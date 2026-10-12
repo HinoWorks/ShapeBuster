@@ -7,6 +7,24 @@ public static class SOLoader
 
     // =====================
 
+    private static SO_CursorUnitData so_cursorUnitData;
+    public static SO_CursorUnitData CursorUnitData
+    {
+        get
+        {
+            if (so_cursorUnitData == null)
+            {
+                so_cursorUnitData = LoadSO<SO_CursorUnitData>(pathBase + nameof(SO_CursorUnitData));
+            }
+            if (so_cursorUnitData == null)
+            {
+                Debug.LogError($"SO_CursorUnitData not found");
+                return null;
+            }
+            return so_cursorUnitData;
+        }
+    }
+
 
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData

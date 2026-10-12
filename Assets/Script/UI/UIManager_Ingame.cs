@@ -12,8 +12,4 @@ public class UIManager_Ingame : MonoBehaviour
 
 
 
-    private void xx()
-    {
-        GameWatcher.Inst.AA();
-    }
 }
