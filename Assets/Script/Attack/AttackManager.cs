@@ -3,6 +3,7 @@ using UniRx;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
 
 public class AttackManager : MonoBehaviour
 {
@@ -12,9 +13,7 @@ public class AttackManager : MonoBehaviour
     // [SerializeField] List<AttackContBase> attackConts = new List<AttackContBase>();
     //[SerializeField] PickaxeAnimCont pickaxeAnimCont;
     private bool isAttacking = false;
-    public int currentPickaxeDamage => 1;//pickaxeConts[currentPickaxeIndex].baseDamage;
-    public Vector3 currentPickaxePosition => cursorCont.pickaxePosition;
-    private int[] slotIndexes = { 0 };
+    public int currentPickaxeDamage => cursorCont.Damage;
 
     private readonly Subject<Unit> onPickaxeAttackTiming = new();
     public IObservable<Unit> OnPickaxeAttackTiming => onPickaxeAttackTiming.AsObservable();
@@ -79,21 +78,10 @@ public class AttackManager : MonoBehaviour
         onPickaxeAttackTiming.OnNext(Unit.Default);
     }
 
-    /*
-    private void EnsurePickaxeAnimCont()
-    {
-        if (pickaxeAnimCont != null) return;
-        pickaxeAnimCont = GetComponentInChildren<PickaxeAnimCont>(true);
-        if (pickaxeAnimCont != null) return;
-
-        var go = new GameObject("PickaxeAnim");
-        go.transform.SetParent(transform);
-        pickaxeAnimCont = go.AddComponent<PickaxeAnimCont>();
-    }
-
 
     private void AttackUnitGenerate(AttackParam _attackParam)
     {
+        /*
         var attackUnit = Instantiate(_attackParam.so.pf, transform) as GameObject;
         attackUnit.transform.position = transform.position;
         attackUnit.transform.localScale = Vector3.one;
@@ -102,8 +90,9 @@ public class AttackManager : MonoBehaviour
         attackConts.Add(attackCont);
         attackCont.Init(_attackParam);
         attackCont.Set_AttackTrigger(isAttacking);
+        */
     }
-*/
+
 
     public void Set_AttackState(bool isStart)
     {

@@ -4,7 +4,7 @@ using System;
 
 
 /// <summary>
-/// ピッケルデータ
+/// カーソルデータ
 /// </summary>
 [System.Serializable]
 public class CursorUnitData

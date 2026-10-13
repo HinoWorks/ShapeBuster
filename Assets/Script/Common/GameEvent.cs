@@ -1,4 +1,3 @@
-using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using System;
@@ -43,23 +42,17 @@ public static class GameEvent
         }
 */
 
-        // ピッケル攻撃時のイベント
-        private static readonly Subject<Unit> onPickaxeAttack = new();
-        public static IObservable<Unit> OnPickaxeAttack => onPickaxeAttack.AsObservable();
-        public static void PublishOnPickaxeAttack()
+        /// <summary>
+        /// HPバーに攻撃された時のイベント
+        /// </summary>
+        private static readonly Subject<int> hpBarDamaged = new();
+        public static IObservable<int> HpBarDamaged => hpBarDamaged.AsObservable();
+        public static void PublishHpBarDamaged(int damage)
         {
-            //Debug.Log("===Event publish===  PickaxeAttack");
-            onPickaxeAttack.OnNext(Unit.Default);
+            hpBarDamaged.OnNext(damage);
         }
 
-        // 新しい地面レイヤーに到達
-        private static readonly Subject<int> onNewGroundLayer = new();
-        public static IObservable<int> OnNewGroundLayer => onNewGroundLayer.AsObservable();
-        public static void PublishOnNewGroundLayer(int layer)
-        {
-            //Debug.Log("===Event publish===  NewGroundLayer: " + layer);
-            onNewGroundLayer.OnNext(layer);
-        }
+
 
         /// <summary>
         /// アーティファクト効果発火時のイベント
@@ -86,20 +79,6 @@ public static class GameEvent
 
     public static class Input
     {
-        private static readonly Subject<Vector3> pointerMove = new();
-        public static IObservable<Vector3> PointerMove => pointerMove.AsObservable();
-        public static void PublishPointerMove(Vector3 pos)
-        {
-            pointerMove.OnNext(pos);
-        }
-        private static readonly Subject<bool> pointerAreaIn = new();
-        public static IObservable<bool> PointerAreaIn => pointerAreaIn.AsObservable();
-        public static void PublishPointerAreaIn(bool isAreaIn)
-        {
-            pointerAreaIn.OnNext(isAreaIn);
-        }
-
-
         private static readonly Subject<IDamagable> pointerDamage = new();
         public static IObservable<IDamagable> PointerDamage => pointerDamage.AsObservable();
         public static void PublishPointerDamage(IDamagable target)

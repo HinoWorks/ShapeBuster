@@ -16,15 +16,21 @@ public static class SOLoader
             {
                 so_cursorUnitData = LoadSO<SO_CursorUnitData>(pathBase + nameof(SO_CursorUnitData));
             }
-            if (so_cursorUnitData == null)
-            {
-                Debug.LogError($"SO_CursorUnitData not found");
-                return null;
-            }
             return so_cursorUnitData;
         }
     }
-
+    private static SO_EnemyData so_enemyData;
+    public static SO_EnemyData EnemyData
+    {
+        get
+        {
+            if (so_enemyData == null)
+            {
+                so_enemyData = LoadSO<SO_EnemyData>(pathBase + nameof(SO_EnemyData));
+            }
+            return so_enemyData;
+        }
+    }
 
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData

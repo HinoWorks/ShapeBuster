@@ -3,6 +3,7 @@ using UnityEngine;
 public class UIManager_Ingame : MonoBehaviour
 {
     public static UIManager_Ingame Inst { get; private set; }
+    [SerializeField] UI_PlayerHpCont playerHpCont;
 
     private void Awake()
     {
@@ -11,5 +12,9 @@ public class UIManager_Ingame : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        playerHpCont.InitOnce();
+    }
 
 }

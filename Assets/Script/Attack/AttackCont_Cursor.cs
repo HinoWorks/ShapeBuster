@@ -13,7 +13,7 @@ public class AttackCont_Cursor : MonoBehaviour
 
     protected bool isActive = false;//　Init後、攻撃開始タイミング同期用。trueになったら攻撃開始
 
-    public int baseDamage => cursorParam.damage;
+    public int Damage => damage;
     protected int damage => 1;//(int)(cursorParam.damage * (1f + GameParamManager.gameBaseParam.pickaxeBase_AttackDamage));
     protected float attackInterval => cursorParam.attackInterval;
     protected float criticalRate => cursorParam.criticalRate + 0f;
@@ -25,18 +25,15 @@ public class AttackCont_Cursor : MonoBehaviour
     [SerializeField] TriggerSender[] triggerSender;
     [SerializeField] ParticleSystem eff_critical;
 
-
-
-    // 複数 TriggerSender で同一対象と重なるとき、片方の Exit だけでは対象を外さない
-    private readonly Dictionary<IDamagable, int> targetOverlapRefCount = new Dictionary<IDamagable, int>();
-    private HashSet<IDamagable> targets = new HashSet<IDamagable>();
-    private readonly List<IDamagable> removeBuffer = new();
+    const int OverlapBufferSize = 64;
+    readonly Collider2D[] overlapBuffer = new Collider2D[OverlapBufferSize];
+    readonly HashSet<IDamagable> hitTargets = new();
+    Collider2D[] hitColliders = System.Array.Empty<Collider2D>();
 
     public Vector3 pickaxePosition => obj_pointerArea.transform.position;
-    private Vector3 offsetPosition = new Vector3(0, 0.1f, 0);
+    //private Vector3 offsetPosition = new Vector3(0, 0.1f, 0);
     private float calc_criticalDamageRate = 1f;
     private float criticalDamageRate = 2f;
-    private int instantShatterDamage = 9999;
 
     private readonly SerialDisposable attackLoopDisposable = new SerialDisposable();
 
@@ -48,20 +45,12 @@ public class AttackCont_Cursor : MonoBehaviour
     protected void Awake()
     {
         attackLoopDisposable.AddTo(this);
-        GameEvent.Input.PointerAreaIn.Subscribe(isAreaIn => PointerAreaIn(isAreaIn)).AddTo(this);
-        GameEvent.Input.PointerMove.Subscribe(pos => PointerMove(pos)).AddTo(this);
-        foreach (var sender in triggerSender)
-        {
-            sender.OnEnter += OnEnter;
-            sender.OnExit += OnExit;
-        }
+        CacheHitColliders();
     }
     public void Init(CursorParam _cursorParam)
     {
         cursorParam = _cursorParam;
         obj_pointerArea.transform.localScale = size * Vector3.one;
-        targets.Clear();
-        targetOverlapRefCount.Clear();
         //CreateAttackRoop();
         this.gameObject.SetActive(false);
         timer = 0;
@@ -84,11 +73,6 @@ public class AttackCont_Cursor : MonoBehaviour
 
     public void OnDestroy()
     {
-        foreach (var sender in triggerSender)
-        {
-            sender.OnEnter -= OnEnter;
-            sender.OnExit -= OnExit;
-        }
         CTS.Cancel();
         Destroy(this.gameObject);
     }
@@ -106,7 +90,6 @@ public class AttackCont_Cursor : MonoBehaviour
     private async void Attack()
     {
         AttackManager.Inst.NotifyPickaxeAttackTiming();
-        removeBuffer.Clear();
 
         // critical check
         var isCritical = UnityEngine.Random.Range(0f, 1f) < criticalRate;
@@ -121,48 +104,14 @@ public class AttackCont_Cursor : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: CTS.Token);
 
         obj_pointerArea.transform.DOScale(1.1f * size * Vector3.one, 0.075f).SetEase(Ease.OutBack);
-        obj_pointerArea.transform.DOScale(size * Vector3.one, 0.075f).SetEase(Ease.OutBack).SetDelay(0.075f)
-            .OnComplete(() =>
-            {
+        obj_pointerArea.transform.DOScale(size * Vector3.one, 0.075f).SetEase(Ease.OutBack).SetDelay(0.075f);
 
-            });
-
-        foreach (var t in targets)
+        if (ApplyHits() > 0)
         {
-            if (!t.isAlive)
-            {
-                removeBuffer.Add(t);
-                continue;
-            }
-
-            /*
-                        // instant shatter check
-                        var damage_calc = GameParamManager.gameBaseParam.isInstantShatter ?
-                                                instantShatterDamage : (int)(damage * calc_criticalDamageRate);
-
-                        // lucky mine check
-                        var isLuckyMine = GameParamManager.gameBaseParam.isLuckyMine;
-                        var resourceUpRate_LuckyMine = isLuckyMine ? GameParamManager.gameBaseParam.luckyMineRate_ResourceUpRate : 0f;
-
-                        if (t.Damage(damage_calc, resourceUpRate_pickaxe
-                                            + resourceUpRate_LuckyMine
-                                            + GameParamManager.gameBaseParam.resourceUpRate))
-                                            */
-
-            // 破壊されていた場合
-            removeBuffer.Add(t);
-
-        }
-        if (targets.Count > 0)
-        {
-            GameEvent.InGame.PublishOnPickaxeAttack();
             Check_AttackAddTime();
         }
-        foreach (var t in removeBuffer)
-        {
-            targets.Remove(t);
-            targetOverlapRefCount.Remove(t);
-        }
+
+        Debug.Log($"AttackCont_Cursor: Attack");
     }
 
     private void Check_AttackAddTime()
@@ -175,55 +124,80 @@ public class AttackCont_Cursor : MonoBehaviour
 
 
 
-    #region -- position fix --
-    private void PointerAreaIn(bool isAreaIn)
+    void LateUpdate()
     {
-        if (isAreaIn == obj_pointerArea.activeSelf) return;
-        obj_pointerArea.SetActive(isAreaIn);
+        if (obj_pointerArea == null) return;
+
+        bool show = PointerWorld.IsInsidePlayfield;
+        if (obj_pointerArea.activeSelf != show)
+            obj_pointerArea.SetActive(show);
+
+        obj_pointerArea.transform.position = PointerWorld.Position;
     }
 
-    private void PointerMove(Vector3 pos)
+
+    // カーソルは瞬間移動するので、入退場ではなく攻撃時点の重なりを使う
+    void CacheHitColliders()
     {
-        obj_pointerArea.transform.position = pos + offsetPosition;
-    }
-    #endregion
-
-
-    #region -- target fix --
-    private void OnEnter(Collider other)
-    {
-        if (!other.TryGetComponent(out IDamagable target)) return;
-
-        if (targetOverlapRefCount.TryGetValue(target, out var n))
-            targetOverlapRefCount[target] = n + 1;
-        else
+        if (triggerSender == null || triggerSender.Length == 0)
         {
-            targetOverlapRefCount[target] = 1;
-            targets.Add(target);
+            hitColliders = System.Array.Empty<Collider2D>();
+            return;
+        }
+
+        var found = new List<Collider2D>(triggerSender.Length);
+        foreach (var sender in triggerSender)
+        {
+            if (sender == null) continue;
+            if (sender.TryGetComponent(out Collider2D hitCollider))
+                found.Add(hitCollider);
+        }
+        hitColliders = found.ToArray();
+    }
+
+    int ApplyHits()
+    {
+        if (obj_pointerArea == null || !obj_pointerArea.activeSelf) return 0;
+
+        CollectOverlaps();
+        if (hitTargets.Count == 0) return 0;
+
+        int damageCalc = (int)(damage * calc_criticalDamageRate);
+        int hitCount = 0;
+        foreach (var target in hitTargets)
+        {
+            if (!target.isAlive) continue;
+            target.Damage(damageCalc, resourceUpRate_pickaxe);
+            hitCount++;
+        }
+        return hitCount;
+    }
+
+    void CollectOverlaps()
+    {
+        hitTargets.Clear();
+        var filter = ContactFilter2D.noFilter;
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider == null || !hitCollider.enabled) continue;
+
+            int count = hitCollider.Overlap(filter, overlapBuffer);
+            for (int i = 0; i < count; i++)
+            {
+                var other = overlapBuffer[i];
+                if (other == null) continue;
+                if (!other.TryGetComponent(out IDamagable target)) continue;
+                if (!target.isAlive) continue;
+                hitTargets.Add(target);
+            }
         }
     }
-
-    private void OnExit(Collider other)
-    {
-        if (!other.TryGetComponent(out IDamagable target)) return;
-        if (!targetOverlapRefCount.TryGetValue(target, out var n)) return;
-
-        n--;
-        if (n <= 0)
-        {
-            targetOverlapRefCount.Remove(target);
-            targets.Remove(target);
-        }
-        else
-            targetOverlapRefCount[target] = n;
-    }
-    #endregion
 
 
 
     private void DebugLog()
     {
-        //Debug.Log($"damage: {pickaxeParam.damage} / attackInterval: {pickaxeParam.attackInterval} / criticalRate: {pickaxeParam.criticalRate} / resourceRate: {pickaxeParam.resourceUpRate} / size: {pickaxeParam.size}");
+        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size}");
         //Debug.Log($"gameBaseParam: {GameParamManager.gameBaseParam.pickaxeBase_AttackDamage} / {GameParamManager.gameBaseParam.pickaxeBase_AttackInterval} / {GameParamManager.gameBaseParam.pickaxeBase_CriticalRate} / {GameParamManager.gameBaseParam.pickaxeBase_ResourceUpRate} / {GameParamManager.gameBaseParam.pickaxeBase_Size}");
         //Debug.Log($"RESULT == > damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size}");
     }

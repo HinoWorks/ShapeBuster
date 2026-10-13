@@ -23,15 +23,29 @@ public class GameWatcher : MonoBehaviour
         GameEvent.GameState.PublishGameState(currentGameState);
         GameParamManager.Init();
 
-        IngameStart();
+        IngameReady();
     }
 
 
 
-    private void IngameStart()
+    private void IngameReady()
     {
+        EnemyGenerateManager.Inst?.Clear();
+        PlayerManager.Inst?.PlayerHPCont?.Init();
         GameParamManager.Init_IngameStart();
         AttackManager.Inst.Set_Ready();
+        GameEvent.GameState.PublishGameState(GameStateType.InGame_Ready);
+
+        IngameStart();
+    }
+
+
+    private void IngameStart()
+    {
+        GameEvent.GameState.PublishGameState(GameStateType.InGame);
+
+        AttackManager.Inst.Set_AttackState(true);
+        EnemyGenerateManager.Inst?.Set_GenerateState(true);
     }
 
 
