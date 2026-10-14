@@ -29,6 +29,7 @@ public class AttackCont_Cursor : MonoBehaviour
     readonly Collider2D[] overlapBuffer = new Collider2D[OverlapBufferSize];
     readonly HashSet<IDamagable> hitTargets = new();
     Collider2D[] hitColliders = System.Array.Empty<Collider2D>();
+    ContactFilter2D resourceOverlapFilter;
 
     public Vector3 pickaxePosition => obj_pointerArea.transform.position;
     //private Vector3 offsetPosition = new Vector3(0, 0.1f, 0);
@@ -46,6 +47,8 @@ public class AttackCont_Cursor : MonoBehaviour
     {
         attackLoopDisposable.AddTo(this);
         CacheHitColliders();
+        resourceOverlapFilter = ContactFilter2D.noFilter;
+        resourceOverlapFilter.SetLayerMask(LayerMask.GetMask("Resource"));
     }
     public void Init(CursorParam _cursorParam)
     {
@@ -87,6 +90,18 @@ public class AttackCont_Cursor : MonoBehaviour
             Attack();
         }
     }
+    void LateUpdate()
+    {
+        if (obj_pointerArea == null) return;
+
+        bool show = PointerWorld.IsInsidePlayfield;
+        if (obj_pointerArea.activeSelf != show)
+            obj_pointerArea.SetActive(show);
+
+        obj_pointerArea.transform.position = PointerWorld.Position;
+        CollectResources();
+    }
+
     private async void Attack()
     {
         AttackManager.Inst.NotifyPickaxeAttackTiming();
@@ -124,16 +139,7 @@ public class AttackCont_Cursor : MonoBehaviour
 
 
 
-    void LateUpdate()
-    {
-        if (obj_pointerArea == null) return;
 
-        bool show = PointerWorld.IsInsidePlayfield;
-        if (obj_pointerArea.activeSelf != show)
-            obj_pointerArea.SetActive(show);
-
-        obj_pointerArea.transform.position = PointerWorld.Position;
-    }
 
 
     // カーソルは瞬間移動するので、入退場ではなく攻撃時点の重なりを使う
@@ -173,6 +179,31 @@ public class AttackCont_Cursor : MonoBehaviour
         return hitCount;
     }
 
+    /// <summary>
+    /// リソースを取得
+    /// </summary>
+    void CollectResources()
+    {
+        if (obj_pointerArea == null || !obj_pointerArea.activeSelf) return;
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider == null || !hitCollider.enabled) continue;
+
+            int count = hitCollider.Overlap(resourceOverlapFilter, overlapBuffer);
+            for (int i = 0; i < count; i++)
+            {
+                var other = overlapBuffer[i];
+                if (other == null) continue;
+                if (!other.TryGetComponent(out ResourceCont resource)) continue;
+                resource.Collect();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 攻撃対象を取得
+    /// </summary>
     void CollectOverlaps()
     {
         hitTargets.Clear();

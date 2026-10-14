@@ -11,6 +11,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     [SerializeField] EnemyHpFill hpFill;
 
     EnemyGenerateManager owner;
+    EnemyData enemyData;
     Rigidbody2D body;
     bool inPool;
     float moveSpeed;
@@ -59,6 +60,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     public void Activate(Vector3 worldPosition, EnemyData enemyData)
     {
         inPool = false;
+        this.enemyData = enemyData;
         moveSpeed = enemyData.speed * randomRate_speed;
         rotateSpeed = enemyData.rotateSpeed * randomRate_rotateSpeed;
         DamageAmount = enemyData.damage;
@@ -190,6 +192,8 @@ public class EnemyBase : MonoBehaviour, IDamagable
     protected virtual void OnDeath(float resourceUpRate)
     {
         CameraManager.Inst.Shake(CameraShakeLevel.Small);
+        if (owner == null || enemyData == null) return;
+        owner.SpawnResources(transform.position, enemyData);
     }
     protected virtual void OnRelease() { }
 

@@ -32,6 +32,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_ResourceData so_resourceData;
+    public static SO_ResourceData ResourceData
+    {
+        get
+        {
+            if (so_resourceData == null)
+            {
+                so_resourceData = LoadSO<SO_ResourceData>(pathBase + nameof(SO_ResourceData));
+            }
+            return so_resourceData;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

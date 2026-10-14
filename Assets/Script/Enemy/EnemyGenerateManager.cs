@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 敵の生成とプール。生存中の一覧と、プレハブごとの未使用インスタンスを持つ。
+/// 敵と、撃破時リソースの生成とプール。生存中の一覧と、プレハブごとの未使用インスタンスを持つ。
 /// </summary>
 public class EnemyGenerateManager : MonoBehaviour
 {
@@ -11,6 +11,12 @@ public class EnemyGenerateManager : MonoBehaviour
     readonly Dictionary<EnemyBase, Stack<EnemyBase>> pools = new();
     readonly HashSet<EnemyBase> parked = new();
     readonly List<EnemyBase> active = new();
+
+    readonly Dictionary<ResourceCont, Stack<ResourceCont>> resourcePools = new();
+    readonly HashSet<ResourceCont> resourceParked = new();
+    readonly List<ResourceCont> resourceActive = new();
+
+    const float ResourceScatterRadius = 0.4f;
 
     [SerializeField] float spawnInterval = 3f;
     [SerializeField] int spawnCount = 2;
@@ -128,9 +134,33 @@ public class EnemyGenerateManager : MonoBehaviour
         stack.Push(enemy);
     }
 
+    /// <summary>敵データの生成数・種類・プレハブに従って、撃破位置へリソースを出す。</summary>
+    public void SpawnResources(Vector3 origin, EnemyData enemyData)
+    {
+        if (enemyData == null) return;
+
+        int count = enemyData.resourceGenerateCount;
+        var resourceData = SOLoader.ResourceData.GetResourceData(enemyData.resourceType);
+        var prefab = resourceData != null ? resourceData.resourceCont : null;
+        if (count <= 0 || prefab == null) return;
+
+        for (int i = 0; i < count; i++)
+        {
+            var resource = RentResource(prefab);
+            resource.Activate(origin + ScatterOffset(), enemyData.resourceType);
+            resourceActive.Add(resource);
+        }
+    }
+
     public void Clear()
     {
         spawnTimer = 0f;
+        ReleaseActiveEnemies();
+        ReleaseActiveResources();
+    }
+
+    void ReleaseActiveEnemies()
+    {
         if (active.Count == 0) return;
 
         var snapshot = active.ToArray();
@@ -140,6 +170,25 @@ public class EnemyGenerateManager : MonoBehaviour
             snapshot[i].Release();
         }
         active.Clear();
+    }
+
+    void ReleaseActiveResources()
+    {
+        if (resourceActive.Count == 0) return;
+
+        var snapshot = resourceActive.ToArray();
+        for (int i = 0; i < snapshot.Length; i++)
+        {
+            if (snapshot[i] == null) continue;
+            snapshot[i].Release();
+        }
+        resourceActive.Clear();
+    }
+
+    static Vector3 ScatterOffset()
+    {
+        var offset = Random.insideUnitCircle * ResourceScatterRadius;
+        return new Vector3(offset.x, offset.y, 0f);
     }
 
     T Rent<T>(T prefab) where T : EnemyBase
@@ -163,5 +212,53 @@ public class EnemyGenerateManager : MonoBehaviour
         var enemy = Instantiate(prefab, transform);
         enemy.Bind(this, prefab);
         return enemy;
+    }
+
+    public void Return(ResourceCont resource)
+    {
+        if (resource == null || !resourceParked.Add(resource)) return;
+
+        resourceActive.Remove(resource);
+        resource.MarkInPool();
+        resource.gameObject.SetActive(false);
+        resource.transform.SetParent(transform, false);
+
+        var key = resource.SourcePrefab;
+        if (key == null)
+        {
+            resourceParked.Remove(resource);
+            Destroy(resource.gameObject);
+            return;
+        }
+
+        if (!resourcePools.TryGetValue(key, out var stack))
+        {
+            stack = new Stack<ResourceCont>();
+            resourcePools[key] = stack;
+        }
+        stack.Push(resource);
+    }
+
+    ResourceCont RentResource(ResourceCont prefab)
+    {
+        if (resourcePools.TryGetValue(prefab, out var stack))
+        {
+            while (stack.Count > 0)
+            {
+                var pooled = stack.Pop();
+                resourceParked.Remove(pooled);
+                if (pooled == null) continue;
+                return pooled;
+            }
+        }
+
+        return CreateResource(prefab);
+    }
+
+    ResourceCont CreateResource(ResourceCont prefab)
+    {
+        var resource = Instantiate(prefab, transform);
+        resource.Bind(this, prefab);
+        return resource;
     }
 }

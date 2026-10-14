@@ -13,6 +13,10 @@ public class EnemyData
     public float speed;
     public float rotateSpeed;
     public float criticalRate;
+
+    public ResourceType resourceType;
+    public int resourceGenerateCount;
+    //public GameObject resourcePf;
 }
 
 [CreateAssetMenu(menuName = "SO/EnemyData")]

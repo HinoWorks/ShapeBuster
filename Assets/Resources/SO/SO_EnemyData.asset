@@ -22,3 +22,5 @@ MonoBehaviour:
     speed: 0.5
     rotateSpeed: 5
     criticalRate: 0
+    resourceType: 0
+    resourceGenerateCount: 2

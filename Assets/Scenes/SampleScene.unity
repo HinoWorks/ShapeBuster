@@ -782,13 +782,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   shakeTarget: {fileID: 519420032}
-  amplitudeSmall: 0.06
-  durationSmall: 0.1
-  amplitudeMedium: 0.14
-  durationMedium: 0.18
-  amplitudeLarge: 0.28
-  durationLarge: 0.28
-  frequency: 28
+  amplitudeSmall: 0.1
+  durationSmall: 0.15
+  amplitudeMedium: 0.2
+  durationMedium: 0.2
+  amplitudeLarge: 0.3
+  durationLarge: 0.3
+  frequency: 35
 --- !u!1 &530128297
 GameObject:
   m_ObjectHideFlags: 0
