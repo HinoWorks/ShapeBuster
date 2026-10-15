@@ -14,6 +14,7 @@ public class AttackManager : MonoBehaviour
     //[SerializeField] PickaxeAnimCont pickaxeAnimCont;
     private bool isAttacking = false;
     public int currentPickaxeDamage => cursorCont.Damage;
+    public Transform CursorTransform => cursorCont != null ? cursorCont.CursorTransform : null;
 
     private readonly Subject<Unit> onPickaxeAttackTiming = new();
     public IObservable<Unit> OnPickaxeAttackTiming => onPickaxeAttackTiming.AsObservable();

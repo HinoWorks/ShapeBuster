@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     Transform damageVisual;
     Vector3 damageVisualScale = Vector3.one;
     bool damageVisualScaleCaptured;
+    Action<EnemyBase> defeatedListener;
 
 
     public bool isAlive { get; private set; }
@@ -30,9 +32,9 @@ public class EnemyBase : MonoBehaviour, IDamagable
     public EnemyBase SourcePrefab { get; private set; }
     public Transform GetTransform() => transform;
 
-    private float randomRate_speed => Random.Range(0.8f, 1.1f);
-    private float randomRate_rotateSpeed => Random.Range(0.8f, 1.1f);
-    private float randomRate_goAngle => Random.Range(-15f, 15f);
+    private float randomRate_speed => UnityEngine.Random.Range(0.8f, 1.1f);
+    private float randomRate_rotateSpeed => UnityEngine.Random.Range(0.8f, 1.1f);
+    private float randomRate_goAngle => UnityEngine.Random.Range(-15f, 15f);
 
     /// <summary>false のとき、死亡後の Release は派生クラスが呼ぶ。</summary>
     protected virtual bool ReleaseOnDeath => true;
@@ -57,9 +59,15 @@ public class EnemyBase : MonoBehaviour, IDamagable
         SourcePrefab = sourcePrefab;
     }
 
+    public void SetDefeatedListener(Action<EnemyBase> listener)
+    {
+        defeatedListener = listener;
+    }
+
     public void Activate(Vector3 worldPosition, EnemyData enemyData)
     {
         inPool = false;
+        defeatedListener = null;
         this.enemyData = enemyData;
         moveSpeed = enemyData.speed * randomRate_speed;
         rotateSpeed = enemyData.rotateSpeed * randomRate_rotateSpeed;
@@ -192,8 +200,12 @@ public class EnemyBase : MonoBehaviour, IDamagable
     protected virtual void OnDeath(float resourceUpRate)
     {
         CameraManager.Inst.Shake(CameraShakeLevel.Small);
-        if (owner == null || enemyData == null) return;
-        owner.SpawnResources(transform.position, enemyData);
+        if (owner != null && enemyData != null)
+            owner.SpawnResources(transform.position, enemyData);
+
+        var listener = defeatedListener;
+        defeatedListener = null;
+        listener?.Invoke(this);
     }
     protected virtual void OnRelease() { }
 

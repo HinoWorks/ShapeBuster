@@ -86,6 +86,21 @@ public class EnemyGenerateManager : MonoBehaviour
         return Spawn(enemyBase, position, enemyData);
     }
 
+    /// <summary>出現範囲の中央に 1 体出す。ボス用。</summary>
+    public EnemyBase SpawnBoss(EnemyData enemyData)
+    {
+        if (enemyData == null || enemyData.pf == null) return null;
+
+        var enemyBase = enemyData.pf.GetComponent<EnemyBase>();
+        if (enemyBase == null) return null;
+
+        var position = new Vector3(
+            (spawnAreaMin.x + spawnAreaMax.x) * 0.5f,
+            (spawnAreaMin.y + spawnAreaMax.y) * 0.5f,
+            0f);
+        return Spawn(enemyBase, position, enemyData);
+    }
+
 
 
 

@@ -19,6 +19,19 @@ public static class SOLoader
             return so_cursorUnitData;
         }
     }
+    private static SO_StageData so_stageData;
+    public static SO_StageData StageData
+    {
+        get
+        {
+            if (so_stageData == null)
+            {
+                so_stageData = LoadSO<SO_StageData>(pathBase + nameof(SO_StageData));
+            }
+            return so_stageData;
+        }
+    }
+
     private static SO_EnemyData so_enemyData;
     public static SO_EnemyData EnemyData
     {

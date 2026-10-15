@@ -46,6 +46,7 @@ public class GameWatcher : MonoBehaviour
 
         AttackManager.Inst.Set_AttackState(true);
         EnemyGenerateManager.Inst?.Set_GenerateState(true);
+        StageTimeManager.Inst?.StartStage();
     }
 
 

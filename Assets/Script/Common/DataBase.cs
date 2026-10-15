@@ -21,25 +21,30 @@ public class DataBase : MonoBehaviour
 
     // --- GSS Load Setting --
     //https://docs.google.com/spreadsheets/d/18r14I3b0cia4TxMk525C686vuO6sjbfO5Cd16gWzNes/edit?usp=sharing
-    private string SheetID = "18r14I3b0cia4TxMk525C686vuO6sjbfO5Cd16gWzNes";
+    //https://docs.google.com/spreadsheets/d/196MZMdtOL4CrDTLsYSusSHm0Ku0qwbFzoPRsczOKKE0/edit?usp=sharing
+    private string SheetID = "196MZMdtOL4CrDTLsYSusSHm0Ku0qwbFzoPRsczOKKE0";
+
     string tqx = "tqx=out:csv";
 
 
 
 
     [Header("GSS Load data")]
+    [SerializeField] SO_StageData mSO_StageData;
     [SerializeField] SO_CursorUnitData mSO_CursorUnitData;
     [SerializeField] SO_SoundData mSO_SoundData;
 
     public async UniTask LoadData()
     {
-        await DataLoad_CursorUnitData();
+        //await DataLoad_CursorUnitData();
+        await DataLoad_StageData();
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
         await UniTask.Delay(200, true);
 
 
-        EditorUtility.SetDirty(mSO_CursorUnitData);
+        //EditorUtility.SetDirty(mSO_CursorUnitData);
+        EditorUtility.SetDirty(mSO_StageData);
         // -- save --
         AssetDatabase.SaveAssets();
 #endif
@@ -53,6 +58,17 @@ public class DataBase : MonoBehaviour
 #if UNITY_EDITOR
         //EditorUtility.SetDirty(mSO_SkillTreeData);
 #endif
+    }
+
+    private async UniTask DataLoad_StageData()
+    {
+        var loadData = await DataLoad("StageData");
+        var convData = CSVSerializer.Deserialize<StageData>(loadData);
+        mSO_StageData.stageDatas = convData;
+
+        loadData = await DataLoad("StageLevelData");
+        var convData2 = CSVSerializer.Deserialize<StageLevelData>(loadData);
+        mSO_StageData.stageLevelDatas = convData2;
     }
 
 

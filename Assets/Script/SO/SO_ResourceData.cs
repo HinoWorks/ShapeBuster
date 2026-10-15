@@ -6,6 +6,7 @@ using System;
 public class ResourceData
 {
     public ResourceType resourceType;
+    public Sprite icon;
     public ResourceCont resourceCont;
 }
 

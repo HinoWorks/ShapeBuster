@@ -32,6 +32,7 @@ public class AttackCont_Cursor : MonoBehaviour
     ContactFilter2D resourceOverlapFilter;
 
     public Vector3 pickaxePosition => obj_pointerArea.transform.position;
+    public Transform CursorTransform => obj_pointerArea.transform;
     //private Vector3 offsetPosition = new Vector3(0, 0.1f, 0);
     private float calc_criticalDamageRate = 1f;
     private float criticalDamageRate = 2f;
@@ -126,7 +127,6 @@ public class AttackCont_Cursor : MonoBehaviour
             Check_AttackAddTime();
         }
 
-        Debug.Log($"AttackCont_Cursor: Attack");
     }
 
     private void Check_AttackAddTime()
@@ -193,9 +193,11 @@ public class AttackCont_Cursor : MonoBehaviour
             int count = hitCollider.Overlap(resourceOverlapFilter, overlapBuffer);
             for (int i = 0; i < count; i++)
             {
+
                 var other = overlapBuffer[i];
                 if (other == null) continue;
                 if (!other.TryGetComponent(out ResourceCont resource)) continue;
+                if (resource.isCollecting) continue;
                 resource.Collect();
             }
         }

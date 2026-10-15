@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_ResourceData
   resourceDatas:
   - resourceType: 0
+    icon: {fileID: 3795675482090570979, guid: 430d1d44cdab542f49b939a1a2015acc, type: 3}
     resourceCont: {fileID: 6401827364550192831, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}

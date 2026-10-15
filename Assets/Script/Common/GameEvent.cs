@@ -77,6 +77,17 @@ public static class GameEvent
     }
 
 
+    public static class Stage
+    {
+        private static readonly Subject<Unit> cleared = new();
+        public static IObservable<Unit> Cleared => cleared.AsObservable();
+        public static void PublishCleared()
+        {
+            cleared.OnNext(Unit.Default);
+        }
+    }
+
+
     public static class Input
     {
         private static readonly Subject<IDamagable> pointerDamage = new();

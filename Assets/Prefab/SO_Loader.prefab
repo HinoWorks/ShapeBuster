@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a159ad1e7d645468b0785b1940cea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataBase
+  mSO_StageData: {fileID: 11400000, guid: 6ac5e73cdc4dd48be90bc99578bdce01, type: 2}
   mSO_CursorUnitData: {fileID: 0}
   mSO_SoundData: {fileID: 0}

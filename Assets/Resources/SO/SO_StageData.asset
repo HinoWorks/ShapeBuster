@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62f1c3387214438d957c3a5cdb43c0f, type: 3}
+  m_Name: SO_StageData
+  m_EditorClassIdentifier: Assembly-CSharp::SO_StageData
+  stageDatas:
+  - stageIndex: 0
+    stageTime: 180
+    enemyPowerRate: 1
+    enemyHpRate: 1
+    bossIndex: 1
+  - stageIndex: 1
+    stageTime: 180
+    enemyPowerRate: 1.5
+    enemyHpRate: 1.5
+    bossIndex: 2
+  - stageIndex: 2
+    stageTime: 180
+    enemyPowerRate: 2
+    enemyHpRate: 2
+    bossIndex: 3
+  stageLevelDatas:
+  - stageIndex: 1
+    startSecond: 0
+    endSecond: 60
+    spawnCount_forSecond: 2
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 1
+    startSecond: 60
+    endSecond: 120
+    spawnCount_forSecond: 3
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 1
+    startSecond: 120
+    endSecond: 180
+    spawnCount_forSecond: 3
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 2
+    startSecond: 0
+    endSecond: 60
+    spawnCount_forSecond: 3
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 2
+    startSecond: 60
+    endSecond: 120
+    spawnCount_forSecond: 4
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 2
+    startSecond: 120
+    endSecond: 180
+    spawnCount_forSecond: 4
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0

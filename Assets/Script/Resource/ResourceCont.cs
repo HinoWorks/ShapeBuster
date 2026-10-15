@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// 敵を倒したときに出るリソース。生成とプールは EnemyGenerateManager が行う。
@@ -8,6 +9,7 @@ public class ResourceCont : MonoBehaviour
 {
     EnemyGenerateManager owner;
     bool inPool;
+    public bool isCollecting { get; private set; } = false;
 
     public ResourceType ResourceType { get; private set; }
     public ResourceCont SourcePrefab { get; private set; }
@@ -21,6 +23,7 @@ public class ResourceCont : MonoBehaviour
     public void Activate(Vector3 worldPosition, ResourceType resourceType)
     {
         inPool = false;
+        isCollecting = false;
         ResourceType = resourceType;
         transform.position = worldPosition;
         gameObject.SetActive(true);
@@ -34,10 +37,37 @@ public class ResourceCont : MonoBehaviour
     /// <summary>1個獲得してプールへ戻す。プール済みなら何もしない。</summary>
     public void Collect()
     {
-        if (inPool) return;
+        if (inPool || isCollecting) return;
 
-        GameEvent.UI.PublishResourceMod_Ingame(ResourceType, 1);
-        Release();
+        isCollecting = true;
+        var cursor = AttackManager.Inst != null ? AttackManager.Inst.CursorTransform : null;
+        if (cursor == null)
+        {
+            GameEvent.UI.PublishResourceMod_Ingame(ResourceType, 1);
+            Release();
+            return;
+        }
+
+        var start = transform.position;
+        DOTween.To(
+            () => 0f,
+            rate =>
+            {
+                if (cursor == null) return;
+                var target = cursor.position;
+                target.z = start.z;
+                transform.position = Vector3.LerpUnclamped(start, target, rate);
+            },
+            1f,
+            0.3f)
+            .SetEase(Ease.OutBack)
+            .SetTarget(transform)
+            .OnComplete(() =>
+            {
+                GameEvent.UI.PublishResourceMod_Ingame(ResourceType, 1);
+                Release();
+            });
+
     }
 
     /// <summary>管理者のプールへ戻す。管理者がいなければ破棄する。</summary>
@@ -46,6 +76,8 @@ public class ResourceCont : MonoBehaviour
         if (inPool) return;
 
         inPool = true;
+        isCollecting = false;
+        transform.DOKill();
         if (owner != null)
             owner.Return(this);
         else
