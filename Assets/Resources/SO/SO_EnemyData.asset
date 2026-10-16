@@ -14,13 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_EnemyData
   enemyDatas:
   - enemyIndex: 0
-    enemyName: enemy_0
+    enemyName: shape_1
     icon: {fileID: 0}
-    pf: {fileID: 7170872176539118308, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
-    maxHp: 5
-    damage: 1
+    pf: {fileID: 3803278028999049696, guid: 33c5213f69fa849c4b0ac69d8833ba1d, type: 3}
+    maxHp: 3
+    damage: 2
     speed: 0.5
     rotateSpeed: 5
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 2
+  - enemyIndex: 1
+    enemyName: shape_2
+    icon: {fileID: 0}
+    pf: {fileID: 3803278028999049696, guid: c88825e71d78d47cd81f0cb57cedeb12, type: 3}
+    maxHp: 1
+    damage: 1
+    speed: 2
+    rotateSpeed: 10
+    criticalRate: 0
+    resourceType: 1
+    resourceGenerateCount: 1
+  - enemyIndex: 2
+    enemyName: shape_3
+    icon: {fileID: 0}
+    pf: {fileID: 0}
+    maxHp: 3
+    damage: 0
+    speed: 0
+    rotateSpeed: 0
+    criticalRate: 0
+    resourceType: 0
+    resourceGenerateCount: 0

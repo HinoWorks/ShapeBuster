@@ -30,9 +30,4 @@ public class SO_EnemyData : ScriptableObject
     }
 
 
-    public EnemyData GetRandomEnemyData()
-    {
-        return enemyDatas[Random.Range(0, enemyDatas.Length)];
-    }
-
 }

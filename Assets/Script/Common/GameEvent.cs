@@ -43,6 +43,26 @@ public static class GameEvent
 */
 
         /// <summary>
+        /// 敵に与えたダメージ
+        /// </summary>
+        private static readonly Subject<int> damageDealt = new();
+        public static IObservable<int> DamageDealt => damageDealt.AsObservable();
+        public static void PublishDamageDealt(int damage)
+        {
+            damageDealt.OnNext(damage);
+        }
+
+        /// <summary>
+        /// 敵を撃破した時
+        /// </summary>
+        private static readonly Subject<Unit> enemyDefeated = new();
+        public static IObservable<Unit> EnemyDefeated => enemyDefeated.AsObservable();
+        public static void PublishEnemyDefeated()
+        {
+            enemyDefeated.OnNext(Unit.Default);
+        }
+
+        /// <summary>
         /// HPバーに攻撃された時のイベント
         /// </summary>
         private static readonly Subject<int> hpBarDamaged = new();

@@ -33,8 +33,8 @@ MonoBehaviour:
     startSecond: 0
     endSecond: 60
     spawnCount_forSecond: 2
-    rate_enemy1: 100
-    rate_enemy2: 0
+    rate_enemy1: 50
+    rate_enemy2: 50
     rate_enemy3: 0
     rate_enemy4: 0
     rate_enemy5: 0

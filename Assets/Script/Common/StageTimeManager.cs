@@ -12,10 +12,11 @@ public class StageTimeManager : MonoBehaviour
 
     public float stageTime { get; private set; }
     public float stageMaxTime { get; private set; }
+    public int activeStageIndex { get; private set; }
+    public bool isTimeRunning { get; private set; }
     public bool isBossPhase { get; private set; }
     public bool isStageCleared { get; private set; }
 
-    bool isTimeRunning;
     bool isFailed;
     EnemyBase boss;
 
@@ -31,6 +32,25 @@ public class StageTimeManager : MonoBehaviour
     {
         if (Inst == this) Inst = null;
     }
+
+
+    private void OnGameState(GameStateType state)
+    {
+        switch (state)
+        {
+            case GameStateType.InGame_Ready:
+                break;
+            case GameStateType.InGame:
+                StartStage();
+                break;
+            case GameStateType.InGame_End:
+                isFailed = true;
+                isTimeRunning = false;
+                break;
+        }
+    }
+
+
 
     void Update()
     {
@@ -58,6 +78,7 @@ public class StageTimeManager : MonoBehaviour
             return;
         }
 
+        activeStageIndex = stageData.stageIndex;
         stageMaxTime = Mathf.Max(0f, stageData.stageTime);
         stageTime = 0f;
         isBossPhase = false;
@@ -104,14 +125,6 @@ public class StageTimeManager : MonoBehaviour
         AttackManager.Inst?.Set_AttackState(false);
         GameEvent.Stage.PublishCleared();
         Debug.Log("<color=yellow> ========= Stage Clear ========= </color>");
-    }
-
-    void OnGameState(GameStateType state)
-    {
-        if (state != GameStateType.InGame_End) return;
-
-        isFailed = true;
-        isTimeRunning = false;
     }
 
     static StageData FindStageData(int index)

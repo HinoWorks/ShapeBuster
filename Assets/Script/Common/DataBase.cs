@@ -30,21 +30,25 @@ public class DataBase : MonoBehaviour
 
 
     [Header("GSS Load data")]
+    [SerializeField] SO_EnemyData mSO_EnemyData;
     [SerializeField] SO_StageData mSO_StageData;
     [SerializeField] SO_CursorUnitData mSO_CursorUnitData;
     [SerializeField] SO_SoundData mSO_SoundData;
-
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
         await DataLoad_StageData();
+        await DataLoad_EnemyData();
+
+
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
         await UniTask.Delay(200, true);
 
-
         //EditorUtility.SetDirty(mSO_CursorUnitData);
         EditorUtility.SetDirty(mSO_StageData);
+        EditorUtility.SetDirty(mSO_EnemyData);
+
         // -- save --
         AssetDatabase.SaveAssets();
 #endif
@@ -70,7 +74,12 @@ public class DataBase : MonoBehaviour
         var convData2 = CSVSerializer.Deserialize<StageLevelData>(loadData);
         mSO_StageData.stageLevelDatas = convData2;
     }
-
+    private async UniTask DataLoad_EnemyData()
+    {
+        var loadData = await DataLoad("EnemyData");
+        var convData = CSVSerializer.Deserialize<EnemyData>(loadData);
+        mSO_EnemyData.enemyDatas = convData;
+    }
 
 
     private async UniTask DataLoad_CursorUnitData()

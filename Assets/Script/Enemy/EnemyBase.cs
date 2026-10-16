@@ -110,6 +110,8 @@ public class EnemyBase : MonoBehaviour, IDamagable
 
         int applied = Mathf.Max(0, ModifyDamage(damage, resourceUpRate));
         CurrentHp -= applied;
+        if (applied > 0)
+            GameEvent.InGame.PublishDamageDealt(applied);
         OnDamaged(applied, resourceUpRate);
         RefreshHpFill();
         DamageAnim();
@@ -200,6 +202,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     protected virtual void OnDeath(float resourceUpRate)
     {
         CameraManager.Inst.Shake(CameraShakeLevel.Small);
+        GameEvent.InGame.PublishEnemyDefeated();
         if (owner != null && enemyData != null)
             owner.SpawnResources(transform.position, enemyData);
 

@@ -25,6 +25,25 @@ public class AttackManager : MonoBehaviour
         if (Inst == null) { Inst = this; }
         else { Destroy(this); return; }
         onPickaxeAttackTiming.AddTo(this);
+        GameEvent.GameState.SetGameState.Subscribe(OnGameState).AddTo(this);
+    }
+
+
+
+    private void OnGameState(GameStateType state)
+    {
+        switch (state)
+        {
+            case GameStateType.InGame_Ready:
+                Set_Ready();
+                break;
+            case GameStateType.InGame:
+                Set_AttackState(true);
+                break;
+
+            case GameStateType.InGame_End:
+                break;
+        }
     }
 
 

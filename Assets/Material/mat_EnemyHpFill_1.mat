@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_EnemyHpFill
+  m_Name: mat_EnemyHpFill_1
   m_Shader: {fileID: 4800000, guid: f1b27d4a8c6e4f0a9d3b5c7e1a2f4680, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

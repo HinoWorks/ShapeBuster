@@ -7,7 +7,7 @@ using DG.Tweening;
 public enum ResourceType
 {
 
-    AA, BB
+    AA, BB, CC, DD, EE, FF, GG
 }
 
 public class ResourceCount

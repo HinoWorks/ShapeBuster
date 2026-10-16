@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// 敵と、撃破時リソースの生成とプール。生存中の一覧と、プレハブごとの未使用インスタンスを持つ。
@@ -18,13 +19,14 @@ public class EnemyGenerateManager : MonoBehaviour
 
     const float ResourceScatterRadius = 0.4f;
 
-    [SerializeField] float spawnInterval = 3f;
-    [SerializeField] int spawnCount = 2;
     [SerializeField] Vector2 spawnAreaMin = new Vector2(-6f, 5.5f);
     [SerializeField] Vector2 spawnAreaMax = new Vector2(6f, 6);
 
     bool isGenerating;
-    float spawnTimer;
+    float spawnStock;
+    StageLevelData currentLevel;
+    private int selectStageIndex = 1; //のちに適切な場所で管理する
+
 
 
 
@@ -32,6 +34,7 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         if (Inst == null) { Inst = this; }
         else { Destroy(this); return; }
+        GameEvent.GameState.SetGameState.Subscribe(OnGameState).AddTo(this);
     }
 
     void OnDestroy()
@@ -39,33 +42,70 @@ public class EnemyGenerateManager : MonoBehaviour
         if (Inst == this) Inst = null;
     }
 
+    private void OnGameState(GameStateType state)
+    {
+        switch (state)
+        {
+            case GameStateType.InGame_Ready:
+                Clear();
+                isGenerating = false;
+                StageTimeCheck();
+                break;
+            case GameStateType.InGame:
+                Set_GenerateState(true);
+                break;
+
+            case GameStateType.InGame_End:
+                Set_GenerateState(false);
+                break;
+        }
+    }
+
+
+    private void StageTimeCheck()
+    {
+        if (StageTimeManager.Inst == null) return;
+
+        var time = StageTimeManager.Inst.stageTime;
+        if (currentLevel == null || time >= currentLevel.endSecond)
+        {
+            currentLevel = SOLoader.StageData.GetCurrentStageLevelData(selectStageIndex, time);
+            //TODO: レベルデータ変更時の処理
+        }
+    }
+
+
     void Update()
     {
         if (!isGenerating) return;
-        if (spawnInterval <= 0f || spawnCount <= 0) return;
 
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer < spawnInterval) return;
+        StageTimeCheck();
+        if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0) return;
 
-        spawnTimer -= spawnInterval;
-        GenerateEnemies(spawnCount);
+        spawnStock += currentLevel.spawnCount_forSecond * Time.deltaTime;
+        while (spawnStock >= 1f)
+        {
+            spawnStock -= 1f;
+            SpawnFromLevel(currentLevel);
+        }
     }
 
     public void Set_GenerateState(bool isStart)
     {
         isGenerating = isStart;
-        spawnTimer = 0f;
+        spawnStock = 0f;
+        if (!isStart) currentLevel = null;
     }
 
-    void GenerateEnemies(int count)
+    void SpawnFromLevel(StageLevelData level)
     {
-        for (int i = 0; i < count; i++)
-        {
-            var enemyData = SOLoader.EnemyData.GetRandomEnemyData();
-            var prefab = enemyData.pf;
-            if (prefab == null) return;
-            Spawn(enemyData);
-        }
+        int enemyIndex = level.PickEnemyIndex();
+        var enemyDatas = SOLoader.EnemyData != null ? SOLoader.EnemyData.enemyDatas : null;
+        if (enemyIndex < 0 || enemyDatas == null || enemyIndex >= enemyDatas.Length) return;
+
+        var enemyData = SOLoader.EnemyData.GetEnemyData(enemyIndex);
+        if (enemyData == null || enemyData.pf == null) return;
+        Spawn(enemyData);
     }
 
 
@@ -169,7 +209,8 @@ public class EnemyGenerateManager : MonoBehaviour
 
     public void Clear()
     {
-        spawnTimer = 0f;
+        spawnStock = 0f;
+        currentLevel = null;
         ReleaseActiveEnemies();
         ReleaseActiveResources();
     }

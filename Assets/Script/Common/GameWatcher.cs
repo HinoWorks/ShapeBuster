@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class GameWatcher : MonoBehaviour
 {
@@ -28,14 +29,15 @@ public class GameWatcher : MonoBehaviour
 
 
 
-    private void IngameReady()
+    private async void IngameReady()
     {
-        EnemyGenerateManager.Inst?.Clear();
+        //EnemyGenerateManager.Inst?.Clear();
         PlayerManager.Inst?.PlayerHPCont?.Init();
         GameParamManager.Init_IngameStart();
-        AttackManager.Inst.Set_Ready();
+        //AttackManager.Inst.Set_Ready();
         GameEvent.GameState.PublishGameState(GameStateType.InGame_Ready);
 
+        await UniTask.Delay(1000);
         IngameStart();
     }
 
@@ -44,9 +46,8 @@ public class GameWatcher : MonoBehaviour
     {
         GameEvent.GameState.PublishGameState(GameStateType.InGame);
 
-        AttackManager.Inst.Set_AttackState(true);
-        EnemyGenerateManager.Inst?.Set_GenerateState(true);
-        StageTimeManager.Inst?.StartStage();
+        //AttackManager.Inst.Set_AttackState(true);
+        //StageTimeManager.Inst?.StartStage();
     }
 
 
