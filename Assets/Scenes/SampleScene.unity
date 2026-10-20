@@ -292,6 +292,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1086050673}
     m_Modifications:
+    - target: {fileID: 134399139934389523, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
+      propertyPath: resourceType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1347,7 +1351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 112.1, y: 65}
+  m_AnchoredPosition: {x: 112.100006, y: 65}
   m_SizeDelta: {x: 20, y: 250}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &651802187
@@ -1642,6 +1646,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1086050673}
     m_Modifications:
+    - target: {fileID: 134399139934389523, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
+      propertyPath: resourceType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1875,6 +1883,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1086050673}
     m_Modifications:
+    - target: {fileID: 134399139934389523, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
+      propertyPath: resourceType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2013,6 +2025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f43650ecdbf48be8097ceef72390d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackManager
+  attackUnitData: {fileID: 11400000, guid: f9d2b63c74509f134b82a4c6d7f01935, type: 2}
+  debugAttackIndices: 00000000010000000200000003000000
 --- !u!4 &927878392
 Transform:
   m_ObjectHideFlags: 0
@@ -2395,7 +2409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 168.7, y: 65}
+  m_AnchoredPosition: {x: 168.70001, y: 65}
   m_SizeDelta: {x: 20, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1255193907
@@ -2978,6 +2992,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerateManager
   spawnAreaMin: {x: -6, y: 5.5}
   spawnAreaMax: {x: 6, y: 6}
+  screenTopMinY: 2.5
+  screenTopMaxY: 4.5
+  screenCenterMinY: -1
+  screenCenterMaxY: 1
 --- !u!114 &1871639610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3037,6 +3055,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1086050673}
     m_Modifications:
+    - target: {fileID: 134399139934389523, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
+      propertyPath: resourceType
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

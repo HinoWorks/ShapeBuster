@@ -34,11 +34,13 @@ public class DataBase : MonoBehaviour
     [SerializeField] SO_StageData mSO_StageData;
     [SerializeField] SO_CursorUnitData mSO_CursorUnitData;
     [SerializeField] SO_SoundData mSO_SoundData;
+    [SerializeField] SO_AttackUnitData mSO_AttackUnitData;
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
         await DataLoad_StageData();
         await DataLoad_EnemyData();
+        await DataLoad_AttackUnitData();
 
 
 #if UNITY_EDITOR
@@ -48,6 +50,8 @@ public class DataBase : MonoBehaviour
         //EditorUtility.SetDirty(mSO_CursorUnitData);
         EditorUtility.SetDirty(mSO_StageData);
         EditorUtility.SetDirty(mSO_EnemyData);
+        if (mSO_AttackUnitData != null)
+            EditorUtility.SetDirty(mSO_AttackUnitData);
 
         // -- save --
         AssetDatabase.SaveAssets();
@@ -66,19 +70,45 @@ public class DataBase : MonoBehaviour
 
     private async UniTask DataLoad_StageData()
     {
-        var loadData = await DataLoad("StageData");
+        var loadData = await DataLoad("Stage");
         var convData = CSVSerializer.Deserialize<StageData>(loadData);
         mSO_StageData.stageDatas = convData;
 
-        loadData = await DataLoad("StageLevelData");
+        loadData = await DataLoad("StageLevel");
         var convData2 = CSVSerializer.Deserialize<StageLevelData>(loadData);
         mSO_StageData.stageLevelDatas = convData2;
+
+        try
+        {
+            loadData = await DataLoad("StageSpawnOrder");
+            mSO_StageData.stageSpawnOrders = CSVSerializer.Deserialize<StageSpawnOrder>(loadData);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"StageSpawnOrder の読み込みをスキップしました。{e.Message}");
+        }
     }
     private async UniTask DataLoad_EnemyData()
     {
-        var loadData = await DataLoad("EnemyData");
+        var loadData = await DataLoad("Enemy");
         var convData = CSVSerializer.Deserialize<EnemyData>(loadData);
         mSO_EnemyData.enemyDatas = convData;
+    }
+
+    private async UniTask DataLoad_AttackUnitData()
+    {
+        if (mSO_AttackUnitData == null) return;
+
+        try
+        {
+            var loadData = await DataLoad("AttackUnit");
+            var convData = CSVSerializer.Deserialize<AttackUnitData>(loadData);
+            mSO_AttackUnitData.ApplyLoaded(convData);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"AttackUnitData の読み込みをスキップしました。{e.Message}");
+        }
     }
 
 

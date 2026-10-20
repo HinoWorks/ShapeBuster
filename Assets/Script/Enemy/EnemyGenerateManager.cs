@@ -22,10 +22,20 @@ public class EnemyGenerateManager : MonoBehaviour
     [SerializeField] Vector2 spawnAreaMin = new Vector2(-6f, 5.5f);
     [SerializeField] Vector2 spawnAreaMax = new Vector2(6f, 6);
 
+    [Header("指定生成のY範囲。Xは出現範囲と同じ")]
+    [SerializeField] float screenTopMinY = 2.5f;
+    [SerializeField] float screenTopMaxY = 4.5f;
+    [SerializeField] float screenCenterMinY = -1f;
+    [SerializeField] float screenCenterMaxY = 1f;
+
     bool isGenerating;
     float spawnStock;
     StageLevelData currentLevel;
     private int selectStageIndex = 1; //のちに適切な場所で管理する
+
+    readonly List<StageSpawnOrder> spawnOrders = new();
+    int spawnOrderStage = int.MinValue;
+    int nextSpawnOrder;
 
 
 
@@ -80,6 +90,7 @@ public class EnemyGenerateManager : MonoBehaviour
         if (!isGenerating) return;
 
         StageTimeCheck();
+        TickSpawnOrders();
         if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0) return;
 
         spawnStock += currentLevel.spawnCount_forSecond * Time.deltaTime;
@@ -95,6 +106,93 @@ public class EnemyGenerateManager : MonoBehaviour
         isGenerating = isStart;
         spawnStock = 0f;
         if (!isStart) currentLevel = null;
+    }
+
+    /// <summary>
+    /// 出現率とは別に、敵 ID・個数・高さの帯・形を指定して出す。
+    /// X は出現範囲内でランダム。帯の Y 範囲はインスペクターで指定する。
+    /// size は Circle の半径、Line の長さ。angle は度。0 が右、90 が上。
+    /// </summary>
+    public void SpawnSpecified(int enemyIndex, int count, SpawnBand band, SpawnShape shape, float size = 0f, float angle = 0f)
+    {
+        if (count <= 0) return;
+
+        ExecuteSpawnOrder(new StageSpawnOrder
+        {
+            enemyIndex = enemyIndex,
+            count = count,
+            spawnBand = band,
+            shape = shape,
+            size = size,
+            angle = angle,
+        });
+    }
+
+    void TickSpawnOrders()
+    {
+        if (StageTimeManager.Inst == null) return;
+
+        int stageIndex = StageTimeManager.Inst.activeStageIndex;
+        if (spawnOrderStage != stageIndex)
+            BindSpawnOrders(stageIndex);
+
+        float time = StageTimeManager.Inst.stageTime;
+        while (nextSpawnOrder < spawnOrders.Count && time >= spawnOrders[nextSpawnOrder].spawnSecond)
+        {
+            ExecuteSpawnOrder(spawnOrders[nextSpawnOrder]);
+            nextSpawnOrder++;
+        }
+    }
+
+    void BindSpawnOrders(int stageIndex)
+    {
+        spawnOrderStage = stageIndex;
+        nextSpawnOrder = 0;
+        spawnOrders.Clear();
+
+        if (SOLoader.StageData == null) return;
+        SOLoader.StageData.CollectSpawnOrders(stageIndex, spawnOrders);
+    }
+
+    void ResetSpawnOrders()
+    {
+        spawnOrderStage = int.MinValue;
+        nextSpawnOrder = 0;
+        spawnOrders.Clear();
+    }
+
+    void ExecuteSpawnOrder(StageSpawnOrder order)
+    {
+        if (order == null || order.count <= 0) return;
+
+        var enemyData = SOLoader.EnemyData != null ? SOLoader.EnemyData.FindEnemyData(order.enemyIndex) : null;
+        if (enemyData == null || enemyData.pf == null)
+        {
+            Debug.LogWarning($"指定生成の敵が見つかりません。 enemyIndex: {order.enemyIndex}");
+            return;
+        }
+
+        var prefab = enemyData.pf.GetComponent<EnemyBase>();
+        if (prefab == null) return;
+
+        var xRange = new Vector2(spawnAreaMin.x, spawnAreaMax.x);
+        var positions = order.BuildPositions(xRange, ResolveBandY(order.spawnBand));
+        bool fallAsFormation = order.shape == SpawnShape.Circle || order.shape == SpawnShape.Line;
+        for (int i = 0; i < positions.Length; i++)
+            Spawn(prefab, positions[i], enemyData, fallAsFormation);
+    }
+
+    Vector2 ResolveBandY(SpawnBand band)
+    {
+        switch (band)
+        {
+            case SpawnBand.ScreenTop:
+                return new Vector2(screenTopMinY, screenTopMaxY);
+            case SpawnBand.ScreenCenter:
+                return new Vector2(screenCenterMinY, screenCenterMaxY);
+            default:
+                return new Vector2(spawnAreaMin.y, spawnAreaMax.y);
+        }
     }
 
     void SpawnFromLevel(StageLevelData level)
@@ -115,6 +213,22 @@ public class EnemyGenerateManager : MonoBehaviour
             Random.Range(spawnAreaMin.x, spawnAreaMax.x),
             Random.Range(spawnAreaMin.y, spawnAreaMax.y),
             0f);
+    }
+
+    /// <summary>生存中の敵から 1 体を等確率で選ぶ。</summary>
+    public bool TryPickRandomAlive(out EnemyBase enemy)
+    {
+        enemy = null;
+        int count = 0;
+        for (int i = 0; i < active.Count; i++)
+        {
+            var candidate = active[i];
+            if (candidate == null || !candidate.isAlive) continue;
+            count++;
+            if (Random.Range(0, count) == 0)
+                enemy = candidate;
+        }
+        return enemy != null;
     }
 
 
@@ -146,12 +260,12 @@ public class EnemyGenerateManager : MonoBehaviour
 
 
     /// <summary>hp が 0 以下ならプレハブの maxHp を使う。</summary>
-    public T Spawn<T>(T prefab, Vector3 position, EnemyData enemyData) where T : EnemyBase
+    public T Spawn<T>(T prefab, Vector3 position, EnemyData enemyData, bool fallAsFormation = false) where T : EnemyBase
     {
         if (prefab == null) return null;
 
         var enemy = Rent(prefab);
-        enemy.Activate(position, enemyData);
+        enemy.Activate(position, enemyData, fallAsFormation);
         active.Add(enemy);
         return enemy;
     }
@@ -211,6 +325,7 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         spawnStock = 0f;
         currentLevel = null;
+        ResetSpawnOrders();
         ReleaseActiveEnemies();
         ReleaseActiveResources();
     }

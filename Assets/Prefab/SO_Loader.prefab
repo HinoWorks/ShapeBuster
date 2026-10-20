@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DataBase
   mSO_EnemyData: {fileID: 11400000, guid: 07d6d228d3f174c5daa29cc535bf37ef, type: 2}
   mSO_StageData: {fileID: 11400000, guid: 6ac5e73cdc4dd48be90bc99578bdce01, type: 2}
-  mSO_CursorUnitData: {fileID: 0}
+  mSO_CursorUnitData: {fileID: 11400000, guid: 32f39377268664fe1bd4c58316fd1080, type: 2}
   mSO_SoundData: {fileID: 0}
+  mSO_AttackUnitData: {fileID: 11400000, guid: f9d2b63c74509f134b82a4c6d7f01935, type: 2}

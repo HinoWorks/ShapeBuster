@@ -19,6 +19,10 @@ public class AttackManager : MonoBehaviour
     private readonly Subject<Unit> onPickaxeAttackTiming = new();
     public IObservable<Unit> OnPickaxeAttackTiming => onPickaxeAttackTiming.AsObservable();
 
+    private SO_AttackUnitData attackUnitData => SOLoader.AttackUnitData;
+    [SerializeField] int[] debugAttackIndices = { 0, 1, 2, 3 };
+    readonly List<AttackPatternBase> spawnedPatterns = new();
+
 
     void Awake()
     {
@@ -42,6 +46,7 @@ public class AttackManager : MonoBehaviour
                 break;
 
             case GameStateType.InGame_End:
+                ClearAttackPatterns();
                 break;
         }
     }
@@ -79,6 +84,50 @@ public class AttackManager : MonoBehaviour
         };
         CursorUnitGenerate(cursorParam);
         cursorCont.Set_ActiveCursor(true);
+        RefreshAttackPatterns();
+    }
+
+    void RefreshAttackPatterns()
+    {
+        ClearAttackPatterns();
+        if (attackUnitData == null)
+        {
+            Debug.LogWarning("攻撃ユニットの SO が未設定です。");
+            return;
+        }
+        if (debugAttackIndices == null) return;
+
+        for (int i = 0; i < debugAttackIndices.Length; i++)
+        {
+            int index = debugAttackIndices[i];
+            var data = attackUnitData.Find(index);
+            if (data == null)
+            {
+                Debug.LogWarning($"攻撃ユニットがありません。 index: {index}");
+                continue;
+            }
+            if (data.pf == null)
+            {
+                Debug.LogWarning($"攻撃プレハブが未設定です。 index: {index}");
+                continue;
+            }
+
+            var instance = Instantiate(data.pf, transform);
+            spawnedPatterns.Add(instance);
+            instance.Begin(data);
+        }
+    }
+
+    void ClearAttackPatterns()
+    {
+        for (int i = spawnedPatterns.Count - 1; i >= 0; i--)
+        {
+            var pattern = spawnedPatterns[i];
+            if (pattern == null) continue;
+            pattern.End();
+            Destroy(pattern.gameObject);
+        }
+        spawnedPatterns.Clear();
     }
 
 
@@ -133,13 +182,10 @@ public class AttackManager : MonoBehaviour
         */
 
 
-        cursorCont.OnDestroy();
+        ClearAttackPatterns();
+        if (cursorCont != null)
+            cursorCont.OnDestroy();
     }
-
-
-
-
-
 
 
 }

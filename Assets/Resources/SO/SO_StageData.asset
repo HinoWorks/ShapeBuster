@@ -31,10 +31,10 @@ MonoBehaviour:
   stageLevelDatas:
   - stageIndex: 1
     startSecond: 0
-    endSecond: 60
+    endSecond: 30
     spawnCount_forSecond: 2
-    rate_enemy1: 50
-    rate_enemy2: 50
+    rate_enemy1: 100
+    rate_enemy2: 0
     rate_enemy3: 0
     rate_enemy4: 0
     rate_enemy5: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
     rate_enemy8: 0
     rate_enemy9: 0
   - stageIndex: 1
-    startSecond: 60
-    endSecond: 120
+    startSecond: 30
+    endSecond: 60
     spawnCount_forSecond: 3
     rate_enemy1: 100
     rate_enemy2: 0
@@ -56,9 +56,9 @@ MonoBehaviour:
     rate_enemy8: 0
     rate_enemy9: 0
   - stageIndex: 1
-    startSecond: 120
-    endSecond: 180
-    spawnCount_forSecond: 3
+    startSecond: 60
+    endSecond: 150
+    spawnCount_forSecond: 4
     rate_enemy1: 100
     rate_enemy2: 0
     rate_enemy3: 0
@@ -107,3 +107,28 @@ MonoBehaviour:
     rate_enemy7: 0
     rate_enemy8: 0
     rate_enemy9: 0
+  stageSpawnOrders:
+  - stageIndex: 0
+    spawnSecond: 20
+    enemyIndex: 1
+    count: 5
+    spawnBand: 0
+    shape: 1
+    size: 1
+    angle: 0
+  - stageIndex: 0
+    spawnSecond: 22
+    enemyIndex: 1
+    count: 5
+    spawnBand: 1
+    shape: 0
+    size: 1
+    angle: 0
+  - stageIndex: 0
+    spawnSecond: 24
+    enemyIndex: 1
+    count: 3
+    spawnBand: 0
+    shape: 2
+    size: 1
+    angle: 45

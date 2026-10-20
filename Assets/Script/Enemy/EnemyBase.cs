@@ -64,16 +64,24 @@ public class EnemyBase : MonoBehaviour, IDamagable
         defeatedListener = listener;
     }
 
-    public void Activate(Vector3 worldPosition, EnemyData enemyData)
+    public void Activate(Vector3 worldPosition, EnemyData enemyData, bool fallAsFormation = false)
     {
         inPool = false;
         defeatedListener = null;
         this.enemyData = enemyData;
-        moveSpeed = enemyData.speed * randomRate_speed;
         rotateSpeed = enemyData.rotateSpeed * randomRate_rotateSpeed;
         DamageAmount = enemyData.damage;
-        float angle = randomRate_goAngle;
-        moveDirection = Quaternion.Euler(0f, 0f, angle) * Vector3.down;
+        if (fallAsFormation)
+        {
+            moveSpeed = enemyData.speed;
+            moveDirection = Vector2.down;
+        }
+        else
+        {
+            moveSpeed = enemyData.speed * randomRate_speed;
+            float angle = randomRate_goAngle;
+            moveDirection = Quaternion.Euler(0f, 0f, angle) * Vector3.down;
+        }
         MaxHp = Mathf.Max(1, enemyData.maxHp);
         CurrentHp = MaxHp;
 

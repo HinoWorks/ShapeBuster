@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c1a52b634f8e023a7193b5c6ef0824, type: 3}
+  m_Name: SO_AttackUnitData
+  m_EditorClassIdentifier: Assembly-CSharp::SO_AttackUnitData
+  attackUnitDatas:
+  - index: 0
+    attackName: lightning
+    pf: {fileID: 420000001, guid: b35f81429460a5315372a4c0418f639b, type: 3}
+    attackRate: 1
+    generateRate: 0.5
+    generateCount: 1
+    size: 1
+    speed: 1
+    duration: 0.1
+  - index: 1
+    attackName: Pierce
+    pf: {fileID: 440000001, guid: d571a364b682c7537594c6e263a185bd, type: 3}
+    attackRate: 0.5
+    generateRate: 0.3
+    generateCount: 2
+    size: 1
+    speed: 14
+    duration: 0
+  - index: 2
+    attackName: AreaCircle
+    pf: {fileID: 460000001, guid: f793c586d8a4e9759716e80485c3a7df, type: 3}
+    attackRate: 0.3
+    generateRate: 0.3
+    generateCount: 1
+    size: 1.5
+    speed: 0
+    duration: 5
+  - index: 3
+    attackName: Laser
+    pf: {fileID: 480000001, guid: d7b0f40b523e7d912f6082a4b5de9713, type: 3}
+    attackRate: 0.5
+    generateRate: 0.2
+    generateCount: 1
+    size: 1.2
+    speed: 0
+    duration: 0

@@ -29,5 +29,19 @@ public class SO_EnemyData : ScriptableObject
         return enemyDatas[_enemyIndex];
     }
 
+    /// <summary>enemyIndex フィールドが一致するデータ。無ければ null。</summary>
+    public EnemyData FindEnemyData(int enemyIndex)
+    {
+        if (enemyDatas == null) return null;
+
+        for (int i = 0; i < enemyDatas.Length; i++)
+        {
+            var data = enemyDatas[i];
+            if (data != null && data.enemyIndex == enemyIndex)
+                return data;
+        }
+        return null;
+    }
+
 
 }

@@ -67,6 +67,7 @@ public class SO_StageData : ScriptableObject
 {
     public StageData[] stageDatas;
     public StageLevelData[] stageLevelDatas;
+    public StageSpawnOrder[] stageSpawnOrders;
 
 
 
@@ -93,5 +94,30 @@ public class SO_StageData : ScriptableObject
                 return level;
         }
         return null;
+    }
+
+    /// <summary>指定ステージの指定生成を、時刻順に dst へ集める。</summary>
+    public void CollectSpawnOrders(int stageIndex, List<StageSpawnOrder> dst)
+    {
+        dst.Clear();
+        if (stageSpawnOrders == null) return;
+
+        var orderIds = new List<int>();
+        for (int i = 0; i < stageSpawnOrders.Length; i++)
+        {
+            var order = stageSpawnOrders[i];
+            if (order == null || order.stageIndex != stageIndex || order.count <= 0) continue;
+            orderIds.Add(i);
+        }
+
+        orderIds.Sort((a, b) =>
+        {
+            int time = stageSpawnOrders[a].spawnSecond.CompareTo(stageSpawnOrders[b].spawnSecond);
+            if (time != 0) return time;
+            return a.CompareTo(b);
+        });
+
+        for (int i = 0; i < orderIds.Count; i++)
+            dst.Add(stageSpawnOrders[orderIds[i]]);
     }
 }

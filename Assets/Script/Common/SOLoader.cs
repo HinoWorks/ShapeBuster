@@ -54,7 +54,21 @@ public static class SOLoader
             {
                 so_resourceData = LoadSO<SO_ResourceData>(pathBase + nameof(SO_ResourceData));
             }
+
             return so_resourceData;
+        }
+    }
+
+    private static SO_AttackUnitData so_attackUnitData;
+    public static SO_AttackUnitData AttackUnitData
+    {
+        get
+        {
+            if (so_attackUnitData == null)
+            {
+                so_attackUnitData = LoadSO<SO_AttackUnitData>(pathBase + nameof(SO_AttackUnitData));
+            }
+            return so_attackUnitData;
         }
     }
 
