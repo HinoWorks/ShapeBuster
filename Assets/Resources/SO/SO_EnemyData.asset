@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_EnemyData
   enemyDatas:
   - enemyIndex: 0
-    enemyName: shape_1
+    enemyName: normal
     icon: {fileID: 0}
     pf: {fileID: 3803278028999049696, guid: 33c5213f69fa849c4b0ac69d8833ba1d, type: 3}
     maxHp: 3
@@ -25,7 +25,7 @@ MonoBehaviour:
     resourceType: 0
     resourceGenerateCount: 2
   - enemyIndex: 1
-    enemyName: shape_2
+    enemyName: liner
     icon: {fileID: 0}
     pf: {fileID: 3803278028999049696, guid: c88825e71d78d47cd81f0cb57cedeb12, type: 3}
     maxHp: 1
@@ -36,13 +36,46 @@ MonoBehaviour:
     resourceType: 1
     resourceGenerateCount: 1
   - enemyIndex: 2
-    enemyName: shape_3
+    enemyName: brake
     icon: {fileID: 0}
-    pf: {fileID: 0}
+    pf: {fileID: 881100000000000011, guid: c4e8a1b27d5f4c0e9a6b3d1f8e205171, type: 3}
     maxHp: 3
-    damage: 0
-    speed: 0
-    rotateSpeed: 0
+    damage: 2
+    speed: 5
+    rotateSpeed: 10
     criticalRate: 0
     resourceType: 0
-    resourceGenerateCount: 0
+    resourceGenerateCount: 1
+  - enemyIndex: 3
+    enemyName: ricochet
+    icon: {fileID: 0}
+    pf: {fileID: 883300000000000011, guid: c4e8a1b27d5f4c0e9a6b3d1f8e205173, type: 3}
+    maxHp: 3
+    damage: 2
+    speed: 3
+    rotateSpeed: 25
+    criticalRate: 0
+    resourceType: 0
+    resourceGenerateCount: 1
+  - enemyIndex: 4
+    enemyName: step
+    icon: {fileID: 0}
+    pf: {fileID: 884400000000000011, guid: c4e8a1b27d5f4c0e9a6b3d1f8e205174, type: 3}
+    maxHp: 3
+    damage: 2
+    speed: 3
+    rotateSpeed: 40
+    criticalRate: 0
+    resourceType: 0
+    resourceGenerateCount: 1
+  - enemyIndex: 5
+    enemyName: zigzag
+    icon: {fileID: 0}
+    pf: {fileID: 8050811578339109614, guid: c4e8a1b27d5f4c0e9a6b3d1f8e205172, type: 3}
+    maxHp: 3
+    damage: 2
+    speed: 3
+    rotateSpeed: 1040
+    criticalRate: 0
+    resourceType: 0
+    resourceGenerateCount: 1

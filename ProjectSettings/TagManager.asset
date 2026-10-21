@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - DeadLine
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -109,7 +109,7 @@ MonoBehaviour:
     rate_enemy9: 0
   stageSpawnOrders:
   - stageIndex: 0
-    spawnSecond: 20
+    spawnSecond: 15
     enemyIndex: 1
     count: 5
     spawnBand: 0
@@ -117,16 +117,40 @@ MonoBehaviour:
     size: 1
     angle: 0
   - stageIndex: 0
-    spawnSecond: 22
-    enemyIndex: 1
+    spawnSecond: 20
+    enemyIndex: 2
     count: 5
     spawnBand: 1
     shape: 0
     size: 1
     angle: 0
   - stageIndex: 0
-    spawnSecond: 24
-    enemyIndex: 1
+    spawnSecond: 25
+    enemyIndex: 3
+    count: 3
+    spawnBand: 0
+    shape: 2
+    size: 1
+    angle: 45
+  - stageIndex: 0
+    spawnSecond: 30
+    enemyIndex: 4
+    count: 3
+    spawnBand: 0
+    shape: 2
+    size: 1
+    angle: 45
+  - stageIndex: 0
+    spawnSecond: 35
+    enemyIndex: 5
+    count: 3
+    spawnBand: 0
+    shape: 2
+    size: 1
+    angle: 45
+  - stageIndex: 0
+    spawnSecond: 40
+    enemyIndex: 6
     count: 3
     spawnBand: 0
     shape: 2

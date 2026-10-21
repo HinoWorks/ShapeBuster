@@ -9,6 +9,10 @@ public class UIManager_Ingame : MonoBehaviour
     [SerializeField] UI_stageProgressCont stageProgressCont;
     [SerializeField] UI_ResourceCounter[] resourceCounters;
 
+    [Space(10)]
+    public UI_ResultManager ui_ResultManager;
+
+
 
     private void Awake()
     {

@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PierceBullet
   sprite: {fileID: 21300000, guid: c76f17048474e48fa89068058f744b50, type: 3}
-  color: {r: 1, g: 0.9, b: 0.35, a: 1}
+  color: {r: 0.64922446, g: 1, b: 0.34901965, a: 1}
   visualSize: {x: 1, y: 1}
   spinSpeed: 720

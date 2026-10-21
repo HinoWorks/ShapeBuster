@@ -16,6 +16,7 @@ public class GameRecordData
     public BigInteger total_treasureCount = 0;
     public BigInteger total_playerExp = 0;
     public BigInteger total_totalDamage = 0;
+    public BigInteger total_enemyDefeatCount = 0;
     public BigInteger total_skillTreeCount = 0;
     public BigInteger total_artifactCount = 0;
     public BigInteger total_pickaxeCount = 0;
@@ -24,6 +25,7 @@ public class GameRecordData
     public BigInteger oneGame_treasureCount = 0;
     public BigInteger oneGame_playerExp = 0;
     public BigInteger oneGame_totalDamage = 0;
+    public BigInteger oneGame_enemyDefeatCount = 0;
     public BigInteger oneGame_maxDepth = 0;
 }
 
@@ -39,6 +41,7 @@ public class GameRecordDataSave
     public string total_treasureCount;
     public string total_playerExp;
     public string total_totalDamage;
+    public string total_enemyDefeatCount;
     public string total_skillTreeCount;
     public string total_artifactCount;
     public string total_pickaxeCount;
@@ -47,6 +50,7 @@ public class GameRecordDataSave
     public string oneGame_treasureCount;
     public string oneGame_playerExp;
     public string oneGame_totalDamage;
+    public string oneGame_enemyDefeatCount;
     public string oneGame_maxDepth;
 }
 #endregion
@@ -521,6 +525,53 @@ public class SaveLoader : MonoBehaviour
         value = updated;
         GameEvent.UI.PublishResourceMod(_resourceType, value);
     }
+
+    /// <summary>
+    /// 1プレイ分の獲得リソースと記録を、所持数と累計へ足して保存する。
+    /// </summary>
+    public void Request_CommitIngameRecord(IngameRecordData record)
+    {
+        if (record == null) return;
+
+        var resources = new List<(ResourceType type, BigInteger amount)>();
+        foreach (var pair in record.resourceCounts)
+        {
+            if (pair.Value != 0)
+                resources.Add((pair.Key, pair.Value));
+        }
+
+        var damage = record.damageDealt;
+        var defeats = record.enemyDefeatCount;
+        EnqueueMethod(() => CommitIngameRecord(resources, damage, defeats));
+    }
+
+    /// <summary>
+    /// リソース差分と、与ダメージ・撃破数の累計を書く。記録が破損しているときは累計を上書きしない。
+    /// </summary>
+    private void CommitIngameRecord(List<(ResourceType type, BigInteger amount)> resources, BigInteger damage, BigInteger defeats)
+    {
+        for (int i = 0; i < resources.Count; i++)
+            SavePendingResource(resources[i].type, resources[i].amount);
+
+        var loaded = LoadCore<GameRecordDataSave>(KEY_GAME_RECORD_DATA);
+        GameRecordData data;
+        if (loaded.status == SaveLoadStatus.NotFound)
+        {
+            data = new GameRecordData();
+        }
+        else if (loaded.status != SaveLoadStatus.Success || !TryGameRecordDataFromSave(loaded.data, out data))
+        {
+            Debug.LogError("Skip game record commit because loaded data is corrupt.");
+            return;
+        }
+
+        data.total_ingameCount += 1;
+        data.total_totalDamage += damage;
+        data.oneGame_totalDamage = damage;
+        data.total_enemyDefeatCount += defeats;
+        data.oneGame_enemyDefeatCount = defeats;
+        SaveGameRecordData(data);
+    }
     /// <summary>
     /// リソース種別のセーブキーを返す。
     /// </summary>
@@ -946,6 +997,7 @@ public class SaveLoader : MonoBehaviour
             total_treasureCount = _gameRecordData.total_treasureCount.ToString(),
             total_playerExp = _gameRecordData.total_playerExp.ToString(),
             total_totalDamage = _gameRecordData.total_totalDamage.ToString(),
+            total_enemyDefeatCount = _gameRecordData.total_enemyDefeatCount.ToString(),
             total_skillTreeCount = _gameRecordData.total_skillTreeCount.ToString(),
             total_artifactCount = _gameRecordData.total_artifactCount.ToString(),
             total_pickaxeCount = _gameRecordData.total_pickaxeCount.ToString(),
@@ -954,6 +1006,7 @@ public class SaveLoader : MonoBehaviour
             oneGame_treasureCount = _gameRecordData.oneGame_treasureCount.ToString(),
             oneGame_playerExp = _gameRecordData.oneGame_playerExp.ToString(),
             oneGame_totalDamage = _gameRecordData.oneGame_totalDamage.ToString(),
+            oneGame_enemyDefeatCount = _gameRecordData.oneGame_enemyDefeatCount.ToString(),
             oneGame_maxDepth = _gameRecordData.oneGame_maxDepth.ToString(),
         };
         ES3.Save(KEY_GAME_RECORD_DATA, saveData);
@@ -983,6 +1036,7 @@ public class SaveLoader : MonoBehaviour
         if (!TryParseBigIntegerField(save.total_treasureCount, BigInteger.Zero, out var totalTreasureCount)) return false;
         if (!TryParseBigIntegerField(save.total_playerExp, BigInteger.Zero, out var totalPlayerExp)) return false;
         if (!TryParseBigIntegerField(save.total_totalDamage, BigInteger.Zero, out var totalTotalDamage)) return false;
+        if (!TryParseBigIntegerField(save.total_enemyDefeatCount, BigInteger.Zero, out var totalEnemyDefeatCount)) return false;
         if (!TryParseBigIntegerField(save.total_skillTreeCount, BigInteger.Zero, out var totalSkillTreeCount)) return false;
         if (!TryParseBigIntegerField(save.total_artifactCount, BigInteger.Zero, out var totalArtifactCount)) return false;
         if (!TryParseBigIntegerField(save.total_pickaxeCount, BigInteger.Zero, out var totalPickaxeCount)) return false;
@@ -990,6 +1044,7 @@ public class SaveLoader : MonoBehaviour
         if (!TryParseBigIntegerField(save.oneGame_treasureCount, BigInteger.Zero, out var oneGameTreasureCount)) return false;
         if (!TryParseBigIntegerField(save.oneGame_playerExp, BigInteger.Zero, out var oneGamePlayerExp)) return false;
         if (!TryParseBigIntegerField(save.oneGame_totalDamage, BigInteger.Zero, out var oneGameTotalDamage)) return false;
+        if (!TryParseBigIntegerField(save.oneGame_enemyDefeatCount, BigInteger.Zero, out var oneGameEnemyDefeatCount)) return false;
         if (!TryParseBigIntegerField(save.oneGame_maxDepth, BigInteger.Zero, out var oneGameMaxDepth)) return false;
 
         data = new GameRecordData
@@ -1000,6 +1055,7 @@ public class SaveLoader : MonoBehaviour
             total_treasureCount = totalTreasureCount,
             total_playerExp = totalPlayerExp,
             total_totalDamage = totalTotalDamage,
+            total_enemyDefeatCount = totalEnemyDefeatCount,
             total_skillTreeCount = totalSkillTreeCount,
             total_artifactCount = totalArtifactCount,
             total_pickaxeCount = totalPickaxeCount,
@@ -1007,6 +1063,7 @@ public class SaveLoader : MonoBehaviour
             oneGame_treasureCount = oneGameTreasureCount,
             oneGame_playerExp = oneGamePlayerExp,
             oneGame_totalDamage = oneGameTotalDamage,
+            oneGame_enemyDefeatCount = oneGameEnemyDefeatCount,
             oneGame_maxDepth = oneGameMaxDepth,
         };
         return true;

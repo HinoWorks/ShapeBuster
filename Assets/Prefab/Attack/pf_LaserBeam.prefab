@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserBeam
   sprite: {fileID: 0}
-  color: {r: 1, g: 0.32, b: 0.24, a: 0.92}
+  color: {r: 0.27221614, g: 0.23921567, b: 1, a: 0.92}
   length: 32
   minWidth: 0.05
   maxWidth: 1.15

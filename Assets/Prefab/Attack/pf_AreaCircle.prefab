@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802c5e1f613d720e204f719d1e5c3068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaCircle
-  sprite: {fileID: 21300000, guid: 1cad898deb67642408a14e740286232e, type: 3}
-  color: {r: 1, g: 0.42, b: 0.15, a: 0.42}
+  sprite: {fileID: 0}
+  color: {r: 0.1490196, g: 0.67745614, b: 1, a: 0.42}

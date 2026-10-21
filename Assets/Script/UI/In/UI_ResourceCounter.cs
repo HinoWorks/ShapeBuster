@@ -21,7 +21,7 @@ public class UI_ResourceCounter : MonoBehaviour
 
     public void AwakeCall_Ingame()
     {
-        GameEvent.UI.ResourceMod_Ingame.Subscribe(Set_ResourceMod).AddTo(this);
+        IngameRecordManager.ResourceMod_Ingame.Subscribe(Set_ResourceMod).AddTo(this);
         icon.sprite = SOLoader.ResourceData.GetResourceData(resourceType).icon;
         ResourceUnlockCheck();
     }
@@ -34,6 +34,24 @@ public class UI_ResourceCounter : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// リザルトなど、確定した所持数をそのまま出す。
+    /// </summary>
+    public void SetCount(BigInteger count)
+    {
+        var resourceData = SOLoader.ResourceData;
+        if (icon != null && resourceData != null && resourceData.resourceDatas != null)
+        {
+            var data = resourceData.GetResourceData(resourceType);
+            if (data != null && data.icon != null)
+                icon.sprite = data.icon;
+        }
+
+        if (tmp_resourceCount == null) return;
+        currentResourceFloat = 0f;
+        tmp_resourceCount.text = StaticManager.Get_BigintegerToString(count);
+    }
 
     /// <summary>
     /// 主にインゲームでのカウンター初期化用

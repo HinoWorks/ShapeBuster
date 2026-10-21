@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 一定時間その場に残り、間隔ごとに範囲内の敵へダメージを与える。
+/// 一定時間その場に残り、間隔ごとに菱形範囲内の敵へダメージを与える。
+/// 菱形は正方形を45°回転した形で、半径は中心から上下左右の頂点まで。
 /// </summary>
 public class AreaCircle : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class AreaCircle : MonoBehaviour
     {
         while (playing && nextTick < duration && elapsed >= nextTick)
         {
-            AttackHitQuery.Circle(transform.position, radius, overlap);
+            AttackHitQuery.Diamond(transform.position, radius, overlap);
             AttackHitQuery.DamageAll(overlap, damage);
             nextTick += damageInterval;
         }
@@ -92,7 +93,7 @@ public class AreaCircle : MonoBehaviour
             fill = GetComponent<SpriteRenderer>();
             if (fill == null)
                 fill = gameObject.AddComponent<SpriteRenderer>();
-            fill.sprite = AttackVisual.Resolve(sprite, true);
+            fill.sprite = sprite != null ? sprite : AttackVisual.Diamond;
             fill.sortingOrder = 12;
         }
         UpdateVisual();

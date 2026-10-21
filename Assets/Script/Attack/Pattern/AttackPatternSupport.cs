@@ -114,6 +114,15 @@ public static class AttackHitQuery
         Copy(count, results);
     }
 
+    /// <summary>
+    /// 45°回転した正方形。半径は中心から上下左右の頂点までの距離。
+    /// </summary>
+    public static void Diamond(Vector2 center, float radius, List<IDamagable> results)
+    {
+        float side = radius * Mathf.Sqrt(2f);
+        Box(center, new Vector2(side, side), 45f, results);
+    }
+
     public static void DamageAll(List<IDamagable> targets, int damage)
     {
         for (int i = 0; i < targets.Count; i++)
@@ -154,9 +163,11 @@ public static class AttackVisual
 {
     static Sprite white;
     static Sprite circle;
+    static Sprite diamond;
 
     public static Sprite White => white != null ? white : white = BuildWhite();
     public static Sprite Circle => circle != null ? circle : circle = BuildCircle(64);
+    public static Sprite Diamond => diamond != null ? diamond : diamond = BuildDiamond(64);
 
     public static Sprite Resolve(Sprite assigned, bool circle)
     {
@@ -201,6 +212,30 @@ public static class AttackVisual
             for (int x = 0; x < size; x++)
             {
                 float dist = Vector2.Distance(new Vector2(x, y), center) / radius;
+                float fill = dist <= 1f ? 0.45f : 0f;
+                float ring = Mathf.Clamp01(1f - Mathf.Abs(dist - 0.9f) / 0.08f);
+                texture.SetPixel(x, y, new Color(1f, 1f, 1f, Mathf.Max(fill, ring)));
+            }
+        }
+        texture.Apply();
+        return CreateSprite(texture, size);
+    }
+
+    static Sprite BuildDiamond(int size)
+    {
+        var texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        texture.hideFlags = HideFlags.HideAndDontSave;
+        texture.filterMode = FilterMode.Bilinear;
+        texture.wrapMode = TextureWrapMode.Clamp;
+
+        float radius = (size - 1) * 0.5f;
+        var center = new Vector2(radius, radius);
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                var delta = new Vector2(x, y) - center;
+                float dist = (Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) / radius;
                 float fill = dist <= 1f ? 0.45f : 0f;
                 float ring = Mathf.Clamp01(1f - Mathf.Abs(dist - 0.9f) / 0.08f);
                 texture.SetPixel(x, y, new Color(1f, 1f, 1f, Mathf.Max(fill, ring)));
