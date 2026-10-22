@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 using UniRx;
 
 public class UIManager_Ingame : MonoBehaviour
@@ -12,6 +12,9 @@ public class UIManager_Ingame : MonoBehaviour
     [Space(10)]
     public UI_ResultManager ui_ResultManager;
 
+    Canvas canvas;
+    GraphicRaycaster raycaster;
+
 
 
     private void Awake()
@@ -19,7 +22,10 @@ public class UIManager_Ingame : MonoBehaviour
         if (Inst == null) Inst = this;
         else Destroy(gameObject);
 
+        canvas = GetComponent<Canvas>();
+        raycaster = GetComponent<GraphicRaycaster>();
         GameEvent.GameState.SetGameState.Subscribe(OnGameStateChanged).AddTo(this);
+        Apply(GameStateType.Title);
     }
 
 
@@ -36,13 +42,44 @@ public class UIManager_Ingame : MonoBehaviour
 
     private void OnGameStateChanged(GameStateType state)
     {
+        Apply(state);
+    }
+
+    void Apply(GameStateType state)
+    {
+        bool show = GameWatcher.IsIngameScreen(state);
+        if (canvas != null) canvas.enabled = show;
+        if (raycaster != null) raycaster.enabled = show;
+
         if (state == GameStateType.InGame_Ready)
         {
-            // リソース初期化
             foreach (var resourceCounter in resourceCounters)
             {
                 resourceCounter.Set_Init();
             }
         }
+
+        if (ui_ResultManager == null) return;
+        if (state == GameStateType.Result)
+        {
+            var record = IngameRecordManager.Inst != null ? IngameRecordManager.Inst.Record : null;
+            ui_ResultManager.Show(record);
+        }
+        else
+        {
+            ui_ResultManager.Hide();
+        }
     }
+
+
+
+
+
+
+    #region -- OnClick --
+    public void OnClick_ForceEnd()
+    {
+        PlayerManager.Inst.PlayerHPCont.Set_ForceEnd();
+    }
+    #endregion
 }

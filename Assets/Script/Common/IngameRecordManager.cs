@@ -43,7 +43,7 @@ public class IngameRecordData
 
 /// <summary>
 /// インゲーム中の獲得リソース、敵撃破数、与ダメージをキャッシュする。
-/// 終了時に記録を止め、SaveLoader へ確定してリザルトを開く。
+/// 終了時に記録を止め、SaveLoader へ確定する。表示はリザルト側が行う。
 /// </summary>
 public class IngameRecordManager : MonoBehaviour
 {
@@ -85,7 +85,6 @@ public class IngameRecordManager : MonoBehaviour
             case GameStateType.InGame_Ready:
                 Record.Clear();
                 isRecording = true;
-                UIManager_Ingame.Inst.ui_ResultManager.gameObject.SetActive(false);
                 break;
             case GameStateType.InGame_End:
                 Save();
@@ -130,7 +129,5 @@ public class IngameRecordManager : MonoBehaviour
             SaveLoader.Inst.Request_CommitIngameRecord(Record);
         else
             Debug.LogWarning("SaveLoader がないため、インゲーム記録を保存できません。");
-
-        UIManager_Ingame.Inst.ui_ResultManager.Show(Record);
     }
 }

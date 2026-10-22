@@ -46,6 +46,9 @@ public class AttackManager : MonoBehaviour
                 break;
 
             case GameStateType.InGame_End:
+            case GameStateType.Title:
+            case GameStateType.OutGame:
+                Set_AttackState(false);
                 ClearAttackPatterns();
                 break;
         }
@@ -55,6 +58,7 @@ public class AttackManager : MonoBehaviour
     public async void Set_Ready()
     {
         isAttacking = false;
+        AttackUnitDelete();
 
         /*
                 var cursorUnitData = GameParamManager.Get_CursorParam(cursorSlotData.equipedCursorIndex);
@@ -165,9 +169,9 @@ public class AttackManager : MonoBehaviour
 
     public void Set_AttackState(bool isStart)
     {
-        // 攻撃開始
         isAttacking = isStart;
-        cursorCont.Set_AttackTrigger(isStart);
+        if (cursorCont != null)
+            cursorCont.Set_AttackTrigger(isStart);
     }
 
 
@@ -184,7 +188,10 @@ public class AttackManager : MonoBehaviour
 
         ClearAttackPatterns();
         if (cursorCont != null)
+        {
             cursorCont.OnDestroy();
+            cursorCont = null;
+        }
     }
 
 

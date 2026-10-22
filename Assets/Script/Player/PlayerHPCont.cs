@@ -47,7 +47,14 @@ public class PlayerHPCont : MonoBehaviour
 
         if (currentHp <= 0)
         {
-            GameEvent.GameState.PublishGameState(GameStateType.InGame_End);
+            GameWatcher.Inst.SetGameState(GameStateType.InGame_End);
         }
+    }
+
+
+
+    public void Set_ForceEnd()
+    {
+        OnHpBarDamaged(maxHp);
     }
 }

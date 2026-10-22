@@ -67,6 +67,12 @@ public class EnemyGenerateManager : MonoBehaviour
 
             case GameStateType.InGame_End:
                 Set_GenerateState(false);
+                Clear();
+                break;
+            case GameStateType.Title:
+            case GameStateType.OutGame:
+                Set_GenerateState(false);
+                Clear();
                 break;
         }
     }
@@ -105,7 +111,7 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         isGenerating = isStart;
         spawnStock = 0f;
-        if (!isStart) currentLevel = null;
+        currentLevel = null;
     }
 
     /// <summary>

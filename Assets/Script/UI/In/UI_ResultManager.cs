@@ -1,6 +1,5 @@
 using System.Numerics;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,22 +18,14 @@ public class UI_ResultManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_progress;
     [SerializeField] UI_ResourceCounter[] resourceCounters;
 
-    void Awake()
+    public void Hide()
     {
         gameObject.SetActive(false);
     }
 
-    void OnResultOpen(bool isOpen)
-    {
-        gameObject.SetActive(isOpen);
-        if (!isOpen) return;
-
-        var record = IngameRecordManager.Inst != null ? IngameRecordManager.Inst.Record : null;
-        Show(record);
-    }
-
     public void Show(IngameRecordData record)
     {
+        gameObject.SetActive(true);
         bool cleared = record != null && record.isCleared;
         float stageTime = record != null ? record.stageTime : 0f;
 
@@ -66,4 +57,17 @@ public class UI_ResultManager : MonoBehaviour
         if (stage == null || stage.stageMaxTime <= 0f) return 0f;
         return Mathf.Clamp01(stageTime / stage.stageMaxTime);
     }
+
+
+
+    #region -- OnClick --
+    public void OnClick_ToOutGame()
+    {
+        GameWatcher.Inst.SetGameState(GameStateType.ResultEnd_ToOutGame);
+    }
+    public void OnClick_ToRetry()
+    {
+        GameWatcher.Inst.SetGameState(GameStateType.ResultEnd_ToIngameReady);
+    }
+    #endregion
 }

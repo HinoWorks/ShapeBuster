@@ -44,7 +44,12 @@ public class StageTimeManager : MonoBehaviour
                 StartStage();
                 break;
             case GameStateType.InGame_End:
-                isFailed = true;
+                isTimeRunning = false;
+                if (!isStageCleared)
+                    isFailed = true;
+                break;
+            case GameStateType.Title:
+            case GameStateType.OutGame:
                 isTimeRunning = false;
                 break;
         }
@@ -124,6 +129,7 @@ public class StageTimeManager : MonoBehaviour
         isTimeRunning = false;
         AttackManager.Inst?.Set_AttackState(false);
         GameEvent.Stage.PublishCleared();
+        GameWatcher.Inst.SetGameState(GameStateType.InGame_End);
         Debug.Log("<color=yellow> ========= Stage Clear ========= </color>");
     }
 
@@ -134,4 +140,15 @@ public class StageTimeManager : MonoBehaviour
         if (index < 0 || index >= stageData.stageDatas.Length) return null;
         return stageData.GetStageData(index);
     }
+
+
+
+
+
+    #region -- DEBUG --
+    public void Set_ForceBossPhase()
+    {
+        stageTime += stageMaxTime;
+    }
+    #endregion
 }

@@ -2001,13 +2001,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1703886971236208500}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick_ToRetry
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI_ResultManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6891467813891923760, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
       propertyPath: m_text
-      value: Start Session
+      value: Retry
       objectReference: {fileID: 0}
     - target: {fileID: 6891467813891923760, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
       propertyPath: m_fontSize
-      value: 33.2
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2474,13 +2502,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1703886971236208500}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick_ToOutGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI_ResultManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147442088252624040, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6891467813891923760, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
       propertyPath: m_text
-      value: Skill Tree
+      value: UpGrade
       objectReference: {fileID: 0}
     - target: {fileID: 6891467813891923760, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
       propertyPath: m_fontSize
-      value: 34
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
