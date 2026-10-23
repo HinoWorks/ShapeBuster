@@ -19,6 +19,8 @@ public class UI_OutGameManager : MonoBehaviour
     private OutGame_MenuType currentState = OutGame_MenuType.Loading;
 
     [SerializeField] UI_OutGameTabBase[] ui_outGameTabs;
+    [SerializeField] UI_ResourceCounter[] ui_resourceCounters;
+
 
     [Space(10)]
     [SerializeField] UI_SkillTreeManager ui_skillTreeManager;
@@ -36,6 +38,10 @@ public class UI_OutGameManager : MonoBehaviour
         foreach (var ui_outGameTab in ui_outGameTabs)
         {
             ui_outGameTab.Start_OnceInit();
+        }
+        foreach (var ui_resourceCounter in ui_resourceCounters)
+        {
+            ui_resourceCounter.AwakeCall_OutGame();
         }
 
         ui_skillTreeManager.Init_Once();
