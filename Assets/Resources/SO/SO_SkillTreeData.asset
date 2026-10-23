@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c4e1a9b2d8f4e6a9c0b1d2e3f4a5b6c, type: 3}
+  m_Name: SO_SkillTreeData
+  m_EditorClassIdentifier: Assembly-CSharp::SO_SkillTreeData
+  skillTreeBases:
+  - baseSkillIndex: 0
+    skillName: skillName_0
+    description: aaaaa
+    icon: {fileID: 0}
+    maxLevel: 3
+    unit: '%'
+    unit2: NA
+    paramTarget: 1
+    targetIndex: 1
+    paramStat: 1
+    deltaValue: 0.25
+    paramStat2: 0
+    deltaValue2: 0
+  - baseSkillIndex: 1
+    skillName: skillName_1
+    description: bbbbb
+    icon: {fileID: 0}
+    maxLevel: 3
+    unit: '%'
+    unit2: NA
+    paramTarget: 1
+    targetIndex: 1
+    paramStat: 2
+    deltaValue: 0.15
+    paramStat2: 0
+    deltaValue2: 0
+  - baseSkillIndex: 2
+    skillName: skillName_2
+    description: ccc
+    icon: {fileID: 0}
+    maxLevel: 3
+    unit: '%'
+    unit2: NA
+    paramTarget: 1
+    targetIndex: 1
+    paramStat: 2
+    deltaValue: 0.15
+    paramStat2: 0
+    deltaValue2: 0
+  - baseSkillIndex: 3
+    skillName: skillName_3
+    description: ddd
+    icon: {fileID: 0}
+    maxLevel: 3
+    unit: '%'
+    unit2: NA
+    paramTarget: 1
+    targetIndex: 1
+    paramStat: 2
+    deltaValue: 0.15
+    paramStat2: 0
+    deltaValue2: 0
+  skillTreeUnits:
+  - skillTreeIndex: 0
+    baseSkillIndex: 0
+    cost_AA: 10
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 1
+    baseSkillIndex: 1
+    cost_AA: 15
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 2
+    baseSkillIndex: 2
+    cost_AA: 20
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3
+    baseSkillIndex: 0
+    cost_AA: 25
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 4
+    baseSkillIndex: 1
+    cost_AA: 30
+    cost_BB: 10
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 5
+    baseSkillIndex: 2
+    cost_AA: 50
+    cost_BB: 10
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0

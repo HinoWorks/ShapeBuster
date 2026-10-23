@@ -10,6 +10,7 @@ public enum ResourceType
     AA, BB, CC, DD, EE, FF, GG
 }
 
+[Serializable]
 public class ResourceCount
 {
     public ResourceType resourceType;
@@ -227,27 +228,25 @@ public class StaticManager : MonoBehaviour
 
 
     #region --- resource check ---
-    public static bool IsResourceEnough(ResourceCount[] _requredResources)
+    public static bool IsResourceEnough(ResourceCount[] requiredResources)
     {
-        /*
-        var isEnough = true;
-        foreach (var resource in _requredResources)
+        if (requiredResources == null) return true;
+
+        for (int i = 0; i < requiredResources.Length; i++)
         {
-            if (resource.requiredCount <= 0) continue;
-            if (resource.requiredCount > SaveLoader.Inst.Get_ResourceCount(resource.resourceType))
-            {
-                isEnough = false;
-                break;
-            }
+            var resource = requiredResources[i];
+            if (resource == null || resource.requiredCount <= 0) continue;
+            if (!IsResourceEnough(resource.resourceType, resource.requiredCount))
+                return false;
         }
-        return isEnough;
-        */
         return true;
     }
-    public static bool IsResourceEnough(ResourceType _resourceType, int _requiredCount)
+
+    public static bool IsResourceEnough(ResourceType resourceType, int requiredCount)
     {
-        //return SaveLoader.Inst.Get_ResourceCount(_resourceType) >= _requiredCount;
-        return true;
+        if (requiredCount <= 0) return true;
+        if (SaveLoader.Inst == null) return false;
+        return SaveLoader.Inst.Get_ResourceCount(resourceType) >= requiredCount;
     }
     #endregion
 }

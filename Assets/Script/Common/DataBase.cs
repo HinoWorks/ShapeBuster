@@ -35,13 +35,14 @@ public class DataBase : MonoBehaviour
     [SerializeField] SO_CursorUnitData mSO_CursorUnitData;
     [SerializeField] SO_SoundData mSO_SoundData;
     [SerializeField] SO_AttackUnitData mSO_AttackUnitData;
+    [SerializeField] SO_SkillTreeData mSO_SkillTreeData;
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
         await DataLoad_StageData();
         await DataLoad_EnemyData();
         await DataLoad_AttackUnitData();
-
+        await DataLoad_SkillTreeData();
 
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
@@ -50,6 +51,8 @@ public class DataBase : MonoBehaviour
         //EditorUtility.SetDirty(mSO_CursorUnitData);
         EditorUtility.SetDirty(mSO_StageData);
         EditorUtility.SetDirty(mSO_EnemyData);
+        EditorUtility.SetDirty(mSO_SkillTreeData);
+
         if (mSO_AttackUnitData != null)
             EditorUtility.SetDirty(mSO_AttackUnitData);
 
@@ -109,6 +112,17 @@ public class DataBase : MonoBehaviour
         {
             Debug.LogWarning($"AttackUnitData の読み込みをスキップしました。{e.Message}");
         }
+    }
+
+    private async UniTask DataLoad_SkillTreeData()
+    {
+        var loadData = await DataLoad("SkillBase");
+        var convData = CSVSerializer.Deserialize<SkillTreeBase>(loadData);
+        mSO_SkillTreeData.skillTreeBases = convData;
+
+        loadData = await DataLoad("SkillTreeUnit");
+        var convData2 = CSVSerializer.Deserialize<SkillTreeUnit>(loadData);
+        mSO_SkillTreeData.skillTreeUnits = convData2;
     }
 
 

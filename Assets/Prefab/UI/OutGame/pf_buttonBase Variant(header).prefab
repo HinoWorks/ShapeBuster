@@ -88,9 +88,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3048595352533869009}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick_TabChange
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI_OutGameTabBase, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534597428667814155, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2954411003484393665, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
       propertyPath: m_Name
-      value: pf_buttonBase Variant(claim)
+      value: pf_buttonBase Variant(header)
       objectReference: {fileID: 0}
     - target: {fileID: 8315397358240432787, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
       propertyPath: m_fontSize
@@ -115,5 +143,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2954411003484393665, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3048595352533869009}
   m_SourcePrefab: {fileID: 100100000, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+--- !u!1 &415876557010439522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2954411003484393665, guid: 0943b5e89699741f58d6802c1f5e9e9b, type: 3}
+  m_PrefabInstance: {fileID: 3226073364732075427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3048595352533869009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415876557010439522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da9b03d915be42baaf2ee9f3c607eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_OutGameTabBase

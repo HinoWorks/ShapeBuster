@@ -518,20 +518,22 @@ public static class GameParamManager
 
     private static async UniTask Init_SkillTreeParam()
     {
-        /*
-        foreach (var skillData in SOLoader.SkillTreeData.skillTreeUnits)
-        {
-            var saveData = await SaveLoader.Inst.Get_SkillTreeData(skillData.skillTreeIndex);
-            if (saveData == null) continue;
+        SkillTreeBonus.Clear();
+        if (SaveLoader.Inst == null) return;
 
-            var baseSkillData = SOLoader.SkillTreeData.GetSkillTreeBaseData(skillData.refIndex);
+        var table = SOLoader.SkillTreeData;
+        if (table == null || table.skillTreeUnits == null) return;
+
+        foreach (var skillData in table.skillTreeUnits)
+        {
+            if (skillData == null) continue;
+            var saveData = await SaveLoader.Inst.Get_SkillTreeData(skillData.skillTreeIndex);
+            if (saveData == null || saveData.level <= 0) continue;
+
+            var baseSkillData = table.GetSkillTreeBaseData(skillData.baseSkillIndex);
             if (baseSkillData == null) continue;
-            var setParam = baseSkillData.deltaValue * saveData.level;
-            var setParam2 = baseSkillData.deltaValue2 * saveData.level;
-            Set_DeltaParam(baseSkillData.paramCategory, baseSkillData.targetIndex, baseSkillData.paramType, setParam, setParam2);
+            SkillTreeBonus.SetLevel(skillData.skillTreeIndex, baseSkillData, saveData.level);
         }
-        Debug.Log("========== Init_SkillTreeParam End ==========");
-        */
     }
 
     /*

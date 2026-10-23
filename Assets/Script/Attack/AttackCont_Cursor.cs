@@ -14,7 +14,7 @@ public class AttackCont_Cursor : MonoBehaviour
     protected bool isActive = false;//　Init後、攻撃開始タイミング同期用。trueになったら攻撃開始
 
     public int Damage => damage;
-    protected int damage => 1;//(int)(cursorParam.damage * (1f + GameParamManager.gameBaseParam.pickaxeBase_AttackDamage));
+    protected int damage => Mathf.Max(1, 1 + SkillTreeBonus.CursorDamage);
     protected float attackInterval => cursorParam.attackInterval;
     protected float criticalRate => cursorParam.criticalRate + 0f;
     protected float resourceUpRate_pickaxe => cursorParam.resourceUpRate + 0f;

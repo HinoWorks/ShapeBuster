@@ -72,6 +72,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_SkillTreeData so_skillTreeData;
+    public static SO_SkillTreeData SkillTreeData
+    {
+        get
+        {
+            if (so_skillTreeData == null)
+            {
+                so_skillTreeData = LoadSO<SO_SkillTreeData>(pathBase + nameof(SO_SkillTreeData));
+            }
+            return so_skillTreeData;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

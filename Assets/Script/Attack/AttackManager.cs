@@ -80,11 +80,11 @@ public class AttackManager : MonoBehaviour
         var cursorParam = new CursorParam()
         {
             so = cursorData,
-            damage = cursorData.damage,
-            attackInterval = cursorData.attackInterval,
-            criticalRate = cursorData.criticalRate,
-            resourceUpRate = cursorData.resourceUpRate,
-            size = cursorData.size
+            damage = cursorData.damage + SkillTreeBonus.CursorDamage,
+            attackInterval = Mathf.Max(0.05f, cursorData.attackInterval + SkillTreeBonus.CursorAttackInterval),
+            criticalRate = cursorData.criticalRate + SkillTreeBonus.CursorCriticalRate,
+            resourceUpRate = cursorData.resourceUpRate + SkillTreeBonus.CursorResourceUpRate,
+            size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize)
         };
         CursorUnitGenerate(cursorParam);
         cursorCont.Set_ActiveCursor(true);
@@ -118,7 +118,7 @@ public class AttackManager : MonoBehaviour
 
             var instance = Instantiate(data.pf, transform);
             spawnedPatterns.Add(instance);
-            instance.Begin(data);
+            instance.Begin(SkillTreeBonus.WithAttackBonus(data));
         }
     }
 
