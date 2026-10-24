@@ -8,6 +8,8 @@ public class UIManager_Ingame : MonoBehaviour
     [SerializeField] UI_PlayerHpCont playerHpCont;
     [SerializeField] UI_stageProgressCont stageProgressCont;
     [SerializeField] UI_ResourceCounter[] resourceCounters;
+    [SerializeField] UI_HUD_MagazineInfo bulletInfo;
+    public UI_HUD_MagazineInfo BulletInfo => bulletInfo;
 
     [Space(10)]
     public UI_ResultManager ui_ResultManager;
@@ -24,6 +26,7 @@ public class UIManager_Ingame : MonoBehaviour
 
         canvas = GetComponent<Canvas>();
         raycaster = GetComponent<GraphicRaycaster>();
+
         GameEvent.GameState.SetGameState.Subscribe(OnGameStateChanged).AddTo(this);
         Apply(GameStateType.Title);
     }

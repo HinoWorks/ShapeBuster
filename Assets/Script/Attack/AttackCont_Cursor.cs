@@ -1,11 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UniRx;
 using System.Collections.Generic;
-using System;
 using DG.Tweening;
-using Unity.VisualScripting;
-using Cysharp.Threading.Tasks;
-using System.Threading;
+using TMPro;
 
 public class AttackCont_Cursor : MonoBehaviour
 {
@@ -19,11 +18,24 @@ public class AttackCont_Cursor : MonoBehaviour
     protected float criticalRate => cursorParam.criticalRate + 0f;
     protected float resourceUpRate_pickaxe => cursorParam.resourceUpRate + 0f;
     protected float size => cursorParam.size;
+    int magazineCapacity;
+    float reloadDuration;
 
 
     [SerializeField] GameObject obj_pointerArea;
     [SerializeField] TriggerSender[] triggerSender;
     [SerializeField] ParticleSystem eff_critical;
+    [SerializeField] TMP_Text bulletCount;
+    [SerializeField] TMP_Text tmp_onOff;
+    [SerializeField] SpriteRenderer timeBar;
+    [SerializeField] GameObject tmp_reload;
+    [SerializeField] Color reloadBarColor = Color.red;
+
+    Vector3 timeBarBaseScale;
+    float timeBarBaseX;
+    float timeBarPivotX = 0.5f;
+    Color timeBarBaseColor = Color.white;
+    bool timeBarCached;
 
     const int OverlapBufferSize = 64;
     readonly Collider2D[] overlapBuffer = new Collider2D[OverlapBufferSize];
@@ -39,8 +51,19 @@ public class AttackCont_Cursor : MonoBehaviour
 
     private readonly SerialDisposable attackLoopDisposable = new SerialDisposable();
 
-    private float timer = 0;
-    private CancellationTokenSource CTS;
+    int ammoInMag;
+    int spareMagazines;
+    bool isStopped;
+    bool isReloading;
+    bool isDisposed;
+    float fireTimer;
+    float reloadTimer;
+
+    public int AmmoInMagazine => ammoInMag;
+    public int MagazineCapacity => magazineCapacity;
+    public int TotalBullets => spareMagazines * magazineCapacity + (isReloading ? magazineCapacity : ammoInMag);
+    public bool IsFireStopped => isStopped;
+    public bool IsReloading => isReloading;
 
 
 
@@ -55,10 +78,19 @@ public class AttackCont_Cursor : MonoBehaviour
     {
         cursorParam = _cursorParam;
         obj_pointerArea.transform.localScale = size * Vector3.one;
+        magazineCapacity = Mathf.Max(1, cursorParam.magazineAmmo);
+        spareMagazines = Mathf.Max(0, Mathf.Max(1, cursorParam.magazineCount) - 1);
+        reloadDuration = cursorParam.reloadTime > 0f ? cursorParam.reloadTime : 1.2f;
+        ammoInMag = magazineCapacity;
+        isStopped = false;
+        isReloading = false;
+        fireTimer = attackInterval;
+        reloadTimer = 0f;
+        CacheTimeBar();
         //CreateAttackRoop();
         this.gameObject.SetActive(false);
-        timer = 0;
-        CTS = new CancellationTokenSource();
+        RefreshBulletHud();
+        RefreshCursorVisual();
 
 #if UNITY_EDITOR
         DebugLog();
@@ -77,20 +109,154 @@ public class AttackCont_Cursor : MonoBehaviour
 
     public void OnDestroy()
     {
-        CTS.Cancel();
+        if (isDisposed) return;
+        isDisposed = true;
+
         Destroy(this.gameObject);
     }
 
     void Update()
     {
-        if (!isActive) return;
-        timer += Time.deltaTime;
-        if (timer >= attackInterval)
+        if (cursorParam == null) return;
+        RefreshBulletHud();
+        if (isActive)
         {
-            timer = 0;
-            Attack();
+            ReadGunInput();
+            TickGun();
+        }
+        RefreshCursorVisual();
+    }
+
+    void CacheTimeBar()
+    {
+        if (timeBar == null || timeBarCached) return;
+
+        timeBarBaseScale = timeBar.transform.localScale;
+        timeBarBaseX = timeBar.transform.localPosition.x;
+        timeBarBaseColor = timeBar.color;
+        if (timeBar.sprite != null && timeBar.sprite.rect.width > 0f)
+            timeBarPivotX = timeBar.sprite.pivot.x / timeBar.sprite.rect.width;
+        timeBarCached = true;
+    }
+
+    void RefreshCursorVisual()
+    {
+        if (bulletCount != null)
+        {
+            string ammoText = ammoInMag.ToString();
+            if (bulletCount.text != ammoText)
+                bulletCount.text = ammoText;
+        }
+
+        if (tmp_onOff != null)
+        {
+            string stateText = isStopped ? "OFF" : "ON";
+            if (tmp_onOff.text != stateText)
+                tmp_onOff.text = stateText;
+        }
+
+        if (tmp_reload != null && tmp_reload.activeSelf != isReloading)
+            tmp_reload.SetActive(isReloading);
+
+        if (timeBar == null) return;
+        CacheTimeBar();
+
+        float fill = 0f;
+        Color color = timeBarBaseColor;
+        if (isReloading)
+        {
+            color = reloadBarColor;
+            fill = reloadDuration <= 0f ? 0f : 1f - Mathf.Clamp01(reloadTimer / reloadDuration);
+        }
+        else if (ammoInMag > 0)
+        {
+            fill = attackInterval <= 0f ? 1f : Mathf.Clamp01(fireTimer / attackInterval);
+        }
+
+        float width = timeBarBaseScale.x * fill;
+        var scale = timeBarBaseScale;
+        scale.x = width;
+        timeBar.transform.localScale = scale;
+
+        var position = timeBar.transform.localPosition;
+        float left = timeBarBaseX - timeBarBaseScale.x * timeBarPivotX;
+        position.x = left + width * timeBarPivotX;
+        timeBar.transform.localPosition = position;
+        timeBar.color = color;
+    }
+
+    void ReadGunInput()
+    {
+        var mouse = Mouse.current;
+        if (mouse == null || IsOverBlockingUI()) return;
+
+        if (mouse.leftButton.wasPressedThisFrame)
+            isStopped = !isStopped;
+
+        if (mouse.rightButton.wasPressedThisFrame)
+            TryStartReload();
+    }
+
+    void TickGun()
+    {
+        if (isReloading)
+        {
+            reloadTimer += Time.deltaTime;
+            if (reloadTimer >= reloadDuration)
+                FinishReload();
+        }
+
+        if (isReloading || isStopped || ammoInMag <= 0 || !PointerWorld.IsInsidePlayfield) return;
+
+        fireTimer += Time.deltaTime;
+        while (fireTimer >= attackInterval && ammoInMag > 0 && !isReloading)
+        {
+            fireTimer -= attackInterval;
+            Fire();
         }
     }
+
+    void Fire()
+    {
+        if (ammoInMag <= 0) return;
+        ammoInMag--;
+        Attack();
+        if (ammoInMag <= 0)
+            TryStartReload();
+    }
+
+    void TryStartReload()
+    {
+        if (isReloading || spareMagazines <= 0 || ammoInMag >= magazineCapacity) return;
+
+        spareMagazines--;
+        ammoInMag = 0;
+        isReloading = true;
+        reloadTimer = 0f;
+    }
+
+    void FinishReload()
+    {
+        isReloading = false;
+        ammoInMag = magazineCapacity;
+        reloadTimer = 0f;
+        fireTimer = attackInterval;
+    }
+
+    static bool IsOverBlockingUI()
+    {
+        if (EventSystem.current == null) return false;
+        var pointer = Pointer.current;
+        if (pointer == null) return false;
+        return EventSystem.current.IsPointerOverGameObject(pointer.device.deviceId);
+    }
+
+    void RefreshBulletHud()
+    {
+        if (UIManager_Ingame.Inst.BulletInfo == null) return;
+        UIManager_Ingame.Inst.BulletInfo.SetBullet(ammoInMag, magazineCapacity, TotalBullets);
+    }
+
     void LateUpdate()
     {
         if (obj_pointerArea == null) return;
@@ -103,30 +269,26 @@ public class AttackCont_Cursor : MonoBehaviour
         CollectResources();
     }
 
-    private async void Attack()
+    private void Attack()
     {
         AttackManager.Inst.NotifyPickaxeAttackTiming();
 
-        // critical check
         var isCritical = UnityEngine.Random.Range(0f, 1f) < criticalRate;
-        //isCritical = UnityEngine.Random.Range(0f, 1f) < 0.35f; // for DEBUG
         calc_criticalDamageRate = isCritical ? criticalDamageRate : 1f;
 
-        if (isCritical)
-        {
+        if (isCritical && eff_critical != null)
             eff_critical.Play();
+
+        if (obj_pointerArea != null)
+        {
+            obj_pointerArea.transform.DOKill();
+            obj_pointerArea.transform.localScale = size * Vector3.one;
+            obj_pointerArea.transform.DOScale(1.1f * size * Vector3.one, 0.075f).SetEase(Ease.OutBack);
+            obj_pointerArea.transform.DOScale(size * Vector3.one, 0.075f).SetEase(Ease.OutBack).SetDelay(0.075f);
         }
-
-        await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: CTS.Token);
-
-        obj_pointerArea.transform.DOScale(1.1f * size * Vector3.one, 0.075f).SetEase(Ease.OutBack);
-        obj_pointerArea.transform.DOScale(size * Vector3.one, 0.075f).SetEase(Ease.OutBack).SetDelay(0.075f);
 
         if (ApplyHits() > 0)
-        {
             Check_AttackAddTime();
-        }
-
     }
 
     private void Check_AttackAddTime()
@@ -230,7 +392,7 @@ public class AttackCont_Cursor : MonoBehaviour
 
     private void DebugLog()
     {
-        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size}");
+        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size} / ammo: {magazineCapacity} / total: {TotalBullets} / reload: {reloadDuration}");
         //Debug.Log($"gameBaseParam: {GameParamManager.gameBaseParam.pickaxeBase_AttackDamage} / {GameParamManager.gameBaseParam.pickaxeBase_AttackInterval} / {GameParamManager.gameBaseParam.pickaxeBase_CriticalRate} / {GameParamManager.gameBaseParam.pickaxeBase_ResourceUpRate} / {GameParamManager.gameBaseParam.pickaxeBase_Size}");
         //Debug.Log($"RESULT == > damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size}");
     }

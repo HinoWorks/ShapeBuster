@@ -275,6 +275,9 @@ public class CursorParam
     public float criticalRate;
     public float resourceUpRate;
     public float size;
+    public int magazineAmmo;
+    public int magazineCount;
+    public float reloadTime;
 
     public void Init(CursorUnitData _cursorUnitData)
     {
@@ -284,6 +287,9 @@ public class CursorParam
         criticalRate = _cursorUnitData.criticalRate;
         resourceUpRate = _cursorUnitData.resourceUpRate;
         size = _cursorUnitData.size;
+        magazineAmmo = _cursorUnitData.magazineAmmo;
+        magazineCount = _cursorUnitData.magazineCount;
+        reloadTime = _cursorUnitData.reloadTime;
     }
 }
 

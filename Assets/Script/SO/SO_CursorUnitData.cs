@@ -19,6 +19,11 @@ public class CursorUnitData
     public float criticalRate;
     public float resourceUpRate;
     public float size;
+
+    [Header("銃")]
+    public int magazineAmmo = 10;
+    public int magazineCount = 3;
+    public float reloadTime = 1.2f;
 }
 
 

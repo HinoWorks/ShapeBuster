@@ -22,3 +22,6 @@ MonoBehaviour:
     criticalRate: 0
     resourceUpRate: 0
     size: 1
+    magazineAmmo: 5
+    magazineCount: 3
+    reloadTime: 3

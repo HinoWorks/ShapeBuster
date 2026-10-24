@@ -84,7 +84,10 @@ public class AttackManager : MonoBehaviour
             attackInterval = Mathf.Max(0.05f, cursorData.attackInterval + SkillTreeBonus.CursorAttackInterval),
             criticalRate = cursorData.criticalRate + SkillTreeBonus.CursorCriticalRate,
             resourceUpRate = cursorData.resourceUpRate + SkillTreeBonus.CursorResourceUpRate,
-            size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize)
+            size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize),
+            magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo),
+            magazineCount = Mathf.Max(1, cursorData.magazineCount),
+            reloadTime = cursorData.reloadTime > 0f ? cursorData.reloadTime : 1.2f
         };
         CursorUnitGenerate(cursorParam);
         cursorCont.Set_ActiveCursor(true);
