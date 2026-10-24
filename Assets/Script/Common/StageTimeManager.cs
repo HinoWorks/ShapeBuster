@@ -10,6 +10,7 @@ public class StageTimeManager : MonoBehaviour
 
     [SerializeField] int stageIndex;
 
+    public int StageIndex => stageIndex;
     public float stageTime { get; private set; }
     public float stageMaxTime { get; private set; }
     public int activeStageIndex { get; private set; }
@@ -128,17 +129,22 @@ public class StageTimeManager : MonoBehaviour
         isStageCleared = true;
         isTimeRunning = false;
         AttackManager.Inst?.Set_AttackState(false);
+        SaveLoader.Inst?.Request_SaveClearedStage(activeStageIndex);
         GameEvent.Stage.PublishCleared();
         GameWatcher.Inst.SetGameState(GameStateType.InGame_End);
         Debug.Log("<color=yellow> ========= Stage Clear ========= </color>");
     }
 
+    public void SetStageIndex(int index)
+    {
+        stageIndex = index;
+    }
+
     static StageData FindStageData(int index)
     {
         var stageData = SOLoader.StageData;
-        if (stageData == null || stageData.stageDatas == null) return null;
-        if (index < 0 || index >= stageData.stageDatas.Length) return null;
-        return stageData.GetStageData(index);
+        if (stageData == null) return null;
+        return stageData.FindStage(index);
     }
 
 

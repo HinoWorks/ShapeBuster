@@ -208,8 +208,9 @@ public class UI_SkillTreeDetail : MonoBehaviour
             var cont = FindResourceCounter(resource.resourceType);
             if (cont == null) continue;
 
+            var IsResourceEnough = StaticManager.IsResourceEnough(resource.resourceType, resource.requiredCount);
             cont.gameObject.SetActive(true);
-            cont.SetCount(resource.requiredCount);
+            cont.SetCount(resource.requiredCount, IsResourceEnough);
         }
     }
 

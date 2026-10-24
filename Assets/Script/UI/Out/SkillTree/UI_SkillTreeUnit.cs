@@ -26,7 +26,7 @@ public class UI_SkillTreeUnit : MonoBehaviour
     [Header("Connect")]
     [SerializeField] Image image_icon;
     [SerializeField] GameObject obj_lock;
-    [SerializeField] GameObject obj_enhanceReady;
+    // [SerializeField] GameObject obj_enhanceReady;
     [SerializeField] GameObject obj_complete;
     [SerializeField] GameObject obj_upgradeable;
     [SerializeField] ParticleSystem eff_enhance;
@@ -202,8 +202,7 @@ public class UI_SkillTreeUnit : MonoBehaviour
             image_icon.enabled = visible;
         if (obj_lock != null)
             obj_lock.SetActive(unlockState == SkillTreeUnlockState.Locked);
-        if (obj_enhanceReady != null)
-            obj_enhanceReady.SetActive(unlockState == SkillTreeUnlockState.EnhanceReady);
+        //if (obj_enhanceReady != null) obj_enhanceReady.SetActive(unlockState == SkillTreeUnlockState.EnhanceReady);
         if (obj_complete != null)
             obj_complete.SetActive(unlockState == SkillTreeUnlockState.EnhanceComplete);
 
@@ -227,14 +226,12 @@ public class UI_SkillTreeUnit : MonoBehaviour
         if (unlockState != SkillTreeUnlockState.EnhanceReady || skillTreeUnit == null || manager == null)
         {
             isEnhanceReady = false;
-            if (obj_upgradeable != null && obj_upgradeable != obj_enhanceReady)
-                obj_upgradeable.SetActive(false);
+            if (obj_upgradeable != null) obj_upgradeable.SetActive(false);
             return false;
         }
 
         isEnhanceReady = manager.IsResourceEnough(skillTreeUnit);
-        if (obj_upgradeable != null && obj_upgradeable != obj_enhanceReady)
-            obj_upgradeable.SetActive(isEnhanceReady);
+        if (obj_upgradeable != null) obj_upgradeable.SetActive(isEnhanceReady);
         return isEnhanceReady;
     }
 

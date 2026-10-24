@@ -212,6 +212,12 @@ public class SaveLoader : MonoBehaviour
     private List<int> tutorialShownIndices = new();
     private bool tutorialLoadFailed;
 
+    private const string KEY_CLEARED_STAGE = "key_clearedStage";
+    /// <summary>クリア済みの最大 stageIndex。未クリアは -1。</summary>
+    private int clearedStageIndex = -1;
+    private bool clearedStageLoadFailed;
+    public int ClearedStageIndex => clearedStageIndex;
+
     private readonly HashSet<ResourceType> corruptResources = new();
     private readonly Queue<Func<UniTask>> allQueue = new();
     private bool isProcessingQueue;
@@ -296,6 +302,7 @@ public class SaveLoader : MonoBehaviour
 
         LoadArtifactBlockCount();
         LoadTutorialShown();
+        LoadClearedStage();
     }
 
 
@@ -651,6 +658,52 @@ public class SaveLoader : MonoBehaviour
 
         tutorialShownIndices.Add(_index);
         ES3.Save(KEY_TUTORIAL_SHOWN, tutorialShownIndices);
+    }
+    #endregion
+
+
+    #region -- Cleared Stage --
+    /// <summary>
+    /// クリア済みの最大ステージを読む。失敗したら上書きしない。
+    /// </summary>
+    private void LoadClearedStage()
+    {
+        clearedStageIndex = -1;
+        try
+        {
+            if (!ES3.KeyExists(KEY_CLEARED_STAGE)) return;
+            clearedStageIndex = ES3.Load<int>(KEY_CLEARED_STAGE);
+        }
+        catch (Exception exception)
+        {
+            clearedStageLoadFailed = true;
+            clearedStageIndex = -1;
+            Debug.LogException(exception);
+        }
+    }
+
+    /// <summary>
+    /// クリアした stageIndex が記録より大きければ保存する。
+    /// </summary>
+    public void Request_SaveClearedStage(int stageIndex)
+    {
+        if (stageIndex < 0 || stageIndex <= clearedStageIndex) return;
+        if (clearedStageLoadFailed)
+        {
+            Debug.LogError("Skip cleared stage save because loaded data is corrupt.");
+            return;
+        }
+
+        clearedStageIndex = stageIndex;
+        EnqueueMethod(() => ES3.Save(KEY_CLEARED_STAGE, clearedStageIndex));
+    }
+
+    /// <summary>
+    /// 選択できる最大 stageIndex。未クリアなら最初のステージ。
+    /// </summary>
+    public int GetMaxSelectableStageIndex(int firstStageIndex)
+    {
+        return Mathf.Max(firstStageIndex, clearedStageIndex + 1);
     }
     #endregion
 

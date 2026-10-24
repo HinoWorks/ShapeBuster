@@ -20,16 +20,16 @@ MonoBehaviour:
     bossIndex: 1
   - stageIndex: 1
     stageTime: 180
-    enemyPowerRate: 1.5
-    enemyHpRate: 1.5
+    enemyPowerRate: 2
+    enemyHpRate: 2
     bossIndex: 2
   - stageIndex: 2
     stageTime: 180
-    enemyPowerRate: 2
-    enemyHpRate: 2
+    enemyPowerRate: 3
+    enemyHpRate: 3
     bossIndex: 3
   stageLevelDatas:
-  - stageIndex: 1
+  - stageIndex: 0
     startSecond: 0
     endSecond: 30
     spawnCount_forSecond: 2
@@ -42,8 +42,34 @@ MonoBehaviour:
     rate_enemy7: 0
     rate_enemy8: 0
     rate_enemy9: 0
-  - stageIndex: 1
+  - stageIndex: 0
     startSecond: 30
+    endSecond: 60
+    spawnCount_forSecond: 3
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 0
+    startSecond: 60
+    endSecond: 150
+    spawnCount_forSecond: 4
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 1
+    startSecond: 0
     endSecond: 60
     spawnCount_forSecond: 3
     rate_enemy1: 100
@@ -57,7 +83,20 @@ MonoBehaviour:
     rate_enemy9: 0
   - stageIndex: 1
     startSecond: 60
-    endSecond: 150
+    endSecond: 120
+    spawnCount_forSecond: 4
+    rate_enemy1: 100
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
+  - stageIndex: 1
+    startSecond: 120
+    endSecond: 180
     spawnCount_forSecond: 4
     rate_enemy1: 100
     rate_enemy2: 0

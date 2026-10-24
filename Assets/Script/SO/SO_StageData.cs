@@ -75,6 +75,19 @@ public class SO_StageData : ScriptableObject
     {
         return stageDatas[_stageIndex];
     }
+
+    /// <summary>stageIndex が一致するステージ。無ければ null。</summary>
+    public StageData FindStage(int stageIndex)
+    {
+        if (stageDatas == null) return null;
+        for (int i = 0; i < stageDatas.Length; i++)
+        {
+            var stage = stageDatas[i];
+            if (stage != null && stage.stageIndex == stageIndex)
+                return stage;
+        }
+        return null;
+    }
     public StageLevelData GetStageLevelData(int _stageIndex, int _startSecond)
     {
         return Array.Find(stageLevelDatas, x => x.stageIndex == _stageIndex && x.startSecond == _startSecond);

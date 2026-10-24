@@ -64,12 +64,9 @@ public class UI_ResourceCounter : MonoBehaviour
     }
     private bool ResourceUnlockCheck()
     {
-        /*
-        var isResourceUnlock = GameParamManager.blockChangeRateParam.IsBlockTypeUnlock(resourceType);
+        var isResourceUnlock = SaveLoader.Inst.Check_ResourceKeyExists(resourceType);
         this.gameObject.SetActive(isResourceUnlock);
         return isResourceUnlock;
-*/
-        return true;
     }
 
     /// <summary>
@@ -77,17 +74,15 @@ public class UI_ResourceCounter : MonoBehaviour
     /// </summary>
     public void CounterUpdateCheck()
     {
-        /*
         var isResourceUnlock = ResourceUnlockCheck();
         if (!isResourceUnlock) return;
 
-        //var haveResource = SaveLoader.Inst.Check_ResourceKeyExists(resourceType);
-        //if (!haveResource) return;
+        var haveResource = SaveLoader.Inst.Check_ResourceKeyExists(resourceType);
+        if (!haveResource) return;
 
         if (!this.gameObject.activeSelf) this.gameObject.SetActive(true);
         var resourceCount = SaveLoader.Inst.Get_ResourceCount(resourceType);
         Set_ResourceMod((resourceType, resourceCount));
-        */
     }
     private void Set_ResourceMod((ResourceType, BigInteger) _resourceMod)
     {

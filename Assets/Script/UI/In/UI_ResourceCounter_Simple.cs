@@ -12,7 +12,8 @@ public class UI_ResourceCounter_Simple : MonoBehaviour
     [Space(10)]
     [SerializeField] Image icon;
     [SerializeField] TextMeshProUGUI tmp_resourceCount;
-
+    [SerializeField] Color color_enough;
+    [SerializeField] Color color_notEnough;
 
     void Awake()
     {
@@ -24,9 +25,10 @@ public class UI_ResourceCounter_Simple : MonoBehaviour
     /// <summary>
     /// リザルトなど、確定した所持数をそのまま出す。
     /// </summary>
-    public void SetCount(BigInteger count)
+    public void SetCount(BigInteger count, bool isEnabled = true)
     {
         tmp_resourceCount.text = StaticManager.Get_BigintegerToString(count);
+        tmp_resourceCount.color = isEnabled ? color_enough : color_notEnough;
     }
 
 

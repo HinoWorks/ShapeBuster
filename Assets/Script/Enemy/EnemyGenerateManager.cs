@@ -31,7 +31,6 @@ public class EnemyGenerateManager : MonoBehaviour
     bool isGenerating;
     float spawnStock;
     StageLevelData currentLevel;
-    private int selectStageIndex = 1; //のちに適切な場所で管理する
 
     readonly List<StageSpawnOrder> spawnOrders = new();
     int spawnOrderStage = int.MinValue;
@@ -85,7 +84,7 @@ public class EnemyGenerateManager : MonoBehaviour
         var time = StageTimeManager.Inst.stageTime;
         if (currentLevel == null || time >= currentLevel.endSecond)
         {
-            currentLevel = SOLoader.StageData.GetCurrentStageLevelData(selectStageIndex, time);
+            currentLevel = SOLoader.StageData.GetCurrentStageLevelData(PlayingStageIndex(), time);
             //TODO: レベルデータ変更時の処理
         }
     }
@@ -105,6 +104,11 @@ public class EnemyGenerateManager : MonoBehaviour
             spawnStock -= 1f;
             SpawnFromLevel(currentLevel);
         }
+    }
+
+    static int PlayingStageIndex()
+    {
+        return StageTimeManager.Inst != null ? StageTimeManager.Inst.StageIndex : 0;
     }
 
     public void Set_GenerateState(bool isStart)

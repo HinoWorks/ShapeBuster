@@ -26,6 +26,8 @@ public class UI_OutGameManager : MonoBehaviour
     [SerializeField] UI_SkillTreeManager ui_skillTreeManager;
     public UI_SkillTreeManager UI_SkillTreeManager => ui_skillTreeManager;
 
+    [SerializeField] UI_StageSelect ui_stageSelect;
+
 
 
     void Awake()
@@ -64,18 +66,29 @@ public class UI_OutGameManager : MonoBehaviour
 
     private void ToOutGame()
     {
+        ui_stageSelect?.Close();
         currentState = OutGame_MenuType.Loading;
+        ResourceCounterUpdateCheck();
         Init(true);
+
         ActiveTabChange(OutGame_MenuType.SkillTree);
     }
 
 
     void Init(bool show)
     {
+        if (!show) ui_stageSelect?.Close();
         if (canvas != null) canvas.enabled = show;
         if (raycaster != null) raycaster.enabled = show;
     }
 
+    private void ResourceCounterUpdateCheck()
+    {
+        foreach (var ui_resourceCounter in ui_resourceCounters)
+        {
+            ui_resourceCounter.CounterUpdateCheck();
+        }
+    }
 
     public void ActiveTabChange(OutGame_MenuType menuType)
     {
@@ -94,7 +107,10 @@ public class UI_OutGameManager : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ToIngame()
     {
-        GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
+        if (ui_stageSelect != null)
+            ui_stageSelect.Open();
+        else
+            GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
     }
 
     public void OnClick_ToTitle()

@@ -154,9 +154,8 @@ MonoBehaviour:
   neighborSkillIndexes: 
   image_icon: {fileID: 6038071334574812214}
   obj_lock: {fileID: 2770238350856727293}
-  obj_enhanceReady: {fileID: 5121034777095670944}
   obj_complete: {fileID: 2070010735637770764}
-  obj_upgradeable: {fileID: 0}
+  obj_upgradeable: {fileID: 5121034777095670944}
   eff_enhance: {fileID: 0}
   button: {fileID: 3131314755536768265}
   obj_debug: {fileID: 0}
@@ -509,7 +508,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4302872989103955293}
+        m_TargetAssemblyTypeName: UI_SkillTreeUnit, Assembly-CSharp
+        m_MethodName: OnClick_Enhance
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1058074848177888618
 MonoBehaviour:
   m_ObjectHideFlags: 0
