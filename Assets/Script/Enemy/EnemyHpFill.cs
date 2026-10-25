@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// スプライトの輪郭は残し、内側だけを下から HP 割合で塗る。
-/// 塗りの色は SpriteRenderer.color の RGB。割合は頂点カラーの A に入れ、敵ごとに持つ。
+/// 塗りの模様はマテリアルの地色とドット色。割合は頂点カラーの A に入れ、敵ごとに持つ。
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -11,6 +11,7 @@ public class EnemyHpFill : MonoBehaviour
 {
     static readonly int OutlineColorId = Shader.PropertyToID("_OutlineColor");
     static readonly int OutlineWidthId = Shader.PropertyToID("_OutlineWidth");
+    static readonly int FlashId = Shader.PropertyToID("_Flash");
 
     [SerializeField] Material fillMaterial;
     [SerializeField] Color outlineColor = Color.white;
@@ -65,8 +66,10 @@ public class EnemyHpFill : MonoBehaviour
 
         var outline = outlineColor;
         ApplyOutlineColor(Color.white);
+        ApplyFlash(1f);
         DOVirtual.Float(0f, 1f, 0.1f, t =>
             ApplyOutlineColor(Color.Lerp(Color.white, outline, t))).SetTarget(this);
+        DOVirtual.Float(1f, 0f, 0.1f, ApplyFlash).SetTarget(this);
     }
 
     public void RestoreVisual()
@@ -76,6 +79,7 @@ public class EnemyHpFill : MonoBehaviour
         DOTween.Kill(this);
         ApplyFill();
         ApplyOutline();
+        ApplyFlash(0f);
     }
 
     void OnDisable()
@@ -107,6 +111,16 @@ public class EnemyHpFill : MonoBehaviour
         spriteRenderer.GetPropertyBlock(block);
         block.SetColor(OutlineColorId, color);
         block.SetFloat(OutlineWidthId, outlineWidth);
+        spriteRenderer.SetPropertyBlock(block);
+    }
+
+    void ApplyFlash(float flash)
+    {
+        if (spriteRenderer == null) return;
+        if (block == null) block = new MaterialPropertyBlock();
+
+        spriteRenderer.GetPropertyBlock(block);
+        block.SetFloat(FlashId, flash);
         spriteRenderer.SetPropertyBlock(block);
     }
 

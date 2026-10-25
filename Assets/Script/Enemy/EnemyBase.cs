@@ -274,6 +274,9 @@ public class EnemyBase : MonoBehaviour, IDamagable
 
     protected virtual void OnDeath(float resourceUpRate)
     {
+        if (EffectManager.Inst != null)
+            EffectManager.Inst.Rent(EffectType.EnemyDead, transform.position);
+
         CameraManager.Inst.Shake(CameraShakeLevel.Small);
         GameEvent.InGame.PublishEnemyDefeated();
         if (owner != null && enemyData != null)

@@ -5446,6 +5446,7 @@ GameObject:
   - component: {fileID: 1871639612}
   - component: {fileID: 1871639613}
   - component: {fileID: 1871639614}
+  - component: {fileID: 1871639615}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -5590,6 +5591,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f7a4f5b7a19440d94d7477a655397f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoader
+--- !u!114 &1871639615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871639604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2b8d4a1c9e4b7d8a3f5c0e2d6b8a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectManager
+  effects:
+  - type: 0
+    prefab: {fileID: 7102846519038472611, guid: 272fe47b16dc24db59ee58a84cba75c1, type: 3}
+    prewarmCount: 8
 --- !u!1001 &1904293904
 PrefabInstance:
   m_ObjectHideFlags: 0
