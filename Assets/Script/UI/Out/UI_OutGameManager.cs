@@ -26,6 +26,9 @@ public class UI_OutGameManager : MonoBehaviour
     [SerializeField] UI_SkillTreeManager ui_skillTreeManager;
     public UI_SkillTreeManager UI_SkillTreeManager => ui_skillTreeManager;
 
+    [SerializeField] UI_MileStoneManager ui_mileStoneManager;
+    public UI_MileStoneManager UI_MileStoneManager => ui_mileStoneManager;
+
     [SerializeField] UI_StageSelect ui_stageSelect;
 
 
@@ -47,6 +50,8 @@ public class UI_OutGameManager : MonoBehaviour
         }
 
         ui_skillTreeManager.Init_Once();
+        if (ui_mileStoneManager != null)
+            ui_mileStoneManager.Init_Once();
 
         Init(false);
     }
@@ -70,6 +75,8 @@ public class UI_OutGameManager : MonoBehaviour
         currentState = OutGame_MenuType.Loading;
         ResourceCounterUpdateCheck();
         Init(true);
+        if (ui_mileStoneManager != null)
+            ui_mileStoneManager.RefreshUnits();
 
         ActiveTabChange(OutGame_MenuType.SkillTree);
     }

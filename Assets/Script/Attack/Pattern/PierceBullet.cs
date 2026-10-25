@@ -20,11 +20,13 @@ public class PierceBullet : MonoBehaviour
     Vector3 velocity;
     float spin;
     int damage;
+    int attackIndex = -1;
     bool playing;
 
-    public void Launch(Vector3 position, int direction, float speed, int damage, Vector2 hitSize, Action<PierceBullet> release)
+    public void Launch(Vector3 position, int direction, float speed, int damage, Vector2 hitSize, Action<PierceBullet> release, int attackIndex = -1)
     {
         this.release = release;
+        this.attackIndex = attackIndex;
         int sign = direction >= 0 ? 1 : -1;
         velocity = Vector3.right * (sign * speed);
         spin = -sign * spinSpeed;
@@ -51,7 +53,7 @@ public class PierceBullet : MonoBehaviour
             var target = overlap[i];
             if (!hit.Add(target)) continue;
             if (!target.isAlive) continue;
-            target.Damage(damage);
+            target.Damage(damage, attackIndex: attackIndex);
         }
 
         if (!playing) return;

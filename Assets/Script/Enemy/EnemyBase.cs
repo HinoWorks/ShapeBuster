@@ -174,14 +174,14 @@ public class EnemyBase : MonoBehaviour, IDamagable
         isAlive = false;
     }
 
-    public bool Damage(int damage, float resourceUpRate = 1f)
+    public bool Damage(int damage, float resourceUpRate = 1f, int attackIndex = -1)
     {
         if (!isAlive) return true;
 
         int applied = Mathf.Max(0, ModifyDamage(damage, resourceUpRate));
         CurrentHp -= applied;
         if (applied > 0)
-            GameEvent.InGame.PublishDamageDealt(applied);
+            GameEvent.InGame.PublishDamageDealt(applied, attackIndex);
         OnDamaged(applied, resourceUpRate);
         RefreshHpFill();
         DamageAnim();
@@ -278,7 +278,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
             EffectManager.Inst.Rent(EffectType.EnemyDead, transform.position);
 
         CameraManager.Inst.Shake(CameraShakeLevel.Small);
-        GameEvent.InGame.PublishEnemyDefeated();
+        GameEvent.InGame.PublishEnemyDefeated(enemyData != null ? enemyData.enemyIndex : -1);
         if (owner != null && enemyData != null)
             owner.SpawnResources(transform.position, enemyData);
 

@@ -51,12 +51,12 @@ public class AttackPierce : AttackPatternBase
         int damage = CurrentDamage();
         int count = Mathf.Max(1, generateCount);
         for (int i = 0; i < count; i++)
-            Launch(origin, i % 2 == 0 ? 1 : -1, damage);
+            Launch(origin, i % 2 == 0 ? 1 : -1, damage, Unit != null ? Unit.index : (int)AttackPatternType.Pierce);
     }
 
-    void Launch(Vector3 origin, int direction, int damage)
+    void Launch(Vector3 origin, int direction, int damage, int attackIndex)
     {
         var bullet = pool.Rent();
-        bullet.Launch(origin, direction, speed, damage, hitSize, pool.Return);
+        bullet.Launch(origin, direction, speed, damage, hitSize, pool.Return, attackIndex);
     }
 }

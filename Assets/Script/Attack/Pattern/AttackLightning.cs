@@ -60,7 +60,7 @@ public class AttackLightning : AttackPatternBase
             var target = enemy.GetTransform();
             if (target == null || !enemy.isAlive) continue;
 
-            enemy.Damage(damage);
+            enemy.Damage(damage, attackIndex: Unit != null ? Unit.index : (int)AttackPatternType.Lightning);
             var bolt = pool.Rent();
             bolt.Play(origin, target.position, boltDuration, pool.Return);
         }

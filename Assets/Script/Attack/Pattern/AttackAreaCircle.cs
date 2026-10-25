@@ -55,7 +55,7 @@ public class AttackAreaCircle : AttackPatternBase
         {
             if (!TryPickPosition(out var position)) return;
             var circle = pool.Rent();
-            circle.Play(position, radius, duration, damageInterval, damage, pool.Return);
+            circle.Play(position, radius, duration, damageInterval, damage, pool.Return, Unit != null ? Unit.index : (int)AttackPatternType.AreaCircle);
         }
     }
 

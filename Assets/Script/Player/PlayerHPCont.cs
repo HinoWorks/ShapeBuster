@@ -9,7 +9,7 @@ public class PlayerHPCont : MonoBehaviour
 
     bool inited;
 
-    public int MaxHp => Mathf.Max(1, maxHp + SkillTreeBonus.PlayerMaxHp);
+    public int MaxHp => Mathf.Max(1, maxHp + SkillTreeBonus.PlayerMaxHp + MilestoneBonus.PlayerMaxHp);
     public int CurrentHp => currentHp;
     public int DefaultMaxHp => maxHp;
     float HpRatio => maxHp <= 0 ? 0f : Mathf.Clamp01((float)currentHp / maxHp);
@@ -41,6 +41,9 @@ public class PlayerHPCont : MonoBehaviour
 
     private void OnHpBarDamaged(int damage)
     {
+        if (damage > 0)
+            GameEvent.InGame.PublishDamageTaken(damage);
+
         currentHp = Mathf.Max(0, currentHp - damage);
         CameraManager.Inst.Shake(CameraShakeLevel.Medium);
         HpChanged.OnNext((MaxHp, currentHp));

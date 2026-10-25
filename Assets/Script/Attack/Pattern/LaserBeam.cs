@@ -22,14 +22,19 @@ public class LaserBeam : MonoBehaviour
     Vector3 origin;
     float width;
     int damage;
+    int attackIndex = -1;
     float elapsed;
+    float baseHold = -1f;
     bool playing;
 
-    public void Play(Vector3 origin, float angle, int damage, float width, float grow, Action<LaserBeam> release)
+    public void Play(Vector3 origin, float angle, int damage, float width, float grow, Action<LaserBeam> release, int attackIndex = -1, float extraHold = 0f)
     {
         this.release = release;
         this.origin = origin;
         this.damage = damage;
+        this.attackIndex = attackIndex;
+        if (baseHold < 0f) baseHold = holdDuration;
+        holdDuration = baseHold + Mathf.Max(0f, extraHold);
         if (width > 0f) maxWidth = width;
         if (grow > 0f) growDuration = grow;
         elapsed = 0f;
@@ -81,7 +86,7 @@ public class LaserBeam : MonoBehaviour
             var target = overlap[i];
             if (!hit.Add(target)) continue;
             if (!target.isAlive) continue;
-            target.Damage(damage);
+            target.Damage(damage, attackIndex: attackIndex);
         }
     }
 

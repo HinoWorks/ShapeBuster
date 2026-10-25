@@ -11,6 +11,7 @@ public class AttackLaser : AttackPatternBase
     [SerializeField] int generateCount = 1;
     [SerializeField] float maxWidth = 1.15f;
     [SerializeField] float growDuration = 0.18f;
+    float extraHold;
 
     AttackObjectPool<LaserBeam> pool;
 
@@ -25,6 +26,7 @@ public class AttackLaser : AttackPatternBase
             if (data.generateCount > 0) generateCount = data.generateCount;
             if (data.size > 0f) maxWidth = data.size;
             if (data.generateRate > 0f) growDuration = data.generateRate;
+            extraHold = Mathf.Max(0f, MilestoneBonus.Get(MilestoneBonusStat.AttackDuration, data.index));
         }
 
         if (beamPrefab == null)
@@ -54,7 +56,7 @@ public class AttackLaser : AttackPatternBase
         {
             float angle = UnityEngine.Random.Range(0f, 360f);
             var beam = pool.Rent();
-            beam.Play(origin, angle, damage, maxWidth, growDuration, pool.Return);
+            beam.Play(origin, angle, damage, maxWidth, growDuration, pool.Return, Unit != null ? Unit.index : (int)AttackPatternType.Laser, extraHold);
         }
     }
 }

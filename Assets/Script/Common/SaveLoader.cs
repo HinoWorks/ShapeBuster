@@ -161,6 +161,9 @@ public class SaveLoader : MonoBehaviour
 
     private const string KEY_CREATE_INITIAL_DATA = "key_createInitialData"; // 初期データ作成フラグ
     private const string KEY_GAME_RECORD_DATA = "key_gameRecordData"; // ゲーム記録データ
+    private const string KEY_MILESTONE_PROGRESS = "key_milestoneProgress";
+    private bool milestoneLoadFailed;
+    private bool milestoneSaveQueued;
 
 
     #region -- resource data --
@@ -252,6 +255,7 @@ public class SaveLoader : MonoBehaviour
     /// </summary>
     void OnDestroy()
     {
+        MilestoneRuntime.Flush();
         FlushQueue();
         if (Inst == this) Inst = null;
     }
@@ -261,7 +265,11 @@ public class SaveLoader : MonoBehaviour
     /// </summary>
     void OnApplicationPause(bool pause)
     {
-        if (pause) FlushQueue();
+        if (pause)
+        {
+            MilestoneRuntime.Flush();
+            FlushQueue();
+        }
     }
 
     /// <summary>
@@ -269,6 +277,7 @@ public class SaveLoader : MonoBehaviour
     /// </summary>
     void OnApplicationQuit()
     {
+        MilestoneRuntime.Flush();
         FlushQueue();
     }
 
@@ -303,6 +312,8 @@ public class SaveLoader : MonoBehaviour
         LoadArtifactBlockCount();
         LoadTutorialShown();
         LoadClearedStage();
+        LoadMilestoneProgress();
+        MilestoneRuntime.Bind();
     }
 
 
@@ -993,6 +1004,66 @@ public class SaveLoader : MonoBehaviour
     #endregion
 
 
+
+
+    #region -- Milestone --
+    /// <summary>
+    /// マイルストーン累計を読む。壊れているときは上書きしない。
+    /// </summary>
+    private void LoadMilestoneProgress()
+    {
+        milestoneLoadFailed = false;
+        try
+        {
+            if (!ES3.KeyExists(KEY_MILESTONE_PROGRESS))
+            {
+                MilestoneProgress.Replace(null);
+                return;
+            }
+
+            var save = ES3.Load<MilestoneProgressSave>(KEY_MILESTONE_PROGRESS);
+            if (!MilestoneProgress.TryRead(save, out var loaded))
+            {
+                milestoneLoadFailed = true;
+                Debug.LogError("Milestone progress save is corrupt.");
+                return;
+            }
+
+            MilestoneProgress.Replace(loaded);
+        }
+        catch (Exception exception)
+        {
+            milestoneLoadFailed = true;
+            Debug.LogException(exception);
+        }
+    }
+
+    /// <summary>
+    /// 変化があればマイルストーン累計を保存する。連続した要求は1回にまとめる。
+    /// </summary>
+    public void Request_SaveMilestoneProgress()
+    {
+        if (milestoneLoadFailed || milestoneSaveQueued || !MilestoneProgress.IsDirty) return;
+
+        milestoneSaveQueued = true;
+        EnqueueMethod(SaveMilestoneProgress);
+    }
+
+    /// <summary>
+    /// いまの累計を書く。書き込み中に進んだ分はもう一度保存する。
+    /// </summary>
+    private void SaveMilestoneProgress()
+    {
+        milestoneSaveQueued = false;
+        if (milestoneLoadFailed || !MilestoneProgress.IsDirty) return;
+
+        int version = MilestoneProgress.EditVersion;
+        ES3.Save(KEY_MILESTONE_PROGRESS, MilestoneProgress.Capture());
+        MilestoneProgress.MarkSaved(version);
+        if (MilestoneProgress.IsDirty)
+            Request_SaveMilestoneProgress();
+    }
+    #endregion
 
 
     #region -- GameRecordData --

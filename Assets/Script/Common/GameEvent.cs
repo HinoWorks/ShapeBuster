@@ -43,23 +43,47 @@ public static class GameEvent
 */
 
         /// <summary>
-        /// 敵に与えたダメージ
+        /// 敵に与えたダメージ。attackIndex が 0 未満のときはカーソル攻撃。
         /// </summary>
-        private static readonly Subject<int> damageDealt = new();
-        public static IObservable<int> DamageDealt => damageDealt.AsObservable();
-        public static void PublishDamageDealt(int damage)
+        private static readonly Subject<(int damage, int attackIndex)> damageDealt = new();
+        public static IObservable<(int damage, int attackIndex)> DamageDealt => damageDealt.AsObservable();
+        public static void PublishDamageDealt(int damage, int attackIndex = -1)
         {
-            damageDealt.OnNext(damage);
+            damageDealt.OnNext((damage, attackIndex));
         }
 
         /// <summary>
-        /// 敵を撃破した時
+        /// 敵を撃破した時。enemyIndex が 0 未満のときは種別不明。
         /// </summary>
-        private static readonly Subject<Unit> enemyDefeated = new();
-        public static IObservable<Unit> EnemyDefeated => enemyDefeated.AsObservable();
-        public static void PublishEnemyDefeated()
+        private static readonly Subject<int> enemyDefeated = new();
+        public static IObservable<int> EnemyDefeated => enemyDefeated.AsObservable();
+        public static void PublishEnemyDefeated(int enemyIndex)
         {
-            enemyDefeated.OnNext(Unit.Default);
+            enemyDefeated.OnNext(enemyIndex);
+        }
+
+        /// <summary>クリティカルが成立した攻撃。</summary>
+        private static readonly Subject<Unit> criticalHit = new();
+        public static IObservable<Unit> CriticalHit => criticalHit.AsObservable();
+        public static void PublishCriticalHit()
+        {
+            criticalHit.OnNext(Unit.Default);
+        }
+
+        /// <summary>リロードを開始した時。</summary>
+        private static readonly Subject<Unit> reloadStarted = new();
+        public static IObservable<Unit> ReloadStarted => reloadStarted.AsObservable();
+        public static void PublishReloadStarted()
+        {
+            reloadStarted.OnNext(Unit.Default);
+        }
+
+        /// <summary>プレイヤーが受けたダメージ。</summary>
+        private static readonly Subject<int> damageTaken = new();
+        public static IObservable<int> DamageTaken => damageTaken.AsObservable();
+        public static void PublishDamageTaken(int damage)
+        {
+            damageTaken.OnNext(damage);
         }
 
         /// <summary>

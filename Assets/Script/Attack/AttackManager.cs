@@ -85,7 +85,7 @@ public class AttackManager : MonoBehaviour
             criticalRate = cursorData.criticalRate + SkillTreeBonus.CursorCriticalRate,
             resourceUpRate = cursorData.resourceUpRate + SkillTreeBonus.CursorResourceUpRate,
             size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize),
-            magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo),
+            magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo + MilestoneBonus.MagazineAmmo),
             magazineCount = Mathf.Max(1, cursorData.magazineCount),
             reloadTime = cursorData.reloadTime > 0f ? cursorData.reloadTime : 1.2f
         };
@@ -121,7 +121,9 @@ public class AttackManager : MonoBehaviour
 
             var instance = Instantiate(data.pf, transform);
             spawnedPatterns.Add(instance);
-            instance.Begin(SkillTreeBonus.WithAttackBonus(data));
+            var tuned = SkillTreeBonus.WithAttackBonus(data);
+            MilestoneBonus.ApplyAttack(tuned);
+            instance.Begin(tuned);
         }
     }
 

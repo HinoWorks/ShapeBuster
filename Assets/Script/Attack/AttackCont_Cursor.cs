@@ -13,11 +13,12 @@ public class AttackCont_Cursor : MonoBehaviour
     protected bool isActive = false;//　Init後、攻撃開始タイミング同期用。trueになったら攻撃開始
 
     public int Damage => damage;
-    protected int damage => Mathf.Max(1, 1 + SkillTreeBonus.CursorDamage);
-    protected float attackInterval => cursorParam.attackInterval;
-    protected float criticalRate => cursorParam.criticalRate + 0f;
+    protected int damage => MilestoneBonus.ScaleCursorDamage(Mathf.Max(1, 1 + SkillTreeBonus.CursorDamage));
+    protected float attackInterval => Mathf.Max(0.05f, cursorParam.attackInterval + MilestoneBonus.AttackIntervalAdd);
+    protected float criticalRate => cursorParam.criticalRate + MilestoneBonus.CriticalRate;
     protected float resourceUpRate_pickaxe => cursorParam.resourceUpRate + 0f;
-    protected float size => cursorParam.size;
+    protected float size => Mathf.Max(0.01f, cursorParam.size + MilestoneBonus.CursorSizeAdd);
+    float CurrentReloadDuration => Mathf.Max(0.05f, reloadDuration * MilestoneBonus.ReloadScale);
     int magazineCapacity;
     float reloadDuration;
 
@@ -166,7 +167,7 @@ public class AttackCont_Cursor : MonoBehaviour
         if (isReloading)
         {
             color = reloadBarColor;
-            fill = reloadDuration <= 0f ? 0f : 1f - Mathf.Clamp01(reloadTimer / reloadDuration);
+            fill = CurrentReloadDuration <= 0f ? 0f : 1f - Mathf.Clamp01(reloadTimer / CurrentReloadDuration);
         }
         else if (ammoInMag > 0)
         {
@@ -202,7 +203,7 @@ public class AttackCont_Cursor : MonoBehaviour
         if (isReloading)
         {
             reloadTimer += Time.deltaTime;
-            if (reloadTimer >= reloadDuration)
+            if (reloadTimer >= CurrentReloadDuration)
                 FinishReload();
         }
 
@@ -233,6 +234,7 @@ public class AttackCont_Cursor : MonoBehaviour
         ammoInMag = 0;
         isReloading = true;
         reloadTimer = 0f;
+        GameEvent.InGame.PublishReloadStarted();
     }
 
     void FinishReload()
@@ -275,6 +277,8 @@ public class AttackCont_Cursor : MonoBehaviour
 
         var isCritical = UnityEngine.Random.Range(0f, 1f) < criticalRate;
         calc_criticalDamageRate = isCritical ? criticalDamageRate : 1f;
+        if (isCritical)
+            GameEvent.InGame.PublishCriticalHit();
 
         if (isCritical && eff_critical != null)
             eff_critical.Play();
@@ -392,7 +396,7 @@ public class AttackCont_Cursor : MonoBehaviour
 
     private void DebugLog()
     {
-        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size} / ammo: {magazineCapacity} / total: {TotalBullets} / reload: {reloadDuration}");
+        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size} / ammo: {magazineCapacity} / total: {TotalBullets} / reload: {CurrentReloadDuration}");
         //Debug.Log($"gameBaseParam: {GameParamManager.gameBaseParam.pickaxeBase_AttackDamage} / {GameParamManager.gameBaseParam.pickaxeBase_AttackInterval} / {GameParamManager.gameBaseParam.pickaxeBase_CriticalRate} / {GameParamManager.gameBaseParam.pickaxeBase_ResourceUpRate} / {GameParamManager.gameBaseParam.pickaxeBase_Size}");
         //Debug.Log($"RESULT == > damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size}");
     }

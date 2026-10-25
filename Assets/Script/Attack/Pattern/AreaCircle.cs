@@ -21,11 +21,13 @@ public class AreaCircle : MonoBehaviour
     float elapsed;
     float nextTick;
     int damage;
+    int attackIndex = -1;
     bool playing;
 
-    public void Play(Vector3 position, float radius, float duration, float damageInterval, int damage, Action<AreaCircle> release)
+    public void Play(Vector3 position, float radius, float duration, float damageInterval, int damage, Action<AreaCircle> release, int attackIndex = -1)
     {
         this.release = release;
+        this.attackIndex = attackIndex;
         this.radius = Mathf.Max(0.1f, radius);
         this.duration = Mathf.Max(0.1f, duration);
         this.damageInterval = Mathf.Max(0.05f, damageInterval);
@@ -58,7 +60,7 @@ public class AreaCircle : MonoBehaviour
         while (playing && nextTick < duration && elapsed >= nextTick)
         {
             AttackHitQuery.Diamond(transform.position, radius, overlap);
-            AttackHitQuery.DamageAll(overlap, damage);
+            AttackHitQuery.DamageAll(overlap, damage, attackIndex);
             nextTick += damageInterval;
         }
     }

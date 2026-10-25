@@ -98,10 +98,10 @@ public class IngameRecordManager : MonoBehaviour
         Record.AddResource(resourceMod.type, resourceMod.mod);
     }
 
-    void OnDamageDealt(int damage)
+    void OnDamageDealt((int damage, int attackIndex) info)
     {
-        if (!isRecording || damage <= 0) return;
-        Record.damageDealt += damage;
+        if (!isRecording || info.damage <= 0) return;
+        Record.damageDealt += info.damage;
     }
 
     void OnEnemyDefeated()

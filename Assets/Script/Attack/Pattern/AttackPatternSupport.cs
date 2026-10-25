@@ -123,13 +123,13 @@ public static class AttackHitQuery
         Box(center, new Vector2(side, side), 45f, results);
     }
 
-    public static void DamageAll(List<IDamagable> targets, int damage)
+    public static void DamageAll(List<IDamagable> targets, int damage, int attackIndex = -1)
     {
         for (int i = 0; i < targets.Count; i++)
         {
             var target = targets[i];
             if (target == null || !target.isAlive) continue;
-            target.Damage(damage);
+            target.Damage(damage, attackIndex: attackIndex);
         }
     }
 

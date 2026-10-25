@@ -318,7 +318,12 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         if (enemyData == null) return;
 
-        int count = enemyData.resourceGenerateCount;
+        int stageIndex = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
+        int count = MilestoneBonus.ScaleDropCount(
+            enemyData.resourceGenerateCount,
+            enemyData.enemyIndex,
+            enemyData.resourceType,
+            stageIndex);
         var resourceData = SOLoader.ResourceData.GetResourceData(enemyData.resourceType);
         var prefab = resourceData != null ? resourceData.resourceCont : null;
         if (count <= 0 || prefab == null) return;
