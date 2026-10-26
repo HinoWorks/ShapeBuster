@@ -7,9 +7,17 @@ public class UI_OutGameTabBase : MonoBehaviour
 {
     protected bool isReloadFin = false;
     [SerializeField] protected OutGame_MenuType thisMenuType;
+    private HButtonConnect hButtonConnect;
 
 
-
+    void Awake()
+    {
+        hButtonConnect = this.GetComponent<HButtonConnect>();
+        if (thisMenuType == OutGame_MenuType.Loading)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
     /// <summary>
     /// 初期化時に一度だけ呼ばれる.主にコールバックを設定
     /// </summary>
@@ -28,7 +36,8 @@ public class UI_OutGameTabBase : MonoBehaviour
             await UniTask.WaitUntil(() => isReloadFin);
             Init_ActiveTab();
         }
-        this.gameObject.SetActive(isActive);
+        hButtonConnect.Set_SelectActive(isActive);
+        //        this.gameObject.SetActive(isActive);
     }
 
     /// <summary>

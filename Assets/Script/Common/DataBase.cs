@@ -36,6 +36,7 @@ public class DataBase : MonoBehaviour
     [SerializeField] SO_SoundData mSO_SoundData;
     [SerializeField] SO_AttackUnitData mSO_AttackUnitData;
     [SerializeField] SO_SkillTreeData mSO_SkillTreeData;
+    [SerializeField] SO_MilestoneData mSO_MilestoneData;
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
@@ -43,6 +44,7 @@ public class DataBase : MonoBehaviour
         await DataLoad_EnemyData();
         await DataLoad_AttackUnitData();
         await DataLoad_SkillTreeData();
+        await DataLoad_MilestoneData();
 
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
@@ -55,6 +57,8 @@ public class DataBase : MonoBehaviour
 
         if (mSO_AttackUnitData != null)
             EditorUtility.SetDirty(mSO_AttackUnitData);
+        if (mSO_MilestoneData != null)
+            EditorUtility.SetDirty(mSO_MilestoneData);
 
         // -- save --
         AssetDatabase.SaveAssets();
@@ -125,6 +129,21 @@ public class DataBase : MonoBehaviour
         mSO_SkillTreeData.skillTreeUnits = convData2;
     }
 
+
+    private async UniTask DataLoad_MilestoneData()
+    {
+        if (mSO_MilestoneData == null) return;
+
+        try
+        {
+            var loadData = await DataLoad("Milestone");
+            mSO_MilestoneData.milestoneDatas = CSVSerializer.Deserialize<MilestoneData>(loadData);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"MilestoneData の読み込みをスキップしました。{e.Message}");
+        }
+    }
 
     private async UniTask DataLoad_CursorUnitData()
     {

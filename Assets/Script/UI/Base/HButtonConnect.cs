@@ -13,7 +13,7 @@ public class HButtonConnect : MonoBehaviour
     {
         var button = this.GetComponent<HButton>();
         button.onMouseOver += Set_MouseOverActive;
-        button.onSelect += Set_SelectActive;
+        //button.onSelect += Set_SelectActive;
         button.rightClick += RightClickAction;
         button.onInteractableChange += Set_Interactable;
     }

@@ -79,38 +79,24 @@ public class UI_MileStoneUnit : MonoBehaviour
 
     void Apply(MilestoneState state)
     {
-        if (tmp_description != null)
-            tmp_description.SetText(state.title);
-        if (tmp_now != null)
-            tmp_now.SetText(FormatAmount(state.unit, state.progress));
-        if (tmp_target != null)
-            tmp_target.SetText(FormatAmount(state.unit, state.nextThreshold));
-        if (image_fill != null)
-            image_fill.fillAmount = state.ratioToNext;
-        if (tmp_bonusName != null)
-            tmp_bonusName.SetText(state.bonusLabel);
-        if (tmp_bonusValue != null)
-            tmp_bonusValue.SetText(state.FormatPerTier());
-        if (button_claim != null)
-            button_claim.interactable = state.canClaim;
+        tmp_description.SetText(state.title);
+        tmp_now.SetText(FormatAmount(state.unit, state.progress));
+        tmp_target.SetText(FormatAmount(state.unit, state.nextThreshold));
+        image_fill.fillAmount = state.ratioToNext;
+        tmp_bonusName.SetText(state.bonusLabel);
+        tmp_bonusValue.SetText(state.FormatPerTier());
+        button_claim.Set_Interactable(state.canClaim);
     }
 
     void ApplyEmpty()
     {
-        if (tmp_description != null)
-            tmp_description.SetText(string.Empty);
-        if (tmp_now != null)
-            tmp_now.SetText(string.Empty);
-        if (tmp_target != null)
-            tmp_target.SetText(string.Empty);
-        if (image_fill != null)
-            image_fill.fillAmount = 0f;
-        if (tmp_bonusName != null)
-            tmp_bonusName.SetText(string.Empty);
-        if (tmp_bonusValue != null)
-            tmp_bonusValue.SetText(string.Empty);
-        if (button_claim != null)
-            button_claim.interactable = false;
+        tmp_description.SetText(string.Empty);
+        tmp_now.SetText(string.Empty);
+        tmp_target.SetText(string.Empty);
+        image_fill.fillAmount = 0f;
+        tmp_bonusName.SetText(string.Empty);
+        tmp_bonusValue.SetText(string.Empty);
+        button_claim.Set_Interactable(false);
     }
 
     void Resolve()

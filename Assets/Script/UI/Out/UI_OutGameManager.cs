@@ -7,6 +7,7 @@ public enum OutGame_MenuType
 {
     Loading,
     SkillTree,
+    MileStone,
 }
 
 public class UI_OutGameManager : MonoBehaviour
@@ -107,6 +108,7 @@ public class UI_OutGameManager : MonoBehaviour
         }
 
         ui_skillTreeManager.Init(menuType == OutGame_MenuType.SkillTree);
+        ui_mileStoneManager.Init(menuType == OutGame_MenuType.MileStone);
     }
 
 

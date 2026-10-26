@@ -85,6 +85,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_MilestoneData so_milestoneData;
+    public static SO_MilestoneData MilestoneData
+    {
+        get
+        {
+            if (so_milestoneData == null)
+            {
+                so_milestoneData = LoadSO<SO_MilestoneData>(pathBase + nameof(SO_MilestoneData));
+            }
+            return so_milestoneData;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

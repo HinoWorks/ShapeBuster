@@ -50,3 +50,4 @@ MonoBehaviour:
   mSO_SoundData: {fileID: 0}
   mSO_AttackUnitData: {fileID: 11400000, guid: f9d2b63c74509f134b82a4c6d7f01935, type: 2}
   mSO_SkillTreeData: {fileID: 11400000, guid: 2c3d4e5f60718293a4b5c6d7e8f90123, type: 2}
+  mSO_MilestoneData: {fileID: 11400000, guid: a1b2c3d4e5f64789a0b1c2d3e4f56780, type: 2}

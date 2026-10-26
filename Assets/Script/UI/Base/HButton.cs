@@ -21,6 +21,8 @@ public class HButton : Button
     public UnityAction rightClick;
     //public UnityAction onRightClick;
 
+    bool pointerOver;
+
 
 
 
@@ -44,22 +46,32 @@ public class HButton : Button
         if (!base.interactable) return;
         base.OnPointerEnter(eventData);
 
+        pointerOver = true;
         Anim_ScaleChange_PointerOn();
-        if (onMouseOver != null)
-        {
-            onMouseOver(true);
-        }
+        onMouseOver?.Invoke(true);
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-        if (!base.interactable) return;
-        base.OnPointerExit(eventData);
+        // interactable が先に落ちても、乗っていた表示は消す
+        if (base.interactable)
+            base.OnPointerExit(eventData);
+        EndPointerOver();
+    }
+
+    protected override void DoStateTransition(SelectionState state, bool instant)
+    {
+        base.DoStateTransition(state, instant);
+        if (state == SelectionState.Disabled)
+            EndPointerOver();
+    }
+
+    void EndPointerOver()
+    {
+        if (!pointerOver) return;
+        pointerOver = false;
         Anim_ScaleChange_ToNormal();
-        if (onMouseOver != null)
-        {
-            onMouseOver(false);
-        }
+        onMouseOver?.Invoke(false);
     }
 
     public override void OnPointerDown(PointerEventData eventData)

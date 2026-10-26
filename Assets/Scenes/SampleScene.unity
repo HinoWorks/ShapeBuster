@@ -1045,6 +1045,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048595352533869009, guid: 3393c6c615eba41caaa0a8d4ea859c81, type: 3}
+      propertyPath: thisMenuType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891467813891923760, guid: 3393c6c615eba41caaa0a8d4ea859c81, type: 3}
+      propertyPath: m_text
+      value: Mile Stone
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1301,7 +1309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.92941177}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3880,8 +3888,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingLayerID: -99980829
+  m_SortingOrder: 125
   m_TargetDisplay: 0
 --- !u!224 &1114743630
 RectTransform:
@@ -4834,6 +4842,10 @@ PrefabInstance:
     - target: {fileID: 3048595352533869009, guid: 3393c6c615eba41caaa0a8d4ea859c81, type: 3}
       propertyPath: thisMenuType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891467813891923760, guid: 3393c6c615eba41caaa0a8d4ea859c81, type: 3}
+      propertyPath: m_text
+      value: Skill Tree
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5955,7 +5967,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -99980829
   m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!224 &1945959459
