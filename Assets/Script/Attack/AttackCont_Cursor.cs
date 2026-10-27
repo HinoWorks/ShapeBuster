@@ -13,12 +13,23 @@ public class AttackCont_Cursor : MonoBehaviour
     protected bool isActive = false;//　Init後、攻撃開始タイミング同期用。trueになったら攻撃開始
 
     public int Damage => damage;
-    protected int damage => MilestoneBonus.ScaleCursorDamage(Mathf.Max(1, 1 + SkillTreeBonus.CursorDamage));
+    protected int damage
+    {
+        get
+        {
+            int value = Mathf.Max(1, 1 + SkillTreeBonus.CursorDamage);
+            if (spareMagazines <= 0 && SkillTreeBonus.LastMagDamage > 0f)
+                value = Mathf.Max(1, Mathf.RoundToInt(value * (1f + SkillTreeBonus.LastMagDamage)));
+            return MilestoneBonus.ScaleCursorDamage(value);
+        }
+    }
     protected float attackInterval => Mathf.Max(0.05f, cursorParam.attackInterval + MilestoneBonus.AttackIntervalAdd);
     protected float criticalRate => cursorParam.criticalRate + MilestoneBonus.CriticalRate;
     protected float resourceUpRate_pickaxe => cursorParam.resourceUpRate + 0f;
     protected float size => Mathf.Max(0.01f, cursorParam.size + MilestoneBonus.CursorSizeAdd);
-    float CurrentReloadDuration => Mathf.Max(0.05f, reloadDuration * MilestoneBonus.ReloadScale);
+    float CurrentReloadDuration => Mathf.Max(
+        reloadDuration * 0.5f,
+        reloadDuration * MilestoneBonus.ReloadScale * SkillTreeBonus.ReloadTimeScale);
     int magazineCapacity;
     float reloadDuration;
 
@@ -59,6 +70,8 @@ public class AttackCont_Cursor : MonoBehaviour
     bool isDisposed;
     float fireTimer;
     float reloadTimer;
+    float stoppedRegenStock;
+    int lastHitCount;
 
     public int AmmoInMagazine => ammoInMag;
     public int MagazineCapacity => magazineCapacity;
@@ -87,6 +100,7 @@ public class AttackCont_Cursor : MonoBehaviour
         isReloading = false;
         fireTimer = attackInterval;
         reloadTimer = 0f;
+        stoppedRegenStock = 0f;
         CacheTimeBar();
         //CreateAttackRoop();
         this.gameObject.SetActive(false);
@@ -124,6 +138,7 @@ public class AttackCont_Cursor : MonoBehaviour
         {
             ReadGunInput();
             TickGun();
+            TickStoppedAmmoRegen();
         }
         RefreshCursorVisual();
     }
@@ -222,8 +237,34 @@ public class AttackCont_Cursor : MonoBehaviour
         if (ammoInMag <= 0) return;
         ammoInMag--;
         Attack();
+        if (lastHitCount <= 0 && UnityEngine.Random.value < SkillTreeBonus.MissRefund)
+            ammoInMag = Mathf.Min(magazineCapacity, ammoInMag + 1);
         if (ammoInMag <= 0)
             TryStartReload();
+    }
+
+    void RestoreRoundOnKill()
+    {
+        if (isReloading || ammoInMag >= magazineCapacity) return;
+        if (UnityEngine.Random.value >= SkillTreeBonus.BulletRegain) return;
+        ammoInMag++;
+    }
+
+    void TickStoppedAmmoRegen()
+    {
+        float perSecond = SkillTreeBonus.StoppedAmmoRegen;
+        if (perSecond <= 0f || !isStopped || isReloading || ammoInMag >= magazineCapacity)
+        {
+            stoppedRegenStock = 0f;
+            return;
+        }
+
+        stoppedRegenStock += perSecond * Time.deltaTime;
+        if (stoppedRegenStock < 1f) return;
+
+        int gain = Mathf.FloorToInt(stoppedRegenStock);
+        stoppedRegenStock -= gain;
+        ammoInMag = Mathf.Min(magazineCapacity, ammoInMag + gain);
     }
 
     void TryStartReload()
@@ -276,7 +317,7 @@ public class AttackCont_Cursor : MonoBehaviour
         AttackManager.Inst.NotifyPickaxeAttackTiming();
 
         var isCritical = UnityEngine.Random.Range(0f, 1f) < criticalRate;
-        calc_criticalDamageRate = isCritical ? criticalDamageRate : 1f;
+        calc_criticalDamageRate = isCritical ? criticalDamageRate + SkillTreeBonus.CriticalDamage : 1f;
         if (isCritical)
             GameEvent.InGame.PublishCriticalHit();
 
@@ -329,19 +370,28 @@ public class AttackCont_Cursor : MonoBehaviour
 
     int ApplyHits()
     {
+        lastHitCount = 0;
         if (obj_pointerArea == null || !obj_pointerArea.activeSelf) return 0;
 
         CollectOverlaps();
         if (hitTargets.Count == 0) return 0;
+
+        int enemiesInArea = 0;
+        foreach (var target in hitTargets)
+        {
+            if (target.isAlive) enemiesInArea++;
+        }
 
         int damageCalc = (int)(damage * calc_criticalDamageRate);
         int hitCount = 0;
         foreach (var target in hitTargets)
         {
             if (!target.isAlive) continue;
-            target.Damage(damageCalc, resourceUpRate_pickaxe);
+            if (target.Damage(damageCalc, resourceUpRate_pickaxe, enemiesInArea: enemiesInArea))
+                RestoreRoundOnKill();
             hitCount++;
         }
+        lastHitCount = hitCount;
         return hitCount;
     }
 
@@ -366,6 +416,32 @@ public class AttackCont_Cursor : MonoBehaviour
                 if (resource.isCollecting) continue;
                 resource.Collect();
             }
+        }
+
+        CollectResourcesInRange();
+    }
+
+    void CollectResourcesInRange()
+    {
+        float bonus = SkillTreeBonus.PickupRange;
+        if (bonus <= 0f || obj_pointerArea == null) return;
+
+        float baseRadius = 0.5f;
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider == null) continue;
+            baseRadius = Mathf.Max(baseRadius, hitCollider.bounds.extents.magnitude);
+        }
+
+        Vector2 center = obj_pointerArea.transform.position;
+        int count = Physics2D.OverlapCircle(center, baseRadius * (1f + bonus), resourceOverlapFilter, overlapBuffer);
+        for (int i = 0; i < count; i++)
+        {
+            var other = overlapBuffer[i];
+            if (other == null) continue;
+            if (!other.TryGetComponent(out ResourceCont resource)) continue;
+            if (resource.isCollecting) continue;
+            resource.Collect();
         }
     }
 

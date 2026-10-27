@@ -51,7 +51,8 @@ public static class MilestoneBonus
         float bonus = Get(MilestoneBonusStat.EnemyDropRate, enemyIndex)
             + Get(MilestoneBonusStat.ResourceTypeRate, (int)resourceType)
             + Get(MilestoneBonusStat.ResourceGainRate, 0)
-            + (stageIndex >= 0 ? Get(MilestoneBonusStat.StageDropRate, stageIndex) : 0f);
+            + (stageIndex >= 0 ? Get(MilestoneBonusStat.StageDropRate, stageIndex) : 0f)
+            + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate);
         if (bonus <= 0f) return baseCount;
 
         float scaled = baseCount * (1f + bonus);

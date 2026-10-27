@@ -15,6 +15,7 @@ MonoBehaviour:
   milestoneDatas:
   - id: 10000
     title: Normal Defeats
+    icon: {fileID: 0}
     bonusLabel: This Enemy Drop
     track: 0
     trackKey: 0
@@ -26,6 +27,7 @@ MonoBehaviour:
     unit: 0
   - id: 10001
     title: Liner Defeats
+    icon: {fileID: 0}
     bonusLabel: This Enemy Drop
     track: 0
     trackKey: 1
@@ -37,6 +39,7 @@ MonoBehaviour:
     unit: 0
   - id: 10002
     title: Brake Defeats
+    icon: {fileID: 0}
     bonusLabel: This Enemy Drop
     track: 0
     trackKey: 2
@@ -48,6 +51,7 @@ MonoBehaviour:
     unit: 0
   - id: 10003
     title: Ricochet Defeats
+    icon: {fileID: 0}
     bonusLabel: This Enemy Drop
     track: 0
     trackKey: 3
@@ -59,6 +63,7 @@ MonoBehaviour:
     unit: 0
   - id: 10004
     title: Step Defeats
+    icon: {fileID: 0}
     bonusLabel: This Enemy Drop
     track: 0
     trackKey: 4
@@ -70,6 +75,7 @@ MonoBehaviour:
     unit: 0
   - id: 10005
     title: Zigzag Defeats
+    icon: {fileID: 0}
     bonusLabel: This Enemy Drop
     track: 0
     trackKey: 5
@@ -81,6 +87,7 @@ MonoBehaviour:
     unit: 0
   - id: 1
     title: Total Defeats
+    icon: {fileID: 0}
     bonusLabel: Cursor Damage
     track: 1
     trackKey: 0
@@ -92,6 +99,7 @@ MonoBehaviour:
     unit: 0
   - id: 2
     title: Total Damage Dealt
+    icon: {fileID: 0}
     bonusLabel: Critical Rate
     track: 2
     trackKey: 0
@@ -103,6 +111,7 @@ MonoBehaviour:
     unit: 1
   - id: 20000
     title: Lightning Damage Dealt
+    icon: {fileID: 0}
     bonusLabel: Lightning Rate
     track: 3
     trackKey: 0
@@ -114,6 +123,7 @@ MonoBehaviour:
     unit: 1
   - id: 20001
     title: Pierce Damage Dealt
+    icon: {fileID: 0}
     bonusLabel: Pierce Count
     track: 3
     trackKey: 1
@@ -125,6 +135,7 @@ MonoBehaviour:
     unit: 1
   - id: 20002
     title: Area Damage Dealt
+    icon: {fileID: 0}
     bonusLabel: Area Size
     track: 3
     trackKey: 2
@@ -136,6 +147,7 @@ MonoBehaviour:
     unit: 1
   - id: 20003
     title: Laser Damage Dealt
+    icon: {fileID: 0}
     bonusLabel: Laser Duration
     track: 3
     trackKey: 3
@@ -147,6 +159,7 @@ MonoBehaviour:
     unit: 1
   - id: 3
     title: Total Clear Time
+    icon: {fileID: 0}
     bonusLabel: Resource Gain
     track: 4
     trackKey: 0
@@ -158,6 +171,7 @@ MonoBehaviour:
     unit: 2
   - id: 4
     title: Total Clears
+    icon: {fileID: 0}
     bonusLabel: Reload Time
     track: 5
     trackKey: 0
@@ -169,6 +183,7 @@ MonoBehaviour:
     unit: 0
   - id: 30000
     title: Stage 0 Clears
+    icon: {fileID: 0}
     bonusLabel: This Stage Drop
     track: 6
     trackKey: 0
@@ -180,6 +195,7 @@ MonoBehaviour:
     unit: 0
   - id: 30001
     title: Stage 1 Clears
+    icon: {fileID: 0}
     bonusLabel: This Stage Drop
     track: 6
     trackKey: 1
@@ -191,6 +207,7 @@ MonoBehaviour:
     unit: 0
   - id: 30002
     title: Stage 2 Clears
+    icon: {fileID: 0}
     bonusLabel: This Stage Drop
     track: 6
     trackKey: 2
@@ -202,6 +219,7 @@ MonoBehaviour:
     unit: 0
   - id: 5
     title: Total Plays
+    icon: {fileID: 0}
     bonusLabel: Max HP
     track: 7
     trackKey: 0
@@ -213,6 +231,7 @@ MonoBehaviour:
     unit: 0
   - id: 40000
     title: Total AA Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 0
@@ -224,6 +243,7 @@ MonoBehaviour:
     unit: 0
   - id: 40001
     title: Total BB Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 1
@@ -235,6 +255,7 @@ MonoBehaviour:
     unit: 0
   - id: 40002
     title: Total CC Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 2
@@ -246,6 +267,7 @@ MonoBehaviour:
     unit: 0
   - id: 40003
     title: Total DD Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 3
@@ -257,6 +279,7 @@ MonoBehaviour:
     unit: 0
   - id: 40004
     title: Total EE Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 4
@@ -268,6 +291,7 @@ MonoBehaviour:
     unit: 0
   - id: 40005
     title: Total FF Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 5
@@ -279,6 +303,7 @@ MonoBehaviour:
     unit: 0
   - id: 40006
     title: Total GG Gained
+    icon: {fileID: 0}
     bonusLabel: This Resource Gain
     track: 8
     trackKey: 6
@@ -290,6 +315,7 @@ MonoBehaviour:
     unit: 0
   - id: 6
     title: Total Criticals
+    icon: {fileID: 0}
     bonusLabel: Critical Rate
     track: 9
     trackKey: 0
@@ -301,6 +327,7 @@ MonoBehaviour:
     unit: 0
   - id: 7
     title: Total Reloads
+    icon: {fileID: 0}
     bonusLabel: Magazine Ammo
     track: 10
     trackKey: 0
@@ -312,6 +339,7 @@ MonoBehaviour:
     unit: 0
   - id: 8
     title: Total Damage Taken
+    icon: {fileID: 0}
     bonusLabel: Max HP
     track: 11
     trackKey: 0
@@ -323,6 +351,7 @@ MonoBehaviour:
     unit: 1
   - id: 9
     title: Best Damage Updates
+    icon: {fileID: 0}
     bonusLabel: Attack Interval
     track: 13
     trackKey: 0
@@ -334,6 +363,7 @@ MonoBehaviour:
     unit: 0
   - id: 10
     title: Best Clear Updates
+    icon: {fileID: 0}
     bonusLabel: Cursor Size
     track: 15
     trackKey: 0

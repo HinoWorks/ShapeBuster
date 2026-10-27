@@ -15,6 +15,7 @@ public class AttackManager : MonoBehaviour
     private bool isAttacking = false;
     public int currentPickaxeDamage => cursorCont.Damage;
     public Transform CursorTransform => cursorCont != null ? cursorCont.CursorTransform : null;
+    public bool IsCursorReloading => cursorCont != null && cursorCont.IsReloading;
 
     private readonly Subject<Unit> onPickaxeAttackTiming = new();
     public IObservable<Unit> OnPickaxeAttackTiming => onPickaxeAttackTiming.AsObservable();
@@ -85,8 +86,8 @@ public class AttackManager : MonoBehaviour
             criticalRate = cursorData.criticalRate + SkillTreeBonus.CursorCriticalRate,
             resourceUpRate = cursorData.resourceUpRate + SkillTreeBonus.CursorResourceUpRate,
             size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize),
-            magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo + MilestoneBonus.MagazineAmmo),
-            magazineCount = Mathf.Max(1, cursorData.magazineCount),
+            magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo + MilestoneBonus.MagazineAmmo + SkillTreeBonus.MagazineAmmoAdd),
+            magazineCount = Mathf.Max(1, cursorData.magazineCount + SkillTreeBonus.MagazineCountAdd),
             reloadTime = cursorData.reloadTime > 0f ? cursorData.reloadTime : 1.2f
         };
         CursorUnitGenerate(cursorParam);

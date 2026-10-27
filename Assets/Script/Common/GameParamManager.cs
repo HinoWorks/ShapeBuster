@@ -530,13 +530,15 @@ public static class GameParamManager
         var table = SOLoader.SkillTreeData;
         if (table == null || table.skillTreeUnits == null) return;
 
+        var applied = new HashSet<int>();
         foreach (var skillData in table.skillTreeUnits)
         {
-            if (skillData == null) continue;
+            if (skillData == null || !applied.Add(skillData.skillTreeIndex)) continue;
             var saveData = await SaveLoader.Inst.Get_SkillTreeData(skillData.skillTreeIndex);
             if (saveData == null || saveData.level <= 0) continue;
 
-            var baseSkillData = table.GetSkillTreeBaseData(skillData.baseSkillIndex);
+            var unit = table.GetSkillTreeUnitData(skillData.skillTreeIndex);
+            var baseSkillData = unit != null ? table.GetSkillTreeBaseData(unit.skillTreeIndex) : null;
             if (baseSkillData == null) continue;
             SkillTreeBonus.SetLevel(skillData.skillTreeIndex, baseSkillData, saveData.level);
         }

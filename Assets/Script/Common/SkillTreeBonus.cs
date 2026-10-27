@@ -13,22 +13,79 @@ public static class SkillTreeBonus
         public int targetIndex;
         public SkillParamStat stat;
         public float value;
-        public SkillParamStat stat2;
-        public float value2;
     }
 
     static readonly Dictionary<int, Contribution> bySkill = new();
+    static float armorRemainder;
+    static float reloadGuardRemainder;
 
     public static int CursorDamage => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.Damage));
     public static float CursorAttackInterval => Sum(SkillParamTarget.Cursor, SkillParamStat.AttackInterval);
     public static float CursorCriticalRate => Sum(SkillParamTarget.Cursor, SkillParamStat.CriticalRate);
     public static float CursorSize => Sum(SkillParamTarget.Cursor, SkillParamStat.Size);
     public static float CursorResourceUpRate => Sum(SkillParamTarget.Cursor, SkillParamStat.ResourceUpRate);
+    public static float ConditionalDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.ConditionalDamage);
+    public static float CriticalDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.CriticalDamage);
+    public static float BossDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.BossDamage);
+    public static float PickupRange => Sum(SkillParamTarget.Cursor, SkillParamStat.PickupRange);
+    public static float BulletRegain => Sum(SkillParamTarget.Cursor, SkillParamStat.BulletRegain);
+    public static float ReloadReduction => Sum(SkillParamTarget.Cursor, SkillParamStat.ReloadReduction);
+    public static float ReloadTimeScale => Mathf.Max(0f, 1f - Mathf.Max(0f, ReloadReduction));
+    public static int MagazineCountAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.MagazineCount));
+    public static int MagazineAmmoAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.MagazineAmmo));
+    public static float MissRefund => Sum(SkillParamTarget.Cursor, SkillParamStat.MissRefund);
+    public static float StoppedAmmoRegen => Sum(SkillParamTarget.Cursor, SkillParamStat.StoppedAmmoRegen);
+    public static float ReloadGuard => Sum(SkillParamTarget.Cursor, SkillParamStat.ReloadGuard);
+    public static float LastMagDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.LastMagDamage);
     public static int PlayerMaxHp => Mathf.RoundToInt(Sum(SkillParamTarget.Player, SkillParamStat.MaxHp));
+    public static float Regen => Sum(SkillParamTarget.Player, SkillParamStat.Regen);
+    public static float Armor => Sum(SkillParamTarget.Player, SkillParamStat.Armor);
+    public static float SpawnRate => Sum(SkillParamTarget.Player, SkillParamStat.SpawnRate);
+
+    public const float ArmorCap = 0.8f;
+
+    public static int ScaleDealtDamage(int damage, int enemiesInArea, bool isBoss)
+    {
+        if (damage <= 0) return 0;
+
+        float scale = 1f + Mathf.Max(0f, ConditionalDamage) * Mathf.Max(0, enemiesInArea);
+        if (isBoss)
+            scale *= 1f + Mathf.Max(0f, BossDamage);
+        return Mathf.Max(1, Mathf.RoundToInt(damage * scale));
+    }
+
+    public static int ApplyArmor(int damage)
+    {
+        return ApplyFractionalReduction(damage, Armor, ref armorRemainder);
+    }
+
+    public static int ApplyReloadGuard(int damage)
+    {
+        return ApplyFractionalReduction(damage, ReloadGuard, ref reloadGuardRemainder);
+    }
+
+    static int ApplyFractionalReduction(int damage, float reduction, ref float remainder)
+    {
+        if (damage <= 0) return 0;
+
+        reduction = Mathf.Clamp(reduction, 0f, ArmorCap);
+        float reduced = damage * (1f - reduction);
+        int applied = Mathf.FloorToInt(reduced);
+        remainder += reduced - applied;
+        if (remainder >= 1f)
+        {
+            int carry = Mathf.FloorToInt(remainder);
+            applied += carry;
+            remainder -= carry;
+        }
+        return applied;
+    }
 
     public static void Clear()
     {
         bySkill.Clear();
+        armorRemainder = 0f;
+        reloadGuardRemainder = 0f;
     }
 
     public static void SetLevel(int skillIndex, SkillTreeBase skill, int level)
@@ -44,9 +101,7 @@ public static class SkillTreeBonus
             target = skill.paramTarget,
             targetIndex = skill.targetIndex,
             stat = skill.paramStat,
-            value = skill.deltaValue * level,
-            stat2 = skill.paramStat2,
-            value2 = skill.deltaValue2 * level
+            value = skill.deltaValue * level
         };
     }
 
@@ -78,7 +133,6 @@ public static class SkillTreeBonus
             if (contribution.target != SkillParamTarget.Attack) continue;
             if (contribution.targetIndex != attackIndex) continue;
             if (contribution.stat == stat) total += contribution.value;
-            if (contribution.stat2 == stat) total += contribution.value2;
         }
         return total;
     }
@@ -92,7 +146,6 @@ public static class SkillTreeBonus
         {
             if (contribution.target != target) continue;
             if (contribution.stat == stat) total += contribution.value;
-            if (contribution.stat2 == stat) total += contribution.value2;
         }
         return total;
     }

@@ -86,7 +86,7 @@ public class LaserBeam : MonoBehaviour
             var target = overlap[i];
             if (!hit.Add(target)) continue;
             if (!target.isAlive) continue;
-            target.Damage(damage, attackIndex: attackIndex);
+            target.Damage(damage, attackIndex: attackIndex, enemiesInArea: overlap.Count);
         }
     }
 

@@ -95,7 +95,7 @@ public class UI_SkillTreeUnit : MonoBehaviour
         if (table == null) return;
 
         var unitData = table.GetSkillTreeUnitData(skillIndex);
-        var baseData = unitData != null ? table.GetSkillTreeBaseData(unitData.baseSkillIndex) : null;
+        var baseData = unitData != null ? table.GetSkillTreeBaseData(skillIndex) : null;
         if (unitData == null || baseData == null) return;
 
         skillTree = baseData;
@@ -230,7 +230,7 @@ public class UI_SkillTreeUnit : MonoBehaviour
             return false;
         }
 
-        isEnhanceReady = manager.IsResourceEnough(skillTreeUnit);
+        isEnhanceReady = manager.IsResourceEnough(this);
         if (obj_upgradeable != null) obj_upgradeable.SetActive(isEnhanceReady);
         return isEnhanceReady;
     }

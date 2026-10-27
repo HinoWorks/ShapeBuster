@@ -125,11 +125,18 @@ public static class AttackHitQuery
 
     public static void DamageAll(List<IDamagable> targets, int damage, int attackIndex = -1)
     {
+        int enemiesInArea = 0;
+        for (int i = 0; i < targets.Count; i++)
+        {
+            if (targets[i] != null && targets[i].isAlive)
+                enemiesInArea++;
+        }
+
         for (int i = 0; i < targets.Count; i++)
         {
             var target = targets[i];
             if (target == null || !target.isAlive) continue;
-            target.Damage(damage, attackIndex: attackIndex);
+            target.Damage(damage, attackIndex: attackIndex, enemiesInArea: enemiesInArea);
         }
     }
 

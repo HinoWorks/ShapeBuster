@@ -132,13 +132,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
-    unit2: 
     paramTarget: 0
     targetIndex: 0
     paramStat: 0
     deltaValue: 0
-    paramStat2: 0
-    deltaValue2: 0
   skillTreeUnit:
     skillTreeIndex: 0
     baseSkillIndex: 0

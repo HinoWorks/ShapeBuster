@@ -80,7 +80,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
         if (tmp_description != null)
             tmp_description.SetText(FormatDescription(so, currentLevel, isMaxLevel));
 
-        SetData_RequiredCost();
+        SetData_RequiredCost(currentLevel);
 
         if (obj_complete != null)
             obj_complete.SetActive(isMaxLevel);
@@ -98,20 +98,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     static string FormatParams(SkillTreeBase skill, int atLevel)
     {
-        var lines = new List<string>();
-        var primary = FormatParam(skill.unit, skill.deltaValue * atLevel);
-        if (!string.IsNullOrEmpty(primary))
-            lines.Add(primary);
-
-        if (skill.deltaValue2 != 0f)
-        {
-            var secondaryUnit = string.IsNullOrEmpty(skill.unit2) ? "" : skill.unit2;
-            var secondary = FormatParam(secondaryUnit, skill.deltaValue2 * atLevel);
-            if (string.IsNullOrEmpty(secondary))
-                secondary = $"+{(skill.deltaValue2 * atLevel).ToString("F1")}";
-            lines.Add(secondary);
-        }
-        return string.Join("\n", lines);
+        return FormatParam(skill.unit, skill.deltaValue * atLevel);
     }
 
     static string FormatParam(string unit, float value)
@@ -181,7 +168,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
         SetData_Base(currentLevel);
     }
 
-    private void SetData_RequiredCost()
+    private void SetData_RequiredCost(int currentLevel)
     {
         requredResources.Clear();
         if (ui_resourceCounts != null)
@@ -192,13 +179,23 @@ public class UI_SkillTreeDetail : MonoBehaviour
             }
         }
 
-        if (currentUnit == null || currentUnit.skillTreeUnit == null)
+        if (currentUnit == null || isMaxLevel)
         {
             resourceReady = false;
             return;
         }
 
-        var costs = currentUnit.skillTreeUnit.CopyPositiveCosts();
+        var table = SOLoader.SkillTreeData;
+        var costRow = table != null
+            ? table.GetSkillTreeUnitCost(currentUnit.skillIndex, currentLevel + 1)
+            : null;
+        if (costRow == null)
+        {
+            resourceReady = false;
+            return;
+        }
+
+        var costs = costRow.CopyPositiveCosts();
         requredResources.AddRange(costs);
         resourceReady = StaticManager.IsResourceEnough(costs);
 

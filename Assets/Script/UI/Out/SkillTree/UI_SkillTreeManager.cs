@@ -92,7 +92,7 @@ public class UI_SkillTreeManager : MonoBehaviour
                 Debug.LogError($"SkillTreeUnit not found: {skillTreeUnit.skillIndex}");
                 continue;
             }
-            var soBase = table.GetSkillTreeBaseData(soUnit.baseSkillIndex);
+            var soBase = table.GetSkillTreeBaseData(skillTreeUnit.skillIndex);
             if (soBase == null)
             {
                 Debug.LogError($"SkillTreeBase not found: {skillTreeUnit.skillIndex}");
@@ -276,10 +276,13 @@ public class UI_SkillTreeManager : MonoBehaviour
             headerCheckMark.SetActive(haveEnhanceReadyUnit);
     }
 
-    public bool IsResourceEnough(SkillTreeUnit skillTreeUnit)
+    public bool IsResourceEnough(UI_SkillTreeUnit unit)
     {
-        if (skillTreeUnit == null) return false;
-        return StaticManager.IsResourceEnough(skillTreeUnit.CopyPositiveCosts());
+        if (unit == null) return false;
+        var table = SOLoader.SkillTreeData;
+        var costRow = table != null ? table.GetSkillTreeUnitCost(unit.skillIndex, unit.level + 1) : null;
+        if (costRow == null) return false;
+        return StaticManager.IsResourceEnough(costRow.CopyPositiveCosts());
     }
 
 
@@ -440,7 +443,13 @@ public class UI_SkillTreeManager : MonoBehaviour
         if (skillTreeUnit.unlockState != SkillTreeUnlockState.EnhanceReady) return;
         if (skillTreeUnit.level >= Mathf.Max(1, skillTreeUnit.skillTree.maxLevel)) return;
 
-        var costs = skillTreeUnit.skillTreeUnit.CopyPositiveCosts();
+        var table = SOLoader.SkillTreeData;
+        var costRow = table != null
+            ? table.GetSkillTreeUnitCost(skillTreeUnit.skillIndex, skillTreeUnit.level + 1)
+            : null;
+        if (costRow == null) return;
+
+        var costs = costRow.CopyPositiveCosts();
         bool skipCost = false;
 #if UNITY_EDITOR
         skipCost = debugUpgradeWithoutCost;

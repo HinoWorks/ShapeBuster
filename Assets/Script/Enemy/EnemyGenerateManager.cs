@@ -98,7 +98,8 @@ public class EnemyGenerateManager : MonoBehaviour
         TickSpawnOrders();
         if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0) return;
 
-        spawnStock += currentLevel.spawnCount_forSecond * Time.deltaTime;
+        float spawnPerSecond = currentLevel.spawnCount_forSecond * (1f + Mathf.Max(0f, SkillTreeBonus.SpawnRate));
+        spawnStock += spawnPerSecond * Time.deltaTime;
         while (spawnStock >= 1f)
         {
             spawnStock -= 1f;
@@ -262,7 +263,9 @@ public class EnemyGenerateManager : MonoBehaviour
             (spawnAreaMin.x + spawnAreaMax.x) * 0.5f,
             (spawnAreaMin.y + spawnAreaMax.y) * 0.5f,
             0f);
-        return Spawn(enemyBase, position, enemyData);
+        var boss = Spawn(enemyBase, position, enemyData);
+        boss?.MarkAsBoss();
+        return boss;
     }
 
 

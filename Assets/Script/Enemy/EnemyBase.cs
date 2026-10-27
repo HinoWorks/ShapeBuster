@@ -31,6 +31,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
 
 
     public bool isAlive { get; private set; }
+    public bool IsBoss { get; private set; }
     public int MaxHp { get; private set; }
     public int CurrentHp { get; private set; }
     public int DefaultMaxHp => maxHp;
@@ -99,10 +100,16 @@ public class EnemyBase : MonoBehaviour, IDamagable
         defeatedListener = listener;
     }
 
+    public void MarkAsBoss()
+    {
+        IsBoss = true;
+    }
+
     public void Activate(Vector3 worldPosition, EnemyData enemyData, bool fallAsFormation = false)
     {
         inPool = false;
         defeatedListener = null;
+        IsBoss = false;
         this.enemyData = enemyData;
         rotateSpeed = enemyData.rotateSpeed * randomRate_rotateSpeed;
         DamageAmount = enemyData.damage;
@@ -174,10 +181,11 @@ public class EnemyBase : MonoBehaviour, IDamagable
         isAlive = false;
     }
 
-    public bool Damage(int damage, float resourceUpRate = 1f, int attackIndex = -1)
+    public bool Damage(int damage, float resourceUpRate = 1f, int attackIndex = -1, int enemiesInArea = 1)
     {
         if (!isAlive) return true;
 
+        damage = SkillTreeBonus.ScaleDealtDamage(damage, enemiesInArea, IsBoss);
         int applied = Mathf.Max(0, ModifyDamage(damage, resourceUpRate));
         CurrentHp -= applied;
         if (applied > 0)
