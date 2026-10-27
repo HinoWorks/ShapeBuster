@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_ResourceData
   resourceDatas:
   - resourceType: 0
-    icon: {fileID: 3795675482090570979, guid: 430d1d44cdab542f49b939a1a2015acc, type: 3}
+    icon: {fileID: 21300000, guid: 5830d82cd44ed954281f452708f8ca66, type: 3}
     resourceCont: {fileID: 3260955959217819440, guid: 6805b88fd5df34447bf63cb511cc943c, type: 3}
   - resourceType: 1
-    icon: {fileID: -7607125382520649678, guid: 94a89e7e24d824194bea960a9340a18c, type: 3}
+    icon: {fileID: 21300000, guid: 4fb10d78a49253246880a851928e2f11, type: 3}
     resourceCont: {fileID: 3260955959217819440, guid: 711b3022ee53747d28b1f5c0224bae16, type: 3}
   - resourceType: 2
     icon: {fileID: -7607125382520649678, guid: 94a89e7e24d824194bea960a9340a18c, type: 3}
