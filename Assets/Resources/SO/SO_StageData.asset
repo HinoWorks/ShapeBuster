@@ -167,7 +167,7 @@ MonoBehaviour:
     spawnSecond: 25
     enemyIndex: 3
     count: 3
-    spawnBand: 0
+    spawnBand: 1
     shape: 2
     size: 1
     angle: 45
@@ -175,7 +175,7 @@ MonoBehaviour:
     spawnSecond: 30
     enemyIndex: 4
     count: 3
-    spawnBand: 0
+    spawnBand: 1
     shape: 2
     size: 1
     angle: 45
@@ -183,7 +183,7 @@ MonoBehaviour:
     spawnSecond: 35
     enemyIndex: 5
     count: 3
-    spawnBand: 0
+    spawnBand: 2
     shape: 2
     size: 1
     angle: 45
@@ -191,7 +191,7 @@ MonoBehaviour:
     spawnSecond: 40
     enemyIndex: 6
     count: 3
-    spawnBand: 0
+    spawnBand: 2
     shape: 2
     size: 1
     angle: 45

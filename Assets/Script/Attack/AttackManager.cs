@@ -22,6 +22,8 @@ public class AttackManager : MonoBehaviour
 
     private SO_AttackUnitData attackUnitData => SOLoader.AttackUnitData;
     [SerializeField] int[] debugAttackIndices = { 0, 1, 2, 3 };
+    [SerializeField] bool debugAmmo999 = true;
+    const int DebugAmmoCount = 999;
     readonly List<AttackPatternBase> spawnedPatterns = new();
 
 
@@ -78,6 +80,9 @@ public class AttackManager : MonoBehaviour
 
 
         var cursorData = SOLoader.CursorUnitData.GetCursorUnitData(0);
+        int magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo + MilestoneBonus.MagazineAmmo + SkillTreeBonus.MagazineAmmoAdd);
+        if (debugAmmo999)
+            magazineAmmo = DebugAmmoCount;
         var cursorParam = new CursorParam()
         {
             so = cursorData,
@@ -86,7 +91,7 @@ public class AttackManager : MonoBehaviour
             criticalRate = cursorData.criticalRate + SkillTreeBonus.CursorCriticalRate,
             resourceUpRate = cursorData.resourceUpRate + SkillTreeBonus.CursorResourceUpRate,
             size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize),
-            magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo + MilestoneBonus.MagazineAmmo + SkillTreeBonus.MagazineAmmoAdd),
+            magazineAmmo = magazineAmmo,
             magazineCount = Mathf.Max(1, cursorData.magazineCount + SkillTreeBonus.MagazineCountAdd),
             reloadTime = cursorData.reloadTime > 0f ? cursorData.reloadTime : 1.2f
         };

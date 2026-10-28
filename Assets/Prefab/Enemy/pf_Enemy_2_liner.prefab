@@ -27,8 +27,8 @@ RectTransform:
   m_GameObject: {fileID: 4985031620888231511}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3857322345330569163}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5bb142ba1e6e43a2b582d73fa85ba3f, type: 3}
   m_Color: {r: 0.8117647, g: 0.38039216, b: 0.14117648, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,11 +120,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1015092758560719891, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.595
       objectReference: {fileID: 0}
     - target: {fileID: 1015092758560719891, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.241
       objectReference: {fileID: 0}
     - target: {fileID: 1015092758560719891, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 7378124589840532725}
     - target: {fileID: 7170872176539118308, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
       propertyPath: m_Name
-      value: pf_EnemyBase Variant_2
+      value: pf_Enemy_2_liner
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8786769670392867599, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
@@ -234,8 +234,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0, y: 0.585993}
-      - {x: -0.5016962, y: -0.28927037}
-      - {x: 0.5025684, y: -0.287675}
+      - {x: -0.56049645, y: -0.5440724}
+      - {x: 0.56790227, y: -0.5490104}
   m_UseDelaunayMesh: 0
 --- !u!4 &3857322345330569163 stripped
 Transform:

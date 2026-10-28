@@ -164,7 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 7378124589840532725}
     - target: {fileID: 7170872176539118308, guid: 866e5ad10a07e4b4b93534a75a14b33f, type: 3}
       propertyPath: m_Name
-      value: pf_EnemyBase Variant_1
+      value: pf_Enemy_1_normal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

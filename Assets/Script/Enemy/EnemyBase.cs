@@ -18,6 +18,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     Rigidbody2D body;
     bool inPool;
     const float SpecifiedVelocityYRecoverTime = 1f;
+    const float SpawnScaleDuration = 0.25f;
 
     float moveSpeed;
     float rotateSpeed;
@@ -26,6 +27,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     Vector2 moveDirection = Vector2.down;
     Transform damageVisual;
     Vector3 damageVisualScale = Vector3.one;
+    Vector3 spawnScale = Vector3.one;
     bool damageVisualScaleCaptured;
     Action<EnemyBase> defeatedListener;
 
@@ -85,6 +87,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         body.interpolation = RigidbodyInterpolation2D.Interpolate;
         body.constraints = RigidbodyConstraints2D.None;
+        spawnScale = transform.localScale;
     }
 
 
@@ -135,6 +138,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
         CacheDamageVisual();
 
         gameObject.SetActive(true);
+        ScaleAnim();
 
         body.linearVelocity = moveDirection * moveSpeed;
         body.angularVelocity = rotateSpeed;
@@ -151,6 +155,13 @@ public class EnemyBase : MonoBehaviour, IDamagable
             RecoverVelocityY();
         body.linearVelocity = moveDirection * moveSpeed;
         body.angularVelocity = rotateSpeed;
+    }
+
+    void ScaleAnim()
+    {
+        transform.DOKill();
+        transform.localScale = Vector3.zero;
+        transform.DOScale(spawnScale, SpawnScaleDuration).SetEase(Ease.OutBounce);
     }
 
     /// <summary>速度を決めたあと、毎物理フレームで移動を上書きする。</summary>
@@ -215,6 +226,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
         transform.DOKill();
+        transform.localScale = spawnScale;
         ResetDamageAnim();
 
         if (owner != null)
