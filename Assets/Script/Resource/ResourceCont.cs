@@ -25,6 +25,8 @@ public class ResourceCont : MonoBehaviour
         inPool = false;
         isCollecting = false;
         ResourceType = resourceType;
+        transform.DOKill();
+        transform.localScale = Vector3.one;
         transform.position = worldPosition;
         gameObject.SetActive(true);
     }
@@ -78,6 +80,7 @@ public class ResourceCont : MonoBehaviour
         inPool = true;
         isCollecting = false;
         transform.DOKill();
+        transform.localScale = Vector3.one;
         if (owner != null)
             owner.Return(this);
         else

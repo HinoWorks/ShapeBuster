@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UniRx;
 
@@ -17,10 +18,15 @@ public class EnemyGenerateManager : MonoBehaviour
     readonly HashSet<ResourceCont> resourceParked = new();
     readonly List<ResourceCont> resourceActive = new();
 
+    readonly Dictionary<GlassDrop, Stack<GlassDrop>> glassPools = new();
+    readonly HashSet<GlassDrop> glassParked = new();
+    readonly List<GlassDrop> glassActive = new();
+
     const float ResourceScatterRadius = 0.4f;
 
     [SerializeField] Vector2 spawnAreaMin = new Vector2(-6f, 5.5f);
     [SerializeField] Vector2 spawnAreaMax = new Vector2(6f, 6);
+    [SerializeField] GlassDrop glassPrefab;
 
     [Header("指定生成のY範囲。Xは出現範囲と同じ")]
     [SerializeField] float screenTopMinY = 2.5f;
@@ -215,6 +221,44 @@ public class EnemyGenerateManager : MonoBehaviour
         var enemyData = SOLoader.EnemyData.GetEnemyData(enemyIndex);
         if (enemyData == null || enemyData.pf == null) return;
         Spawn(enemyData);
+        TrySpawnGlass();
+    }
+
+    void TrySpawnGlass()
+    {
+        float chance = SkillTreeBonus.GlassSpawnRate;
+        if (chance <= 0f || glassPrefab == null) return;
+        if (Random.value > chance) return;
+
+        if (!TryPickGlassResource(out var resourceType, out var icon)) return;
+
+        var glass = RentGlass(glassPrefab);
+        glass.Activate(SelectSpawnPosition(), resourceType, icon);
+        glassActive.Add(glass);
+    }
+
+    static bool TryPickGlassResource(out ResourceType resourceType, out Sprite icon)
+    {
+        resourceType = ResourceType.AA;
+        icon = null;
+        var table = SOLoader.ResourceData;
+        if (table == null || table.resourceDatas == null) return false;
+
+        int count = 0;
+        ResourceData picked = null;
+        for (int i = 0; i < table.resourceDatas.Length; i++)
+        {
+            var data = table.resourceDatas[i];
+            if (data == null || data.resourceCont == null) continue;
+            count++;
+            if (Random.Range(0, count) == 0)
+                picked = data;
+        }
+        if (picked == null) return false;
+
+        resourceType = picked.resourceType;
+        icon = picked.icon;
+        return true;
     }
 
 
@@ -346,6 +390,7 @@ public class EnemyGenerateManager : MonoBehaviour
         ResetSpawnOrders();
         ReleaseActiveEnemies();
         ReleaseActiveResources();
+        ReleaseActiveGlass();
     }
 
     void ReleaseActiveEnemies()
@@ -372,6 +417,78 @@ public class EnemyGenerateManager : MonoBehaviour
             snapshot[i].Release();
         }
         resourceActive.Clear();
+    }
+
+    void ReleaseActiveGlass()
+    {
+        if (glassActive.Count == 0) return;
+
+        var snapshot = glassActive.ToArray();
+        for (int i = 0; i < snapshot.Length; i++)
+        {
+            if (snapshot[i] == null) continue;
+            snapshot[i].Release();
+        }
+        glassActive.Clear();
+    }
+
+    /// <summary>ガラスが割れたあとの中身。カーソルが触れると獲得する。</summary>
+    public void SpawnLooseResource(Vector3 origin, ResourceType resourceType)
+    {
+        var resourceData = SOLoader.ResourceData != null
+            ? SOLoader.ResourceData.GetResourceData(resourceType)
+            : null;
+        var prefab = resourceData != null ? resourceData.resourceCont : null;
+        if (prefab == null) return;
+
+        var resource = RentResource(prefab);
+        resource.Activate(origin, resourceType);
+        resource.transform.localScale = Vector3.one * 0.35f;
+        resource.transform.DOScale(Vector3.one, 0.16f).SetEase(Ease.OutBack).SetTarget(resource.transform);
+        resourceActive.Add(resource);
+    }
+
+    public void Return(GlassDrop glass)
+    {
+        if (glass == null || !glassParked.Add(glass)) return;
+
+        glassActive.Remove(glass);
+        glass.MarkInPool();
+        glass.gameObject.SetActive(false);
+        glass.transform.SetParent(transform, false);
+
+        var key = glass.SourcePrefab;
+        if (key == null)
+        {
+            glassParked.Remove(glass);
+            Destroy(glass.gameObject);
+            return;
+        }
+
+        if (!glassPools.TryGetValue(key, out var stack))
+        {
+            stack = new Stack<GlassDrop>();
+            glassPools[key] = stack;
+        }
+        stack.Push(glass);
+    }
+
+    GlassDrop RentGlass(GlassDrop prefab)
+    {
+        if (glassPools.TryGetValue(prefab, out var stack))
+        {
+            while (stack.Count > 0)
+            {
+                var pooled = stack.Pop();
+                glassParked.Remove(pooled);
+                if (pooled == null) continue;
+                return pooled;
+            }
+        }
+
+        var created = Instantiate(prefab, transform);
+        created.Bind(this, prefab);
+        return created;
     }
 
     static Vector3 ScatterOffset()

@@ -41,6 +41,7 @@ public static class SkillTreeBonus
     public static float Regen => Sum(SkillParamTarget.Player, SkillParamStat.Regen);
     public static float Armor => Sum(SkillParamTarget.Player, SkillParamStat.Armor);
     public static float SpawnRate => Sum(SkillParamTarget.Player, SkillParamStat.SpawnRate);
+    public static float GlassSpawnRate => Mathf.Clamp01(Sum(SkillParamTarget.Player, SkillParamStat.GlassSpawnRate));
 
     public const float ArmorCap = 0.8f;
 

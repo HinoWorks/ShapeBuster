@@ -127,6 +127,7 @@ public class DataBase : MonoBehaviour
         loadData = await DataLoad("SkillTreeUnit");
         var convData2 = CSVSerializer.Deserialize<SkillTreeUnit>(loadData);
         mSO_SkillTreeData.skillTreeUnits = convData2;
+        mSO_SkillTreeData.EnsureGlassSkill();
     }
 
 

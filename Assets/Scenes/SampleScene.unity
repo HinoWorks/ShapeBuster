@@ -5765,6 +5765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerateManager
   spawnAreaMin: {x: -6, y: 5.5}
   spawnAreaMax: {x: 6, y: 6}
+  glassPrefab: {fileID: 100005, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
   screenTopMinY: 2.5
   screenTopMaxY: 3.5
   screenCenterMinY: -1

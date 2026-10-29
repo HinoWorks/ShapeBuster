@@ -383,6 +383,16 @@ MonoBehaviour:
     targetIndex: 3
     paramStat: 8
     deltaValue: -0.02
+  - baseSkillIndex: 37
+    skillName: Glass
+    description: Glass capsules appear on [A] of spawns. Break one, then touch the item.
+    icon: {fileID: 0}
+    maxLevel: 5
+    unit: '%'
+    paramTarget: 2
+    targetIndex: 0
+    paramStat: 27
+    deltaValue: 0.05
   skillTreeUnits:
   - skillTreeIndex: 0
     level: 1
@@ -2763,6 +2773,51 @@ MonoBehaviour:
   - skillTreeIndex: 0
     level: 0
     cost_AA: 0
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 37
+    level: 1
+    cost_AA: 15
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 37
+    level: 2
+    cost_AA: 40
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 37
+    level: 3
+    cost_AA: 90
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 37
+    level: 4
+    cost_AA: 180
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 37
+    level: 5
+    cost_AA: 320
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0

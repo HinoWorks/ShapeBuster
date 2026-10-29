@@ -29,6 +29,7 @@ public enum SkillParamStat
     StoppedAmmoRegen = 24, // 射撃停止中の毎秒装弾回復
     ReloadGuard = 25, // リロード中の被ダメージ軽減率
     LastMagDamage = 26, // 予備マガジンが無い間のダメージ倍率
+    GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
 
     // == Player ==
     MaxHp = 6, // 最大HPへの加算。ラン開始時に反映
@@ -164,5 +165,60 @@ public class SO_SkillTreeData : ScriptableObject
         if (skillTreeBases == null) return null;
         var data = Array.Find(skillTreeBases, basis => basis != null && basis.baseSkillIndex == refIndex);
         return data;
+    }
+
+    public const int GlassSkillIndex = 37;
+
+    /// <summary>
+    /// シートにガラスの行が無くても、スキル37として出現率を買えるように足す。
+    /// 同じ効果の行が既にあれば何もしない。
+    /// </summary>
+    public void EnsureGlassSkill()
+    {
+        if (HasGlassSkill()) return;
+
+        var bases = new List<SkillTreeBase>();
+        if (skillTreeBases != null)
+            bases.AddRange(skillTreeBases);
+        bases.Add(new SkillTreeBase
+        {
+            baseSkillIndex = GlassSkillIndex,
+            skillName = "Glass",
+            description = "Glass capsules appear on [A] of spawns. Break one, then touch the item.",
+            maxLevel = 5,
+            unit = "%",
+            paramTarget = SkillParamTarget.Player,
+            targetIndex = 0,
+            paramStat = SkillParamStat.GlassSpawnRate,
+            deltaValue = 0.05f
+        });
+        skillTreeBases = bases.ToArray();
+
+        var units = new List<SkillTreeUnit>();
+        if (skillTreeUnits != null)
+            units.AddRange(skillTreeUnits);
+        int[] costs = { 15, 40, 90, 180, 320 };
+        for (int level = 1; level <= costs.Length; level++)
+        {
+            units.Add(new SkillTreeUnit
+            {
+                skillTreeIndex = GlassSkillIndex,
+                level = level,
+                cost_AA = costs[level - 1]
+            });
+        }
+        skillTreeUnits = units.ToArray();
+    }
+
+    bool HasGlassSkill()
+    {
+        if (skillTreeBases == null) return false;
+        for (int i = 0; i < skillTreeBases.Length; i++)
+        {
+            var basis = skillTreeBases[i];
+            if (basis != null && basis.paramStat == SkillParamStat.GlassSpawnRate)
+                return true;
+        }
+        return false;
     }
 }

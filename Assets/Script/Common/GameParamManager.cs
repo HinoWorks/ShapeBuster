@@ -528,7 +528,9 @@ public static class GameParamManager
         if (SaveLoader.Inst == null) return;
 
         var table = SOLoader.SkillTreeData;
-        if (table == null || table.skillTreeUnits == null) return;
+        if (table == null) return;
+        table.EnsureGlassSkill();
+        if (table.skillTreeUnits == null) return;
 
         var applied = new HashSet<int>();
         foreach (var skillData in table.skillTreeUnits)
