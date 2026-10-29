@@ -115,14 +115,14 @@ MonoBehaviour:
     deltaValue: 0.1
   - baseSkillIndex: 10
     skillName: Spare Magazine
-    description: 'Magazine count increases by [A]'
+    description: Reserve ammo is unlimited
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
     paramTarget: 1
     targetIndex: 0
-    paramStat: 21
-    deltaValue: 1
+    paramStat: 0
+    deltaValue: 0
   - baseSkillIndex: 11
     skillName: Extended Magazine
     description: 'Rounds per magazine increase by [A]'
@@ -165,14 +165,14 @@ MonoBehaviour:
     deltaValue: 0.3
   - baseSkillIndex: 15
     skillName: Last Mag
-    description: Damage increases by [A] while no spare magazines remain
+    description: Reserve ammo is unlimited
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
     paramTarget: 1
     targetIndex: 0
-    paramStat: 26
-    deltaValue: 0.25
+    paramStat: 0
+    deltaValue: 0
   - baseSkillIndex: 16
     skillName: Influence
     description: 'Cursor size increases by [A]'

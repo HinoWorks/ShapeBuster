@@ -22,7 +22,6 @@ public class CursorUnitData
 
     [Header("銃")]
     public int magazineAmmo = 10;
-    public int magazineCount = 3;
     public float reloadTime = 1.2f;
 }
 

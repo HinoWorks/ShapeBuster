@@ -92,7 +92,6 @@ public class AttackManager : MonoBehaviour
             resourceUpRate = cursorData.resourceUpRate + SkillTreeBonus.CursorResourceUpRate,
             size = Mathf.Max(0.01f, cursorData.size + SkillTreeBonus.CursorSize),
             magazineAmmo = magazineAmmo,
-            magazineCount = Mathf.Max(1, cursorData.magazineCount + SkillTreeBonus.MagazineCountAdd),
             reloadTime = cursorData.reloadTime > 0f ? cursorData.reloadTime : 1.2f
         };
         CursorUnitGenerate(cursorParam);

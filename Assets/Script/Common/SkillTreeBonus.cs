@@ -31,12 +31,10 @@ public static class SkillTreeBonus
     public static float BulletRegain => Sum(SkillParamTarget.Cursor, SkillParamStat.BulletRegain);
     public static float ReloadReduction => Sum(SkillParamTarget.Cursor, SkillParamStat.ReloadReduction);
     public static float ReloadTimeScale => Mathf.Max(0f, 1f - Mathf.Max(0f, ReloadReduction));
-    public static int MagazineCountAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.MagazineCount));
     public static int MagazineAmmoAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.MagazineAmmo));
     public static float MissRefund => Sum(SkillParamTarget.Cursor, SkillParamStat.MissRefund);
     public static float StoppedAmmoRegen => Sum(SkillParamTarget.Cursor, SkillParamStat.StoppedAmmoRegen);
     public static float ReloadGuard => Sum(SkillParamTarget.Cursor, SkillParamStat.ReloadGuard);
-    public static float LastMagDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.LastMagDamage);
     public static int PlayerMaxHp => Mathf.RoundToInt(Sum(SkillParamTarget.Player, SkillParamStat.MaxHp));
     public static float Regen => Sum(SkillParamTarget.Player, SkillParamStat.Regen);
     public static float Armor => Sum(SkillParamTarget.Player, SkillParamStat.Armor);

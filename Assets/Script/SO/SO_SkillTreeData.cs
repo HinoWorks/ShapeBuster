@@ -23,12 +23,12 @@ public enum SkillParamStat
     PickupRange = 18, // 拾得半径への倍率加算。0.5 で 1.5倍
     BulletRegain = 19, // 銃の攻撃で倒した時に装弾を1戻す確率
     ReloadReduction = 20, // リロード時間の短縮率。0.1 で 10%
-    MagazineCount = 21, // マガジン本数の加算
+    MagazineCount = 21, // 未使用。予備弾は無限
     MagazineAmmo = 22, // 1本の装弾数の加算
     MissRefund = 23, // 当たらなかった攻撃が弾を消費しない確率
     StoppedAmmoRegen = 24, // 射撃停止中の毎秒装弾回復
     ReloadGuard = 25, // リロード中の被ダメージ軽減率
-    LastMagDamage = 26, // 予備マガジンが無い間のダメージ倍率
+    LastMagDamage = 26, // 未使用。予備弾は無限
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
 
     // == Player ==

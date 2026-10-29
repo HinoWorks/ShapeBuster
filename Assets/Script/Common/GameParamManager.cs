@@ -276,7 +276,6 @@ public class CursorParam
     public float resourceUpRate;
     public float size;
     public int magazineAmmo;
-    public int magazineCount;
     public float reloadTime;
 
     public void Init(CursorUnitData _cursorUnitData)
@@ -288,7 +287,6 @@ public class CursorParam
         resourceUpRate = _cursorUnitData.resourceUpRate;
         size = _cursorUnitData.size;
         magazineAmmo = _cursorUnitData.magazineAmmo;
-        magazineCount = _cursorUnitData.magazineCount;
         reloadTime = _cursorUnitData.reloadTime;
     }
 }

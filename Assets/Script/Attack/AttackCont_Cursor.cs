@@ -18,8 +18,6 @@ public class AttackCont_Cursor : MonoBehaviour
         get
         {
             int value = Mathf.Max(1, 1 + SkillTreeBonus.CursorDamage);
-            if (spareMagazines <= 0 && SkillTreeBonus.LastMagDamage > 0f)
-                value = Mathf.Max(1, Mathf.RoundToInt(value * (1f + SkillTreeBonus.LastMagDamage)));
             return MilestoneBonus.ScaleCursorDamage(value);
         }
     }
@@ -64,7 +62,6 @@ public class AttackCont_Cursor : MonoBehaviour
     private readonly SerialDisposable attackLoopDisposable = new SerialDisposable();
 
     int ammoInMag;
-    int spareMagazines;
     bool isStopped;
     bool isReloading;
     bool isDisposed;
@@ -75,7 +72,6 @@ public class AttackCont_Cursor : MonoBehaviour
 
     public int AmmoInMagazine => ammoInMag;
     public int MagazineCapacity => magazineCapacity;
-    public int TotalBullets => spareMagazines * magazineCapacity + (isReloading ? magazineCapacity : ammoInMag);
     public bool IsFireStopped => isStopped;
     public bool IsReloading => isReloading;
 
@@ -93,7 +89,6 @@ public class AttackCont_Cursor : MonoBehaviour
         cursorParam = _cursorParam;
         obj_pointerArea.transform.localScale = size * Vector3.one;
         magazineCapacity = Mathf.Max(1, cursorParam.magazineAmmo);
-        spareMagazines = Mathf.Max(0, Mathf.Max(1, cursorParam.magazineCount) - 1);
         reloadDuration = cursorParam.reloadTime > 0f ? cursorParam.reloadTime : 1.2f;
         ammoInMag = magazineCapacity;
         isStopped = false;
@@ -269,9 +264,8 @@ public class AttackCont_Cursor : MonoBehaviour
 
     void TryStartReload()
     {
-        if (isReloading || spareMagazines <= 0 || ammoInMag >= magazineCapacity) return;
+        if (isReloading || ammoInMag >= magazineCapacity) return;
 
-        spareMagazines--;
         ammoInMag = 0;
         isReloading = true;
         reloadTimer = 0f;
@@ -297,7 +291,7 @@ public class AttackCont_Cursor : MonoBehaviour
     void RefreshBulletHud()
     {
         if (UIManager_Ingame.Inst.BulletInfo == null) return;
-        UIManager_Ingame.Inst.BulletInfo.SetBullet(ammoInMag, magazineCapacity, TotalBullets);
+        UIManager_Ingame.Inst.BulletInfo.SetBullet(ammoInMag, magazineCapacity);
     }
 
     void LateUpdate()
@@ -472,7 +466,7 @@ public class AttackCont_Cursor : MonoBehaviour
 
     private void DebugLog()
     {
-        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size} / ammo: {magazineCapacity} / total: {TotalBullets} / reload: {CurrentReloadDuration}");
+        Debug.Log($"damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size} / ammo: {magazineCapacity} / reload: {CurrentReloadDuration}");
         //Debug.Log($"gameBaseParam: {GameParamManager.gameBaseParam.pickaxeBase_AttackDamage} / {GameParamManager.gameBaseParam.pickaxeBase_AttackInterval} / {GameParamManager.gameBaseParam.pickaxeBase_CriticalRate} / {GameParamManager.gameBaseParam.pickaxeBase_ResourceUpRate} / {GameParamManager.gameBaseParam.pickaxeBase_Size}");
         //Debug.Log($"RESULT == > damage: {damage} / attackInterval: {attackInterval} / criticalRate: {criticalRate} / resourceRate: {resourceUpRate_pickaxe} / size: {size}");
     }
