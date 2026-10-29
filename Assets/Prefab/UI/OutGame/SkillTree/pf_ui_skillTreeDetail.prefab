@@ -731,6 +731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6396994986001686405}
   - component: {fileID: 5911202567293901429}
+  - component: {fileID: 5316091048236228137}
   m_Layer: 5
   m_Name: pf_ui_skillTreeDetail
   m_TagString: Untagged
@@ -783,7 +784,29 @@ MonoBehaviour:
   - {fileID: 2836174801821937249}
   - {fileID: 6517073325189342654}
   - {fileID: 1237828377878117447}
-  hoverYOffset: 80
+  hoverYOffset: 79.4
+--- !u!95 &5316091048236228137
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434104890892888476}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6845c2b1d63ae485c8e1d5db5e4aabae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5546031267014978286
 GameObject:
   m_ObjectHideFlags: 0

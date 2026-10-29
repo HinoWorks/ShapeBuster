@@ -191,7 +191,7 @@ MonoBehaviour:
     spawnSecond: 40
     enemyIndex: 6
     count: 3
-    spawnBand: 2
+    spawnBand: 1
     shape: 2
-    size: 1
-    angle: 45
+    size: 8
+    angle: 0

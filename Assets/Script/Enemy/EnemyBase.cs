@@ -195,6 +195,8 @@ public class EnemyBase : MonoBehaviour, IDamagable
     public bool Damage(int damage, float resourceUpRate = 1f, int attackIndex = -1, int enemiesInArea = 1)
     {
         if (!isAlive) return true;
+        if (EnemyShield.TryAbsorb(this, damage, resourceUpRate, attackIndex, enemiesInArea))
+            return false;
 
         damage = SkillTreeBonus.ScaleDealtDamage(damage, enemiesInArea, IsBoss);
         int applied = Mathf.Max(0, ModifyDamage(damage, resourceUpRate));
