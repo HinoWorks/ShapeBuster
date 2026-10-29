@@ -18,9 +18,9 @@ MonoBehaviour:
     icon: {fileID: 0}
     pf: {fileID: 4153458172180751321, guid: bab1e0b155bfe4881852ce1808721271, type: 3}
     damage: 2
-    attackInterval: 1
+    attackInterval: 2
     criticalRate: 0
     resourceUpRate: 0
     size: 1
-    magazineAmmo: 5
-    reloadTime: 3
+    magazineAmmo: 3
+    reloadTime: 3.5

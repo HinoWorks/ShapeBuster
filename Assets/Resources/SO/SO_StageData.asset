@@ -14,25 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_StageData
   stageDatas:
   - stageIndex: 0
-    stageTime: 180
+    stageTime: 60
     enemyPowerRate: 1
     enemyHpRate: 1
     bossIndex: 1
   - stageIndex: 1
-    stageTime: 180
+    stageTime: 60
     enemyPowerRate: 2
     enemyHpRate: 2
     bossIndex: 2
   - stageIndex: 2
-    stageTime: 180
+    stageTime: 60
     enemyPowerRate: 3
     enemyHpRate: 3
     bossIndex: 3
   stageLevelDatas:
   - stageIndex: 0
     startSecond: 0
-    endSecond: 30
-    spawnCount_forSecond: 2
+    endSecond: 20
+    spawnCount_forSecond: 1
     rate_enemy1: 100
     rate_enemy2: 0
     rate_enemy3: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
     rate_enemy8: 0
     rate_enemy9: 0
   - stageIndex: 0
-    startSecond: 30
-    endSecond: 60
+    startSecond: 20
+    endSecond: 40
     spawnCount_forSecond: 3
     rate_enemy1: 100
     rate_enemy2: 0
@@ -56,8 +56,8 @@ MonoBehaviour:
     rate_enemy8: 0
     rate_enemy9: 0
   - stageIndex: 0
-    startSecond: 60
-    endSecond: 150
+    startSecond: 40
+    endSecond: 60
     spawnCount_forSecond: 4
     rate_enemy1: 100
     rate_enemy2: 0
@@ -157,10 +157,10 @@ MonoBehaviour:
     angle: 0
   - stageIndex: 0
     spawnSecond: 20
-    enemyIndex: 2
-    count: 5
-    spawnBand: 1
-    shape: 0
+    enemyIndex: 6
+    count: 3
+    spawnBand: 2
+    shape: 2
     size: 1
     angle: 0
   - stageIndex: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
     shape: 2
     size: 1
     angle: 45
-  - stageIndex: 0
+  - stageIndex: 1
     spawnSecond: 30
     enemyIndex: 4
     count: 3
@@ -179,7 +179,7 @@ MonoBehaviour:
     shape: 2
     size: 1
     angle: 45
-  - stageIndex: 0
+  - stageIndex: 1
     spawnSecond: 35
     enemyIndex: 5
     count: 3
@@ -187,11 +187,11 @@ MonoBehaviour:
     shape: 2
     size: 1
     angle: 45
-  - stageIndex: 0
+  - stageIndex: 1
     spawnSecond: 40
     enemyIndex: 6
     count: 3
-    spawnBand: 1
+    spawnBand: 2
     shape: 2
-    size: 8
-    angle: 0
+    size: 1
+    angle: 45

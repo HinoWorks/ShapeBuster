@@ -115,14 +115,14 @@ MonoBehaviour:
     deltaValue: 0.1
   - baseSkillIndex: 10
     skillName: Spare Magazine
-    description: Reserve ammo is unlimited
+    description: 'Magazine count increases by [A]'
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
     paramTarget: 1
     targetIndex: 0
-    paramStat: 0
-    deltaValue: 0
+    paramStat: 21
+    deltaValue: 1
   - baseSkillIndex: 11
     skillName: Extended Magazine
     description: 'Rounds per magazine increase by [A]'
@@ -165,14 +165,14 @@ MonoBehaviour:
     deltaValue: 0.3
   - baseSkillIndex: 15
     skillName: Last Mag
-    description: Reserve ammo is unlimited
+    description: Damage increases by [A] while no spare magazines remain
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
     paramTarget: 1
     targetIndex: 0
-    paramStat: 0
-    deltaValue: 0
+    paramStat: 26
+    deltaValue: 0.25
   - baseSkillIndex: 16
     skillName: Influence
     description: 'Cursor size increases by [A]'
@@ -385,7 +385,8 @@ MonoBehaviour:
     deltaValue: -0.02
   - baseSkillIndex: 37
     skillName: Glass
-    description: Glass capsules appear on [A] of spawns. Break one, then touch the item.
+    description: Glass capsules appear on [A] of spawns. Break one, then touch the
+      item.
     icon: {fileID: 0}
     maxLevel: 5
     unit: '%'

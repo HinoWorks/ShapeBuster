@@ -82,11 +82,11 @@ MonoBehaviour:
   - enemyIndex: 6
     enemyName: shield
     icon: {fileID: 0}
-    pf: {fileID: 886600000000000011, guid: c4e8a1b27d5f4c0e9a6b3d1f8e205175, type: 3}
-    maxHp: 18
+    pf: {fileID: 8055207181232122606, guid: c4e8a1b27d5f4c0e9a6b3d1f8e205175, type: 3}
+    maxHp: 20
     damage: 0
     speed: 0
     rotateSpeed: 0
     criticalRate: 0
     resourceType: 0
-    resourceGenerateCount: 2
+    resourceGenerateCount: 3
