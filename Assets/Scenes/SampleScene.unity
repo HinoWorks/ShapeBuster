@@ -3538,8 +3538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f43650ecdbf48be8097ceef72390d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackManager
-  debugAttackIndices: 00000000010000000200000003000000
-  debugAmmo999: 1
+  debugAttackIndices: 
+  debugAmmo999: 0
 --- !u!4 &927878392
 Transform:
   m_ObjectHideFlags: 0
@@ -5026,8 +5026,71 @@ Transform:
   - {fileID: 1584270529}
   - {fileID: 625797749}
   - {fileID: 1635988470}
+  - {fileID: 1445496291}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1445496290
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1420603827}
+    m_Modifications:
+    - target: {fileID: 100001, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_Name
+      value: pf_GlassDrop
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.17697
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.49528
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+--- !u!4 &1445496291 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+  m_PrefabInstance: {fileID: 1445496290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1491507351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3048595352533869009, guid: 3393c6c615eba41caaa0a8d4ea859c81, type: 3}
@@ -5828,7 +5891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerateManager
   spawnAreaMin: {x: -6, y: 5.5}
   spawnAreaMax: {x: 6, y: 6}
-  glassPrefab: {fileID: 100005, guid: b8d4f02c5e3a49f7b2c1d6e9f8a41527, type: 3}
+  glassPrefab: {fileID: 0}
   screenTopMinY: 2.5
   screenTopMaxY: 3.5
   screenCenterMinY: -1
@@ -7518,7 +7581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5393596402553381975, guid: f8a73e7cc0fdf49f7a9b0a26ad81f702, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5393596402553381975, guid: f8a73e7cc0fdf49f7a9b0a26ad81f702, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7550,7 +7613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5393596402553381975, guid: f8a73e7cc0fdf49f7a9b0a26ad81f702, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -30
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 5393596402553381975, guid: f8a73e7cc0fdf49f7a9b0a26ad81f702, type: 3}
       propertyPath: m_AnchoredPosition.y
