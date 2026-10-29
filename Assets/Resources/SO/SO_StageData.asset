@@ -17,16 +17,25 @@ MonoBehaviour:
     stageTime: 60
     enemyPowerRate: 1
     enemyHpRate: 1
+    enemySpeedRate: 1
+    enemyResourceRate: 1
+    timeEnhanceRate: 0.5
     bossIndex: 1
   - stageIndex: 1
     stageTime: 60
     enemyPowerRate: 2
     enemyHpRate: 2
+    enemySpeedRate: 1.2
+    enemyResourceRate: 2
+    timeEnhanceRate: 0.5
     bossIndex: 2
   - stageIndex: 2
     stageTime: 60
     enemyPowerRate: 3
     enemyHpRate: 3
+    enemySpeedRate: 1.4
+    enemyResourceRate: 3
+    timeEnhanceRate: 0.5
     bossIndex: 3
   stageLevelDatas:
   - stageIndex: 0
@@ -45,7 +54,7 @@ MonoBehaviour:
   - stageIndex: 0
     startSecond: 20
     endSecond: 40
-    spawnCount_forSecond: 3
+    spawnCount_forSecond: 1
     rate_enemy1: 100
     rate_enemy2: 0
     rate_enemy3: 0
@@ -58,7 +67,7 @@ MonoBehaviour:
   - stageIndex: 0
     startSecond: 40
     endSecond: 60
-    spawnCount_forSecond: 4
+    spawnCount_forSecond: 1
     rate_enemy1: 100
     rate_enemy2: 0
     rate_enemy3: 0
@@ -158,7 +167,7 @@ MonoBehaviour:
   - stageIndex: 0
     spawnSecond: 20
     enemyIndex: 6
-    count: 3
+    count: 1
     spawnBand: 2
     shape: 2
     size: 1

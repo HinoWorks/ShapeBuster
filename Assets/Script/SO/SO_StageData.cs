@@ -11,9 +11,50 @@ public class StageData
     public int stageTime;
     public float enemyPowerRate;
     public float enemyHpRate;
+    public float enemySpeedRate;
+    public float enemyResourceRate;
+    /// <summary>20秒ごとに攻撃とHPへ足す倍率。速度とドロップには掛けない。</summary>
+    public float timeEnhanceRate;
     public int bossIndex;
 
 
+}
+
+/// <summary>生成時点のステージ倍率。攻撃とHPは経過20秒ごとに timeEnhanceRate を足す。</summary>
+public struct StageEnemyScale
+{
+    public const float TimeStepSeconds = 20f;
+
+    public float power;
+    public float hp;
+    public float speed;
+    public float resource;
+
+    public static StageEnemyScale Identity => new StageEnemyScale
+    {
+        power = 1f,
+        hp = 1f,
+        speed = 1f,
+        resource = 1f,
+    };
+
+    public static int ScaleInt(int value, float rate)
+    {
+        if (value <= 0 || rate <= 0f) return 0;
+        return Mathf.Max(0, Mathf.RoundToInt(value * rate));
+    }
+
+    /// <summary>端数は確率で1個足す。倍率1なら個数はそのまま。</summary>
+    public static int ScaleResourceCount(int baseCount, float rate)
+    {
+        if (baseCount <= 0 || rate <= 0f) return 0;
+
+        float scaled = baseCount * rate;
+        int whole = Mathf.FloorToInt(scaled);
+        if (UnityEngine.Random.value < scaled - whole)
+            whole++;
+        return whole;
+    }
 }
 
 [System.Serializable]
@@ -88,6 +129,34 @@ public class SO_StageData : ScriptableObject
         }
         return null;
     }
+
+    /// <summary>
+    /// 攻撃とHPは経過20秒ごとに timeEnhanceRate を足す。
+    /// 速度とドロップ倍率が 0 以下のときは未設定として 1。
+    /// </summary>
+    public StageEnemyScale GetEnemyScale(int stageIndex, float elapsedSecond)
+    {
+        var stage = FindStage(stageIndex);
+        if (stage == null) return StageEnemyScale.Identity;
+
+        int steps = Mathf.FloorToInt(Mathf.Max(0f, elapsedSecond) / StageEnemyScale.TimeStepSeconds);
+        float timeBonus = stage.timeEnhanceRate * steps;
+        return new StageEnemyScale
+        {
+            power = Mathf.Max(0f, stage.enemyPowerRate + timeBonus),
+            hp = Mathf.Max(0f, stage.enemyHpRate + timeBonus),
+            speed = stage.enemySpeedRate > 0f ? stage.enemySpeedRate : 1f,
+            resource = stage.enemyResourceRate > 0f ? stage.enemyResourceRate : 1f,
+        };
+    }
+
+    public StageEnemyScale GetCurrentEnemyScale()
+    {
+        var time = StageTimeManager.Inst;
+        if (time == null) return StageEnemyScale.Identity;
+        return GetEnemyScale(time.activeStageIndex, time.stageTime);
+    }
+
     public StageLevelData GetStageLevelData(int _stageIndex, int _startSecond)
     {
         return Array.Find(stageLevelDatas, x => x.stageIndex == _stageIndex && x.startSecond == _startSecond);

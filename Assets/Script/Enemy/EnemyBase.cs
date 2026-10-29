@@ -114,22 +114,26 @@ public class EnemyBase : MonoBehaviour, IDamagable
         defeatedListener = null;
         IsBoss = false;
         this.enemyData = enemyData;
+        var scale = SOLoader.StageData != null
+            ? SOLoader.StageData.GetCurrentEnemyScale()
+            : StageEnemyScale.Identity;
         rotateSpeed = enemyData.rotateSpeed * randomRate_rotateSpeed;
-        DamageAmount = enemyData.damage;
+        DamageAmount = StageEnemyScale.ScaleInt(enemyData.damage, scale.power);
         spawnedInFormation = fallAsFormation;
+        float speed = enemyData.speed * scale.speed;
         if (fallAsFormation)
         {
-            moveSpeed = enemyData.speed;
+            moveSpeed = speed;
             moveDirection = Vector2.down;
         }
         else
         {
-            moveSpeed = enemyData.speed * randomRate_speed;
+            moveSpeed = speed * randomRate_speed;
             float angle = randomRate_goAngle;
             moveDirection = Quaternion.Euler(0f, 0f, angle) * Vector3.down;
         }
         specifiedVelocityY = moveDirection.y * moveSpeed;
-        MaxHp = Mathf.Max(1, enemyData.maxHp);
+        MaxHp = Mathf.Max(1, StageEnemyScale.ScaleInt(enemyData.maxHp, scale.hp));
         CurrentHp = MaxHp;
 
         transform.position = worldPosition;

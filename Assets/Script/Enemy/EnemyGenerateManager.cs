@@ -366,8 +366,11 @@ public class EnemyGenerateManager : MonoBehaviour
         if (enemyData == null) return;
 
         int stageIndex = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
+        float resourceRate = SOLoader.StageData != null
+            ? SOLoader.StageData.GetCurrentEnemyScale().resource
+            : 1f;
         int count = MilestoneBonus.ScaleDropCount(
-            enemyData.resourceGenerateCount,
+            StageEnemyScale.ScaleResourceCount(enemyData.resourceGenerateCount, resourceRate),
             enemyData.enemyIndex,
             enemyData.resourceType,
             stageIndex);

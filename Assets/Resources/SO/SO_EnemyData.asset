@@ -19,7 +19,7 @@ MonoBehaviour:
     pf: {fileID: 3803278028999049696, guid: 33c5213f69fa849c4b0ac69d8833ba1d, type: 3}
     maxHp: 3
     damage: 2
-    speed: 0.5
+    speed: 1
     rotateSpeed: 5
     criticalRate: 0
     resourceType: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     pf: {fileID: 3803278028999049696, guid: c88825e71d78d47cd81f0cb57cedeb12, type: 3}
     maxHp: 1
     damage: 1
-    speed: 2
+    speed: 3
     rotateSpeed: 10
     criticalRate: 0
     resourceType: 1
