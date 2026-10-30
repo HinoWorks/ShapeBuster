@@ -14,21 +14,25 @@ public class PierceBullet : MonoBehaviour
     [SerializeField] Color color = new Color(1f, 0.9f, 0.35f, 1f);
     [SerializeField] Vector2 visualSize = new Vector2(0.9f, 0.16f);
     [SerializeField] float spinSpeed = 720f;
+    [SerializeField] float shrinkDuration = 0.2f;
 
     Action<PierceBullet> release;
     Vector2 hitSize;
     Vector3 velocity;
+    Vector3 baseScale = Vector3.one;
+    float lifeRemaining;
     float spin;
     int damage;
     int attackIndex = -1;
     bool playing;
 
-    public void Launch(Vector3 position, int direction, float speed, int damage, Vector2 hitSize, Action<PierceBullet> release, int attackIndex = -1)
+    public void Launch(Vector3 position, int direction, float speed, float lifeTime, int damage, Vector2 hitSize, Action<PierceBullet> release, int attackIndex = -1)
     {
         this.release = release;
         this.attackIndex = attackIndex;
         int sign = direction >= 0 ? 1 : -1;
         velocity = Vector3.right * (sign * speed);
+        lifeRemaining = Mathf.Max(0.05f, lifeTime);
         spin = -sign * spinSpeed;
         this.damage = damage;
         this.hitSize = hitSize;
@@ -45,8 +49,11 @@ public class PierceBullet : MonoBehaviour
     {
         if (!playing) return;
 
-        transform.position += velocity * Time.deltaTime;
-        transform.Rotate(0f, 0f, spin * Time.deltaTime);
+        float step = Time.deltaTime;
+        lifeRemaining -= step;
+        transform.position += velocity * step;
+        transform.Rotate(0f, 0f, spin * step);
+        ApplyShrink();
         AttackHitQuery.Box(transform.position, hitSize, overlap);
         for (int i = 0; i < overlap.Count; i++)
         {
@@ -57,7 +64,7 @@ public class PierceBullet : MonoBehaviour
         }
 
         if (!playing) return;
-        if (IsOutside())
+        if (lifeRemaining <= 0f || IsOutside())
             Finish();
     }
 
@@ -67,6 +74,14 @@ public class PierceBullet : MonoBehaviour
         playing = false;
         hit.Clear();
         release?.Invoke(this);
+    }
+
+    void ApplyShrink()
+    {
+        float duration = Mathf.Max(0.01f, shrinkDuration);
+        float t = lifeRemaining >= duration ? 1f : Mathf.Clamp01(lifeRemaining / duration);
+        float eased = t * t * (3f - 2f * t);
+        transform.localScale = baseScale * eased;
     }
 
     bool IsOutside()
@@ -85,6 +100,7 @@ public class PierceBullet : MonoBehaviour
         renderer.color = color;
         renderer.sortingOrder = 40;
         renderer.flipX = false;
-        transform.localScale = AttackVisual.ScaleTo(renderer.sprite, visualSize);
+        baseScale = AttackVisual.ScaleTo(renderer.sprite, visualSize);
+        transform.localScale = baseScale;
     }
 }

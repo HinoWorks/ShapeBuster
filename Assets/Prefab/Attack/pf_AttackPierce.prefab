@@ -47,5 +47,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 430000001, guid: c4609253a571b6426483b5d1529074ac, type: 3}
   procRate: 0.1
   prewarmCount: 6
-  speed: 14
+  speed: 5
+  bulletLife: 0.75
   hitSize: {x: 0.9, y: 0.7}
+  generateCount: 2

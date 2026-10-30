@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// カーソルを中心に置き、線の幅が太くなるレーザー。接触した敵は 1 本につき 1 回ダメージを受ける。
+/// 当たりの形は子の Collider2D。ルートのスケールだけ長さと幅に合わせる。
 /// </summary>
 public class LaserBeam : MonoBehaviour
 {
@@ -17,10 +18,14 @@ public class LaserBeam : MonoBehaviour
     [SerializeField] float maxWidth = 1.15f;
     [SerializeField] float growDuration = 0.18f;
     [SerializeField] float holdDuration = 0.08f;
+    [SerializeField] TriggerSender hitSender;
+    [SerializeField] Material beamMaterial;
 
     Action<LaserBeam> release;
+    SpriteRenderer beamRenderer;
+    Collider2D hitCollider;
+    bool warnedMissingHit;
     Vector3 origin;
-    float width;
     int damage;
     int attackIndex = -1;
     float elapsed;
@@ -65,14 +70,22 @@ public class LaserBeam : MonoBehaviour
 
     void ApplyWidth(float nextWidth)
     {
-        width = nextWidth;
         float beamLength = Mathf.Max(0.1f, length);
         origin.z = 0f;
-        var visual = sprite != null ? sprite : AttackVisual.White;
-        var scale = AttackVisual.ScaleTo(visual, new Vector2(beamLength, width));
+        var visual = beamRenderer != null && beamRenderer.sprite != null
+            ? beamRenderer.sprite
+            : AttackVisual.Resolve(sprite, false);
+        var scale = AttackVisual.ScaleTo(visual, new Vector2(beamLength, nextWidth));
         transform.localScale = scale;
 
         var center = visual != null ? visual.bounds.center : Vector3.zero;
+        if (beamRenderer != null && beamRenderer.transform != transform)
+        {
+            var child = beamRenderer.transform;
+            center.x *= child.localScale.x;
+            center.y *= child.localScale.y;
+            center = child.localRotation * center + child.localPosition;
+        }
         center.x *= scale.x;
         center.y *= scale.y;
         transform.position = origin - transform.rotation * center;
@@ -80,7 +93,11 @@ public class LaserBeam : MonoBehaviour
 
     void DamageOverlaps()
     {
-        AttackHitQuery.Box(origin, new Vector2(length, width), transform.eulerAngles.z, overlap);
+        if (hitCollider == null) return;
+
+        // 幅を変えた直後は物理側へスケールを渡してから重ねる。
+        Physics2D.SyncTransforms();
+        AttackHitQuery.Overlap(hitCollider, overlap);
         for (int i = 0; i < overlap.Count; i++)
         {
             var target = overlap[i];
@@ -100,13 +117,46 @@ public class LaserBeam : MonoBehaviour
 
     void EnsureVisual()
     {
-        if (!TryGetComponent(out SpriteRenderer renderer))
-            renderer = gameObject.AddComponent<SpriteRenderer>();
+        if (beamRenderer == null)
+        {
+            var renderers = GetComponentsInChildren<SpriteRenderer>(true);
+            if (renderers.Length > 0)
+                beamRenderer = renderers[0];
+            else if (hitSender != null)
+                beamRenderer = hitSender.gameObject.AddComponent<SpriteRenderer>();
+            else
+                beamRenderer = gameObject.AddComponent<SpriteRenderer>();
+        }
 
-        renderer.sprite = AttackVisual.Resolve(sprite, false);
-        renderer.color = color;
-        renderer.sortingOrder = 28;
-        renderer.flipX = false;
-        renderer.flipY = false;
+        beamRenderer.sprite = AttackVisual.Resolve(sprite, false);
+        beamRenderer.color = color;
+        beamRenderer.sortingOrder = 28;
+        if (beamMaterial != null && beamRenderer.sharedMaterial != beamMaterial)
+            beamRenderer.sharedMaterial = beamMaterial;
+        beamRenderer.flipX = false;
+        beamRenderer.flipY = false;
+
+        CacheHitCollider();
+        if (hitCollider == null && !warnedMissingHit)
+        {
+            warnedMissingHit = true;
+            Debug.LogWarning("レーザーの子に、TriggerSender と Collider2D が必要です。", this);
+        }
+    }
+
+    void CacheHitCollider()
+    {
+        if (hitCollider != null && hitCollider.enabled) return;
+
+        hitCollider = null;
+        if (hitSender == null) return;
+
+        var colliders = hitSender.GetComponents<Collider2D>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i] == null || !colliders[i].enabled) continue;
+            hitCollider = colliders[i];
+            return;
+        }
     }
 }

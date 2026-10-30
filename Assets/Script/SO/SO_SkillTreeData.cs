@@ -13,7 +13,7 @@ public enum SkillParamTarget
 public enum SkillParamStat
 {
     // == Cursor ==
-    Damage = 1, // ダメージへの加算。基礎は1
+    Damage = 1, // ダメージへの加算。Cursor は銃。Attack は targetIndex の攻撃
     AttackInterval = 2, // 攻撃間隔への加算。負の値で短くなる。下限は0.05秒
     CriticalRate = 3, // クリティカル率への加算。0.05 で +5%
     ResourceUpRate = 5, // 撃破時のドロップ倍率。銃を含む全攻撃。0.25 で +25%

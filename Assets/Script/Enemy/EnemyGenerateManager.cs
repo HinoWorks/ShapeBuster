@@ -36,6 +36,7 @@ public class EnemyGenerateManager : MonoBehaviour
 
     bool isGenerating;
     float spawnStock;
+    float spawnSecondTimer;
     StageLevelData currentLevel;
 
     readonly List<StageSpawnOrder> spawnOrders = new();
@@ -102,14 +103,21 @@ public class EnemyGenerateManager : MonoBehaviour
 
         StageTimeCheck();
         TickSpawnOrders();
-        if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0) return;
+        if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0f) return;
 
-        float spawnPerSecond = currentLevel.spawnCount_forSecond * (1f + Mathf.Max(0f, SkillTreeBonus.SpawnRate));
-        spawnStock += spawnPerSecond * Time.deltaTime;
-        while (spawnStock >= 1f)
+        spawnSecondTimer += Time.deltaTime;
+        while (spawnSecondTimer >= 1f)
         {
-            spawnStock -= 1f;
-            SpawnFromLevel(currentLevel);
+            spawnSecondTimer -= 1f;
+            float spawnPerSecond = currentLevel.spawnCount_forSecond * (1f + Mathf.Max(0f, SkillTreeBonus.SpawnRate));
+            spawnStock += spawnPerSecond;
+
+            int spawnCount = Mathf.FloorToInt(spawnStock);
+            if (spawnCount <= 0) continue;
+
+            spawnStock -= spawnCount;
+            for (int i = 0; i < spawnCount; i++)
+                SpawnFromLevel(currentLevel);
         }
     }
 
@@ -122,6 +130,7 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         isGenerating = isStart;
         spawnStock = 0f;
+        spawnSecondTimer = 0f;
         currentLevel = null;
     }
 
@@ -389,6 +398,7 @@ public class EnemyGenerateManager : MonoBehaviour
     public void Clear()
     {
         spawnStock = 0f;
+        spawnSecondTimer = 0f;
         currentLevel = null;
         ResetSpawnOrders();
         ReleaseActiveEnemies();

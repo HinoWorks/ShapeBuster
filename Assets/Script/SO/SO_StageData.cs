@@ -64,7 +64,8 @@ public class StageLevelData
     public int startSecond;
     public int endSecond;
 
-    public int spawnCount_forSecond;
+    /// <summary>1秒ごとの生成量。1未満も可。整数分を出し、端数は次の秒へ持ち越す。</summary>
+    public float spawnCount_forSecond;
 
     public int rate_enemy1;
     public int rate_enemy2;

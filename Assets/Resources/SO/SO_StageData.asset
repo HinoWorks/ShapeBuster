@@ -41,7 +41,7 @@ MonoBehaviour:
   - stageIndex: 0
     startSecond: 0
     endSecond: 20
-    spawnCount_forSecond: 1
+    spawnCount_forSecond: 0.5
     rate_enemy1: 100
     rate_enemy2: 0
     rate_enemy3: 0

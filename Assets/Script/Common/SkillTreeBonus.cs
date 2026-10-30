@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -114,12 +115,19 @@ public static class SkillTreeBonus
             attackName = source.attackName,
             pf = source.pf,
             attackRate = source.attackRate + AttackValue(source.index, SkillParamStat.AttackRate),
+            baseDamage = source.baseDamage + AttackValue(source.index, SkillParamStat.Damage),
             generateRate = source.generateRate + AttackValue(source.index, SkillParamStat.GenerateRate),
             generateCount = Mathf.Max(0, source.generateCount + Mathf.RoundToInt(AttackValue(source.index, SkillParamStat.GenerateCount))),
             size = source.size + AttackValue(source.index, SkillParamStat.Size),
             speed = source.speed + AttackValue(source.index, SkillParamStat.Speed),
             duration = source.duration + AttackValue(source.index, SkillParamStat.Duration)
         };
+    }
+
+    public static int RoundDamage(float value)
+    {
+        if (value <= 0f) return 0;
+        return Math.Max(0, (int)Math.Round(value, MidpointRounding.AwayFromZero));
     }
 
     public static float AttackValue(int attackIndex, SkillParamStat stat)

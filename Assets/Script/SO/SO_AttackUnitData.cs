@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 攻撃ユニット。
 /// attackRate は攻撃時の発生確率。
+/// baseDamage はその攻撃が与えるダメージ。
 /// generateRate は継続間隔。サークルのダメージ間隔と、レーザーが太くなる時間。
 /// generateCount は 1 回の発生数。
 /// size は範囲や太さ。speed は弾速。duration は持続時間や表示時間。
@@ -14,6 +15,7 @@ public class AttackUnitData
     public string attackName;
     public AttackPatternBase pf;
     public float attackRate;
+    public float baseDamage;
     public float generateRate;
     public int generateCount = 1;
     public float size;

@@ -8,6 +8,10 @@ public class UI_SkillTreeDetail : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_skillName;
     [SerializeField] TextMeshProUGUI tmp_description;
     [SerializeField] TextMeshProUGUI tmp_level;
+    [SerializeField] TextMeshProUGUI tmp_paramNow;
+    [SerializeField] TextMeshProUGUI tmp_paramNext;
+    [SerializeField] GameObject obj_param;
+    [SerializeField] GameObject obj_paramArrow;
     [SerializeField] GameObject obj_complete;
     [SerializeField] GameObject obj_resourceRoot;
     [SerializeField] UI_ResourceCounter_Simple[] ui_resourceCounts;
@@ -80,6 +84,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
         if (tmp_description != null)
             tmp_description.SetText(FormatDescription(so, currentLevel, isMaxLevel));
 
+        SetParamValues(so, currentLevel, isMaxLevel);
         SetData_RequiredCost(currentLevel);
 
         if (obj_complete != null)
@@ -98,7 +103,86 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     static string FormatParams(SkillTreeBase skill, int atLevel)
     {
-        return FormatParam(skill.unit, skill.deltaValue * atLevel);
+        float value = skill.deltaValue * atLevel;
+        if (!HasDisplayUnit(skill.unit))
+        {
+            if (IsAttackDamage(skill))
+                return PlainSigned(value);
+            return "";
+        }
+        return FormatParam(skill.unit, value);
+    }
+
+    void SetParamValues(SkillTreeBase skill, int currentLevel, bool maxed)
+    {
+        bool showValue = HasDisplayUnit(skill.unit) || IsAttackDamage(skill);
+        if (obj_param != null)
+            obj_param.SetActive(showValue);
+
+        bool showNext = showValue && !maxed;
+        if (tmp_paramNow != null)
+        {
+            tmp_paramNow.gameObject.SetActive(showValue);
+            if (showValue)
+                tmp_paramNow.SetText(FormatParamDisplay(skill, currentLevel));
+        }
+        if (tmp_paramNext != null)
+        {
+            tmp_paramNext.gameObject.SetActive(showNext);
+            if (showNext)
+                tmp_paramNext.SetText(FormatParamDisplay(skill, currentLevel + 1));
+        }
+        if (obj_paramArrow != null)
+            obj_paramArrow.SetActive(showNext);
+    }
+
+    string FormatParamDisplay(SkillTreeBase skill, int atLevel)
+    {
+        if (skill.paramStat == SkillParamStat.AttackInterval)
+            return $"{AttackIntervalAt(skill, atLevel).ToString("F2")} sec";
+        if (IsAttackDamage(skill))
+            return AttackDamageAt(skill, atLevel).ToString();
+        return FormatParams(skill, atLevel);
+    }
+
+    static bool IsAttackDamage(SkillTreeBase skill)
+    {
+        return skill.paramTarget == SkillParamTarget.Attack && skill.paramStat == SkillParamStat.Damage;
+    }
+
+    int AttackDamageAt(SkillTreeBase skill, int atLevel)
+    {
+        float bonus = SkillTreeBonus.AttackValue(skill.targetIndex, SkillParamStat.Damage);
+        int appliedLevel = currentUnit != null ? currentUnit.level : 0;
+        bonus += skill.deltaValue * (atLevel - appliedLevel);
+
+        float baseDamage = 0f;
+        var attacks = SOLoader.AttackUnitData;
+        var attack = attacks != null ? attacks.Find(skill.targetIndex) : null;
+        if (attack != null)
+            baseDamage = attack.baseDamage;
+
+        return SkillTreeBonus.RoundDamage(baseDamage + bonus);
+    }
+
+    float AttackIntervalAt(SkillTreeBase skill, int atLevel)
+    {
+        float bonus = SkillTreeBonus.CursorAttackInterval;
+        int appliedLevel = currentUnit != null ? currentUnit.level : 0;
+        bonus += skill.deltaValue * (atLevel - appliedLevel);
+
+        float baseInterval = 0f;
+        var cursor = SOLoader.CursorUnitData != null ? SOLoader.CursorUnitData.GetCursorUnitData(0) : null;
+        if (cursor != null)
+            baseInterval = cursor.attackInterval;
+
+        float withSkill = Mathf.Max(0.05f, baseInterval + bonus);
+        return Mathf.Max(0.05f, withSkill + MilestoneBonus.AttackIntervalAdd);
+    }
+
+    static bool HasDisplayUnit(string unit)
+    {
+        return !string.IsNullOrEmpty(unit) && unit != "NA";
     }
 
     static string FormatParam(string unit, float value)
@@ -106,18 +190,30 @@ public class UI_SkillTreeDetail : MonoBehaviour
         switch (unit)
         {
             case "%":
-                return $"+{(value * 100f).ToString("F1")} %";
+                return $"{Signed(value * 100f, "F1")} %";
             case "Sec":
-                return $"+{value.ToString("F1")} sec";
+                return $"{Signed(value, "F1")} sec";
             case "Count":
-                return $"+{value.ToString("F0")}";
+                return Signed(value, "F0");
             case "NA":
             case "":
             case null:
                 return "";
             default:
-                return $"+{value.ToString("F1")} {unit}";
+                return $"{Signed(value, "F1")} {unit}";
         }
+    }
+
+    static string PlainSigned(float value)
+    {
+        bool whole = Mathf.Abs(value - Mathf.Round(value)) < 0.001f;
+        return Signed(value, whole ? "F0" : "F1");
+    }
+
+    static string Signed(float value, string format)
+    {
+        string number = Mathf.Abs(value).ToString(format);
+        return value < 0f ? "-" + number : "+" + number;
     }
 
     private void EnsureCachedRefs()

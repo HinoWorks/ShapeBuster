@@ -17,6 +17,7 @@ MonoBehaviour:
     attackName: lightning
     pf: {fileID: 420000001, guid: b35f81429460a5315372a4c0418f639b, type: 3}
     attackRate: 1
+    baseDamage: 1
     generateRate: 0.5
     generateCount: 1
     size: 1
@@ -26,15 +27,17 @@ MonoBehaviour:
     attackName: Pierce
     pf: {fileID: 440000001, guid: d571a364b682c7537594c6e263a185bd, type: 3}
     attackRate: 0.5
+    baseDamage: 1
     generateRate: 0.3
     generateCount: 2
     size: 1
-    speed: 14
+    speed: 5
     duration: 0
   - index: 2
     attackName: AreaCircle
     pf: {fileID: 460000001, guid: f793c586d8a4e9759716e80485c3a7df, type: 3}
     attackRate: 0.3
+    baseDamage: 1
     generateRate: 0.3
     generateCount: 1
     size: 1.5
@@ -44,6 +47,7 @@ MonoBehaviour:
     attackName: Laser
     pf: {fileID: 480000001, guid: d7b0f40b523e7d912f6082a4b5de9713, type: 3}
     attackRate: 0.5
+    baseDamage: 1
     generateRate: 0.2
     generateCount: 1
     size: 1.2

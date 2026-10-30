@@ -9,6 +9,7 @@ public class AttackPierce : AttackPatternBase
     [SerializeField] float procRate = 0.1f;
     [SerializeField] int prewarmCount = 6;
     [SerializeField] float speed = 14f;
+    [SerializeField] float bulletLife = 1f;
     [SerializeField] Vector2 hitSize = new Vector2(0.9f, 0.7f);
     [SerializeField] int generateCount = 2;
 
@@ -57,6 +58,6 @@ public class AttackPierce : AttackPatternBase
     void Launch(Vector3 origin, int direction, int damage, int attackIndex)
     {
         var bullet = pool.Rent();
-        bullet.Launch(origin, direction, speed, damage, hitSize, pool.Return, attackIndex);
+        bullet.Launch(origin, direction, speed, bulletLife, damage, hitSize, pool.Return, attackIndex);
     }
 }

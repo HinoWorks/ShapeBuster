@@ -38,8 +38,8 @@ public abstract class AttackPatternBase : MonoBehaviour
 
     protected int CurrentDamage()
     {
-        if (AttackManager.Inst == null || AttackManager.Inst.CursorTransform == null) return 1;
-        return Mathf.Max(1, AttackManager.Inst.currentPickaxeDamage);
+        float baseDamage = Unit != null ? Unit.baseDamage : 0f;
+        return SkillTreeBonus.RoundDamage(baseDamage);
     }
 
     protected Vector3 AttackOrigin()

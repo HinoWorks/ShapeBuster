@@ -123,6 +123,22 @@ public static class AttackHitQuery
         Box(center, new Vector2(side, side), 45f, results);
     }
 
+    /// <summary>
+    /// コライダーの形そのもので重ねる。TriggerSender の子コライダー用。
+    /// </summary>
+    public static void Overlap(Collider2D collider, List<IDamagable> results)
+    {
+        if (collider == null || !collider.enabled)
+        {
+            results.Clear();
+            return;
+        }
+
+        Ensure();
+        int count = collider.Overlap(filter, buffer);
+        Copy(count, results);
+    }
+
     public static void DamageAll(List<IDamagable> targets, int damage, int attackIndex = -1)
     {
         int enemiesInArea = 0;
