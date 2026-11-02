@@ -2,7 +2,7 @@ using UniRx;
 using UnityEngine;
 
 /// <summary>
-/// ステージ経過時間。stageMaxTime で時間を止め、ボスを出す。ボス撃破でステージクリア。
+/// ステージ経過時間。stageMaxTime で生成を止め、そこまでの獲得でステージを終える。
 /// </summary>
 public class StageTimeManager : MonoBehaviour
 {
@@ -15,17 +15,17 @@ public class StageTimeManager : MonoBehaviour
     public float stageMaxTime { get; private set; }
     public int activeStageIndex { get; private set; }
     public bool isTimeRunning { get; private set; }
-    public bool isBossPhase { get; private set; }
     public bool isStageCleared { get; private set; }
+    public float Progress => stageMaxTime <= 0f ? 1f : Mathf.Clamp01(stageTime / stageMaxTime);
 
     bool isFailed;
-    EnemyBase boss;
 
     void Awake()
     {
         if (Inst == null) { Inst = this; }
         else { Destroy(this); return; }
 
+        StageHarvest.Ensure();
         GameEvent.GameState.SetGameState.Subscribe(OnGameState).AddTo(this);
     }
 
@@ -66,12 +66,9 @@ public class StageTimeManager : MonoBehaviour
             if (stageTime >= stageMaxTime)
             {
                 stageTime = stageMaxTime;
-                BeginBossPhase();
+                FinishStage();
             }
         }
-
-        if (isBossPhase && !isStageCleared && !isFailed && boss != null && !boss.isAlive)
-            SpawnBoss();
     }
 
     public void StartStage()
@@ -87,47 +84,19 @@ public class StageTimeManager : MonoBehaviour
         activeStageIndex = stageData.stageIndex;
         stageMaxTime = Mathf.Max(0f, stageData.stageTime);
         stageTime = 0f;
-        isBossPhase = false;
         isStageCleared = false;
         isFailed = false;
-        boss = null;
         isTimeRunning = true;
     }
 
-    void BeginBossPhase()
+    void FinishStage()
     {
-        if (isBossPhase || isFailed) return;
-
-        isBossPhase = true;
-        isTimeRunning = false;
-        stageTime = stageMaxTime;
-        EnemyGenerateManager.Inst?.Set_GenerateState(false);
-        SpawnBoss();
-    }
-
-    void SpawnBoss()
-    {
-        var stageData = FindStageData(stageIndex);
-        if (stageData == null || EnemyGenerateManager.Inst == null) return;
-
-        var enemyDatas = SOLoader.EnemyData != null ? SOLoader.EnemyData.enemyDatas : null;
-        if (enemyDatas == null || stageData.bossIndex < 0 || stageData.bossIndex >= enemyDatas.Length)
-        {
-            Debug.LogWarning($"ボスが見つかりません。 bossIndex: {stageData.bossIndex}");
-            return;
-        }
-
-        var enemyData = SOLoader.EnemyData.GetEnemyData(stageData.bossIndex);
-        boss = EnemyGenerateManager.Inst.SpawnBoss(enemyData);
-        boss?.SetDefeatedListener(OnBossDefeated);
-    }
-
-    void OnBossDefeated(EnemyBase enemy)
-    {
-        if (isStageCleared || isFailed || enemy != boss) return;
+        if (isStageCleared || isFailed) return;
 
         isStageCleared = true;
         isTimeRunning = false;
+        stageTime = stageMaxTime;
+        EnemyGenerateManager.Inst?.Set_GenerateState(false);
         AttackManager.Inst?.Set_AttackState(false);
         SaveLoader.Inst?.Request_SaveClearedStage(activeStageIndex);
         GameEvent.Stage.PublishCleared();
@@ -154,7 +123,9 @@ public class StageTimeManager : MonoBehaviour
     #region -- DEBUG --
     public void Set_ForceBossPhase()
     {
-        stageTime += stageMaxTime;
+        if (stageMaxTime > 0f)
+            stageTime = stageMaxTime;
+        FinishStage();
     }
     #endregion
 }

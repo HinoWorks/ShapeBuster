@@ -13,14 +13,14 @@ public class StageData
     public float enemyHpRate;
     public float enemySpeedRate;
     public float enemyResourceRate;
-    /// <summary>20秒ごとに攻撃とHPへ足す倍率。速度とドロップには掛けない。</summary>
+    /// <summary>旧仕様の経過強化。現在のステージ進行では使わない。</summary>
     public float timeEnhanceRate;
     public int bossIndex;
 
 
 }
 
-/// <summary>生成時点のステージ倍率。攻撃とHPは経過20秒ごとに timeEnhanceRate を足す。</summary>
+/// <summary>生成時点のステージ倍率。ステージ中は経過時間で上げない。</summary>
 public struct StageEnemyScale
 {
     public const float TimeStepSeconds = 20f;
@@ -132,7 +132,7 @@ public class SO_StageData : ScriptableObject
     }
 
     /// <summary>
-    /// 攻撃とHPは経過20秒ごとに timeEnhanceRate を足す。
+    /// ステージに設定した倍率を、経過時間にかかわらず返す。
     /// 速度とドロップ倍率が 0 以下のときは未設定として 1。
     /// </summary>
     public StageEnemyScale GetEnemyScale(int stageIndex, float elapsedSecond)
@@ -140,12 +140,10 @@ public class SO_StageData : ScriptableObject
         var stage = FindStage(stageIndex);
         if (stage == null) return StageEnemyScale.Identity;
 
-        int steps = Mathf.FloorToInt(Mathf.Max(0f, elapsedSecond) / StageEnemyScale.TimeStepSeconds);
-        float timeBonus = stage.timeEnhanceRate * steps;
         return new StageEnemyScale
         {
-            power = Mathf.Max(0f, stage.enemyPowerRate + timeBonus),
-            hp = Mathf.Max(0f, stage.enemyHpRate + timeBonus),
+            power = Mathf.Max(0f, stage.enemyPowerRate),
+            hp = Mathf.Max(0f, stage.enemyHpRate),
             speed = stage.enemySpeedRate > 0f ? stage.enemySpeedRate : 1f,
             resource = stage.enemyResourceRate > 0f ? stage.enemyResourceRate : 1f,
         };

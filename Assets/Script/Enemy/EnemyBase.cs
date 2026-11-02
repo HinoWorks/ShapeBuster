@@ -1,12 +1,21 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+
+/// <summary>中心付近へ向かう直進。画面外へ出ても報酬は出さない。</summary>
+public struct EnemyLaunch
+{
+    public bool inbound;
+    public Vector2 direction;
+    public bool rare;
+    public bool bomb;
+}
 
 /// <summary>
 /// 敵の共通処理。体力と、死亡時に EnemyGenerateManager へ返す。
 /// 移動は Rigidbody2D の速度。当たり判定用の Collider2D は同じ GameObject に付ける。
-/// Wall タグのコライダーに当たると、接触法線で進行方向を反射する。
-/// 反射で変わったY速度は、出現時のY速度へ徐々に戻す。
+/// 直進以外では、Wall で進行方向を反射し、変わったY速度を出現時の値へ戻す。
 /// </summary>
 public class EnemyBase : MonoBehaviour, IDamagable
 {
@@ -19,11 +28,28 @@ public class EnemyBase : MonoBehaviour, IDamagable
     bool inPool;
     const float SpecifiedVelocityYRecoverTime = 1f;
     const float SpawnScaleDuration = 0.25f;
+    const int BombHpMultiplier = 3;
+    const float BombScale = 1.35f;
+    const float BombRadius = 1.8f;
+    static readonly Color RareOutline = new Color(1f, 0.82f, 0.2f);
+    static readonly Color BombOutline = new Color(1f, 0.38f, 0.12f);
+    static readonly List<IDamagable> blastHits = new();
 
     float moveSpeed;
     float rotateSpeed;
     float specifiedVelocityY;
     bool spawnedInFormation;
+    bool headingLocked;
+    bool enteredPlayfield;
+    bool isRare;
+    bool isBomb;
+    float sizeRate = 1f;
+    bool pendingBlast;
+    float blastResourceRate;
+    int bombExplosionIndex;
+    Collider2D bodyCollider;
+    bool colliderWasTrigger;
+    bool colliderCached;
     Vector2 moveDirection = Vector2.down;
     Transform damageVisual;
     Vector3 damageVisualScale = Vector3.one;
@@ -41,7 +67,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
     public EnemyBase SourcePrefab { get; private set; }
     public Transform GetTransform() => transform;
 
-    private float randomRate_speed => UnityEngine.Random.Range(0.8f, 1.1f);
+    private float randomRate_speed => Mathf.Lerp(0.9f, 1.1f, UnityEngine.Random.value);
     private float randomRate_rotateSpeed => UnityEngine.Random.Range(0.8f, 1.1f);
     private float randomRate_goAngle => UnityEngine.Random.Range(-15f, 15f);
 
@@ -88,6 +114,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
         body.interpolation = RigidbodyInterpolation2D.Interpolate;
         body.constraints = RigidbodyConstraints2D.None;
         spawnScale = transform.localScale;
+        CacheCollider();
     }
 
 
@@ -108,11 +135,18 @@ public class EnemyBase : MonoBehaviour, IDamagable
         IsBoss = true;
     }
 
-    public void Activate(Vector3 worldPosition, EnemyData enemyData, bool fallAsFormation = false)
+    public void Activate(Vector3 worldPosition, EnemyData enemyData, bool fallAsFormation = false, EnemyLaunch launch = default)
     {
         inPool = false;
         defeatedListener = null;
         IsBoss = false;
+        isRare = launch.rare;
+        isBomb = launch.bomb;
+        pendingBlast = false;
+        blastResourceRate = 0f;
+        bombExplosionIndex = 0;
+        headingLocked = launch.inbound;
+        enteredPlayfield = false;
         this.enemyData = enemyData;
         var scale = SOLoader.StageData != null
             ? SOLoader.StageData.GetCurrentEnemyScale()
@@ -121,7 +155,14 @@ public class EnemyBase : MonoBehaviour, IDamagable
         DamageAmount = StageEnemyScale.ScaleInt(enemyData.damage, scale.power);
         spawnedInFormation = fallAsFormation;
         float speed = enemyData.speed * scale.speed;
-        if (fallAsFormation)
+        if (headingLocked)
+        {
+            moveSpeed = speed * randomRate_speed;
+            moveDirection = launch.direction.sqrMagnitude > 0.0001f
+                ? launch.direction.normalized
+                : Vector2.down;
+        }
+        else if (fallAsFormation)
         {
             moveSpeed = speed;
             moveDirection = Vector2.down;
@@ -133,16 +174,23 @@ public class EnemyBase : MonoBehaviour, IDamagable
             moveDirection = Quaternion.Euler(0f, 0f, angle) * Vector3.down;
         }
         specifiedVelocityY = moveDirection.y * moveSpeed;
-        MaxHp = Mathf.Max(1, StageEnemyScale.ScaleInt(enemyData.maxHp, scale.hp));
+        int baseHp = Mathf.Max(1, StageEnemyScale.ScaleInt(enemyData.maxHp, scale.hp));
+        sizeRate = 1f + 0.5f * UnityEngine.Random.Range(0, 3);
+        MaxHp = Mathf.Max(1, Mathf.RoundToInt(baseHp * sizeRate));
+        if (isBomb)
+            MaxHp = Mathf.Max(1, MaxHp * BombHpMultiplier);
         CurrentHp = MaxHp;
 
         transform.position = worldPosition;
         OnSpawn();
+        if (headingLocked)
+            LockHeading(moveDirection, moveSpeed);
         RefreshHpFill();
         CacheDamageVisual();
 
         gameObject.SetActive(true);
         ScaleAnim();
+        ApplyHarvestVisual();
 
         body.linearVelocity = moveDirection * moveSpeed;
         body.angularVelocity = rotateSpeed;
@@ -150,22 +198,78 @@ public class EnemyBase : MonoBehaviour, IDamagable
         isAlive = true;
     }
 
+    void LockHeading(Vector2 direction, float speed)
+    {
+        moveDirection = direction.sqrMagnitude <= 0.0001f ? Vector2.down : direction.normalized;
+        moveSpeed = Mathf.Max(0.01f, speed);
+        specifiedVelocityY = moveDirection.y * moveSpeed;
+        body.bodyType = RigidbodyType2D.Dynamic;
+        body.gravityScale = 0f;
+        body.constraints = RigidbodyConstraints2D.None;
+        CacheCollider();
+        if (bodyCollider != null)
+            bodyCollider.isTrigger = true;
+    }
+
     void FixedUpdate()
     {
         if (!isAlive) return;
 
-        TickMovement();
-        if (RecoverVelocityYEnabled)
-            RecoverVelocityY();
+        if (!headingLocked)
+        {
+            TickMovement();
+            if (RecoverVelocityYEnabled)
+                RecoverVelocityY();
+        }
         body.linearVelocity = moveDirection * moveSpeed;
         body.angularVelocity = rotateSpeed;
+        if (headingLocked)
+            ReleaseIfExited();
     }
 
     void ScaleAnim()
     {
         transform.DOKill();
+        var target = spawnScale * sizeRate * (isBomb ? BombScale : 1f);
         transform.localScale = Vector3.zero;
-        transform.DOScale(spawnScale, SpawnScaleDuration).SetEase(Ease.OutBounce);
+        transform.DOScale(target, SpawnScaleDuration).SetEase(Ease.OutBounce);
+    }
+
+    void ApplyHarvestVisual()
+    {
+        if (hpFill == null)
+            hpFill = GetComponentInChildren<EnemyHpFill>(true);
+        if (hpFill == null) return;
+
+        if (isBomb)
+            hpFill.SetAccent(BombOutline);
+        else if (isRare)
+            hpFill.SetAccent(RareOutline);
+        else
+            hpFill.ClearAccent();
+    }
+
+    void CacheCollider()
+    {
+        if (colliderCached) return;
+        bodyCollider = GetComponent<Collider2D>();
+        colliderWasTrigger = bodyCollider != null && bodyCollider.isTrigger;
+        colliderCached = true;
+    }
+
+    void ReleaseIfExited()
+    {
+        if (!AttackPlayfield.TryGetRect(out var rect)) return;
+
+        var pos = (Vector2)transform.position;
+        if (rect.Contains(pos))
+        {
+            enteredPlayfield = true;
+            return;
+        }
+
+        if (enteredPlayfield)
+            Release();
     }
 
     /// <summary>速度を決めたあと、毎物理フレームで移動を上書きする。</summary>
@@ -196,10 +300,22 @@ public class EnemyBase : MonoBehaviour, IDamagable
         isAlive = false;
     }
 
+    /// <summary>ボムの爆発で倒す。2発目以降の爆発ならドロップが増える。</summary>
+    public void BreakByBlast(float resourceRate, int nextExplosionIndex)
+    {
+        if (!isAlive) return;
+        pendingBlast = true;
+        blastResourceRate = resourceRate;
+        bombExplosionIndex = nextExplosionIndex;
+        Damage(Mathf.Max(CurrentHp, 1), resourceRate);
+    }
+
     public bool Damage(int damage, float resourceUpRate = 1f, int attackIndex = -1, int enemiesInArea = 1)
     {
+        bool fromBlast = pendingBlast;
+        pendingBlast = false;
         if (!isAlive) return true;
-        if (EnemyShield.TryAbsorb(this, damage, resourceUpRate, attackIndex, enemiesInArea))
+        if (!fromBlast && EnemyShield.TryAbsorb(this, damage, resourceUpRate, attackIndex, enemiesInArea))
             return false;
 
         damage = SkillTreeBonus.ScaleDealtDamage(damage, enemiesInArea, IsBoss);
@@ -228,6 +344,11 @@ public class EnemyBase : MonoBehaviour, IDamagable
 
         inPool = true;
         isAlive = false;
+        headingLocked = false;
+        CacheCollider();
+        if (bodyCollider != null)
+            bodyCollider.isTrigger = colliderWasTrigger;
+        hpFill?.ClearAccent();
         OnRelease();
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
@@ -304,24 +425,46 @@ public class EnemyBase : MonoBehaviour, IDamagable
             EffectManager.Inst.Rent(EffectType.EnemyDead, transform.position);
 
         CameraManager.Inst.Shake(CameraShakeLevel.Small);
-        GameEvent.InGame.PublishEnemyDefeated(enemyData != null ? enemyData.enemyIndex : -1);
         if (owner != null && enemyData != null)
-            owner.SpawnResources(transform.position, enemyData);
+        {
+            float bonus = blastResourceRate > 0f ? blastResourceRate : 1f;
+            owner.SpawnResources(transform.position, enemyData, bonus, isRare, sizeRate);
+        }
+        GameEvent.InGame.PublishEnemyDefeated(enemyData != null ? enemyData.enemyIndex : -1);
+
+        if (isBomb)
+            Explode();
 
         var listener = defeatedListener;
         defeatedListener = null;
         listener?.Invoke(this);
+    }
+
+    void Explode()
+    {
+        AttackHitQuery.Circle(transform.position, BombRadius, blastHits);
+        int count = blastHits.Count;
+        var hits = new IDamagable[count];
+        for (int i = 0; i < count; i++)
+            hits[i] = blastHits[i];
+
+        int index = bombExplosionIndex;
+        float rate = index >= 1 ? StageHarvest.ChainResourceRate : 1f;
+        int next = index + 1;
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (!(hits[i] is EnemyBase enemy) || enemy == this) continue;
+            enemy.BreakByBlast(rate, next);
+        }
     }
     protected virtual void OnRelease() { }
 
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("DeadLine"))
-        {
-            GameEvent.InGame.PublishHpBarDamaged(DamageAmount);
-            Release();
-        }
+        if (!other.CompareTag("DeadLine")) return;
+        if (headingLocked && !enteredPlayfield) return;
+        Release();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -336,7 +479,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
 
     void TryReflectFromWall(Collision2D collision)
     {
-        if (!isAlive) return;
+        if (!isAlive || headingLocked) return;
         if (!collision.collider.CompareTag("Wall")) return;
 
         int count = collision.contactCount;

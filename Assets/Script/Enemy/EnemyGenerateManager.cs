@@ -37,6 +37,7 @@ public class EnemyGenerateManager : MonoBehaviour
     bool isGenerating;
     float spawnStock;
     float spawnSecondTimer;
+    float pairBombIn = -1f;
     StageLevelData currentLevel;
 
     readonly List<StageSpawnOrder> spawnOrders = new();
@@ -103,13 +104,15 @@ public class EnemyGenerateManager : MonoBehaviour
 
         StageTimeCheck();
         TickSpawnOrders();
+        TickPairBomb();
         if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0f) return;
 
         spawnSecondTimer += Time.deltaTime;
         while (spawnSecondTimer >= 1f)
         {
             spawnSecondTimer -= 1f;
-            float spawnPerSecond = currentLevel.spawnCount_forSecond * (1f + Mathf.Max(0f, SkillTreeBonus.SpawnRate));
+            float density = Mathf.Lerp(1f, 1.8f, StageProgress());
+            float spawnPerSecond = currentLevel.spawnCount_forSecond * density * (1f + Mathf.Max(0f, SkillTreeBonus.SpawnRate));
             spawnStock += spawnPerSecond;
 
             int spawnCount = Mathf.FloorToInt(spawnStock);
@@ -131,6 +134,7 @@ public class EnemyGenerateManager : MonoBehaviour
         isGenerating = isStart;
         spawnStock = 0f;
         spawnSecondTimer = 0f;
+        pairBombIn = -1f;
         currentLevel = null;
     }
 
@@ -229,8 +233,113 @@ public class EnemyGenerateManager : MonoBehaviour
 
         var enemyData = SOLoader.EnemyData.GetEnemyData(enemyIndex);
         if (enemyData == null || enemyData.pf == null) return;
-        Spawn(enemyData);
+
+        float progress = StageProgress();
+        if (UnityEngine.Random.value < BombChance(progress))
+        {
+            SpawnInbound(enemyData, false, true);
+            if (progress >= 0.67f && pairBombIn < 0f)
+                pairBombIn = 0.55f;
+        }
+        else
+        {
+            SpawnInbound(enemyData, UnityEngine.Random.value < StageHarvest.RareChance, false);
+        }
         TrySpawnGlass();
+    }
+
+    void TickPairBomb()
+    {
+        if (pairBombIn < 0f) return;
+        pairBombIn -= Time.deltaTime;
+        if (pairBombIn > 0f) return;
+        pairBombIn = -1f;
+        SpawnBombFromLevel();
+    }
+
+    void SpawnBombFromLevel()
+    {
+        if (currentLevel == null) return;
+
+        int enemyIndex = currentLevel.PickEnemyIndex();
+        var enemyDatas = SOLoader.EnemyData != null ? SOLoader.EnemyData.enemyDatas : null;
+        if (enemyIndex < 0 || enemyDatas == null || enemyIndex >= enemyDatas.Length) return;
+
+        var enemyData = SOLoader.EnemyData.GetEnemyData(enemyIndex);
+        if (enemyData == null || enemyData.pf == null) return;
+        SpawnInbound(enemyData, false, true);
+    }
+
+    void SpawnInbound(EnemyData enemyData, bool rare, bool bomb)
+    {
+        var enemyBase = enemyData.pf.GetComponent<EnemyBase>();
+        if (enemyBase == null) return;
+
+        if (!TryPickInbound(DirectionCount(StageProgress()), out var position, out var direction))
+            return;
+
+        Spawn(enemyBase, position, enemyData, false, new EnemyLaunch
+        {
+            inbound = true,
+            direction = direction,
+            rare = rare && !bomb,
+            bomb = bomb,
+        });
+    }
+
+    static float StageProgress()
+    {
+        return StageTimeManager.Inst != null ? StageTimeManager.Inst.Progress : 0f;
+    }
+
+    /// <summary>序盤は左右、その後に上、最後に下を足して 4 方向にする。</summary>
+    static int DirectionCount(float progress)
+    {
+        if (progress < 0.34f) return 2;
+        if (progress < 0.67f) return 3;
+        return 4;
+    }
+
+    static float BombChance(float progress)
+    {
+        return Mathf.Lerp(0.05f, 0.22f, Mathf.Clamp01(progress));
+    }
+
+    static bool TryPickInbound(int directionCount, out Vector3 position, out Vector2 direction)
+    {
+        if (!AttackPlayfield.TryGetRect(out var rect))
+            rect = new Rect(-7f, -5f, 14f, 10f);
+
+        int edge = UnityEngine.Random.Range(0, Mathf.Clamp(directionCount, 1, 4));
+        const float margin = 0.8f;
+        float alongX = UnityEngine.Random.Range(rect.xMin, rect.xMax);
+        float alongY = UnityEngine.Random.Range(rect.yMin, rect.yMax);
+        Vector2 spawn;
+        switch (edge)
+        {
+            case 0:
+                spawn = new Vector2(rect.xMin - margin, alongY);
+                break;
+            case 1:
+                spawn = new Vector2(rect.xMax + margin, alongY);
+                break;
+            case 2:
+                spawn = new Vector2(alongX, rect.yMax + margin);
+                break;
+            default:
+                spawn = new Vector2(alongX, rect.yMin - margin);
+                break;
+        }
+
+        float disk = Mathf.Min(rect.width, rect.height) * 0.22f;
+        Vector2 target = rect.center + UnityEngine.Random.insideUnitCircle * disk;
+        Vector2 delta = target - spawn;
+        if (delta.sqrMagnitude < 0.0001f)
+            delta = Vector2.right;
+
+        position = new Vector3(spawn.x, spawn.y, 0f);
+        direction = delta.normalized;
+        return true;
     }
 
     void TrySpawnGlass()
@@ -296,42 +405,13 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
 
-    private EnemyBase Spawn(EnemyData enemyData)
-    {
-        var position = SelectSpawnPosition();
-        var enemyBase = enemyData.pf.GetComponent<EnemyBase>();
-        if (enemyBase == null) return null;
-        return Spawn(enemyBase, position, enemyData);
-    }
-
-    /// <summary>出現範囲の中央に 1 体出す。ボス用。</summary>
-    public EnemyBase SpawnBoss(EnemyData enemyData)
-    {
-        if (enemyData == null || enemyData.pf == null) return null;
-
-        var enemyBase = enemyData.pf.GetComponent<EnemyBase>();
-        if (enemyBase == null) return null;
-
-        var position = new Vector3(
-            (spawnAreaMin.x + spawnAreaMax.x) * 0.5f,
-            (spawnAreaMin.y + spawnAreaMax.y) * 0.5f,
-            0f);
-        var boss = Spawn(enemyBase, position, enemyData);
-        boss?.MarkAsBoss();
-        return boss;
-    }
-
-
-
-
-
     /// <summary>hp が 0 以下ならプレハブの maxHp を使う。</summary>
-    public T Spawn<T>(T prefab, Vector3 position, EnemyData enemyData, bool fallAsFormation = false) where T : EnemyBase
+    public T Spawn<T>(T prefab, Vector3 position, EnemyData enemyData, bool fallAsFormation = false, EnemyLaunch launch = default) where T : EnemyBase
     {
         if (prefab == null) return null;
 
         var enemy = Rent(prefab);
-        enemy.Activate(position, enemyData, fallAsFormation);
+        enemy.Activate(position, enemyData, fallAsFormation, launch);
         active.Add(enemy);
         return enemy;
     }
@@ -370,7 +450,7 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
     /// <summary>敵データの生成数・種類・プレハブに従って、撃破位置へリソースを出す。</summary>
-    public void SpawnResources(Vector3 origin, EnemyData enemyData)
+    public void SpawnResources(Vector3 origin, EnemyData enemyData, float bonusRate = 1f, bool rare = false, float sizeRate = 1f)
     {
         if (enemyData == null) return;
 
@@ -378,6 +458,9 @@ public class EnemyGenerateManager : MonoBehaviour
         float resourceRate = SOLoader.StageData != null
             ? SOLoader.StageData.GetCurrentEnemyScale().resource
             : 1f;
+        resourceRate *= StageHarvest.ResourceRate * Mathf.Max(0f, bonusRate) * Mathf.Max(0f, sizeRate);
+        if (rare)
+            resourceRate *= StageHarvest.RareResourceRate;
         int count = MilestoneBonus.ScaleDropCount(
             StageEnemyScale.ScaleResourceCount(enemyData.resourceGenerateCount, resourceRate),
             enemyData.enemyIndex,
@@ -399,6 +482,7 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         spawnStock = 0f;
         spawnSecondTimer = 0f;
+        pairBombIn = -1f;
         currentLevel = null;
         ResetSpawnOrders();
         ReleaseActiveEnemies();

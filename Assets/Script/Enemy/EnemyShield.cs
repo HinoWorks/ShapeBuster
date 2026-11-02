@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// 生成位置に留まる盾。普通の敵より手前に描き、横幅の下にいる敵のダメージを代わりに受ける。
-/// 体力が 0 になると壊れる。動かないので、デッドラインでプレイヤーの体力は減らない。
+/// 体力が 0 になると壊れる。通常はその場に留まる。
 /// </summary>
 public class EnemyShield : EnemyBase
 {
@@ -50,7 +50,6 @@ public class EnemyShield : EnemyBase
         active.Remove(this);
     }
 
-    /// <summary>動かないため、画面下へ到達してもプレイヤーの体力は減らさない。</summary>
     protected override void OnTriggerEnter2D(Collider2D other) { }
 
     /// <summary>

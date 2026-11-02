@@ -20,7 +20,11 @@ public class EnemyHpFill : MonoBehaviour
     SpriteRenderer spriteRenderer;
     MaterialPropertyBlock block;
     Color fillColor = Color.white;
+    Color accentColor = Color.white;
     float ratio = 1f;
+    bool hasAccent;
+
+    Color CurrentOutline => hasAccent ? accentColor : outlineColor;
 
     void Awake()
     {
@@ -39,6 +43,19 @@ public class EnemyHpFill : MonoBehaviour
         ratio = 1f;
         ApplyOutline();
         ApplyFill();
+    }
+
+    public void SetAccent(Color color)
+    {
+        hasAccent = true;
+        accentColor = color;
+        ApplyOutlineColor(color);
+    }
+
+    public void ClearAccent()
+    {
+        hasAccent = false;
+        ApplyOutline();
     }
 
     public void SetRatio(float value)
@@ -64,7 +81,7 @@ public class EnemyHpFill : MonoBehaviour
         restore.a = ratio;
         spriteRenderer.DOColor(restore, 0.1f);
 
-        var outline = outlineColor;
+        var outline = CurrentOutline;
         ApplyOutlineColor(Color.white);
         ApplyFlash(1f);
         DOVirtual.Float(0f, 1f, 0.1f, t =>
@@ -78,7 +95,10 @@ public class EnemyHpFill : MonoBehaviour
             spriteRenderer.DOKill();
         DOTween.Kill(this);
         ApplyFill();
-        ApplyOutline();
+        if (hasAccent)
+            ApplyOutlineColor(accentColor);
+        else
+            ApplyOutline();
         ApplyFlash(0f);
     }
 
