@@ -72,6 +72,14 @@ public class PlayerHPCont : MonoBehaviour
         ApplyIncoming(MaxHp, false);
     }
 
+    void RecoverFromDefeat()
+    {
+        currentHp = MaxHp;
+        regenStock = 0f;
+        HpChanged.OnNext((MaxHp, currentHp));
+        EnemyGenerateManager.Inst?.ClearActiveEnemies();
+    }
+
     void ApplyIncoming(int damage, bool useArmor)
     {
         if (useArmor)
@@ -86,8 +94,6 @@ public class PlayerHPCont : MonoBehaviour
         HpChanged.OnNext((MaxHp, currentHp));
 
         if (currentHp <= 0)
-        {
-            GameWatcher.Inst.SetGameState(GameStateType.InGame_End);
-        }
+            RecoverFromDefeat();
     }
 }

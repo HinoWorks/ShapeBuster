@@ -7,7 +7,8 @@ public enum SkillParamTarget
     None,
     Cursor,
     Player,
-    Attack
+    Attack,
+    Enemy
 }
 
 public enum SkillParamStat
@@ -35,7 +36,10 @@ public enum SkillParamStat
     MaxHp = 6, // 最大HPへの加算。ラン開始時に反映
     Regen = 15, // 毎秒の体力回復
     Armor = 16, // 被ダメージ軽減。0.05 で 5%。80% が上限
-    SpawnRate = 17, // 毎秒の湧き数への倍率加算。0.5 で +50%
+    SpawnRate = 17, // 全部の敵の出現間隔を縮める倍率。0.5 で間隔が 1.5分の1
+    EnemyUnlock = 28, // 対象の敵を出現させる。targetIndex は敵番号。0番は最初から出る
+    SpawnSeconds = 29, // その敵が1体出る間隔への加算。負の値で短くなる
+    DropCount = 30, // その敵を倒したときのリソース個数への加算
 
     // == Attack ==
     AttackRate = 7, // 発生率への加算。targetIndex は雷0、貫通1、範囲2、レーザー3
@@ -58,8 +62,8 @@ public class SkillTreeBase
     public Sprite icon; //スキルアイコン。空でもよい
     public int maxLevel = 1; //上限レベル。1レベル分の効果は deltaValue
     public string unit = "NA"; //表示単位。% は100倍、Sec は秒、Count は整数。NA は数値を出さない
-    public SkillParamTarget paramTarget; //効果の対象。Cursor、Player、Attack
-    public int targetIndex; //Attack のとき、雷0、貫通1、範囲2、レーザー3。Cursor と Player は 0
+    public SkillParamTarget paramTarget; //効果の対象。Cursor、Player、Attack、Enemy
+    public int targetIndex; //Attack は雷0、貫通1、範囲2、レーザー3。Enemy は敵番号。Cursor と Player は 0
     public SkillParamStat paramStat; //効果
     public float deltaValue; //1レベルあたりの変化量。間隔を短くする効果は負の値
 }

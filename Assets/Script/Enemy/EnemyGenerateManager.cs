@@ -35,14 +35,7 @@ public class EnemyGenerateManager : MonoBehaviour
     [SerializeField] float screenCenterMaxY = 1f;
 
     bool isGenerating;
-    float spawnStock;
-    float spawnSecondTimer;
-    float pairBombIn = -1f;
-    StageLevelData currentLevel;
-
-    readonly List<StageSpawnOrder> spawnOrders = new();
-    int spawnOrderStage = int.MinValue;
-    int nextSpawnOrder;
+    readonly Dictionary<int, float> spawnTimers = new();
 
 
 
@@ -66,7 +59,6 @@ public class EnemyGenerateManager : MonoBehaviour
             case GameStateType.InGame_Ready:
                 Clear();
                 isGenerating = false;
-                StageTimeCheck();
                 break;
             case GameStateType.InGame:
                 Set_GenerateState(true);
@@ -85,57 +77,56 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
 
-    private void StageTimeCheck()
-    {
-        if (StageTimeManager.Inst == null) return;
-
-        var time = StageTimeManager.Inst.stageTime;
-        if (currentLevel == null || time >= currentLevel.endSecond)
-        {
-            currentLevel = SOLoader.StageData.GetCurrentStageLevelData(PlayingStageIndex(), time);
-            //TODO: レベルデータ変更時の処理
-        }
-    }
-
-
     void Update()
     {
         if (!isGenerating) return;
+        TickUpgradeSpawns();
+    }
 
-        StageTimeCheck();
-        TickSpawnOrders();
-        TickPairBomb();
-        if (currentLevel == null || currentLevel.spawnCount_forSecond <= 0f) return;
+    /// <summary>解放済みの敵を、それぞれの間隔で1体ずつ出す。</summary>
+    void TickUpgradeSpawns()
+    {
+        var table = SOLoader.EnemyData;
+        if (table == null || table.enemyDatas == null) return;
 
-        spawnSecondTimer += Time.deltaTime;
-        while (spawnSecondTimer >= 1f)
+        for (int i = 0; i < table.enemyDatas.Length; i++)
         {
-            spawnSecondTimer -= 1f;
-            float density = Mathf.Lerp(1f, 1.8f, StageProgress());
-            float spawnPerSecond = currentLevel.spawnCount_forSecond * density * (1f + Mathf.Max(0f, SkillTreeBonus.SpawnRate));
-            spawnStock += spawnPerSecond;
+            var enemy = table.enemyDatas[i];
+            if (enemy == null || enemy.pf == null) continue;
+            if (!SkillTreeBonus.IsEnemyUnlocked(enemy.enemyIndex))
+            {
+                spawnTimers.Remove(enemy.enemyIndex);
+                continue;
+            }
 
-            int spawnCount = Mathf.FloorToInt(spawnStock);
-            if (spawnCount <= 0) continue;
+            float interval = SkillTreeBonus.EnemySpawnInterval(enemy);
+            if (!spawnTimers.TryGetValue(enemy.enemyIndex, out var timer))
+                timer = 0f;
+            timer += Time.deltaTime;
 
-            spawnStock -= spawnCount;
-            for (int i = 0; i < spawnCount; i++)
-                SpawnFromLevel(currentLevel);
+            int spawned = 0;
+            while (timer >= interval && spawned < 3)
+            {
+                timer -= interval;
+                spawned++;
+                SpawnUpgradeEnemy(enemy);
+            }
+            if (timer > interval)
+                timer = interval;
+            spawnTimers[enemy.enemyIndex] = timer;
         }
     }
 
-    static int PlayingStageIndex()
+    void SpawnUpgradeEnemy(EnemyData enemyData)
     {
-        return StageTimeManager.Inst != null ? StageTimeManager.Inst.StageIndex : 0;
+        SpawnInbound(enemyData, UnityEngine.Random.value < StageHarvest.RareChance, false);
+        TrySpawnGlass();
     }
 
     public void Set_GenerateState(bool isStart)
     {
         isGenerating = isStart;
-        spawnStock = 0f;
-        spawnSecondTimer = 0f;
-        pairBombIn = -1f;
-        currentLevel = null;
+        spawnTimers.Clear();
     }
 
     /// <summary>
@@ -158,39 +149,6 @@ public class EnemyGenerateManager : MonoBehaviour
         });
     }
 
-    void TickSpawnOrders()
-    {
-        if (StageTimeManager.Inst == null) return;
-
-        int stageIndex = StageTimeManager.Inst.activeStageIndex;
-        if (spawnOrderStage != stageIndex)
-            BindSpawnOrders(stageIndex);
-
-        float time = StageTimeManager.Inst.stageTime;
-        while (nextSpawnOrder < spawnOrders.Count && time >= spawnOrders[nextSpawnOrder].spawnSecond)
-        {
-            ExecuteSpawnOrder(spawnOrders[nextSpawnOrder]);
-            nextSpawnOrder++;
-        }
-    }
-
-    void BindSpawnOrders(int stageIndex)
-    {
-        spawnOrderStage = stageIndex;
-        nextSpawnOrder = 0;
-        spawnOrders.Clear();
-
-        if (SOLoader.StageData == null) return;
-        SOLoader.StageData.CollectSpawnOrders(stageIndex, spawnOrders);
-    }
-
-    void ResetSpawnOrders()
-    {
-        spawnOrderStage = int.MinValue;
-        nextSpawnOrder = 0;
-        spawnOrders.Clear();
-    }
-
     void ExecuteSpawnOrder(StageSpawnOrder order)
     {
         if (order == null || order.count <= 0) return;
@@ -205,7 +163,7 @@ public class EnemyGenerateManager : MonoBehaviour
         var prefab = enemyData.pf.GetComponent<EnemyBase>();
         if (prefab == null) return;
 
-        var xRange = new Vector2(spawnAreaMin.x, spawnAreaMax.x);
+        var xRange = PlayfieldXRange();
         var positions = order.BuildPositions(xRange, ResolveBandY(order.spawnBand));
         bool fallAsFormation = order.shape == SpawnShape.Circle || order.shape == SpawnShape.Line;
         for (int i = 0; i < positions.Length; i++)
@@ -223,51 +181,6 @@ public class EnemyGenerateManager : MonoBehaviour
             default:
                 return new Vector2(spawnAreaMin.y, spawnAreaMax.y);
         }
-    }
-
-    void SpawnFromLevel(StageLevelData level)
-    {
-        int enemyIndex = level.PickEnemyIndex();
-        var enemyDatas = SOLoader.EnemyData != null ? SOLoader.EnemyData.enemyDatas : null;
-        if (enemyIndex < 0 || enemyDatas == null || enemyIndex >= enemyDatas.Length) return;
-
-        var enemyData = SOLoader.EnemyData.GetEnemyData(enemyIndex);
-        if (enemyData == null || enemyData.pf == null) return;
-
-        float progress = StageProgress();
-        if (UnityEngine.Random.value < BombChance(progress))
-        {
-            SpawnInbound(enemyData, false, true);
-            if (progress >= 0.67f && pairBombIn < 0f)
-                pairBombIn = 0.55f;
-        }
-        else
-        {
-            SpawnInbound(enemyData, UnityEngine.Random.value < StageHarvest.RareChance, false);
-        }
-        TrySpawnGlass();
-    }
-
-    void TickPairBomb()
-    {
-        if (pairBombIn < 0f) return;
-        pairBombIn -= Time.deltaTime;
-        if (pairBombIn > 0f) return;
-        pairBombIn = -1f;
-        SpawnBombFromLevel();
-    }
-
-    void SpawnBombFromLevel()
-    {
-        if (currentLevel == null) return;
-
-        int enemyIndex = currentLevel.PickEnemyIndex();
-        var enemyDatas = SOLoader.EnemyData != null ? SOLoader.EnemyData.enemyDatas : null;
-        if (enemyIndex < 0 || enemyDatas == null || enemyIndex >= enemyDatas.Length) return;
-
-        var enemyData = SOLoader.EnemyData.GetEnemyData(enemyIndex);
-        if (enemyData == null || enemyData.pf == null) return;
-        SpawnInbound(enemyData, false, true);
     }
 
     void SpawnInbound(EnemyData enemyData, bool rare, bool bomb)
@@ -298,11 +211,6 @@ public class EnemyGenerateManager : MonoBehaviour
         if (progress < 0.34f) return 2;
         if (progress < 0.67f) return 3;
         return 4;
-    }
-
-    static float BombChance(float progress)
-    {
-        return Mathf.Lerp(0.05f, 0.22f, Mathf.Clamp01(progress));
     }
 
     static bool TryPickInbound(int directionCount, out Vector3 position, out Vector2 direction)
@@ -380,10 +288,28 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
 
+    Vector2 PlayfieldXRange()
+    {
+        float min = spawnAreaMin.x;
+        float max = spawnAreaMax.x;
+        if (AttackPlayfield.TryGetRect(out var rect))
+        {
+            min = Mathf.Max(min, rect.xMin);
+            max = Mathf.Min(max, rect.xMax);
+            if (min > max)
+            {
+                min = rect.xMin;
+                max = rect.xMax;
+            }
+        }
+        return new Vector2(min, max);
+    }
+
     Vector3 SelectSpawnPosition()
     {
+        var xRange = PlayfieldXRange();
         return new Vector3(
-            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+            Random.Range(xRange.x, xRange.y),
             Random.Range(spawnAreaMin.y, spawnAreaMax.y),
             0f);
     }
@@ -455,14 +381,15 @@ public class EnemyGenerateManager : MonoBehaviour
         if (enemyData == null) return;
 
         int stageIndex = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
-        float resourceRate = SOLoader.StageData != null
+        float stageResource = SOLoader.StageData != null
             ? SOLoader.StageData.GetCurrentEnemyScale().resource
             : 1f;
-        resourceRate *= StageHarvest.ResourceRate * Mathf.Max(0f, bonusRate) * Mathf.Max(0f, sizeRate);
+        float resourceRate = stageResource * StageHarvest.ResourceRate * Mathf.Max(0f, bonusRate) * Mathf.Max(0f, sizeRate);
         if (rare)
             resourceRate *= StageHarvest.RareResourceRate;
+        int baseCount = Mathf.Max(0, enemyData.resourceGenerateCount + SkillTreeBonus.DropCountAdd(enemyData.enemyIndex));
         int count = MilestoneBonus.ScaleDropCount(
-            StageEnemyScale.ScaleResourceCount(enemyData.resourceGenerateCount, resourceRate),
+            StageEnemyScale.ScaleResourceCount(baseCount, resourceRate),
             enemyData.enemyIndex,
             enemyData.resourceType,
             stageIndex);
@@ -480,14 +407,16 @@ public class EnemyGenerateManager : MonoBehaviour
 
     public void Clear()
     {
-        spawnStock = 0f;
-        spawnSecondTimer = 0f;
-        pairBombIn = -1f;
-        currentLevel = null;
-        ResetSpawnOrders();
+        spawnTimers.Clear();
         ReleaseActiveEnemies();
         ReleaseActiveResources();
         ReleaseActiveGlass();
+    }
+
+    /// <summary>画面上の敵だけ戻す。生成と出現順はそのまま続ける。</summary>
+    public void ClearActiveEnemies()
+    {
+        ReleaseActiveEnemies();
     }
 
     void ReleaseActiveEnemies()

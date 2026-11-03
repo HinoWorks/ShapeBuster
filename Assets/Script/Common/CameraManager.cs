@@ -30,6 +30,10 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] float frequency = 28f;
 
+    [Header("画面内とみなす範囲。ビューポート座標。この外は画面外")]
+    [SerializeField] Vector2 playfieldViewportMin = Vector2.zero;
+    [SerializeField] Vector2 playfieldViewportMax = Vector2.one;
+
     Vector3 restLocalPosition;
     float amplitude;
     float duration;
@@ -57,6 +61,28 @@ public class CameraManager : MonoBehaviour
     {
         if (Inst == this) Inst = null;
         Restore();
+    }
+
+    public void GetPlayfieldViewport(out Vector2 min, out Vector2 max)
+    {
+        min = playfieldViewportMin;
+        max = playfieldViewportMax;
+        min.x = Mathf.Clamp01(min.x);
+        min.y = Mathf.Clamp01(min.y);
+        max.x = Mathf.Clamp01(max.x);
+        max.y = Mathf.Clamp01(max.y);
+        if (min.x > max.x)
+        {
+            float swap = min.x;
+            min.x = max.x;
+            max.x = swap;
+        }
+        if (min.y > max.y)
+        {
+            float swap = min.y;
+            min.y = max.y;
+            max.y = swap;
+        }
     }
 
     public void Shake(CameraShakeLevel level)

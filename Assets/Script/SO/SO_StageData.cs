@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System;
 
 
 
@@ -8,31 +6,21 @@ using System;
 public class StageData
 {
     public int stageIndex;
-    public int stageTime;
-    public float enemyPowerRate;
+    public float enemySpawnSecond;
+    public float enemySpeed;
     public float enemyHpRate;
-    public float enemySpeedRate;
     public float enemyResourceRate;
-    /// <summary>旧仕様の経過強化。現在のステージ進行では使わない。</summary>
-    public float timeEnhanceRate;
-    public int bossIndex;
-
-
 }
 
-/// <summary>生成時点のステージ倍率。ステージ中は経過時間で上げない。</summary>
+/// <summary>生成時点のステージ倍率。</summary>
 public struct StageEnemyScale
 {
-    public const float TimeStepSeconds = 20f;
-
-    public float power;
     public float hp;
     public float speed;
     public float resource;
 
     public static StageEnemyScale Identity => new StageEnemyScale
     {
-        power = 1f,
         hp = 1f,
         speed = 1f,
         resource = 1f,
@@ -57,66 +45,10 @@ public struct StageEnemyScale
     }
 }
 
-[System.Serializable]
-public class StageLevelData
-{
-    public int stageIndex;
-    public int startSecond;
-    public int endSecond;
-
-    /// <summary>1秒ごとの生成量。1未満も可。整数分を出し、端数は次の秒へ持ち越す。</summary>
-    public float spawnCount_forSecond;
-
-    public int rate_enemy1;
-    public int rate_enemy2;
-    public int rate_enemy3;
-    public int rate_enemy4;
-    public int rate_enemy5;
-    public int rate_enemy6;
-    public int rate_enemy7;
-    public int rate_enemy8;
-    public int rate_enemy9;
-
-    /// <summary>rate_enemy1 から順に重み抽選し、敵配列の番号を返す。合計 0 なら -1。</summary>
-    public int PickEnemyIndex()
-    {
-        int total =
-            rate_enemy1 + rate_enemy2 + rate_enemy3 +
-            rate_enemy4 + rate_enemy5 + rate_enemy6 +
-            rate_enemy7 + rate_enemy8 + rate_enemy9;
-        if (total <= 0) return -1;
-
-        int roll = UnityEngine.Random.Range(0, total);
-        int[] rates =
-        {
-            rate_enemy1, rate_enemy2, rate_enemy3,
-            rate_enemy4, rate_enemy5, rate_enemy6,
-            rate_enemy7, rate_enemy8, rate_enemy9
-        };
-        for (int i = 0; i < rates.Length; i++)
-        {
-            roll -= rates[i];
-            if (roll < 0) return i;
-        }
-        return -1;
-    }
-}
-
-
-
 [CreateAssetMenu(menuName = "SO/StageData")]
 public class SO_StageData : ScriptableObject
 {
     public StageData[] stageDatas;
-    public StageLevelData[] stageLevelDatas;
-    public StageSpawnOrder[] stageSpawnOrders;
-
-
-
-    public StageData GetStageData(int _stageIndex)
-    {
-        return stageDatas[_stageIndex];
-    }
 
     /// <summary>stageIndex が一致するステージ。無ければ null。</summary>
     public StageData FindStage(int stageIndex)
@@ -132,73 +64,35 @@ public class SO_StageData : ScriptableObject
     }
 
     /// <summary>
-    /// ステージに設定した倍率を、経過時間にかかわらず返す。
-    /// 速度とドロップ倍率が 0 以下のときは未設定として 1。
+    /// ステージに設定した倍率を返す。
+    /// 0 以下の速度・体力・獲得は未設定として 1。
     /// </summary>
-    public StageEnemyScale GetEnemyScale(int stageIndex, float elapsedSecond)
+    public StageEnemyScale GetEnemyScale(int stageIndex)
     {
         var stage = FindStage(stageIndex);
         if (stage == null) return StageEnemyScale.Identity;
 
         return new StageEnemyScale
         {
-            power = Mathf.Max(0f, stage.enemyPowerRate),
-            hp = Mathf.Max(0f, stage.enemyHpRate),
-            speed = stage.enemySpeedRate > 0f ? stage.enemySpeedRate : 1f,
+            hp = stage.enemyHpRate > 0f ? stage.enemyHpRate : 1f,
+            speed = stage.enemySpeed > 0f ? stage.enemySpeed : 1f,
             resource = stage.enemyResourceRate > 0f ? stage.enemyResourceRate : 1f,
         };
+    }
+
+    /// <summary>現在ステージの出現間隔。0 以下なら未設定。</summary>
+    public float GetCurrentSpawnSecond()
+    {
+        var time = StageTimeManager.Inst;
+        if (time == null) return 0f;
+        var stage = FindStage(time.activeStageIndex);
+        return stage != null ? stage.enemySpawnSecond : 0f;
     }
 
     public StageEnemyScale GetCurrentEnemyScale()
     {
         var time = StageTimeManager.Inst;
         if (time == null) return StageEnemyScale.Identity;
-        return GetEnemyScale(time.activeStageIndex, time.stageTime);
-    }
-
-    public StageLevelData GetStageLevelData(int _stageIndex, int _startSecond)
-    {
-        return Array.Find(stageLevelDatas, x => x.stageIndex == _stageIndex && x.startSecond == _startSecond);
-    }
-
-    /// <summary>startSecond 以上、endSecond 未満の区間。無ければ null。</summary>
-    public StageLevelData GetCurrentStageLevelData(int stageIndex, float elapsedSecond)
-    {
-        if (stageLevelDatas == null) return null;
-
-        int second = Mathf.FloorToInt(elapsedSecond);
-        for (int i = 0; i < stageLevelDatas.Length; i++)
-        {
-            var level = stageLevelDatas[i];
-            if (level == null || level.stageIndex != stageIndex) continue;
-            if (second >= level.startSecond && second < level.endSecond)
-                return level;
-        }
-        return null;
-    }
-
-    /// <summary>指定ステージの指定生成を、時刻順に dst へ集める。</summary>
-    public void CollectSpawnOrders(int stageIndex, List<StageSpawnOrder> dst)
-    {
-        dst.Clear();
-        if (stageSpawnOrders == null) return;
-
-        var orderIds = new List<int>();
-        for (int i = 0; i < stageSpawnOrders.Length; i++)
-        {
-            var order = stageSpawnOrders[i];
-            if (order == null || order.stageIndex != stageIndex || order.count <= 0) continue;
-            orderIds.Add(i);
-        }
-
-        orderIds.Sort((a, b) =>
-        {
-            int time = stageSpawnOrders[a].spawnSecond.CompareTo(stageSpawnOrders[b].spawnSecond);
-            if (time != 0) return time;
-            return a.CompareTo(b);
-        });
-
-        for (int i = 0; i < orderIds.Count; i++)
-            dst.Add(stageSpawnOrders[orderIds[i]]);
+        return GetEnemyScale(time.activeStageIndex);
     }
 }

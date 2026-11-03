@@ -61,8 +61,9 @@ public class UI_OutGameManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameStateType.OutGame:
-                ToOutGame();
+            case GameStateType.InGame_Ready:
+            case GameStateType.InGame:
+                ShowUpgrade(state == GameStateType.InGame_Ready);
                 break;
             default:
                 Init(false);
@@ -70,16 +71,50 @@ public class UI_OutGameManager : MonoBehaviour
         }
     }
 
-    private void ToOutGame()
+    void ShowUpgrade(bool resetTab)
     {
         ui_stageSelect?.Close();
-        currentState = OutGame_MenuType.Loading;
+        HideModeSwitchButtons();
+        HideFullScreenBack();
         ResourceCounterUpdateCheck();
         Init(true);
+        if (!resetTab) return;
+
+        currentState = OutGame_MenuType.Loading;
         if (ui_mileStoneManager != null)
             ui_mileStoneManager.RefreshUnits();
-
         ActiveTabChange(OutGame_MenuType.SkillTree);
+    }
+
+    void HideFullScreenBack()
+    {
+        var back = transform.Find("back") as RectTransform;
+        if (back == null) return;
+        bool coversScreen = back.anchorMin.x <= 0.01f
+            && back.anchorMin.y <= 0.01f
+            && back.anchorMax.x >= 0.99f
+            && back.anchorMax.y >= 0.99f;
+        if (!coversScreen) return;
+        back.gameObject.SetActive(false);
+    }
+
+    void HideModeSwitchButtons()
+    {
+        var buttons = GetComponentsInChildren<Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var button = buttons[i];
+            if (button == null) continue;
+            int count = button.onClick.GetPersistentEventCount();
+            for (int call = 0; call < count; call++)
+            {
+                string method = button.onClick.GetPersistentMethodName(call);
+                if (method != nameof(OnClick_ToIngame) && method != nameof(OnClick_ToTitle))
+                    continue;
+                button.gameObject.SetActive(false);
+                break;
+            }
+        }
     }
 
 
@@ -116,15 +151,10 @@ public class UI_OutGameManager : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ToIngame()
     {
-        if (ui_stageSelect != null)
-            ui_stageSelect.Open();
-        else
-            GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
     }
 
     public void OnClick_ToTitle()
     {
-        GameWatcher.Inst.SetGameState(GameStateType.Title);
     }
     #endregion
 }

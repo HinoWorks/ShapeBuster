@@ -10,7 +10,7 @@ using System;
 /// マイルストーンの進行。SaveLoader の起動時に Bind する。
 /// UI は CopyStates で一覧を取り、ProgressChanged と TierReached で更新する。
 /// ボーナスは TryClaim で受け取った段階だけ効く。
-/// ドロップ倍率は次の撃破から、マガジン弾数と攻撃パターンは次の InGame_Ready から効く。
+/// ドロップ倍率は次の撃破から効く。マガジン弾数と攻撃パターンは受け取り直後に組み直す。
 /// </summary>
 public static class MilestoneRuntime
 {
@@ -78,6 +78,8 @@ public static class MilestoneRuntime
 
         MilestoneProgress.Set(MilestoneTrack.ClaimedTier, id, new BigInteger(state.claimedTier + 1));
         MilestoneBonus.Invalidate();
+        if (AttackManager.Inst != null)
+            AttackManager.Inst.RefreshCombatLoadout();
         progressChanged.OnNext(new MilestoneProgressChange(
             MilestoneTrack.ClaimedTier,
             id,

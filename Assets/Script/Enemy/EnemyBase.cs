@@ -152,7 +152,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
             ? SOLoader.StageData.GetCurrentEnemyScale()
             : StageEnemyScale.Identity;
         rotateSpeed = enemyData.rotateSpeed * randomRate_rotateSpeed;
-        DamageAmount = StageEnemyScale.ScaleInt(enemyData.damage, scale.power);
+        DamageAmount = enemyData.damage;
         spawnedInFormation = fallAsFormation;
         float speed = enemyData.speed * scale.speed;
         if (headingLocked)
@@ -257,9 +257,16 @@ public class EnemyBase : MonoBehaviour, IDamagable
         colliderCached = true;
     }
 
+    const float ExitPadding = 2.5f;
+
     void ReleaseIfExited()
     {
         if (!AttackPlayfield.TryGetRect(out var rect)) return;
+
+        rect.xMin -= ExitPadding;
+        rect.xMax += ExitPadding;
+        rect.yMin -= ExitPadding;
+        rect.yMax += ExitPadding;
 
         var pos = (Vector2)transform.position;
         if (rect.Contains(pos))

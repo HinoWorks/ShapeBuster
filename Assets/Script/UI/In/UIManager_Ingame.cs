@@ -62,16 +62,7 @@ public class UIManager_Ingame : MonoBehaviour
             }
         }
 
-        if (ui_ResultManager == null) return;
-        if (state == GameStateType.Result)
-        {
-            var record = IngameRecordManager.Inst != null ? IngameRecordManager.Inst.Record : null;
-            ui_ResultManager.Show(record);
-        }
-        else
-        {
-            ui_ResultManager.Hide();
-        }
+        ui_ResultManager?.Hide();
     }
 
 

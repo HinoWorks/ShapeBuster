@@ -222,8 +222,13 @@ public class SaveLoader : MonoBehaviour
     public int ClearedStageIndex => clearedStageIndex;
 
     private readonly HashSet<ResourceType> corruptResources = new();
+    private readonly HashSet<ResourceType> dirtyResources = new();
     private readonly Queue<Func<UniTask>> allQueue = new();
     private bool isProcessingQueue;
+
+    [Header("資源のディスク保存間隔（秒）。メモリ上の所持数は即時に変わる")]
+    [SerializeField] float resourceSaveInterval = 2f;
+    float resourceSaveTimer;
 
 
     /// <summary>
@@ -253,8 +258,23 @@ public class SaveLoader : MonoBehaviour
     /// <summary>
     /// 残りのセーブを書き出してから、シングルトン参照を外す。
     /// </summary>
+    void Update()
+    {
+        if (dirtyResources.Count == 0)
+        {
+            resourceSaveTimer = 0f;
+            return;
+        }
+
+        resourceSaveTimer += Time.unscaledDeltaTime;
+        if (resourceSaveTimer < Mathf.Max(0.25f, resourceSaveInterval)) return;
+        FlushPendingResourceWrites();
+    }
+
     void OnDestroy()
     {
+        if (Inst == this)
+            FlushPendingResourceWrites();
         MilestoneRuntime.Flush();
         FlushQueue();
         if (Inst == this) Inst = null;
@@ -268,6 +288,7 @@ public class SaveLoader : MonoBehaviour
         if (pause)
         {
             MilestoneRuntime.Flush();
+            FlushPendingResourceWrites();
             FlushQueue();
         }
     }
@@ -278,6 +299,7 @@ public class SaveLoader : MonoBehaviour
     void OnApplicationQuit()
     {
         MilestoneRuntime.Flush();
+        FlushPendingResourceWrites();
         FlushQueue();
     }
 
@@ -516,11 +538,62 @@ public class SaveLoader : MonoBehaviour
 
     #region -- resource data --
     /// <summary>
-    /// リソース所持数へ差分を足して保存する。
+    /// リソース所持数へ差分を足す。表示は即時、ディスクへは間隔を空けてまとめて書く。減算はその場で書く。
     /// </summary>
     public void Request_SaveResource(ResourceType _resourceType, BigInteger _delta)
     {
-        EnqueueMethod(() => { SavePendingResource(_resourceType, _delta); });
+        if (_delta == BigInteger.Zero) return;
+        if (!ApplyResourceDelta(_resourceType, _delta)) return;
+        if (_delta < BigInteger.Zero)
+            FlushPendingResourceWrites();
+    }
+
+    /// <summary>
+    /// メモリ上の所持数を変え、ディスクへ書く種別として覚える。
+    /// </summary>
+    bool ApplyResourceDelta(ResourceType resourceType, BigInteger delta)
+    {
+        if (corruptResources.Contains(resourceType))
+        {
+            Debug.LogError($"Skip resource save because loaded data is corrupt: {resourceType}");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(GetResourceKey(resourceType)))
+            throw new ArgumentOutOfRangeException(nameof(resourceType));
+
+        ref var value = ref GetResourceRef(resourceType);
+        value += delta;
+        dirtyResources.Add(resourceType);
+        GameEvent.UI.PublishResourceMod(resourceType, value);
+        return true;
+    }
+
+    /// <summary>
+    /// 溜めた資源の所持数を、種別ごとに1回だけディスクへ書く。
+    /// </summary>
+    public void FlushPendingResourceWrites()
+    {
+        resourceSaveTimer = 0f;
+        if (dirtyResources.Count == 0) return;
+
+        var types = new List<ResourceType>(dirtyResources);
+        dirtyResources.Clear();
+        EnqueueMethod(() =>
+        {
+            for (int i = 0; i < types.Count; i++)
+                WriteResourceCount(types[i]);
+            return UniTask.CompletedTask;
+        });
+    }
+
+    void WriteResourceCount(ResourceType resourceType)
+    {
+        if (corruptResources.Contains(resourceType)) return;
+        var key = GetResourceKey(resourceType);
+        if (string.IsNullOrEmpty(key)) return;
+        BigInteger count = GetResourceRef(resourceType);
+        ES3.Save(key, count.ToString());
     }
     /// <summary>
     /// 差分を加算して保存し、UIへ所持数を通知する。破損時は書かない。

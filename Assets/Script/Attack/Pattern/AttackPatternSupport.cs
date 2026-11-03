@@ -76,14 +76,19 @@ public static class AttackPlayfield
             return false;
         }
 
-        float halfHeight = camera.orthographicSize;
-        float halfWidth = halfHeight * camera.aspect;
-        var center = camera.transform.position;
+        Vector2 viewportMin = Vector2.zero;
+        Vector2 viewportMax = Vector2.one;
+        if (CameraManager.Inst != null)
+            CameraManager.Inst.GetPlayfieldViewport(out viewportMin, out viewportMax);
+
+        float depth = Mathf.Abs(camera.transform.position.z);
+        var min = camera.ViewportToWorldPoint(new Vector3(viewportMin.x, viewportMin.y, depth));
+        var max = camera.ViewportToWorldPoint(new Vector3(viewportMax.x, viewportMax.y, depth));
         rect = Rect.MinMaxRect(
-            center.x - halfWidth,
-            center.y - halfHeight,
-            center.x + halfWidth,
-            center.y + halfHeight);
+            Mathf.Min(min.x, max.x),
+            Mathf.Min(min.y, max.y),
+            Mathf.Max(min.x, max.x),
+            Mathf.Max(min.y, max.y));
         return true;
     }
 }

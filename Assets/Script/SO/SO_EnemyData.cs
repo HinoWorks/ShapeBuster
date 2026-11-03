@@ -16,6 +16,8 @@ public class EnemyData
 
     public ResourceType resourceType;
     public int resourceGenerateCount;
+    /// <summary>解放後、この秒ごとに1体出す。0以下は4秒。</summary>
+    public float spawnInterval = 4f;
     //public GameObject resourcePf;
 }
 

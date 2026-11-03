@@ -309,6 +309,8 @@ public class AttackCont_Cursor : MonoBehaviour
     private void Attack()
     {
         AttackManager.Inst.NotifyPickaxeAttackTiming();
+        if (CameraManager.Inst != null)
+            CameraManager.Inst.Shake(CameraShakeLevel.Small);
 
         var isCritical = UnityEngine.Random.Range(0f, 1f) < criticalRate;
         calc_criticalDamageRate = isCritical ? criticalDamageRate + SkillTreeBonus.CriticalDamage : 1f;

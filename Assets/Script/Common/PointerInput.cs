@@ -57,8 +57,12 @@ public class PointerInput : MonoBehaviour
     bool IsInsideViewport(Vector2 screen)
     {
         var viewport = worldCamera.ScreenToViewportPoint(new Vector3(screen.x, screen.y, 0f));
-        return viewport.x >= 0f && viewport.x <= 1f
-            && viewport.y >= 0f && viewport.y <= 1f;
+        Vector2 min = Vector2.zero;
+        Vector2 max = Vector2.one;
+        if (CameraManager.Inst != null)
+            CameraManager.Inst.GetPlayfieldViewport(out min, out max);
+        return viewport.x >= min.x && viewport.x <= max.x
+            && viewport.y >= min.y && viewport.y <= max.y;
     }
 
     static bool IsOverBlockingUI()

@@ -80,20 +80,6 @@ public class DataBase : MonoBehaviour
         var loadData = await DataLoad("Stage");
         var convData = CSVSerializer.Deserialize<StageData>(loadData);
         mSO_StageData.stageDatas = convData;
-
-        loadData = await DataLoad("StageLevel");
-        var convData2 = CSVSerializer.Deserialize<StageLevelData>(loadData);
-        mSO_StageData.stageLevelDatas = convData2;
-
-        try
-        {
-            loadData = await DataLoad("StageSpawnOrder");
-            mSO_StageData.stageSpawnOrders = CSVSerializer.Deserialize<StageSpawnOrder>(loadData);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning($"StageSpawnOrder の読み込みをスキップしました。{e.Message}");
-        }
     }
     private async UniTask DataLoad_EnemyData()
     {

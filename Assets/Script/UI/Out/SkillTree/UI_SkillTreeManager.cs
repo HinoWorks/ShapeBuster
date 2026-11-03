@@ -499,6 +499,7 @@ public class UI_SkillTreeManager : MonoBehaviour
 
             RefreshArrowsAndHeader();
             GameEvent.UI.PublishResourceMod_OutGame();
+            AttackManager.Inst?.RefreshCombatLoadout();
         }
         finally
         {

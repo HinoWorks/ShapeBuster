@@ -42,8 +42,8 @@ public class IngameRecordData
 
 
 /// <summary>
-/// インゲーム中の獲得リソース、敵撃破数、与ダメージをキャッシュする。
-/// 終了時に記録を止め、SaveLoader へ確定する。表示はリザルト側が行う。
+/// プレイ中の獲得リソース、敵撃破数、与ダメージをキャッシュする。
+/// 所持数は拾得のたびに SaveLoader へ足す。
 /// </summary>
 public class IngameRecordManager : MonoBehaviour
 {
@@ -96,6 +96,7 @@ public class IngameRecordManager : MonoBehaviour
     {
         if (!isRecording || resourceMod.mod == 0) return;
         Record.AddResource(resourceMod.type, resourceMod.mod);
+        SaveLoader.Inst?.Request_SaveResource(resourceMod.type, resourceMod.mod);
     }
 
     void OnDamageDealt((int damage, int attackIndex) info)
@@ -111,7 +112,7 @@ public class IngameRecordManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 記録を確定する。中身は次の InGame_Ready まで Record に残り、所持数と累計は SaveLoader が書く。
+    /// セッション表示用の経過を控える。所持数は拾得のたびに保存済みなので、ここでは足さない。
     /// </summary>
     public void Save()
     {
@@ -123,11 +124,5 @@ public class IngameRecordManager : MonoBehaviour
             Record.isCleared = stage.isStageCleared;
             Record.stageTime = stage.stageTime;
         }
-
-        isRecording = false;
-        if (SaveLoader.Inst != null)
-            SaveLoader.Inst.Request_CommitIngameRecord(Record);
-        else
-            Debug.LogWarning("SaveLoader がないため、インゲーム記録を保存できません。");
     }
 }

@@ -16,8 +16,7 @@ public class UI_stageProgressCont : MonoBehaviour
 
     public void InitOnce()
     {
-        GameEvent.GameState.SetGameState.Subscribe(OnGameState).AddTo(this);
-        Refresh();
+        gameObject.SetActive(false);
     }
 
     void Update()

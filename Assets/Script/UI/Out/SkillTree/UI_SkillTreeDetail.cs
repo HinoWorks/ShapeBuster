@@ -94,11 +94,14 @@ public class UI_SkillTreeDetail : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    static string FormatDescription(SkillTreeBase skill, int currentLevel, bool isMaxLevel)
+    string FormatDescription(SkillTreeBase skill, int currentLevel, bool isMaxLevel)
     {
         if (string.IsNullOrEmpty(skill.description)) return "";
         int paramLevel = isMaxLevel ? currentLevel : currentLevel + 1;
-        return skill.description.Replace("[A]", FormatParams(skill, paramLevel));
+        string value = IsEnemySpawnInterval(skill)
+            ? $"1 / {EnemySpawnIntervalAt(skill, paramLevel).ToString("F2")} sec"
+            : FormatParams(skill, paramLevel);
+        return skill.description.Replace("[A]", value);
     }
 
     static string FormatParams(SkillTreeBase skill, int atLevel)
@@ -115,7 +118,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     void SetParamValues(SkillTreeBase skill, int currentLevel, bool maxed)
     {
-        bool showValue = HasDisplayUnit(skill.unit) || IsAttackDamage(skill);
+        bool showValue = HasDisplayUnit(skill.unit) || IsAttackDamage(skill) || IsEnemySpawnInterval(skill);
         if (obj_param != null)
             obj_param.SetActive(showValue);
 
@@ -140,6 +143,8 @@ public class UI_SkillTreeDetail : MonoBehaviour
     {
         if (skill.paramStat == SkillParamStat.AttackInterval)
             return $"{AttackIntervalAt(skill, atLevel).ToString("F2")} sec";
+        if (skill.paramTarget == SkillParamTarget.Enemy && skill.paramStat == SkillParamStat.SpawnSeconds)
+            return $"1 / {EnemySpawnIntervalAt(skill, atLevel).ToString("F2")} sec";
         if (IsAttackDamage(skill))
             return AttackDamageAt(skill, atLevel).ToString();
         return FormatParams(skill, atLevel);
@@ -148,6 +153,22 @@ public class UI_SkillTreeDetail : MonoBehaviour
     static bool IsAttackDamage(SkillTreeBase skill)
     {
         return skill.paramTarget == SkillParamTarget.Attack && skill.paramStat == SkillParamStat.Damage;
+    }
+
+    static bool IsEnemySpawnInterval(SkillTreeBase skill)
+    {
+        return skill.paramTarget == SkillParamTarget.Enemy && skill.paramStat == SkillParamStat.SpawnSeconds;
+    }
+
+    float EnemySpawnIntervalAt(SkillTreeBase skill, int atLevel)
+    {
+        float bonus = SkillTreeBonus.EnemyValue(skill.targetIndex, SkillParamStat.SpawnSeconds);
+        int appliedLevel = currentUnit != null ? currentUnit.level : 0;
+        bonus += skill.deltaValue * (atLevel - appliedLevel);
+
+        var enemies = SOLoader.EnemyData;
+        var enemy = enemies != null ? enemies.FindEnemyData(skill.targetIndex) : null;
+        return SkillTreeBonus.EnemySpawnInterval(enemy, bonus);
     }
 
     int AttackDamageAt(SkillTreeBase skill, int atLevel)

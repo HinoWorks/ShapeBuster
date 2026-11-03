@@ -58,26 +58,22 @@ public class AttackManager : MonoBehaviour
     }
 
 
-    public async void Set_Ready()
+    public void Set_Ready()
     {
         isAttacking = false;
+        BuildLoadout();
+    }
+
+    /// <summary>戦闘を止めずに、今の強化でカーソルと攻撃パターンを組み直す。</summary>
+    public void RefreshCombatLoadout()
+    {
+        BuildLoadout();
+    }
+
+    void BuildLoadout()
+    {
+        bool attacking = isAttacking;
         AttackUnitDelete();
-
-        /*
-                var cursorUnitData = GameParamManager.Get_CursorParam(cursorSlotData.equipedCursorIndex);
-                if (cursorUnitData != null)
-                {
-                    CursorUnitGenerate(cursorUnitData);
-                }
-
-                // 攻撃ユニット生成 == スキルツリー分のパラメータを読み込む
-                foreach (var attackParam in GameParamManager.list_attackParam)
-                {
-                    if (!attackParam.isActive) continue;
-                    AttackUnitGenerate(attackParam);
-                }
-                */
-
 
         var cursorData = SOLoader.CursorUnitData.GetCursorUnitData(0);
         int magazineAmmo = Mathf.Max(1, cursorData.magazineAmmo + MilestoneBonus.MagazineAmmo + SkillTreeBonus.MagazineAmmoAdd);
@@ -97,6 +93,8 @@ public class AttackManager : MonoBehaviour
         CursorUnitGenerate(cursorParam);
         cursorCont.Set_ActiveCursor(true);
         RefreshAttackPatterns();
+        cursorCont.Set_AttackTrigger(attacking);
+        isAttacking = attacking;
     }
 
     void RefreshAttackPatterns()

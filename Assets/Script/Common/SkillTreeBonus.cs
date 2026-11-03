@@ -42,6 +42,51 @@ public static class SkillTreeBonus
     public static float SpawnRate => Sum(SkillParamTarget.Player, SkillParamStat.SpawnRate);
     public static float GlassSpawnRate => Mathf.Clamp01(Sum(SkillParamTarget.Player, SkillParamStat.GlassSpawnRate));
 
+    public const float MinSpawnInterval = 0.2f;
+
+    /// <summary>0番は初期解放。それ以外は EnemyUnlock を買った敵だけ出す。</summary>
+    public static bool IsEnemyUnlocked(int enemyIndex)
+    {
+        if (enemyIndex <= 0) return true;
+        return EnemyValue(enemyIndex, SkillParamStat.EnemyUnlock) > 0f;
+    }
+
+    public static int DropCountAdd(int enemyIndex)
+    {
+        return Mathf.RoundToInt(EnemyValue(enemyIndex, SkillParamStat.DropCount));
+    }
+
+    /// <summary>1体出るまでの秒。間隔短縮と、全体の湧き倍率を反映する。</summary>
+    public static float EnemySpawnInterval(EnemyData enemy)
+    {
+        if (enemy == null) return MinSpawnInterval;
+        return EnemySpawnInterval(enemy, EnemyValue(enemy.enemyIndex, SkillParamStat.SpawnSeconds));
+    }
+
+    public static float EnemySpawnInterval(EnemyData enemy, float intervalBonus)
+    {
+        float stageSecond = SOLoader.StageData != null ? SOLoader.StageData.GetCurrentSpawnSecond() : 0f;
+        float baseInterval = stageSecond > 0f
+            ? stageSecond
+            : enemy != null && enemy.spawnInterval > 0f ? enemy.spawnInterval : 4f;
+        float pace = 1f + Mathf.Max(0f, SpawnRate);
+        return Mathf.Max(MinSpawnInterval, (baseInterval + intervalBonus) / Mathf.Max(0.01f, pace));
+    }
+
+    public static float EnemyValue(int enemyIndex, SkillParamStat stat)
+    {
+        if (stat == SkillParamStat.None) return 0f;
+
+        float total = 0f;
+        foreach (var contribution in bySkill.Values)
+        {
+            if (contribution.target != SkillParamTarget.Enemy) continue;
+            if (contribution.targetIndex != enemyIndex) continue;
+            if (contribution.stat == stat) total += contribution.value;
+        }
+        return total;
+    }
+
     public const float ArmorCap = 0.8f;
 
     public static int ScaleDealtDamage(int damage, int enemiesInArea, bool isBoss)

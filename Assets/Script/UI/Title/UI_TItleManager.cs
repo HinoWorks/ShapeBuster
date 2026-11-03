@@ -35,7 +35,7 @@ public class UI_TItleManager : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ToOutGame()
     {
-        GameWatcher.Inst.SetGameState(GameStateType.OutGame);
+        GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
     }
     #endregion
 }

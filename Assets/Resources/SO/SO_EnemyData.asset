@@ -24,6 +24,7 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 2
+    spawnInterval: 4
   - enemyIndex: 1
     enemyName: liner
     icon: {fileID: 0}
@@ -35,6 +36,7 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 1
     resourceGenerateCount: 1
+    spawnInterval: 4
   - enemyIndex: 2
     enemyName: brake
     icon: {fileID: 0}
@@ -46,6 +48,7 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 1
+    spawnInterval: 4
   - enemyIndex: 3
     enemyName: ricochet
     icon: {fileID: 0}
@@ -57,6 +60,7 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 1
+    spawnInterval: 4
   - enemyIndex: 4
     enemyName: step
     icon: {fileID: 0}
@@ -68,6 +72,7 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 1
+    spawnInterval: 4
   - enemyIndex: 5
     enemyName: zigzag
     icon: {fileID: 0}
@@ -79,6 +84,7 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 1
+    spawnInterval: 4
   - enemyIndex: 6
     enemyName: shield
     icon: {fileID: 0}
@@ -90,3 +96,4 @@ MonoBehaviour:
     criticalRate: 0
     resourceType: 0
     resourceGenerateCount: 3
+    spawnInterval: 4

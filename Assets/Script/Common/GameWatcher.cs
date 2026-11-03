@@ -3,8 +3,7 @@ using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// シーンは切り替えず、状態だけを進める。
-/// Title → OutGame → InGame_Ready → InGame → InGame_End → Result
-/// Result からは OutGame か、もう一度 InGame_Ready。
+/// Title の開始から InGame_Ready、その後は InGame のまま戦闘と強化を続ける。
 /// </summary>
 public class GameWatcher : MonoBehaviour
 {
@@ -47,11 +46,8 @@ public class GameWatcher : MonoBehaviour
 
     void ApplyState(GameStateType state)
     {
+        if (IsRetired(state)) return;
         if (isStateSet && currentGameState == state) return;
-
-        // プレイ中だけ終了へ進める。リザルト表示後の連続ダメージで巻き戻さない
-        if (state == GameStateType.InGame_End && currentGameState != GameStateType.InGame)
-            return;
 
         currentGameState = state;
         isStateSet = true;
@@ -62,20 +58,22 @@ public class GameWatcher : MonoBehaviour
 
     void OnStateEntered(GameStateType state)
     {
+        if (state == GameStateType.InGame_Ready)
+            BeginIngameReady();
+    }
+
+    static bool IsRetired(GameStateType state)
+    {
         switch (state)
         {
-            case GameStateType.InGame_Ready:
-                BeginIngameReady();
-                break;
             case GameStateType.InGame_End:
-                SetGameState(GameStateType.Result);
-                break;
+            case GameStateType.Result:
             case GameStateType.ResultEnd_ToOutGame:
-                SetGameState(GameStateType.OutGame);
-                break;
             case GameStateType.ResultEnd_ToIngameReady:
-                SetGameState(GameStateType.InGame_Ready);
-                break;
+            case GameStateType.OutGame:
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -98,15 +96,6 @@ public class GameWatcher : MonoBehaviour
 
     public static bool IsIngameScreen(GameStateType state)
     {
-        switch (state)
-        {
-            case GameStateType.InGame_Ready:
-            case GameStateType.InGame:
-            case GameStateType.InGame_End:
-            case GameStateType.Result:
-                return true;
-            default:
-                return false;
-        }
+        return state == GameStateType.InGame_Ready || state == GameStateType.InGame;
     }
 }
