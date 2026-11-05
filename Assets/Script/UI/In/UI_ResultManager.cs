@@ -35,11 +35,11 @@ public class UI_ResultManager : MonoBehaviour
         if (background != null)
             background.color = cleared ? clearColor : endColor;
 
-        float ratio = ProgressRatio(stageTime);
+        int sec = Mathf.Max(0, Mathf.FloorToInt(stageTime));
         if (progressFill != null)
-            progressFill.fillAmount = ratio;
+            progressFill.fillAmount = ProgressRatio(stageTime);
         if (tmp_progress != null)
-            tmp_progress.text = $"{Mathf.RoundToInt(ratio * 100f)}%";
+            tmp_progress.text = $"{sec / 60}:{sec % 60:00}";
 
         if (resourceCounters == null) return;
         for (int i = 0; i < resourceCounters.Length; i++)

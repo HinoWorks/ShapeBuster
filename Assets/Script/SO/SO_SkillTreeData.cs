@@ -7,7 +7,8 @@ public enum SkillParamTarget
     None,
     Cursor,
     Player,
-    Attack
+    Attack,
+    Ball
 }
 
 public enum SkillParamStat
@@ -30,6 +31,9 @@ public enum SkillParamStat
     ReloadGuard = 25, // リロード中の被ダメージ軽減率
     LastMagDamage = 26, // 未使用。予備弾は無限
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
+
+    // == Ball ==
+    BallUnlock = 28, // ブロック崩しの特殊ボールを解放。targetIndex はボム0、レーザー1、ヘビー2
 
     // == Player ==
     MaxHp = 6, // 最大HPへの加算。ラン開始時に反映
@@ -168,6 +172,9 @@ public class SO_SkillTreeData : ScriptableObject
     }
 
     public const int GlassSkillIndex = 37;
+    public const int BallBombSkillIndex = 38;
+    public const int BallLaserSkillIndex = 39;
+    public const int BallHeavySkillIndex = 40;
 
     /// <summary>
     /// シートにガラスの行が無くても、スキル37として出現率を買えるように足す。
@@ -208,6 +215,61 @@ public class SO_SkillTreeData : ScriptableObject
             });
         }
         skillTreeUnits = units.ToArray();
+    }
+
+    /// <summary>
+    /// シートにボールの行が無くても、ボム・レーザー・ヘビーを買えるように足す。
+    /// </summary>
+    public void EnsureBallSkills()
+    {
+        EnsureBallSkill(BallBombSkillIndex, 0, "ボムボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で周囲を巻き込む。");
+        EnsureBallSkill(BallLaserSkillIndex, 1, "レーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその列を焼く。");
+        EnsureBallSkill(BallHeavySkillIndex, 2, "ヘビーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。");
+    }
+
+    void EnsureBallSkill(int index, int targetIndex, string skillName, string description)
+    {
+        if (HasBase(index)) return;
+
+        var bases = new List<SkillTreeBase>();
+        if (skillTreeBases != null)
+            bases.AddRange(skillTreeBases);
+        bases.Add(new SkillTreeBase
+        {
+            baseSkillIndex = index,
+            skillName = skillName,
+            description = description,
+            maxLevel = 1,
+            unit = "NA",
+            paramTarget = SkillParamTarget.Ball,
+            targetIndex = targetIndex,
+            paramStat = SkillParamStat.BallUnlock,
+            deltaValue = 1f
+        });
+        skillTreeBases = bases.ToArray();
+
+        var units = new List<SkillTreeUnit>();
+        if (skillTreeUnits != null)
+            units.AddRange(skillTreeUnits);
+        units.Add(new SkillTreeUnit
+        {
+            skillTreeIndex = index,
+            level = 1,
+            cost_AA = 20
+        });
+        skillTreeUnits = units.ToArray();
+    }
+
+    bool HasBase(int index)
+    {
+        if (skillTreeBases == null) return false;
+        for (int i = 0; i < skillTreeBases.Length; i++)
+        {
+            var basis = skillTreeBases[i];
+            if (basis != null && basis.baseSkillIndex == index)
+                return true;
+        }
+        return false;
     }
 
     bool HasGlassSkill()

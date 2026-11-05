@@ -69,6 +69,7 @@ public class EnemyGenerateManager : MonoBehaviour
                 StageTimeCheck();
                 break;
             case GameStateType.InGame:
+                if (BlockSession.Enabled) break;
                 Set_GenerateState(true);
                 break;
 

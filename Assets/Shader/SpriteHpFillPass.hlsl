@@ -25,6 +25,7 @@ CBUFFER_START(UnityPerMaterial)
     half4 _Color;
     half4 _OutlineColor;
     float _OutlineWidth;
+    float4 _OutlineWidthXY;
     half4 _FleshColor;
     half4 _DotColor0;
     half4 _DotColor1;
@@ -93,17 +94,20 @@ half4 UnlitFragment(Varyings input) : SV_Target
 {
     float2 uv = input.uv;
     float centerA = SampleAlpha(uv);
-    float width = max(_OutlineWidth, 0.0001);
-    float diagonal = width * 0.70710678;
+    float2 width = _OutlineWidthXY.xy;
+    if (width.x < 0.0001) width.x = _OutlineWidth;
+    if (width.y < 0.0001) width.y = _OutlineWidth;
+    width = max(width, 0.0001);
+    float2 diagonal = width * 0.70710678;
 
-    float neighborMin = SampleAlpha(uv + float2(width, 0.0));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-width, 0.0)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(0.0, width)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(0.0, -width)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(diagonal, diagonal)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(diagonal, -diagonal)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-diagonal, diagonal)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-diagonal, -diagonal)));
+    float neighborMin = SampleAlpha(uv + float2(width.x, 0.0));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-width.x, 0.0)));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(0.0, width.y)));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(0.0, -width.y)));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(diagonal.x, diagonal.y)));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(diagonal.x, -diagonal.y)));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-diagonal.x, diagonal.y)));
+    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-diagonal.x, -diagonal.y)));
 
     float isOutline = step(0.01, centerA - neighborMin);
     float isFilled = step(input.uv.y, input.fillRatio);

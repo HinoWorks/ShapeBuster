@@ -128,6 +128,7 @@ public class DataBase : MonoBehaviour
         var convData2 = CSVSerializer.Deserialize<SkillTreeUnit>(loadData);
         mSO_SkillTreeData.skillTreeUnits = convData2;
         mSO_SkillTreeData.EnsureGlassSkill();
+        mSO_SkillTreeData.EnsureBallSkills();
     }
 
 

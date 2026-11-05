@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ステージ経過時間の割合。ゲージとパーセントで出す。
+/// ブロックセッション中は経過時間と、デッドラインまでの近さ。
 /// </summary>
 public class UI_stageProgressCont : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class UI_stageProgressCont : MonoBehaviour
 
     private bool isInGame = false;
     int shownPercent = -1;
+    int shownClock = -1;
 
     public void InitOnce()
     {
@@ -44,6 +45,13 @@ public class UI_stageProgressCont : MonoBehaviour
 
     void Refresh()
     {
+        var session = BlockSession.Inst;
+        if (session != null && session.IsRunning)
+        {
+            SetClock(Mathf.FloorToInt(session.Elapsed), session.Danger);
+            return;
+        }
+
         var stage = StageTimeManager.Inst;
         if (stage == null || stage.stageMaxTime <= 0f)
         {
@@ -54,8 +62,20 @@ public class UI_stageProgressCont : MonoBehaviour
         SetRatio(stage.stageTime / stage.stageMaxTime);
     }
 
+    public void SetClock(int seconds, float danger)
+    {
+        if (fill != null)
+            fill.fillAmount = Mathf.Clamp01(danger);
+
+        if (rateLabel == null || seconds == shownClock) return;
+        shownClock = seconds;
+        shownPercent = -1;
+        rateLabel.text = $"{seconds / 60}:{seconds % 60:00}";
+    }
+
     public void SetRatio(float ratio)
     {
+        shownClock = -1;
         ratio = Mathf.Clamp01(ratio);
         if (fill != null)
             fill.fillAmount = ratio;

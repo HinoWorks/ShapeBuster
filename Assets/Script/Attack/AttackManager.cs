@@ -23,6 +23,10 @@ public class AttackManager : MonoBehaviour
     private SO_AttackUnitData attackUnitData => SOLoader.AttackUnitData;
     [SerializeField] int[] debugAttackIndices = { 0, 1, 2, 3 };
     [SerializeField] bool debugAmmo999 = true;
+    [Header("ブロック崩しのデバッグ取得")]
+    [SerializeField] bool debugBallBomb = true;
+    [SerializeField] bool debugBallLaser = true;
+    [SerializeField] bool debugBallHeavy = true;
     const int DebugAmmoCount = 999;
     readonly List<AttackPatternBase> spawnedPatterns = new();
 
@@ -42,9 +46,11 @@ public class AttackManager : MonoBehaviour
         switch (state)
         {
             case GameStateType.InGame_Ready:
+                if (BlockSession.Enabled) break;
                 Set_Ready();
                 break;
             case GameStateType.InGame:
+                if (BlockSession.Enabled) break;
                 Set_AttackState(true);
                 break;
 
@@ -155,6 +161,17 @@ public class AttackManager : MonoBehaviour
         cursorCont.Set_AttackTrigger(isAttacking);
     }
 
+
+    public bool OwnsDebugBall(BlockBallKind kind)
+    {
+        switch (kind)
+        {
+            case BlockBallKind.Bomb: return debugBallBomb;
+            case BlockBallKind.Laser: return debugBallLaser;
+            case BlockBallKind.Heavy: return debugBallHeavy;
+            default: return false;
+        }
+    }
 
     public void NotifyPickaxeAttackTiming()
     {

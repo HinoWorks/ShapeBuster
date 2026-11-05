@@ -16,6 +16,7 @@ public class UIManager_Ingame : MonoBehaviour
 
     Canvas canvas;
     GraphicRaycaster raycaster;
+    public Canvas HudCanvas => canvas;
 
 
 

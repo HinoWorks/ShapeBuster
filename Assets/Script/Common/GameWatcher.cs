@@ -19,7 +19,9 @@ public class GameWatcher : MonoBehaviour
     void Awake()
     {
         if (Inst == null) { Inst = this; }
-        else { Destroy(this); }
+        else { Destroy(this); return; }
+
+        BlockSession.Ensure();
     }
 
     void Start()

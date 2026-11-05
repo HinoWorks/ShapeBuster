@@ -528,6 +528,7 @@ public static class GameParamManager
         var table = SOLoader.SkillTreeData;
         if (table == null) return;
         table.EnsureGlassSkill();
+        table.EnsureBallSkills();
         if (table.skillTreeUnits == null) return;
 
         var applied = new HashSet<int>();

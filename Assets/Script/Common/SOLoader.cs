@@ -98,6 +98,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_BlockLevel so_blockLevel;
+    public static SO_BlockLevel BlockLevel
+    {
+        get
+        {
+            if (so_blockLevel == null)
+            {
+                so_blockLevel = LoadSO<SO_BlockLevel>(pathBase + nameof(SO_BlockLevel));
+            }
+            return so_blockLevel;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

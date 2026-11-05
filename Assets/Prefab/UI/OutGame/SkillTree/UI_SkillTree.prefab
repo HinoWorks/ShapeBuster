@@ -223,6 +223,9 @@ RectTransform:
   - {fileID: 6729096527856080355}
   - {fileID: 2057933333588989989}
   - {fileID: 6169204243190832387}
+  - {fileID: 7101000000000000002}
+  - {fileID: 7101000000000000012}
+  - {fileID: 7101000000000000022}
   m_Father: {fileID: 8519810331349346541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -289,6 +292,9 @@ MonoBehaviour:
   - {fileID: 8189858551814095412}
   - {fileID: 3478338172016906226}
   - {fileID: 8743703247380204244}
+  - {fileID: 7101000000000000003}
+  - {fileID: 7101000000000000013}
+  - {fileID: 7101000000000000023}
   ui_skillTreeDetail: {fileID: 939151855142368113}
   headerCheckMark: {fileID: 0}
   nodeContPrefab: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
@@ -1445,6 +1451,393 @@ RectTransform:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
   m_PrefabInstance: {fileID: 4819203344556677001}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8769c1e966d14aecbbeb269453439df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_SkillTreeUnit
+--- !u!1001 &7101000000000000001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9107893553739086405}
+    m_Modifications:
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -800
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Name
+      value: pf_ui_skillTreeUnit (bomb)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillIndex
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: isRoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.baseSkillIndex
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.skillName
+      value: ボムボール
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.description
+      value: ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で周囲を巻き込む。
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.maxLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.unit
+      value: NA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramTarget
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.targetIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramStat
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.deltaValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.skillTreeIndex
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.cost_AA
+      value: 20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+--- !u!224 &7101000000000000002 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 7101000000000000001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7101000000000000003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 7101000000000000001}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8769c1e966d14aecbbeb269453439df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_SkillTreeUnit
+--- !u!1001 &7101000000000000011
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9107893553739086405}
+    m_Modifications:
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -800
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Name
+      value: pf_ui_skillTreeUnit (laser)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillIndex
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: isRoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.baseSkillIndex
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.skillName
+      value: レーザーボール
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.description
+      value: ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその列を焼く。
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.maxLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.unit
+      value: NA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramTarget
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.targetIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramStat
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.deltaValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.skillTreeIndex
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.cost_AA
+      value: 20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+--- !u!224 &7101000000000000012 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 7101000000000000011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7101000000000000013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 7101000000000000011}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8769c1e966d14aecbbeb269453439df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_SkillTreeUnit
+--- !u!1001 &7101000000000000021
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9107893553739086405}
+    m_Modifications:
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -800
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Name
+      value: pf_ui_skillTreeUnit (heavy)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillIndex
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: isRoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.baseSkillIndex
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.skillName
+      value: ヘビーボール
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.description
+      value: ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.maxLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.unit
+      value: NA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramTarget
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.targetIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramStat
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.deltaValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.skillTreeIndex
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.cost_AA
+      value: 20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+--- !u!224 &7101000000000000022 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 7101000000000000021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7101000000000000023 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 7101000000000000021}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

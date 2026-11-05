@@ -42,6 +42,35 @@ public static class SkillTreeBonus
     public static float SpawnRate => Sum(SkillParamTarget.Player, SkillParamStat.SpawnRate);
     public static float GlassSpawnRate => Mathf.Clamp01(Sum(SkillParamTarget.Player, SkillParamStat.GlassSpawnRate));
 
+    public static bool OwnsBall(BlockBallKind kind)
+    {
+        int targetIndex;
+        switch (kind)
+        {
+            case BlockBallKind.Bomb:
+                targetIndex = 0;
+                break;
+            case BlockBallKind.Laser:
+                targetIndex = 1;
+                break;
+            case BlockBallKind.Heavy:
+                targetIndex = 2;
+                break;
+            default:
+                return false;
+        }
+
+        float total = 0f;
+        foreach (var contribution in bySkill.Values)
+        {
+            if (contribution.target != SkillParamTarget.Ball) continue;
+            if (contribution.targetIndex != targetIndex) continue;
+            if (contribution.stat != SkillParamStat.BallUnlock) continue;
+            total += contribution.value;
+        }
+        return total >= 1f;
+    }
+
     public const float ArmorCap = 0.8f;
 
     public static int ScaleDealtDamage(int damage, int enemiesInArea, bool isBoss)

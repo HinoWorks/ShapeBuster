@@ -2,7 +2,7 @@ using UniRx;
 using UnityEngine;
 
 /// <summary>
-/// ステージ経過時間。stageMaxTime で生成を止め、そこまでの獲得でステージを終える。
+/// ステージ経過時間。ブロックセッションの終了はデッドラインで、時間では終わらない。
 /// </summary>
 public class StageTimeManager : MonoBehaviour
 {
@@ -61,14 +61,7 @@ public class StageTimeManager : MonoBehaviour
     void Update()
     {
         if (isTimeRunning)
-        {
             stageTime += Time.deltaTime;
-            if (stageTime >= stageMaxTime)
-            {
-                stageTime = stageMaxTime;
-                FinishStage();
-            }
-        }
     }
 
     public void StartStage()

@@ -6,6 +6,7 @@ Shader "ShapeBuster/SpriteHpFill"
         _Color ("Tint", Color) = (1,1,1,1)
         _OutlineColor ("Outline Color", Color) = (1,1,1,1)
         _OutlineWidth ("Outline Width", Range(0.005, 0.2)) = 0.045
+        [HideInInspector] _OutlineWidthXY ("Outline Width XY", Vector) = (0,0,0,0)
         _FleshColor ("地の色", Color) = (0.36, 0.43, 0.24, 1)
         _DotColor0 ("ドット色 1", Color) = (0.75, 0.13, 0.11, 1)
         _DotColor1 ("ドット色 2", Color) = (0.18, 0.46, 0.16, 1)
