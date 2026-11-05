@@ -129,6 +129,7 @@ public class DataBase : MonoBehaviour
         mSO_SkillTreeData.skillTreeUnits = convData2;
         mSO_SkillTreeData.EnsureGlassSkill();
         mSO_SkillTreeData.EnsureBallSkills();
+        mSO_SkillTreeData.EnsureBlockCompactSkill();
     }
 
 

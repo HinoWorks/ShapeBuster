@@ -42,6 +42,34 @@ public static class SkillTreeBonus
     public static float SpawnRate => Sum(SkillParamTarget.Player, SkillParamStat.SpawnRate);
     public static float GlassSpawnRate => Mathf.Clamp01(Sum(SkillParamTarget.Player, SkillParamStat.GlassSpawnRate));
 
+    public const float BlockCellShrinkPerLevel = 0.06f;
+    public const float BlockResourcePerLevel = 0.12f;
+
+    public static float BlockCompactLevel => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockCompact));
+
+    /// <summary>1で元の大きさ。1段ごとに一辺が6%小さくなる。</summary>
+    public static float BlockCellScale => Mathf.Pow(1f - BlockCellShrinkPerLevel, BlockCompactLevel);
+
+    /// <summary>ブロック破壊資源への加算倍率。1段で +12%。</summary>
+    public static float BlockResourceUpRate => BlockCompactLevel * BlockResourcePerLevel;
+
+    /// <summary>ステージの列数を基準に、縮んだマスが同じ幅へ並ぶ列数へ増やす。</summary>
+    public static int ColumnsFor(int baseColumns)
+    {
+        int columns = Mathf.Max(1, baseColumns);
+        float scale = Mathf.Clamp(BlockCellScale, 0.4f, 1f);
+        if (scale >= 0.999f) return columns;
+        return Mathf.Max(columns, Mathf.RoundToInt(columns / scale));
+    }
+
+    public static string FormatBlockCompact(float level)
+    {
+        float scale = Mathf.Pow(1f - BlockCellShrinkPerLevel, Mathf.Max(0f, level));
+        float shrink = (1f - scale) * 100f;
+        float resource = Mathf.Max(0f, level) * BlockResourcePerLevel * 100f;
+        return $"サイズ -{shrink:F0}%  資源 +{resource:F0}%";
+    }
+
     public static bool OwnsBall(BlockBallKind kind)
     {
         int targetIndex;
@@ -53,8 +81,14 @@ public static class SkillTreeBonus
             case BlockBallKind.Laser:
                 targetIndex = 1;
                 break;
+            case BlockBallKind.LaserRow:
+                targetIndex = 3;
+                break;
             case BlockBallKind.Heavy:
                 targetIndex = 2;
+                break;
+            case BlockBallKind.Orbit:
+                targetIndex = 4;
                 break;
             default:
                 return false;

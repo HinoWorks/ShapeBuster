@@ -26,7 +26,9 @@ public class AttackManager : MonoBehaviour
     [Header("ブロック崩しのデバッグ取得")]
     [SerializeField] bool debugBallBomb = true;
     [SerializeField] bool debugBallLaser = true;
+    [SerializeField] bool debugBallLaserRow = true;
     [SerializeField] bool debugBallHeavy = true;
+    [SerializeField] bool debugBallOrbit = true;
     const int DebugAmmoCount = 999;
     readonly List<AttackPatternBase> spawnedPatterns = new();
 
@@ -168,7 +170,9 @@ public class AttackManager : MonoBehaviour
         {
             case BlockBallKind.Bomb: return debugBallBomb;
             case BlockBallKind.Laser: return debugBallLaser;
+            case BlockBallKind.LaserRow: return debugBallLaserRow;
             case BlockBallKind.Heavy: return debugBallHeavy;
+            case BlockBallKind.Orbit: return debugBallOrbit;
             default: return false;
         }
     }

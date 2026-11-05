@@ -6,16 +6,30 @@ public enum BlockBallKind
     Normal,
     Bomb,
     Laser,
-    Heavy
+    LaserRow,
+    Heavy,
+    Orbit
 }
 
 /// <summary>
 /// 手元にある間は止まっている。放つと一定の速さで跳ね、ブロックに当たるとダメージを与える。
-/// ボムとレーザーは当たったときたまに範囲を巻き込み、ヘビーは遅くブロックを貫通する。
+/// ボムは当たったときたまに周囲を巻き込み、縦レーザーはその列、横レーザーはその段を焼く。
+/// ヘビーは遅くブロックを貫通する。オービットは周りを回る玉もブロックを削る。
 /// </summary>
 public class BlockBall : MonoBehaviour
 {
     const float ProcChance = 0.3f;
+    const int OrbitCount = 3;
+    const float OrbitRadius = 0.55f;
+    const float OrbitHitRadius = 0.1f;
+    const float OrbitTurnsPerSecond = 1.35f;
+    const float StuckTravel = 0.5f;
+    const int StuckFlips = 5;
+    const float StuckKick = 0.5f;
+
+    static readonly Collider2D[] orbitHits = new Collider2D[12];
+    static ContactFilter2D orbitFilter;
+    static bool orbitFilterReady;
 
     Rigidbody2D body;
     Collider2D hit;
@@ -28,6 +42,17 @@ public class BlockBall : MonoBehaviour
     Vector2 approach;
     Vector2 forced;
     bool forceVelocity;
+    float sidewaysSign;
+    float sidewaysCross;
+    int sidewaysFlips;
+    bool sidewaysReady;
+    float verticalSign;
+    float verticalCross;
+    int verticalFlips;
+    bool verticalReady;
+    Transform[] orbits;
+    List<BlockPiece>[] orbitTouch;
+    float orbitAngle;
 
     public BlockBallKind Kind { get; private set; }
     public bool IsHeld { get; private set; }
@@ -80,6 +105,7 @@ public class BlockBall : MonoBehaviour
         gameObject.layer = BlockSession.BallLayer;
         IsHeld = true;
         body.simulated = false;
+        CreateOrbits();
     }
 
     public void SetVisible(bool visible)
@@ -88,6 +114,7 @@ public class BlockBall : MonoBehaviour
             sprite.enabled = visible;
         if (!visible)
             CutTrail();
+        ShowOrbits(visible && !IsHeld);
     }
 
     public void Hold(Vector2 position)
@@ -103,6 +130,8 @@ public class BlockBall : MonoBehaviour
         body.angularVelocity = 0f;
         body.position = position;
         body.simulated = false;
+        ShowOrbits(false);
+        ClearStuck();
     }
 
     public void Fly(Vector2 direction)
@@ -119,11 +148,13 @@ public class BlockBall : MonoBehaviour
         body.position = transform.position;
         body.linearVelocity = approach;
         BeginTrail();
+        ClearStuck();
     }
 
     public void Stop()
     {
         CutTrail();
+        ShowOrbits(false);
         if (body == null) return;
         body.linearVelocity = Vector2.zero;
         body.simulated = false;
@@ -158,13 +189,21 @@ public class BlockBall : MonoBehaviour
     void FixedUpdate()
     {
         if (body == null || !body.simulated || IsHeld) return;
+        bool pierced = forceVelocity;
         if (forceVelocity)
         {
             body.linearVelocity = forced;
             forceVelocity = false;
         }
         KeepSpeed(launchDirection);
+        if (!pierced)
+            WatchStuck();
         approach = body.linearVelocity;
+    }
+
+    void LateUpdate()
+    {
+        TickOrbits();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -182,6 +221,8 @@ public class BlockBall : MonoBehaviour
                 BlockSession.Inst?.Explode(point);
             else if (Kind == BlockBallKind.Laser && Random.value < ProcChance)
                 BlockSession.Inst?.Beam(point.x);
+            else if (Kind == BlockBallKind.LaserRow && Random.value < ProcChance)
+                BlockSession.Inst?.BeamRow(point.y);
 
             if (Kind == BlockBallKind.Heavy)
             {
@@ -235,6 +276,182 @@ public class BlockBall : MonoBehaviour
             velocity.y = Mathf.Sign(velocity.y == 0f ? 1f : velocity.y) * minAxis;
 
         body.linearVelocity = velocity.normalized * speed;
+    }
+
+    /// <summary>
+    /// 同じ向きの反転を繰り返しても、直交する方向がほとんど動かないときスタックとみなす。
+    /// 横なら縦成分を、縦なら横成分を足して往復から抜ける。
+    /// </summary>
+    void WatchStuck()
+    {
+        if (body == null) return;
+
+        Vector2 velocity = body.linearVelocity;
+        Vector2 position = body.position;
+        WatchAxis(ref sidewaysSign, ref sidewaysCross, ref sidewaysFlips, ref sidewaysReady,
+            velocity.x, position.y, true);
+        velocity = body.linearVelocity;
+        WatchAxis(ref verticalSign, ref verticalCross, ref verticalFlips, ref verticalReady,
+            velocity.y, position.x, false);
+    }
+
+    void WatchAxis(ref float sign, ref float cross, ref int flips, ref bool ready,
+        float axisVelocity, float crossPosition, bool kickVertical)
+    {
+        if (Mathf.Abs(axisVelocity) < 0.01f) return;
+
+        float nextSign = axisVelocity > 0f ? 1f : -1f;
+        if (!ready)
+        {
+            ready = true;
+            sign = nextSign;
+            cross = crossPosition;
+            flips = 0;
+            return;
+        }
+
+        if (nextSign == sign) return;
+
+        float travel = Mathf.Abs(crossPosition - cross);
+        sign = nextSign;
+        cross = crossPosition;
+        if (travel >= StuckTravel)
+        {
+            flips = 0;
+            return;
+        }
+
+        flips++;
+        if (flips < StuckFlips) return;
+
+        Vector2 velocity = body.linearVelocity;
+        int axis = kickVertical ? 1 : 0;
+        float kickSign = Mathf.Abs(velocity[axis]) < 0.01f ? 1f : Mathf.Sign(velocity[axis]);
+        velocity[axis] = kickSign * Mathf.Max(Mathf.Abs(velocity[axis]), speed * StuckKick);
+        body.linearVelocity = velocity.normalized * speed;
+        flips = 0;
+    }
+
+    void ClearStuck()
+    {
+        sidewaysReady = false;
+        sidewaysFlips = 0;
+        verticalReady = false;
+        verticalFlips = 0;
+    }
+
+    void CreateOrbits()
+    {
+        if (Kind != BlockBallKind.Orbit) return;
+
+        EnsureOrbitFilter();
+        var found = new List<Transform>(OrbitCount);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            if (child.name == "Orbit")
+                found.Add(child);
+        }
+
+        if (found.Count == 0)
+        {
+            for (int i = 0; i < OrbitCount; i++)
+                found.Add(CreateOrbitDot().transform);
+        }
+
+        orbits = found.ToArray();
+        orbitTouch = new List<BlockPiece>[orbits.Length];
+        for (int i = 0; i < orbits.Length; i++)
+        {
+            orbits[i].gameObject.SetActive(false);
+            orbitTouch[i] = new List<BlockPiece>(4);
+        }
+    }
+
+    GameObject CreateOrbitDot()
+    {
+        var host = new GameObject("Orbit");
+        host.layer = BlockSession.BallLayer;
+        host.transform.SetParent(transform, false);
+        host.transform.localScale = Vector3.one * 0.22f;
+        var dot = host.AddComponent<SpriteRenderer>();
+        dot.sprite = BlockSession.CircleSprite;
+        dot.color = new Color(1f, 0.93f, 0.55f, 1f);
+        dot.sortingOrder = 6;
+        return host;
+    }
+
+    static void EnsureOrbitFilter()
+    {
+        if (orbitFilterReady) return;
+        orbitFilter = new ContactFilter2D
+        {
+            useLayerMask = true,
+            useTriggers = false
+        };
+        orbitFilter.SetLayerMask(1 << BlockSession.BlockLayer);
+        orbitFilterReady = true;
+    }
+
+    void ShowOrbits(bool visible)
+    {
+        if (orbits == null) return;
+        for (int i = 0; i < orbits.Length; i++)
+        {
+            if (orbits[i] != null)
+                orbits[i].gameObject.SetActive(visible);
+            if (!visible && orbitTouch != null)
+                orbitTouch[i].Clear();
+        }
+    }
+
+    void TickOrbits()
+    {
+        if (orbits == null) return;
+
+        bool flying = !IsHeld && body != null && body.simulated;
+        ShowOrbits(flying);
+        if (!flying) return;
+
+        orbitAngle += Time.deltaTime * OrbitTurnsPerSecond * Mathf.PI * 2f;
+        float step = Mathf.PI * 2f / orbits.Length;
+        for (int i = 0; i < orbits.Length; i++)
+        {
+            float angle = orbitAngle + step * i;
+            Vector2 pos = (Vector2)transform.position + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * OrbitRadius;
+            orbits[i].position = pos;
+            SweepOrbit(i, pos);
+        }
+    }
+
+    void SweepOrbit(int index, Vector2 pos)
+    {
+        var touching = orbitTouch[index];
+        int count = Physics2D.OverlapCircle(pos, OrbitHitRadius, orbitFilter, orbitHits);
+        for (int i = touching.Count - 1; i >= 0; i--)
+        {
+            var piece = touching[i];
+            if (piece == null || !piece.IsAlive || !Overlaps(piece, count))
+                touching.RemoveAt(i);
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            var piece = orbitHits[i] != null ? orbitHits[i].GetComponent<BlockPiece>() : null;
+            if (piece == null || !piece.IsAlive || touching.Contains(piece)) continue;
+            touching.Add(piece);
+            piece.Hit(damage);
+        }
+    }
+
+    static bool Overlaps(BlockPiece piece, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (orbitHits[i] != null && orbitHits[i].GetComponent<BlockPiece>() == piece)
+                return true;
+        }
+        return false;
     }
 
     static void ApplyLayer(Transform target)

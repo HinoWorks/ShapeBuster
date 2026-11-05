@@ -529,6 +529,7 @@ public static class GameParamManager
         if (table == null) return;
         table.EnsureGlassSkill();
         table.EnsureBallSkills();
+        table.EnsureBlockCompactSkill();
         if (table.skillTreeUnits == null) return;
 
         var applied = new HashSet<int>();

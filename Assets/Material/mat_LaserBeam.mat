@@ -37,9 +37,11 @@ Material:
     - _EdgeAlpha: 0.45
     - _EnableExternalAlpha: 0
     - _EndFade: 0
+    - _EndPower: 0.4
     - _FlowScale: 0.57
     - _FlowSpeed: 19.1
     - _GlowWidth: 1.5
+    - _GradientAngle: -90
     - _PixelSize: 0.077
     - _SparkRate: 16
     - _StreakStrength: 0.048

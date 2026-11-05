@@ -8,7 +8,8 @@ public enum SkillParamTarget
     Cursor,
     Player,
     Attack,
-    Ball
+    Ball,
+    Block
 }
 
 public enum SkillParamStat
@@ -33,7 +34,10 @@ public enum SkillParamStat
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
 
     // == Ball ==
-    BallUnlock = 28, // ブロック崩しの特殊ボールを解放。targetIndex はボム0、レーザー1、ヘビー2
+    BallUnlock = 28, // ブロック崩しの特殊ボールを解放。targetIndex はボム0、縦レーザー1、ヘビー2、横レーザー3、オービット4
+
+    // == Block ==
+    BlockCompact = 29, // 1レベルで一辺6%縮小し、ステージ列数から列を増やす。破壊資源は1レベル+12%
 
     // == Player ==
     MaxHp = 6, // 最大HPへの加算。ラン開始時に反映
@@ -175,6 +179,9 @@ public class SO_SkillTreeData : ScriptableObject
     public const int BallBombSkillIndex = 38;
     public const int BallLaserSkillIndex = 39;
     public const int BallHeavySkillIndex = 40;
+    public const int BallLaserRowSkillIndex = 41;
+    public const int BallOrbitSkillIndex = 42;
+    public const int BlockCompactSkillIndex = 43;
 
     /// <summary>
     /// シートにガラスの行が無くても、スキル37として出現率を買えるように足す。
@@ -218,13 +225,55 @@ public class SO_SkillTreeData : ScriptableObject
     }
 
     /// <summary>
-    /// シートにボールの行が無くても、ボム・レーザー・ヘビーを買えるように足す。
+    /// シートにボールの行が無くても、特殊ボールを買えるように足す。
     /// </summary>
     public void EnsureBallSkills()
     {
         EnsureBallSkill(BallBombSkillIndex, 0, "ボムボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で周囲を巻き込む。");
         EnsureBallSkill(BallLaserSkillIndex, 1, "レーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその列を焼く。");
+        EnsureBallSkill(BallLaserRowSkillIndex, 3, "横レーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその段を焼く。");
         EnsureBallSkill(BallHeavySkillIndex, 2, "ヘビーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。");
+        EnsureBallSkill(BallOrbitSkillIndex, 4, "オービットボール", "ノーマル弾のあとに同じ方向へ飛ぶ。周りを回る玉もブロックを削る。");
+    }
+
+    /// <summary>
+    /// シートに細片の行が無くても、ブロック縮小と破壊資源を買えるように足す。
+    /// </summary>
+    public void EnsureBlockCompactSkill()
+    {
+        if (HasBase(BlockCompactSkillIndex)) return;
+
+        var bases = new List<SkillTreeBase>();
+        if (skillTreeBases != null)
+            bases.AddRange(skillTreeBases);
+        bases.Add(new SkillTreeBase
+        {
+            baseSkillIndex = BlockCompactSkillIndex,
+            skillName = "細片",
+            description = "ステージの列数を基準に、ブロックを小さくして列を増やす。[A]",
+            maxLevel = 5,
+            unit = "NA",
+            paramTarget = SkillParamTarget.Block,
+            targetIndex = 0,
+            paramStat = SkillParamStat.BlockCompact,
+            deltaValue = 1f
+        });
+        skillTreeBases = bases.ToArray();
+
+        var units = new List<SkillTreeUnit>();
+        if (skillTreeUnits != null)
+            units.AddRange(skillTreeUnits);
+        int[] costs = { 25, 60, 120, 220, 380 };
+        for (int level = 1; level <= costs.Length; level++)
+        {
+            units.Add(new SkillTreeUnit
+            {
+                skillTreeIndex = BlockCompactSkillIndex,
+                level = level,
+                cost_AA = costs[level - 1]
+            });
+        }
+        skillTreeUnits = units.ToArray();
     }
 
     void EnsureBallSkill(int index, int targetIndex, string skillName, string description)

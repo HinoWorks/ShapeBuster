@@ -9,6 +9,8 @@ public class StageData
 {
     public int stageIndex;
     public int stageTime;
+    /// <summary>横に並べるブロック数。0以下は10列。</summary>
+    public int blockColumns;
     public float enemyPowerRate;
     public float enemyHpRate;
     public float enemySpeedRate;

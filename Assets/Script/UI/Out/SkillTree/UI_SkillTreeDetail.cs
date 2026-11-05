@@ -104,6 +104,8 @@ public class UI_SkillTreeDetail : MonoBehaviour
     static string FormatParams(SkillTreeBase skill, int atLevel)
     {
         float value = skill.deltaValue * atLevel;
+        if (skill.paramStat == SkillParamStat.BlockCompact)
+            return SkillTreeBonus.FormatBlockCompact(value);
         if (!HasDisplayUnit(skill.unit))
         {
             if (IsAttackDamage(skill))
@@ -115,7 +117,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     void SetParamValues(SkillTreeBase skill, int currentLevel, bool maxed)
     {
-        bool showValue = HasDisplayUnit(skill.unit) || IsAttackDamage(skill);
+        bool showValue = HasDisplayUnit(skill.unit) || IsAttackDamage(skill) || skill.paramStat == SkillParamStat.BlockCompact;
         if (obj_param != null)
             obj_param.SetActive(showValue);
 

@@ -67,6 +67,9 @@ public class BlockPiece : MonoBehaviour
     public float HpScale => Mathf.Max(0f, hpScale);
     public bool IsAlive { get; private set; }
     public bool IsSolid => solid;
+    public int Level => level;
+    public int Hp => currentHp;
+    public int HpMax => barMax;
     public float Bottom => transform.position.y - half;
 
     void OnEnable()
@@ -206,6 +209,7 @@ public class BlockPiece : MonoBehaviour
     public void Hit(int damage)
     {
         if (!IsAlive || solid) return;
+        if (session != null && !session.IsOnCamera(this)) return;
 
         int applied = Mathf.Max(1, damage);
         int left = applied;
@@ -243,9 +247,9 @@ public class BlockPiece : MonoBehaviour
         if (collider != null)
             collider.enabled = false;
 
-        int reward = StageEnemyScale.ScaleResourceCount(
-            rewardCells,
-            1f + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate));
+        float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate))
+            * (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate));
+        int reward = StageEnemyScale.ScaleResourceCount(rewardCells, rewardRate);
         if (reward > 0)
             GameEvent.UI.PublishResourceMod_Ingame(ResourceType.AA, reward);
 

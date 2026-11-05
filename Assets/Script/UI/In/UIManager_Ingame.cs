@@ -10,12 +10,15 @@ public class UIManager_Ingame : MonoBehaviour
     [SerializeField] UI_ResourceCounter[] resourceCounters;
     [SerializeField] UI_HUD_MagazineInfo bulletInfo;
     public UI_HUD_MagazineInfo BulletInfo => bulletInfo;
+    [SerializeField] Canvas dynamicCanvas;
+    public Canvas DynamicHudCanvas => dynamicCanvas;
 
     [Space(10)]
     public UI_ResultManager ui_ResultManager;
 
     Canvas canvas;
     GraphicRaycaster raycaster;
+    GraphicRaycaster dynamicRaycaster;
     public Canvas HudCanvas => canvas;
 
 
@@ -27,6 +30,8 @@ public class UIManager_Ingame : MonoBehaviour
 
         canvas = GetComponent<Canvas>();
         raycaster = GetComponent<GraphicRaycaster>();
+        if (dynamicCanvas != null)
+            dynamicRaycaster = dynamicCanvas.GetComponent<GraphicRaycaster>();
 
         GameEvent.GameState.SetGameState.Subscribe(OnGameStateChanged).AddTo(this);
         Apply(GameStateType.Title);
@@ -54,6 +59,8 @@ public class UIManager_Ingame : MonoBehaviour
         bool show = GameWatcher.IsIngameScreen(state);
         if (canvas != null) canvas.enabled = show;
         if (raycaster != null) raycaster.enabled = show;
+        if (dynamicCanvas != null) dynamicCanvas.enabled = show;
+        if (dynamicRaycaster != null) dynamicRaycaster.enabled = show;
 
         if (state == GameStateType.InGame_Ready)
         {

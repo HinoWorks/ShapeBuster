@@ -454,6 +454,16 @@ MonoBehaviour:
     targetIndex: 2
     paramStat: 28
     deltaValue: 1
+  - baseSkillIndex: 43
+    skillName: 細片
+    description: ステージの列数を基準に、ブロックを小さくして列を増やす。[A]
+    icon: {fileID: 0}
+    maxLevel: 5
+    unit: NA
+    paramTarget: 5
+    targetIndex: 0
+    paramStat: 29
+    deltaValue: 1
   skillTreeUnits:
   - skillTreeIndex: 0
     level: 1
@@ -2906,6 +2916,51 @@ MonoBehaviour:
   - skillTreeIndex: 40
     level: 1
     cost_AA: 20
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 43
+    level: 1
+    cost_AA: 25
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 43
+    level: 2
+    cost_AA: 60
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 43
+    level: 3
+    cost_AA: 120
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 43
+    level: 4
+    cost_AA: 220
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 43
+    level: 5
+    cost_AA: 380
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
