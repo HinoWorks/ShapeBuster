@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// ブロック崩しの1セッション。
-/// ステージの列数×6行を配置率70%で出し、全体を滑らかに下降させる。
-/// 未クリアのステージは、stageTime の次の生成でボスを画面外に出す。以降の通常配置は70%。
+/// 配置率、HP、下降速度、ボール数などの数値は SO_BlockSession。HPと速度はステージの倍率も掛ける。
+/// 未クリアのステージは、stageTime の次の生成でボスを画面外に出す。
 /// 新しい群の下限は画面上部1/4。ブロックがデッドラインに触れると終了する。
-/// ボールは3つ。狙った方向へ、手持ちを戻ってきた順に0.2秒おきで続けて打つ。下のラインで回収する。
+/// 狙った方向へ、手持ちを戻ってきた順に続けて打つ。下のラインで回収する。
 /// </summary>
 public class BlockSession : MonoBehaviour
 {
@@ -18,39 +18,25 @@ public class BlockSession : MonoBehaviour
     public const int BallLayer = 9;
     public const float BallDiameter = 0.32f;
 
-    const float BaseFill = 0.7f;
-    /// <summary>ボス出現後の通常配置率。出現そのものは続ける。</summary>
-    const float BossFillScale = 0.7f;
-    const float MaxFill = 0.85f;
-    const float FillPerSecond = 0.002f;
-    const float BaseSpeed = 0.1f;
-    const float SpeedPerSecond = 0.005f;
-    const float BaseInterval = 8f;
-    const float IntervalShrinkPerSecond = 0.045f;
-    const float MinInterval = 4.2f;
-    const int BaseHp = 2;
-    const float HpPerSecond = 0.1f;
-    /// <summary>1マス増えるごとに足すHP倍率。プレハブの hpScale もさらに掛ける。</summary>
-    const float SizeHpScale = 1f;
-    const int BallCount = 3;
-    const float BallSpeed = 13f;
-    const float BlockGap = 0.1f;
-    const float ShotInterval = 0.2f;
-    const int BallDamage = 1;
-    const float BlockSizeScale = 0.5f;
-    const int DefaultColumns = 10;
-    const float MinPull = 0.28f;
-    const float HeavySpeedScale = 0.5f;
-    const float BombRadiusInCells = 2.5f;
-    const float WallThickness = 0.3f;
-    /// <summary>カメラの外まで壁を塗る余白。画面シェイクで隙間が出ない量。</summary>
-    const float WallOverscan = 2f;
-    const float BeamLife = 0.32f;
-    const float BeamHold = 0.18f;
-    const int AimBounces = 12;
-    const float AimSkin = 0.02f;
-
     public static BlockSession Inst { get; private set; }
+
+    SO_BlockSession rule;
+    float blockHpRate = 1f;
+    float blockSpeedRate = 1f;
+
+    SO_BlockSession Rule
+    {
+        get
+        {
+            if (rule != null) return rule;
+            rule = SOLoader.BlockSession;
+            if (rule != null) return rule;
+
+            Debug.LogWarning("SO_BlockSession がありません。初期値で進めます。");
+            rule = ScriptableObject.CreateInstance<SO_BlockSession>();
+            return rule;
+        }
+    }
 
     /// <summary>インゲームはブロック崩し。敵の湧きとカーソル射撃は使わない。</summary>
     public const bool Enabled = true;
@@ -71,6 +57,7 @@ public class BlockSession : MonoBehaviour
     readonly List<BlockBall> shotQueue = new();
     readonly List<BlockBall> handOrder = new();
     readonly List<BallFlash> flashes = new();
+    readonly List<PoisonZone> poisons = new();
     readonly List<Vector2> aimPath = new();
     UI_BlockBallHud ballHud;
     UI_BlockCursorInfo cursorInfo;
@@ -222,26 +209,27 @@ public class BlockSession : MonoBehaviour
         }
     }
 
-    float CurrentSpeed => BaseSpeed + elapsed * SpeedPerSecond;
+    float CurrentSpeed => (Rule.baseSpeed + elapsed * Rule.speedPerSecond) * blockSpeedRate;
 
-    float CurrentInterval => Mathf.Max(MinInterval, BaseInterval - elapsed * IntervalShrinkPerSecond);
+    float CurrentInterval => Mathf.Max(Rule.minInterval, Rule.baseInterval - elapsed * Rule.intervalShrinkPerSecond);
 
     float CurrentFill
     {
         get
         {
-            float fill = Mathf.Clamp(BaseFill + elapsed * FillPerSecond, BaseFill, MaxFill);
+            float fill = Mathf.Clamp(Rule.baseFill + elapsed * Rule.fillPerSecond, Rule.baseFill, Rule.maxFill);
             if (bossSpawned)
-                fill *= BossFillScale;
+                fill *= Rule.bossFillScale;
             return fill;
         }
     }
 
-    int CurrentHp => Mathf.Max(1, Mathf.RoundToInt(BaseHp + elapsed * HpPerSecond));
+    int CurrentHp => Mathf.Max(1, Mathf.RoundToInt((Rule.baseHp + elapsed * Rule.hpPerSecond) * blockHpRate));
 
     void Begin()
     {
         Clear();
+        ResolveStageRates();
         running = true;
         elapsed = 0f;
         waveTimer = 0f;
@@ -281,6 +269,7 @@ public class BlockSession : MonoBehaviour
         shotQueue.Clear();
         handOrder.Clear();
         flashes.Clear();
+        poisons.Clear();
         elapsed = 0f;
         waveTimer = 0f;
         bossArmed = false;
@@ -328,14 +317,14 @@ public class BlockSession : MonoBehaviour
 
         int baseColumns = ResolveBaseColumns();
         float midX = (view.xMin + view.xMax) * 0.5f;
-        float preferred = view.width / DefaultColumns * BlockSizeScale;
+        float preferred = view.width / Rule.defaultColumns * Rule.blockSizeScale;
         float fitted = view.width / baseColumns;
         float baseCell = Mathf.Max(0.12f, Mathf.Min(preferred, fitted));
         columns = SkillTreeBonus.ColumnsFor(baseColumns);
         cell = Mathf.Max(0.08f, baseCell * baseColumns / columns);
         float blockLeft = midX - cell * columns * 0.5f;
         float blockRight = midX + cell * columns * 0.5f;
-        float edge = BlockGap * 0.5f;
+        float edge = Rule.blockGap * 0.5f;
         fieldLeft = blockLeft + edge;
         fieldRight = blockRight - edge;
         var root = new GameObject("BlockFormation");
@@ -364,16 +353,16 @@ public class BlockSession : MonoBehaviour
         Physics2D.IgnoreLayerCollision(BallLayer, 0, false);
         Physics2D.IgnoreLayerCollision(BallLayer, BallLayer, true);
 
-        float outerLeft = view.xMin - WallOverscan;
-        float outerRight = view.xMax + WallOverscan;
-        float outerBottom = view.yMin - WallOverscan;
-        float outerTop = view.yMax + WallOverscan;
+        float outerLeft = view.xMin - Rule.wallOverscan;
+        float outerRight = view.xMax + Rule.wallOverscan;
+        float outerBottom = view.yMin - Rule.wallOverscan;
+        float outerTop = view.yMax + Rule.wallOverscan;
         var props = SOLoader.BlockSession;
         PlaceWallFill(props != null ? props.leftWall : null, outerLeft, fieldLeft, outerBottom, outerTop, true);
         PlaceWallFill(props != null ? props.rightWall : null, fieldRight, outerRight, outerBottom, outerTop, true);
         CreateWall(
-            new Vector2((fieldLeft + fieldRight) * 0.5f, ceilingY + WallThickness * 0.5f),
-            new Vector2(fieldRight - fieldLeft, WallThickness),
+            new Vector2((fieldLeft + fieldRight) * 0.5f, ceilingY + Rule.wallThickness * 0.5f),
+            new Vector2(fieldRight - fieldLeft, Rule.wallThickness),
             false);
         PlaceDeadline(fieldRight - fieldLeft);
         CreateAimGuide();
@@ -382,14 +371,30 @@ public class BlockSession : MonoBehaviour
         CreateCursorInfo();
     }
 
+    void ResolveStageRates()
+    {
+        blockHpRate = 1f;
+        blockSpeedRate = 1f;
+        var time = StageTimeManager.Inst;
+        var table = SOLoader.StageData;
+        if (time == null || table == null) return;
+
+        var stage = table.FindStage(time.StageIndex);
+        if (stage == null) return;
+        if (stage.blockHpRate > 0f)
+            blockHpRate = stage.blockHpRate;
+        if (stage.blockSpeedRate > 0f)
+            blockSpeedRate = stage.blockSpeedRate;
+    }
+
     int ResolveBaseColumns()
     {
         var time = StageTimeManager.Inst;
         var table = SOLoader.StageData;
-        if (time == null || table == null) return DefaultColumns;
+        if (time == null || table == null) return Rule.defaultColumns;
 
         var stage = table.FindStage(time.StageIndex);
-        if (stage == null || stage.blockColumns <= 0) return DefaultColumns;
+        if (stage == null || stage.blockColumns <= 0) return Rule.defaultColumns;
         return stage.blockColumns;
     }
 
@@ -514,15 +519,17 @@ public class BlockSession : MonoBehaviour
     {
         launchAnchor = new Vector2((fieldLeft + fieldRight) * 0.5f, deadlineY + 0.55f);
         var props = SOLoader.BlockSession;
-        var spawned = new List<BlockBall>(BallCount + 3);
-        for (int i = 0; i < BallCount; i++)
-            AddBall(spawned, BlockBallKind.Normal, props != null ? props.normalBall : null, BallSpeed, true);
+        var spawned = new List<BlockBall>(Rule.ballCount + 3);
+        for (int i = 0; i < Rule.ballCount; i++)
+            AddBall(spawned, BlockBallKind.Normal, props != null ? props.normalBall : null, Rule.ballSpeed, true);
 
-        AddBall(spawned, BlockBallKind.Bomb, props != null ? props.bombBall : null, BallSpeed, false);
-        AddBall(spawned, BlockBallKind.Laser, props != null ? props.laserBall : null, BallSpeed, false);
-        AddBall(spawned, BlockBallKind.LaserRow, props != null ? props.laserRowBall : null, BallSpeed, false);
-        AddBall(spawned, BlockBallKind.Orbit, props != null ? props.orbitBall : null, BallSpeed, false);
-        AddBall(spawned, BlockBallKind.Heavy, props != null ? props.heavyBall : null, BallSpeed * HeavySpeedScale, false);
+        AddBall(spawned, BlockBallKind.Bomb, props != null ? props.bombBall : null, Rule.ballSpeed, false);
+        AddBall(spawned, BlockBallKind.Laser, props != null ? props.laserBall : null, Rule.ballSpeed, false);
+        AddBall(spawned, BlockBallKind.LaserRow, props != null ? props.laserRowBall : null, Rule.ballSpeed, false);
+        AddBall(spawned, BlockBallKind.Orbit, props != null ? props.orbitBall : null, Rule.ballSpeed, false);
+        AddBall(spawned, BlockBallKind.Cross, props != null ? props.crossBall : null, Rule.ballSpeed, false);
+        AddBall(spawned, BlockBallKind.Poison, props != null ? props.poisonBall : null, Rule.ballSpeed, false);
+        AddBall(spawned, BlockBallKind.Heavy, props != null ? props.heavyBall : null, Rule.ballSpeed * Rule.heavySpeedScale, false);
         balls = spawned.ToArray();
         handOrder.Clear();
         handOrder.AddRange(spawned);
@@ -541,7 +548,7 @@ public class BlockSession : MonoBehaviour
         }
 
         var ball = Instantiate(prefab);
-        ball.Init(bounce, BallDamage, speed, kind);
+        ball.Init(bounce, Rule.ballDamage, speed, kind);
         ball.Hold(launchAnchor);
         ball.SetVisible(false);
         spawned.Add(ball);
@@ -567,7 +574,7 @@ public class BlockSession : MonoBehaviour
 
         ballHud = UI_BlockBallHud.Create(canvas.transform, font);
         arena.Add(ballHud.gameObject);
-        ballHud.Set(BallCount, BallCount);
+        ballHud.Set(Rule.ballCount, Rule.ballCount);
     }
 
     void CreateCursorInfo()
@@ -670,6 +677,7 @@ public class BlockSession : MonoBehaviour
         TickCursorBase();
         TickCursorInfo();
         TickFlashes();
+        TickPoisons();
         if (ballHud != null)
             ballHud.Set(CountLaunchable(), balls.Length);
     }
@@ -753,7 +761,7 @@ public class BlockSession : MonoBehaviour
         float floorY = deadlineY + radius;
         aimPath.Add(pos);
 
-        for (int leg = 0; leg < AimBounces && left > 0.05f; leg++)
+        for (int leg = 0; leg < Rule.aimBounces && left > 0.05f; leg++)
         {
             if (pos.y <= floorY)
                 return;
@@ -793,15 +801,15 @@ public class BlockSession : MonoBehaviour
                 return;
 
             dir = Vector2.Reflect(dir, hit.normal).normalized;
-            pos += hit.normal * AimSkin;
+            pos += hit.normal * Rule.aimSkin;
         }
     }
 
-    static float PierceDistance(Collider2D collider, Vector2 direction, float radius)
+    float PierceDistance(Collider2D collider, Vector2 direction, float radius)
     {
         var extents = collider.bounds.extents;
         float span = Mathf.Abs(extents.x * direction.x) + Mathf.Abs(extents.y * direction.y);
-        return span * 2f + radius + AimSkin;
+        return span * 2f + radius + Rule.aimSkin;
     }
 
     static float BallRadius(BlockBall ball)
@@ -822,7 +830,7 @@ public class BlockSession : MonoBehaviour
         if (ball == null) return;
 
         Vector2 pull = (Vector2)PointerWorld.Position - launchAnchor;
-        if (pull.magnitude < MinPull)
+        if (pull.magnitude < Rule.minPull)
         {
             ball.SetVisible(false);
             pinCursorUi = false;
@@ -857,9 +865,9 @@ public class BlockSession : MonoBehaviour
         if (!volley || shotQueue.Count == 0) return;
 
         shotTimer += Time.deltaTime;
-        if (shotTimer < ShotInterval) return;
+        if (shotTimer < Rule.shotInterval) return;
 
-        shotTimer -= ShotInterval;
+        shotTimer -= Rule.shotInterval;
         FireQueued();
     }
 
@@ -915,13 +923,13 @@ public class BlockSession : MonoBehaviour
     public void Explode(BlockPiece source)
     {
         Vector2 point = SkillOrigin(source);
-        float radius = cell * BombRadiusInCells;
+        float radius = cell * Rule.bombRadiusInCells;
         for (int i = pieces.Count - 1; i >= 0; i--)
         {
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!Within(piece, point, radius)) continue;
-            piece.Hit(BallDamage);
+            piece.Hit(Rule.ballDamage);
         }
 
         ShowFlash(
@@ -942,7 +950,7 @@ public class BlockSession : MonoBehaviour
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!InColumn(piece, x, pad)) continue;
-            piece.Hit(BallDamage);
+            piece.Hit(Rule.ballDamage);
         }
 
         ShowBeam(new Vector2(x, (screenBottom + screenTop) * 0.5f), Mathf.Max(0.2f, screenTop - screenBottom), false);
@@ -957,19 +965,154 @@ public class BlockSession : MonoBehaviour
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!InRow(piece, y, pad)) continue;
-            piece.Hit(BallDamage);
+            piece.Hit(Rule.ballDamage);
         }
 
         ShowBeam(new Vector2((screenLeft + screenRight) * 0.5f, y), Mathf.Max(0.2f, screenRight - screenLeft), true);
     }
 
+    public void BeamCross(BlockPiece source)
+    {
+        Vector2 origin = SkillOrigin(source);
+        float pad = cell * 0.55f;
+        var upRight = new Vector2(0.70710678f, 0.70710678f);
+        var downRight = new Vector2(0.70710678f, -0.70710678f);
+        for (int i = pieces.Count - 1; i >= 0; i--)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
+            if (!OnDiagonal(piece, origin, upRight, pad) && !OnDiagonal(piece, origin, downRight, pad)) continue;
+            piece.Hit(Rule.ballDamage);
+        }
+
+        float spanX = screenRight - screenLeft;
+        float spanY = screenTop - screenBottom;
+        float length = Mathf.Sqrt(spanX * spanX + spanY * spanY) * 2.5f;
+        var props = SOLoader.BlockSession;
+        var prefab = props != null ? props.laserBeamCross : null;
+        ShowBeam(origin, length, 45f, prefab);
+        ShowBeam(origin, length, -45f, prefab);
+    }
+
+    public void Poison(BlockPiece source)
+    {
+        if (poisons.Count >= PoisonCap) return;
+
+        Vector2 point = SkillOrigin(source);
+        float radius = cell * Rule.poisonRadiusInCells;
+        DamagePoison(point, radius);
+
+        var view = CreatePoisonView(point, radius);
+        var renderer = view != null ? view.GetComponentInChildren<SpriteRenderer>(true) : null;
+        poisons.Add(new PoisonZone
+        {
+            point = point,
+            radius = radius,
+            view = view,
+            sprite = renderer,
+            color = renderer != null ? renderer.color : Color.white,
+            scale = view != null ? view.localScale : Vector3.one
+        });
+    }
+
+    /// <summary>同時に置ける沼。初期値は SO の poisonMax。スキルツリーの加算はあとから足す。</summary>
+    int PoisonCap => Mathf.Max(0, Rule.poisonMax);
+
+    void TickPoisons()
+    {
+        float exit = 0.25f;
+        for (int i = poisons.Count - 1; i >= 0; i--)
+        {
+            var zone = poisons[i];
+            zone.age += Time.deltaTime;
+            float life = Mathf.Max(0.2f, Rule.poisonDuration);
+            float fadeStart = Mathf.Max(0f, life - exit);
+            if (zone.age < fadeStart)
+            {
+                zone.tick += Time.deltaTime;
+                if (zone.tick >= Mathf.Max(0.05f, Rule.poisonInterval))
+                {
+                    zone.tick = 0f;
+                    DamagePoison(zone.point, zone.radius);
+                }
+            }
+            else if (zone.sprite != null)
+            {
+                float t = Mathf.Clamp01((zone.age - fadeStart) / Mathf.Max(0.05f, life - fadeStart));
+                zone.view.localScale = zone.scale * (1f - t);
+                var color = zone.color;
+                color.a *= 1f - t;
+                zone.sprite.color = color;
+            }
+
+            if (zone.age < life) continue;
+
+            EndPoison(zone);
+            poisons.RemoveAt(i);
+        }
+    }
+
+    void DamagePoison(Vector2 point, float radius)
+    {
+        for (int i = pieces.Count - 1; i >= 0; i--)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
+            if (!Within(piece, point, radius)) continue;
+            piece.Hit(Rule.ballDamage);
+        }
+    }
+
+    Transform CreatePoisonView(Vector2 point, float radius)
+    {
+        var props = SOLoader.BlockSession;
+        var prefab = props != null ? props.poisonPool : null;
+        GameObject instance;
+        if (prefab != null)
+            instance = Instantiate(prefab);
+        else
+        {
+            instance = new GameObject("Poison");
+            var sprite = instance.AddComponent<SpriteRenderer>();
+            sprite.sprite = CircleSprite;
+            sprite.color = new Color(0.4f, 0.95f, 0.35f, 0.45f);
+            sprite.sortingOrder = 4;
+        }
+
+        var renderer = instance.GetComponentInChildren<SpriteRenderer>(true);
+        if (renderer != null && renderer.sprite == null)
+            renderer.sprite = CircleSprite;
+        float spriteSize = renderer != null && renderer.sprite != null
+            ? Mathf.Max(0.001f, renderer.sprite.bounds.size.x)
+            : 1f;
+        var authored = prefab != null ? prefab.transform.localScale : Vector3.one;
+        float size = Mathf.Max(0.2f, radius * 2f) / spriteSize;
+        instance.transform.position = new Vector3(point.x, point.y, 0f);
+        instance.transform.localScale = new Vector3(
+            Mathf.Sign(authored.x == 0f ? 1f : authored.x) * size * Mathf.Max(0.001f, Mathf.Abs(authored.x)),
+            Mathf.Sign(authored.y == 0f ? 1f : authored.y) * size * Mathf.Max(0.001f, Mathf.Abs(authored.y)),
+            authored.z == 0f ? 1f : authored.z);
+        arena.Add(instance);
+        return instance.transform;
+    }
+
+    void EndPoison(PoisonZone zone)
+    {
+        if (zone.view != null)
+            Destroy(zone.view.gameObject);
+    }
+
     void ShowBeam(Vector2 center, float length, bool horizontal)
     {
         var props = SOLoader.BlockSession;
-        var prefab = props != null ? props.laserBeam : null;
+        ShowBeam(center, length, horizontal ? 90f : 0f, props != null ? props.laserBeam : null);
+    }
+
+    void ShowBeam(Vector2 center, float length, float angle, GameObject prefab)
+    {
         if (prefab == null)
         {
-            Debug.LogWarning("縦レーザーのプレハブがありません。 SO_BlockSession を確認してください。");
+            Debug.LogWarning("レーザーのプレハブがありません。 SO_BlockSession を確認してください。");
             return;
         }
 
@@ -981,10 +1124,9 @@ public class BlockSession : MonoBehaviour
         float ySign = authored.y < 0f ? -1f : 1f;
 
         var instance = Instantiate(prefab);
-        var rotation = horizontal ? Quaternion.Euler(0f, 0f, 90f) : Quaternion.identity;
         instance.transform.SetPositionAndRotation(
             new Vector3(center.x, center.y, prefab.transform.localPosition.z),
-            prefab.transform.rotation * rotation);
+            prefab.transform.rotation * Quaternion.Euler(0f, 0f, angle));
         var scale = new Vector3(xSign * thickness, ySign * length, authored.z == 0f ? 1f : authored.z);
         instance.transform.localScale = scale;
 
@@ -996,8 +1138,8 @@ public class BlockSession : MonoBehaviour
         {
             transform = instance.transform,
             sprite = sprite,
-            life = BeamLife,
-            hold = BeamHold,
+            life = Rule.beamLife,
+            hold = Rule.beamHold,
             shrinkShort = true,
             color = color,
             from = scale,
@@ -1039,6 +1181,17 @@ public class BlockSession : MonoBehaviour
     {
         float half = Mathf.Abs(piece.transform.lossyScale.y) * 0.5f;
         return Mathf.Abs(piece.transform.position.y - y) <= half + pad;
+    }
+
+    static bool OnDiagonal(BlockPiece piece, Vector2 origin, Vector2 direction, float pad)
+    {
+        Vector2 normal = new Vector2(-direction.y, direction.x);
+        Vector2 rel = (Vector2)piece.transform.position - origin;
+        float distance = Mathf.Abs(rel.x * normal.x + rel.y * normal.y);
+        var scale = piece.transform.lossyScale;
+        float reach = Mathf.Abs(scale.x) * 0.5f * Mathf.Abs(normal.x)
+            + Mathf.Abs(scale.y) * 0.5f * Mathf.Abs(normal.y);
+        return distance <= reach + pad;
     }
 
     void ShowFlash(Vector3 position, Sprite image, Vector3 from, Vector3 to, Color color, float life, float hold = 0f, bool shrinkShort = false)
@@ -1108,6 +1261,18 @@ public class BlockSession : MonoBehaviour
         return scale;
     }
 
+    sealed class PoisonZone
+    {
+        public Vector2 point;
+        public float radius;
+        public float age;
+        public float tick;
+        public Transform view;
+        public SpriteRenderer sprite;
+        public Color color;
+        public Vector3 scale;
+    }
+
     sealed class BallFlash
     {
         public Transform transform;
@@ -1175,7 +1340,7 @@ public class BlockSession : MonoBehaviour
         float worldBottom = screenTop;
         if (!float.IsNegativeInfinity(stackedBottom))
         {
-            float above = parentY + stackedBottom + BlockGap * 0.5f;
+            float above = parentY + stackedBottom + Rule.blockGap * 0.5f;
             worldBottom = Mathf.Max(worldBottom, above);
         }
 
@@ -1268,7 +1433,7 @@ public class BlockSession : MonoBehaviour
         float worldBottom = spawnFloorY;
         if (!float.IsNegativeInfinity(stackedBottom))
         {
-            float above = parentY + stackedBottom + BlockGap * 0.5f;
+            float above = parentY + stackedBottom + Rule.blockGap * 0.5f;
             worldBottom = Mathf.Max(worldBottom, above);
         }
 
@@ -1368,7 +1533,7 @@ public class BlockSession : MonoBehaviour
     void SplitDurability(int cells, float hpScale, out int level, out int current, out int barMax, out int stepHp)
     {
         float scale = SizeScale(cells, hpScale);
-        stepHp = Mathf.Max(1, Mathf.RoundToInt(BaseHp * scale));
+        stepHp = Mathf.Max(1, Mathf.RoundToInt(Rule.baseHp * scale));
         int total = Mathf.Max(stepHp, Mathf.RoundToInt(CurrentHp * scale));
 
         level = Mathf.Max(1, Mathf.CeilToInt(total / (float)stepHp));
@@ -1388,9 +1553,9 @@ public class BlockSession : MonoBehaviour
         barMax = stepHp;
     }
 
-    static float SizeScale(int cells, float hpScale)
+    float SizeScale(int cells, float hpScale)
     {
-        float scale = 1f + (Mathf.Max(1, cells) - 1) * SizeHpScale;
+        float scale = 1f + (Mathf.Max(1, cells) - 1) * Rule.sizeHpScale;
         return scale * Mathf.Max(0f, hpScale);
     }
 
@@ -1398,8 +1563,8 @@ public class BlockSession : MonoBehaviour
     {
         float spanWidth = cell * cellsX;
         float spanHeight = cell * cellsY;
-        float width = Mathf.Max(0.02f, spanWidth - BlockGap);
-        float height = Mathf.Max(0.02f, spanHeight - BlockGap);
+        float width = Mathf.Max(0.02f, spanWidth - Rule.blockGap);
+        float height = Mathf.Max(0.02f, spanHeight - Rule.blockGap);
         BlockPiece piece;
         if (prefab != null)
             piece = Instantiate(prefab, formation);

@@ -428,7 +428,8 @@ public class AttackCont_Cursor : MonoBehaviour
         float bonus = SkillTreeBonus.PickupRange;
         if (bonus <= 0f || obj_pointerArea == null) return;
 
-        float baseRadius = 0.5f;
+        var session = SOLoader.BlockSession;
+        float baseRadius = session != null ? session.cursorPickupRadius : 0.5f;
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider == null) continue;

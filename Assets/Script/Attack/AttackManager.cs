@@ -29,6 +29,8 @@ public class AttackManager : MonoBehaviour
     [SerializeField] bool debugBallLaserRow = true;
     [SerializeField] bool debugBallHeavy = true;
     [SerializeField] bool debugBallOrbit = true;
+    [SerializeField] bool debugBallCross = true;
+    [SerializeField] bool debugBallPoison = true;
     const int DebugAmmoCount = 999;
     readonly List<AttackPatternBase> spawnedPatterns = new();
 
@@ -173,6 +175,8 @@ public class AttackManager : MonoBehaviour
             case BlockBallKind.LaserRow: return debugBallLaserRow;
             case BlockBallKind.Heavy: return debugBallHeavy;
             case BlockBallKind.Orbit: return debugBallOrbit;
+            case BlockBallKind.Cross: return debugBallCross;
+            case BlockBallKind.Poison: return debugBallPoison;
             default: return false;
         }
     }

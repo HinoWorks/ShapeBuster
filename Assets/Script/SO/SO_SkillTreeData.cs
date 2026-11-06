@@ -34,7 +34,7 @@ public enum SkillParamStat
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
 
     // == Ball ==
-    BallUnlock = 28, // ブロック崩しの特殊ボールを解放。targetIndex はボム0、縦レーザー1、ヘビー2、横レーザー3、オービット4
+    BallUnlock = 28, // ブロック崩しの特殊ボールを解放。targetIndex はボム0、縦レーザー1、ヘビー2、横レーザー3、オービット4、クロス5、ポイズン6
 
     // == Block ==
     BlockCompact = 29, // 1レベルで一辺6%縮小し、ステージ列数から列を増やす。破壊資源は1レベル+12%
@@ -181,6 +181,8 @@ public class SO_SkillTreeData : ScriptableObject
     public const int BallHeavySkillIndex = 40;
     public const int BallLaserRowSkillIndex = 41;
     public const int BallOrbitSkillIndex = 42;
+    public const int BallCrossSkillIndex = 44;
+    public const int BallPoisonSkillIndex = 45;
     public const int BlockCompactSkillIndex = 43;
 
     /// <summary>
@@ -234,6 +236,8 @@ public class SO_SkillTreeData : ScriptableObject
         EnsureBallSkill(BallLaserRowSkillIndex, 3, "横レーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその段を焼く。");
         EnsureBallSkill(BallHeavySkillIndex, 2, "ヘビーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。");
         EnsureBallSkill(BallOrbitSkillIndex, 4, "オービットボール", "ノーマル弾のあとに同じ方向へ飛ぶ。周りを回る玉もブロックを削る。");
+        EnsureBallSkill(BallCrossSkillIndex, 5, "クロスレーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で斜め2本のレーザーを出す。");
+        EnsureBallSkill(BallPoisonSkillIndex, 6, "ポイズンボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で沼を残し、数秒間まわりを溶かす。");
     }
 
     /// <summary>

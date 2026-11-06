@@ -18,10 +18,51 @@ MonoBehaviour:
   laserRowBall: {fileID: 8101000000000434486, guid: c4e8a1b0bb000001a1b0bb000001b0b5, type: 3}
   heavyBall: {fileID: 8101000000000434486, guid: c4e8a1b0bb000001a1b0bb000001b0b3, type: 3}
   orbitBall: {fileID: 8101000000000434492, guid: e1a7c3b05d4e4f21a9b8c7d6e5f40312, type: 3}
+  crossBall: {fileID: 8101000000000434442, guid: a2c4e6f81b3d4a5c9e0f1a2b3c4d5e6f, type: 3}
+  poisonBall: {fileID: 8101000000000434448, guid: b3d5f7a92c4e4b6d0f1a2b3c4d5e6f70, type: 3}
   leftWall: {fileID: 710001, guid: b1f0e2a34c5d6789a0b1c2d3e4f50618, type: 3}
   rightWall: {fileID: 720001, guid: b1f0e2a34c5d6789a0b1c2d3e4f50619, type: 3}
   deadline: {fileID: 730001, guid: b1f0e2a34c5d6789a0b1c2d3e4f5061a, type: 3}
   laserBeam: {fileID: 740001, guid: c3a91e7b5d4f4a2e8b6c0d1f9a7e5b34, type: 3}
+  laserBeamCross: {fileID: 740001, guid: 6fab99392497e4457abfc5daaeea8815, type: 3}
+  poisonPool: {fileID: 750001, guid: c4e6a8b03d5f4c7e1a2b3c4d5e6f7081, type: 3}
   cursorInfo: {fileID: 100003, guid: d5e9f2b38c604d1fab4c7e208f815326, type: 3}
   cursorBase: {fileID: 4190715106081716764, guid: 09814f1f1dd4049c4b182aad67ab0dad, type: 3}
   aimGuide: {fileID: 200003, guid: b8c4d5e6f7084910bc23de45f0678901, type: 3}
+  baseFill: 0.7
+  bossFillScale: 0.7
+  maxFill: 0.85
+  fillPerSecond: 0.002
+  baseSpeed: 0.075
+  speedPerSecond: 0.0025
+  baseInterval: 8
+  intervalShrinkPerSecond: 0.045
+  minInterval: 4.2
+  baseHp: 4
+  hpPerSecond: 0.1
+  sizeHpScale: 1
+  ballCount: 3
+  ballSpeed: 13
+  shotInterval: 0.2
+  ballDamage: 1
+  minPull: 0.28
+  heavySpeedScale: 0.3
+  bombRadiusInCells: 2.5
+  poisonDuration: 2.5
+  poisonRadiusInCells: 1.6
+  poisonInterval: 0.4
+  poisonMax: 2
+  blockGap: 0.1
+  blockSizeScale: 0.5
+  defaultColumns: 10
+  wallThickness: 0.3
+  wallOverscan: 2
+  beamLife: 0.32
+  beamHold: 0.18
+  aimBounces: 12
+  aimSkin: 0.02
+  pickupRange: 0.5
+  cursorPickupRadius: 0.5
+  collectKickDistance: 0.45
+  collectKickDuration: 0.1
+  collectPullDuration: 0.18

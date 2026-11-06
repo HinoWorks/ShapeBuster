@@ -90,6 +90,12 @@ public static class SkillTreeBonus
             case BlockBallKind.Orbit:
                 targetIndex = 4;
                 break;
+            case BlockBallKind.Cross:
+                targetIndex = 5;
+                break;
+            case BlockBallKind.Poison:
+                targetIndex = 6;
+                break;
             default:
                 return false;
         }

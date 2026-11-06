@@ -55,7 +55,8 @@ public class ResourceCont : MonoBehaviour
     {
         if (inPool || isCollecting || !PointerWorld.IsInsidePlayfield) return;
 
-        float range = 0.4f * (1f + Mathf.Max(0f, SkillTreeBonus.PickupRange));
+        var session = SOLoader.BlockSession;
+        float range = (session != null ? session.pickupRange : 0.4f) * (1f + Mathf.Max(0f, SkillTreeBonus.PickupRange));
         Vector2 delta = (Vector2)PointerWorld.Position - (Vector2)transform.position;
         if (delta.sqrMagnitude > range * range) return;
         Collect();
@@ -100,18 +101,22 @@ public class ResourceCont : MonoBehaviour
             awayDir = Vector3.up;
         else
             awayDir.Normalize();
-        var away = start + awayDir * 0.45f;
+        var session = SOLoader.BlockSession;
+        float kickDistance = session != null ? session.collectKickDistance : 0.45f;
+        float kickDuration = session != null ? session.collectKickDuration : 0.1f;
+        float pullDuration = session != null ? session.collectPullDuration : 0.18f;
+        var away = start + awayDir * kickDistance;
         away.z = start.z;
 
         var pullFrom = away;
         DOTween.Sequence()
             .SetTarget(transform)
-            .Append(transform.DOMove(away, 0.1f).SetEase(Ease.OutCubic))
+            .Append(transform.DOMove(away, kickDuration).SetEase(Ease.OutCubic))
             .AppendCallback(() => pullFrom = transform.position)
             .Append(DOTween.To(() => 0f, rate =>
             {
                 transform.position = Vector3.LerpUnclamped(pullFrom, CursorPoint(pullFrom.z), rate);
-            }, 1f, 0.18f).SetEase(Ease.InCubic))
+            }, 1f, pullDuration).SetEase(Ease.InCubic))
             .OnComplete(() =>
             {
                 if (inPool) return;

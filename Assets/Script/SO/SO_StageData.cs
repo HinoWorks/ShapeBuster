@@ -12,6 +12,10 @@ public class StageData
     public int stageTime;
     /// <summary>横に並べるブロック数。0以下は10列。</summary>
     public int blockColumns;
+    /// <summary>ブロックHPへの倍率。0以下は1。</summary>
+    public float blockHpRate = 1f;
+    /// <summary>ブロック下降速度への倍率。0以下は1。</summary>
+    public float blockSpeedRate = 1f;
     public float enemyPowerRate;
     public float enemyHpRate;
     public float enemySpeedRate;

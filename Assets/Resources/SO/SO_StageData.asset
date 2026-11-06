@@ -16,6 +16,8 @@ MonoBehaviour:
   - stageIndex: 0
     stageTime: 15
     blockColumns: 8
+    blockHpRate: 1
+    blockSpeedRate: 1
     enemyPowerRate: 1
     enemyHpRate: 1
     enemySpeedRate: 0.5
@@ -24,6 +26,8 @@ MonoBehaviour:
   - stageIndex: 1
     stageTime: 30
     blockColumns: 8
+    blockHpRate: 1
+    blockSpeedRate: 1
     enemyPowerRate: 1
     enemyHpRate: 2
     enemySpeedRate: 0.75
@@ -32,6 +36,8 @@ MonoBehaviour:
   - stageIndex: 2
     stageTime: 30
     blockColumns: 10
+    blockHpRate: 1
+    blockSpeedRate: 1
     enemyPowerRate: 1
     enemyHpRate: 3
     enemySpeedRate: 1
@@ -40,6 +46,8 @@ MonoBehaviour:
   - stageIndex: 3
     stageTime: 30
     blockColumns: 10
+    blockHpRate: 1
+    blockSpeedRate: 1
     enemyPowerRate: 1
     enemyHpRate: 3
     enemySpeedRate: 1

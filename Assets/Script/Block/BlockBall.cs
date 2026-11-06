@@ -8,13 +8,16 @@ public enum BlockBallKind
     Laser,
     LaserRow,
     Heavy,
-    Orbit
+    Orbit,
+    Cross,
+    Poison
 }
 
 /// <summary>
 /// 手元にある間は止まっている。放つと一定の速さで跳ね、ブロックに当たるとダメージを与える。
 /// ボムは当たったときたまに周囲を巻き込み、縦レーザーはその列、横レーザーはその段を焼く。
 /// ヘビーは遅くブロックを貫通する。オービットは周りを回る玉もブロックを削る。
+/// クロスレーザーは斜め2本、ポイズンはたまにその場へ沼を残す。
 /// </summary>
 public class BlockBall : MonoBehaviour
 {
@@ -220,6 +223,10 @@ public class BlockBall : MonoBehaviour
                 BlockSession.Inst?.Beam(piece);
             else if (Kind == BlockBallKind.LaserRow && Random.value < ProcChance)
                 BlockSession.Inst?.BeamRow(piece);
+            else if (Kind == BlockBallKind.Cross && Random.value < ProcChance)
+                BlockSession.Inst?.BeamCross(piece);
+            else if (Kind == BlockBallKind.Poison && Random.value < ProcChance)
+                BlockSession.Inst?.Poison(piece);
 
             if (Kind == BlockBallKind.Heavy)
             {
