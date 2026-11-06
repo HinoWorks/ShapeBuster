@@ -595,6 +595,7 @@ GameObject:
   - component: {fileID: 213275858}
   - component: {fileID: 213275860}
   - component: {fileID: 213275859}
+  - component: {fileID: 213275861}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1584,6 +1585,7 @@ GameObject:
   - component: {fileID: 442043952}
   - component: {fileID: 442043954}
   - component: {fileID: 442043953}
+  - component: {fileID: 442043955}
   m_Layer: 5
   m_Name: tmp_title
   m_TagString: Untagged
@@ -4412,6 +4414,7 @@ GameObject:
   - component: {fileID: 1144791997}
   - component: {fileID: 1144791999}
   - component: {fileID: 1144791998}
+  - component: {fileID: 1144792000}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -8013,3 +8016,42 @@ SceneRoots:
   - {fileID: 1871639605}
   - {fileID: 927878392}
   - {fileID: 1420603827}
+--- !u!114 &213275861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213275857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.hp
+--- !u!114 &442043955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442043951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.title
+--- !u!114 &1144792000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144791996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.exp

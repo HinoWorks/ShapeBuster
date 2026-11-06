@@ -85,6 +85,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_Locale so_locale;
+    public static SO_Locale Locale
+    {
+        get
+        {
+            if (so_locale == null)
+            {
+                so_locale = LoadSO<SO_Locale>(pathBase + nameof(SO_Locale));
+            }
+            return so_locale;
+        }
+    }
+
     private static SO_MilestoneData so_milestoneData;
     public static SO_MilestoneData MilestoneData
     {

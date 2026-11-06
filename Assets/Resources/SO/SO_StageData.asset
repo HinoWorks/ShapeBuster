@@ -13,104 +13,39 @@ MonoBehaviour:
   m_Name: SO_StageData
   m_EditorClassIdentifier: Assembly-CSharp::SO_StageData
   stageDatas:
-  - stageIndex: 0
-    stageTime: 60
-    blockColumns: 10
-    enemyPowerRate: 1
+  - stageIndex: 1
+    stageTime: 0
+    blockColumns: 0
+    enemyPowerRate: 0
     enemyHpRate: 1
-    enemySpeedRate: 1
+    enemySpeedRate: 0
     enemyResourceRate: 1
-    timeEnhanceRate: 0.5
-    bossIndex: 1
-  - stageIndex: 1
-    stageTime: 60
-    blockColumns: 10
-    enemyPowerRate: 2
+    timeEnhanceRate: 0
+    bossIndex: 0
+  - stageIndex: 2
+    stageTime: 0
+    blockColumns: 0
+    enemyPowerRate: 0
     enemyHpRate: 2
-    enemySpeedRate: 1.2
+    enemySpeedRate: 0
     enemyResourceRate: 2
-    timeEnhanceRate: 0.5
-    bossIndex: 2
-  - stageIndex: 2
-    stageTime: 60
-    blockColumns: 10
-    enemyPowerRate: 3
+    timeEnhanceRate: 0
+    bossIndex: 0
+  - stageIndex: 3
+    stageTime: 0
+    blockColumns: 0
+    enemyPowerRate: 0
     enemyHpRate: 3
-    enemySpeedRate: 1.4
+    enemySpeedRate: 0
     enemyResourceRate: 3
-    timeEnhanceRate: 0.5
-    bossIndex: 3
+    timeEnhanceRate: 0
+    bossIndex: 0
   stageLevelDatas:
-  - stageIndex: 0
-    startSecond: 0
-    endSecond: 20
-    spawnCount_forSecond: 0.5
-    rate_enemy1: 100
-    rate_enemy2: 0
-    rate_enemy3: 0
-    rate_enemy4: 0
-    rate_enemy5: 0
-    rate_enemy6: 0
-    rate_enemy7: 0
-    rate_enemy8: 0
-    rate_enemy9: 0
-  - stageIndex: 0
-    startSecond: 20
-    endSecond: 40
-    spawnCount_forSecond: 1
-    rate_enemy1: 100
-    rate_enemy2: 0
-    rate_enemy3: 0
-    rate_enemy4: 0
-    rate_enemy5: 0
-    rate_enemy6: 0
-    rate_enemy7: 0
-    rate_enemy8: 0
-    rate_enemy9: 0
-  - stageIndex: 0
-    startSecond: 40
-    endSecond: 60
-    spawnCount_forSecond: 1
-    rate_enemy1: 100
-    rate_enemy2: 0
-    rate_enemy3: 0
-    rate_enemy4: 0
-    rate_enemy5: 0
-    rate_enemy6: 0
-    rate_enemy7: 0
-    rate_enemy8: 0
-    rate_enemy9: 0
   - stageIndex: 1
     startSecond: 0
-    endSecond: 60
-    spawnCount_forSecond: 3
-    rate_enemy1: 100
-    rate_enemy2: 0
-    rate_enemy3: 0
-    rate_enemy4: 0
-    rate_enemy5: 0
-    rate_enemy6: 0
-    rate_enemy7: 0
-    rate_enemy8: 0
-    rate_enemy9: 0
-  - stageIndex: 1
-    startSecond: 60
-    endSecond: 120
-    spawnCount_forSecond: 4
-    rate_enemy1: 100
-    rate_enemy2: 0
-    rate_enemy3: 0
-    rate_enemy4: 0
-    rate_enemy5: 0
-    rate_enemy6: 0
-    rate_enemy7: 0
-    rate_enemy8: 0
-    rate_enemy9: 0
-  - stageIndex: 1
-    startSecond: 120
-    endSecond: 180
-    spawnCount_forSecond: 4
-    rate_enemy1: 100
+    endSecond: 0
+    spawnCount_forSecond: 0
+    rate_enemy1: 0
     rate_enemy2: 0
     rate_enemy3: 0
     rate_enemy4: 0
@@ -121,9 +56,9 @@ MonoBehaviour:
     rate_enemy9: 0
   - stageIndex: 2
     startSecond: 0
-    endSecond: 60
-    spawnCount_forSecond: 3
-    rate_enemy1: 100
+    endSecond: 0
+    spawnCount_forSecond: 0
+    rate_enemy1: 0
     rate_enemy2: 0
     rate_enemy3: 0
     rate_enemy4: 0
@@ -132,24 +67,11 @@ MonoBehaviour:
     rate_enemy7: 0
     rate_enemy8: 0
     rate_enemy9: 0
-  - stageIndex: 2
-    startSecond: 60
-    endSecond: 120
-    spawnCount_forSecond: 4
-    rate_enemy1: 100
-    rate_enemy2: 0
-    rate_enemy3: 0
-    rate_enemy4: 0
-    rate_enemy5: 0
-    rate_enemy6: 0
-    rate_enemy7: 0
-    rate_enemy8: 0
-    rate_enemy9: 0
-  - stageIndex: 2
-    startSecond: 120
-    endSecond: 180
-    spawnCount_forSecond: 4
-    rate_enemy1: 100
+  - stageIndex: 3
+    startSecond: 0
+    endSecond: 0
+    spawnCount_forSecond: 0
+    rate_enemy1: 0
     rate_enemy2: 0
     rate_enemy3: 0
     rate_enemy4: 0

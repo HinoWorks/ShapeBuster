@@ -425,8 +425,8 @@ MonoBehaviour:
     paramStat: 27
     deltaValue: 0.05
   - baseSkillIndex: 38
-    skillName: ボムボール
-    description: ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で周囲を巻き込む。
+    skillName: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+    description: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u5468\u56F2\u3092\u5DFB\u304D\u8FBC\u3080\u3002"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -435,8 +435,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 39
-    skillName: レーザーボール
-    description: ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその列を焼く。
+    skillName: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    description: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u305D\u306E\u5217\u3092\u713C\u304F\u3002"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -444,9 +444,19 @@ MonoBehaviour:
     targetIndex: 1
     paramStat: 28
     deltaValue: 1
+  - baseSkillIndex: 41
+    skillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    description: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u305D\u306E\u6BB5\u3092\u713C\u304F\u3002"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: NA
+    paramTarget: 4
+    targetIndex: 3
+    paramStat: 28
+    deltaValue: 1
   - baseSkillIndex: 40
-    skillName: ヘビーボール
-    description: ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。
+    skillName: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+    description: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u9045\u304F\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u8CAB\u901A\u3059\u308B\u3002"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -454,9 +464,19 @@ MonoBehaviour:
     targetIndex: 2
     paramStat: 28
     deltaValue: 1
+  - baseSkillIndex: 42
+    skillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+    description: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5468\u308A\u3092\u56DE\u308B\u7389\u3082\u30D6\u30ED\u30C3\u30AF\u3092\u524A\u308B\u3002"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: NA
+    paramTarget: 4
+    targetIndex: 4
+    paramStat: 28
+    deltaValue: 1
   - baseSkillIndex: 43
-    skillName: 細片
-    description: ステージの列数を基準に、ブロックを小さくして列を増やす。[A]
+    skillName: "\u7D30\u7247"
+    description: "\u30B9\u30C6\u30FC\u30B8\u306E\u5217\u6570\u3092\u57FA\u6E96\u306B\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u5C0F\u3055\u304F\u3057\u3066\u5217\u3092\u5897\u3084\u3059\u3002[A]"
     icon: {fileID: 0}
     maxLevel: 5
     unit: NA
@@ -2913,7 +2933,25 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
+  - skillTreeIndex: 41
+    level: 1
+    cost_AA: 20
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
   - skillTreeIndex: 40
+    level: 1
+    cost_AA: 20
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 42
     level: 1
     cost_AA: 20
     cost_BB: 0

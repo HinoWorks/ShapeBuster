@@ -18,19 +18,49 @@ public class UI_ResultManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_progress;
     [SerializeField] UI_ResourceCounter[] resourceCounters;
 
+    IngameRecordData shown;
+    bool showing;
+
+    void OnEnable()
+    {
+        Loc.Changed += OnLanguage;
+    }
+
+    void OnDisable()
+    {
+        Loc.Changed -= OnLanguage;
+    }
+
+    void OnLanguage(GameLanguage _)
+    {
+        if (showing)
+            Apply(shown);
+    }
+
     public void Hide()
     {
+        showing = false;
         gameObject.SetActive(false);
     }
 
     public void Show(IngameRecordData record)
     {
+        shown = record;
+        showing = true;
         gameObject.SetActive(true);
+        Apply(record);
+    }
+
+    void Apply(IngameRecordData record)
+    {
         bool cleared = record != null && record.isCleared;
         float stageTime = record != null ? record.stageTime : 0f;
 
         if (tmp_title != null)
-            tmp_title.text = cleared ? "Stage Clear" : "Session End";
+        {
+            Loc.UseFont(tmp_title);
+            tmp_title.text = Loc.Text(cleared ? "ui.result.clear" : "ui.result.end");
+        }
 
         if (background != null)
             background.color = cleared ? clearColor : endColor;

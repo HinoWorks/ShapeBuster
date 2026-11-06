@@ -76,13 +76,22 @@ public class UI_SkillTreeDetail : MonoBehaviour
         int maxLevel = Mathf.Max(1, so.maxLevel);
         isMaxLevel = currentLevel >= maxLevel;
         if (tmp_skillName != null)
-            tmp_skillName.SetText(so.skillName);
+        {
+            Loc.UseFont(tmp_skillName);
+            tmp_skillName.SetText(Loc.Content(Loc.SkillName(so.baseSkillIndex), so.skillName));
+        }
         if (tmp_level != null)
+        {
+            Loc.UseFont(tmp_level);
             tmp_level.SetText(isMaxLevel ?
-                $"<size=75%>Lv.</size>{"MAX"}" :
-                $"<size=75%>Lv.</size>{currentLevel} <size=75%> / {maxLevel}</size>");
+                Loc.Text("ui.skill.level.max") :
+                Loc.Format("ui.skill.level", currentLevel, maxLevel));
+        }
         if (tmp_description != null)
+        {
+            Loc.UseFont(tmp_description);
             tmp_description.SetText(FormatDescription(so, currentLevel, isMaxLevel));
+        }
 
         SetParamValues(so, currentLevel, isMaxLevel);
         SetData_RequiredCost(currentLevel);
@@ -94,11 +103,40 @@ public class UI_SkillTreeDetail : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    void OnEnable()
+    {
+        Loc.Changed += OnLanguage;
+    }
+
+    void OnDisable()
+    {
+        Loc.Changed -= OnLanguage;
+    }
+
+    void OnLanguage(GameLanguage _)
+    {
+        if (currentUnit != null)
+            SetData_Base(currentUnit.level);
+    }
+
     static string FormatDescription(SkillTreeBase skill, int currentLevel, bool isMaxLevel)
     {
-        if (string.IsNullOrEmpty(skill.description)) return "";
+        string template = Loc.Content(Loc.SkillDesc(skill.baseSkillIndex), skill.description);
+        if (string.IsNullOrEmpty(template)) return "";
         int paramLevel = isMaxLevel ? currentLevel : currentLevel + 1;
-        return skill.description.Replace("[A]", FormatParams(skill, paramLevel));
+        string value = FormatParams(skill, paramLevel);
+        if (template.Contains("{0}"))
+        {
+            try
+            {
+                return string.Format(template, value);
+            }
+            catch (System.FormatException)
+            {
+                return template;
+            }
+        }
+        return template.Replace("[A]", value);
     }
 
     static string FormatParams(SkillTreeBase skill, int atLevel)
@@ -141,7 +179,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
     string FormatParamDisplay(SkillTreeBase skill, int atLevel)
     {
         if (skill.paramStat == SkillParamStat.AttackInterval)
-            return $"{AttackIntervalAt(skill, atLevel).ToString("F2")} sec";
+            return AttackIntervalAt(skill, atLevel).ToString("F2") + " " + Loc.Text("ui.unit.sec");
         if (IsAttackDamage(skill))
             return AttackDamageAt(skill, atLevel).ToString();
         return FormatParams(skill, atLevel);
@@ -194,7 +232,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
             case "%":
                 return $"{Signed(value * 100f, "F1")} %";
             case "Sec":
-                return $"{Signed(value, "F1")} sec";
+                return Signed(value, "F1") + " " + Loc.Text("ui.unit.sec");
             case "Count":
                 return Signed(value, "F0");
             case "NA":

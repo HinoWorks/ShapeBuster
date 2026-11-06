@@ -37,6 +37,7 @@ public class DataBase : MonoBehaviour
     [SerializeField] SO_AttackUnitData mSO_AttackUnitData;
     [SerializeField] SO_SkillTreeData mSO_SkillTreeData;
     [SerializeField] SO_MilestoneData mSO_MilestoneData;
+    [SerializeField] SO_Locale mSO_Locale;
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
@@ -45,6 +46,7 @@ public class DataBase : MonoBehaviour
         await DataLoad_AttackUnitData();
         await DataLoad_SkillTreeData();
         await DataLoad_MilestoneData();
+        await DataLoad_Locale();
 
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
@@ -59,6 +61,9 @@ public class DataBase : MonoBehaviour
             EditorUtility.SetDirty(mSO_AttackUnitData);
         if (mSO_MilestoneData != null)
             EditorUtility.SetDirty(mSO_MilestoneData);
+        if (mSO_Locale != null)
+            EditorUtility.SetDirty(mSO_Locale);
+        Loc.Reload();
 
         // -- save --
         AssetDatabase.SaveAssets();
@@ -145,6 +150,21 @@ public class DataBase : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogWarning($"MilestoneData の読み込みをスキップしました。{e.Message}");
+        }
+    }
+
+    private async UniTask DataLoad_Locale()
+    {
+        if (mSO_Locale == null) return;
+
+        try
+        {
+            var loadData = await DataLoad("Locale");
+            mSO_Locale.Merge(CSVSerializer.Deserialize<LocaleEntry>(loadData));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Locale の読み込みをスキップしました。{e.Message}");
         }
     }
 

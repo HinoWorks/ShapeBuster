@@ -31,7 +31,27 @@ public class UI_BlockBallHud : MonoBehaviour
 
         var hud = host.AddComponent<UI_BlockBallHud>();
         hud.label = text;
+        Loc.UseFont(text);
         return hud;
+    }
+
+    void OnEnable()
+    {
+        Loc.Changed += OnLanguage;
+    }
+
+    void OnDisable()
+    {
+        Loc.Changed -= OnLanguage;
+    }
+
+    void OnLanguage(GameLanguage _)
+    {
+        if (shownLaunch < 0) return;
+        int launch = shownLaunch;
+        int total = shownTotal;
+        shownLaunch = -1;
+        Set(launch, total);
     }
 
     public void Set(int launchable, int total)
@@ -39,6 +59,7 @@ public class UI_BlockBallHud : MonoBehaviour
         if (label == null || (launchable == shownLaunch && total == shownTotal)) return;
         shownLaunch = launchable;
         shownTotal = total;
-        label.text = $"発射 {launchable}\n所持 {total}";
+        Loc.UseFont(label);
+        label.text = Loc.Format("ui.ball.hud", launchable, total);
     }
 }

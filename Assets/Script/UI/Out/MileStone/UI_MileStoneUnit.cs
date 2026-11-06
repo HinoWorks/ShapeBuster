@@ -35,13 +35,20 @@ public class UI_MileStoneUnit : MonoBehaviour
         disposable?.Dispose();
         disposable = new CompositeDisposable();
         MilestoneRuntime.ProgressChanged.Subscribe(OnProgress).AddTo(disposable);
+        Loc.Changed += OnLanguage;
         Refresh();
     }
 
     void OnDisable()
     {
+        Loc.Changed -= OnLanguage;
         disposable?.Dispose();
         disposable = null;
+    }
+
+    void OnLanguage(GameLanguage _)
+    {
+        Refresh();
     }
 
     public void SetMilestone(int id)
@@ -79,11 +86,13 @@ public class UI_MileStoneUnit : MonoBehaviour
 
     void Apply(MilestoneState state)
     {
-        tmp_description.SetText(state.title);
+        Loc.UseFont(tmp_description);
+        Loc.UseFont(tmp_bonusName);
+        tmp_description.SetText(Loc.Content(Loc.MilestoneTitle(state.id), state.title));
         tmp_now.SetText(FormatAmount(state.unit, state.progress));
         tmp_target.SetText(FormatAmount(state.unit, state.nextThreshold));
         image_fill.fillAmount = state.ratioToNext;
-        tmp_bonusName.SetText(state.bonusLabel);
+        tmp_bonusName.SetText(Loc.Content(Loc.MilestoneBonus(state.id), state.bonusLabel));
         tmp_bonusValue.SetText(state.FormatPerTier());
         button_claim.Set_Interactable(state.canClaim);
     }

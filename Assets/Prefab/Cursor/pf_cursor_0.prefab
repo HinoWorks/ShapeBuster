@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 7157920662599078500}
   - component: {fileID: 7145325631715902369}
   - component: {fileID: 2430200272203243172}
+  - component: {fileID: 810000000000000108}
   m_Layer: 0
   m_Name: tmp_reload
   m_TagString: Untagged
@@ -6363,3 +6364,16 @@ Transform:
   - {fileID: 7185941554195462548}
   m_Father: {fileID: 3933012428917418560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810000000000000108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152890460345169678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.gun.reload

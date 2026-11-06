@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 3817123588082981247}
   - component: {fileID: 7126540683523353344}
   - component: {fileID: 2553252059065869451}
+  - component: {fileID: 810000000000000102}
   m_Layer: 5
   m_Name: title
   m_TagString: Untagged
@@ -979,3 +980,16 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2648659672021518875, guid: 4a6a294c1cfce4e5b8ae5280fa9098e8, type: 3}
   m_PrefabInstance: {fileID: 8846131422981331457}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &810000000000000102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001703380292949190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.stage.select

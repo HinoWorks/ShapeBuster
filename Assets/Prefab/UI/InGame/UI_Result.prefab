@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 5790073274242087746}
   - component: {fileID: 8801293834824582622}
   - component: {fileID: 1085448293232641907}
+  - component: {fileID: 810000000000000103}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1007,6 +1008,7 @@ GameObject:
   - component: {fileID: 8457114075102235298}
   - component: {fileID: 1971183002514275453}
   - component: {fileID: 2648250398335344212}
+  - component: {fileID: 810000000000000104}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2548,3 +2550,29 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2648659672021518875, guid: 9e99d7487e4e64b3dbf76c96438d7285, type: 3}
   m_PrefabInstance: {fileID: 8530767989834594779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &810000000000000103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516906704228674618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.result.progress
+--- !u!114 &810000000000000104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865284889374733139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e503d16f415c809d2e3f7091a25336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_LocalizedText
+  key: ui.result.resources

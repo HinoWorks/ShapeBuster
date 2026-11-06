@@ -83,6 +83,12 @@ public class AttackCont_Cursor : MonoBehaviour
         CacheHitColliders();
         resourceOverlapFilter = ContactFilter2D.noFilter;
         resourceOverlapFilter.SetLayerMask(LayerMask.GetMask("Resource"));
+        Loc.Changed += OnLanguage;
+    }
+
+    void OnLanguage(GameLanguage _)
+    {
+        RefreshCursorVisual();
     }
     public void Init(CursorParam _cursorParam)
     {
@@ -119,6 +125,7 @@ public class AttackCont_Cursor : MonoBehaviour
 
     public void OnDestroy()
     {
+        Loc.Changed -= OnLanguage;
         if (isDisposed) return;
         isDisposed = true;
 
@@ -161,7 +168,8 @@ public class AttackCont_Cursor : MonoBehaviour
 
         if (tmp_onOff != null)
         {
-            string stateText = isStopped ? "OFF" : "ON";
+            string stateText = Loc.Text(isStopped ? "ui.gun.off" : "ui.gun.on");
+            Loc.UseFont(tmp_onOff);
             if (tmp_onOff.text != stateText)
                 tmp_onOff.text = stateText;
         }

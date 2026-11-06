@@ -61,8 +61,8 @@ public enum SkillParamStat
 public class SkillTreeBase
 {
     public int baseSkillIndex; //スキル定義の固定ID。SkillTreeUnit の baseSkillIndex と一致させる
-    public string skillName; //詳細に出す名前
-    public string description; //詳細の説明。[A] は今のレベルが最大なら現在値、それ以外は次のレベル値に置き換わる
+    public string skillName; //翻訳が無いときの名前。表示は skill.{id}.name
+    public string description; //翻訳が無いときの説明。[A] は効果量。表示は skill.{id}.desc
     public Sprite icon; //スキルアイコン。空でもよい
     public int maxLevel = 1; //上限レベル。1レベル分の効果は deltaValue
     public string unit = "NA"; //表示単位。% は100倍、Sec は秒、Count は整数。NA は数値を出さない
