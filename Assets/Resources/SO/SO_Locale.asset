@@ -12,537 +12,546 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d4f2c05e304b7f9c1d2e6f80914325, type: 3}
   m_Name: SO_Locale
   m_EditorClassIdentifier: Assembly-CSharp::SO_Locale
-  fontJa: {fileID: 0}
-  fontEn: {fileID: 0}
+  fontJa: {fileID: 11400000, guid: b5bf10371f71f44299b21bbc2bf26bd1, type: 2}
+  fontEn: {fileID: 11400000, guid: bad75bf4e316a43749f9df1a5595fce3, type: 2}
   entries:
-  - key: "ui.result.clear"
-    ja: "ステージクリア"
-    en: "Stage Clear"
-  - key: "ui.result.end"
-    ja: "セッション終了"
-    en: "Session End"
-  - key: "ui.result.progress"
-    ja: "進捗"
-    en: "Progress"
-  - key: "ui.result.resources"
-    ja: "獲得リソース"
-    en: "Get Resources"
-  - key: "ui.ball.hud"
-    ja: "発射 {0}\n所持 {1}"
-    en: "Launch {0}\nHeld {1}"
-  - key: "ui.stage.select"
-    ja: "ステージ選択"
-    en: "Stage Select"
-  - key: "ui.title"
-    ja: "ゲームタイトル"
-    en: "Game Title"
-  - key: "ui.hp"
-    ja: "HP"
-    en: "HP"
-  - key: "ui.exp"
-    ja: "経験値"
-    en: "EXP"
-  - key: "ui.gun.on"
-    ja: "ON"
-    en: "ON"
-  - key: "ui.gun.off"
-    ja: "OFF"
-    en: "OFF"
-  - key: "ui.gun.reload"
-    ja: "リロード"
-    en: "Reload"
-  - key: "ui.unit.sec"
-    ja: "秒"
-    en: "sec"
-  - key: "ui.skill.level"
-    ja: "<size=75%>Lv.</size>{0} <size=75%> / {1}</size>"
-    en: "<size=75%>Lv.</size>{0} <size=75%> / {1}</size>"
-  - key: "ui.skill.level.max"
-    ja: "<size=75%>Lv.</size>MAX"
-    en: "<size=75%>Lv.</size>MAX"
-  - key: "Claim"
-    ja: "受け取る"
-    en: "Claim"
-  - key: "Start"
-    ja: "スタート"
-    en: "Start"
-  - key: "Retry"
-    ja: "リトライ"
-    en: "Retry"
-  - key: "UPgrade"
-    ja: "強化"
-    en: "Upgrade"
-  - key: "UpGrade"
-    ja: "強化"
-    en: "Upgrade"
-  - key: "Skill Tree"
-    ja: "スキルツリー"
-    en: "Skill Tree"
-  - key: "Mile Stone"
-    ja: "マイルストーン"
-    en: "Milestone"
-  - key: "End sessin"
-    ja: "セッション終了"
-    en: "End Session"
-  - key: "skill.0.name"
-    ja: "威力"
-    en: "Power"
-  - key: "skill.0.desc"
-    ja: "ダメージが [A] 増える"
-    en: "Damage increases by [A]"
-  - key: "skill.1.name"
-    ja: "拡張マガジン"
-    en: "Extended Magazine"
-  - key: "skill.1.desc"
-    ja: "1マガジンの弾数が [A] 増える"
-    en: "Rounds per magazine increase by [A]"
-  - key: "skill.2.name"
-    ja: "連射"
-    en: "Rapid Fire"
-  - key: "skill.2.desc"
-    ja: "攻撃間隔が [A] 変わる"
-    en: "Attack interval changes by [A]"
-  - key: "skill.3.name"
-    ja: "高速リロード"
-    en: "Fast Reload"
-  - key: "skill.3.desc"
-    ja: "リロード時間が [A] 変わる"
-    en: "Reload time changes by [A]"
-  - key: "skill.4.name"
-    ja: "クリティカル"
-    en: "Critical"
-  - key: "skill.4.desc"
-    ja: "クリティカル率が [A] 増える"
-    en: "Critical rate increases by [A]"
-  - key: "skill.5.name"
-    ja: "致命"
-    en: "Fatal"
-  - key: "skill.5.desc"
-    ja: "クリティカル倍率が [A] 増える"
-    en: "Critical multiplier increases by [A]"
-  - key: "skill.6.name"
-    ja: "影響範囲"
-    en: "Influence"
-  - key: "skill.6.desc"
-    ja: "カーソルサイズが [A] 増える"
-    en: "Cursor size increases by [A]"
-  - key: "skill.7.name"
-    ja: "連鎖"
-    en: "Chain"
-  - key: "skill.7.desc"
-    ja: "同じ範囲の敵1体につきダメージが [A] 増える"
-    en: "Damage increases by [A] for each enemy in the same area"
-  - key: "skill.8.name"
-    ja: "ボス殺し"
-    en: "Boss Slayer"
-  - key: "skill.8.desc"
-    ja: "ボスへのダメージが [A] 増える"
-    en: "Damage to bosses increases by [A]"
-  - key: "skill.100.name"
-    ja: "収穫"
-    en: "Harvest"
-  - key: "skill.100.desc"
-    ja: "撃破時のドロップが [A] 増える"
-    en: "Drops on defeat increase by [A]"
-  - key: "skill.101.name"
-    ja: "磁石"
-    en: "Magnet"
-  - key: "skill.101.desc"
-    ja: "拾得範囲が [A] 広がる"
-    en: "Pickup range increases by [A]"
-  - key: "skill.102.name"
-    ja: "弾回収"
-    en: "Bullet Regain"
-  - key: "skill.102.desc"
-    ja: "銃で倒すと [A] の確率で弾が1戻る"
-    en: "A gun kill has a [A] chance to restore 1 round"
-  - key: "skill.103.name"
-    ja: "空撃ち返還"
-    en: "Blank Refund"
-  - key: "skill.103.desc"
-    ja: "当たらなかった弾は [A] の確率で消費しない"
-    en: "A shot that hits nothing has a [A] chance to not consume a round"
-  - key: "skill.104.name"
-    ja: "息継ぎ"
-    en: "Breath"
-  - key: "skill.104.desc"
-    ja: "射撃を止めている間、毎秒 [A] 弾が戻る"
-    en: "While fire is stopped, restore [A] rounds per second"
-  - key: "skill.105.name"
-    ja: "カバーリロード"
-    en: "Cover Reload"
-  - key: "skill.105.desc"
-    ja: "リロード中の被ダメージが [A] 減る"
-    en: "Damage taken during reload decreases by [A]"
-  - key: "skill.200.name"
-    ja: "耐久"
-    en: "Endurance"
-  - key: "skill.200.desc"
-    ja: "最大HPが [A] 増える"
-    en: "Max HP increases by [A]"
-  - key: "skill.201.name"
-    ja: "再生"
-    en: "Regen"
-  - key: "skill.201.desc"
-    ja: "毎秒 [A] 回復する"
-    en: "Restore [A] per second"
-  - key: "skill.202.name"
-    ja: "装甲"
-    en: "Armor"
-  - key: "skill.202.desc"
-    ja: "被ダメージが [A] 減る"
-    en: "Damage taken decreases by [A]"
-  - key: "skill.203.name"
-    ja: "大群"
-    en: "Swarm"
-  - key: "skill.203.desc"
-    ja: "敵の湧き数が [A] 増える"
-    en: "Enemy spawn rate increases by [A]"
-  - key: "skill.1000.name"
-    ja: "雷"
-    en: "Lightning"
-  - key: "skill.1000.desc"
-    ja: "雷を解放する"
-    en: "Unlock Lightning"
-  - key: "skill.1001.name"
-    ja: "雷威力"
-    en: "Lightning Power"
-  - key: "skill.1001.desc"
-    ja: "ダメージが [A] 増える"
-    en: "Damage increases by [A]"
-  - key: "skill.1002.name"
-    ja: "雷発生率"
-    en: "Lightning Rate"
-  - key: "skill.1002.desc"
-    ja: "雷の発生率が [A] 増える"
-    en: "Lightning chance increases by [A]"
-  - key: "skill.1003.name"
-    ja: "雷の本数"
-    en: "Lightning Count"
-  - key: "skill.1003.desc"
-    ja: "雷の本数が [A] 増える"
-    en: "Lightning bolts increase by [A]"
-  - key: "skill.1100.name"
-    ja: "EX弾"
-    en: "EX Bullet"
-  - key: "skill.1100.desc"
-    ja: "EX弾を解放する"
-    en: "Unlock ExBullet"
-  - key: "skill.1101.name"
-    ja: "弾威力"
-    en: "Bullet Power"
-  - key: "skill.1101.desc"
-    ja: "ダメージが [A] 増える"
-    en: "Damage increases by [A]"
-  - key: "skill.1102.name"
-    ja: "斉射率"
-    en: "Volley Rate"
-  - key: "skill.1102.desc"
-    ja: "貫通の発生率が [A] 増える"
-    en: "Pierce chance increases by [A]"
-  - key: "skill.1103.name"
-    ja: "斉射数"
-    en: "Volley Count"
-  - key: "skill.1103.desc"
-    ja: "貫通弾が [A] 増える"
-    en: "Pierce shots increase by [A]"
-  - key: "skill.1104.name"
-    ja: "弾速"
-    en: "Bullet Speed"
-  - key: "skill.1104.desc"
-    ja: "貫通弾が [A] 速くなる"
-    en: "Pierce shots get faster by [A]"
-  - key: "skill.1105.name"
-    ja: "弾の大きさ"
-    en: "Bullet Size"
-  - key: "skill.1105.desc"
-    ja: "貫通の当たり判定が [A] 大きくなる"
-    en: "Pierce hit size increases by [A]"
-  - key: "skill.1200.name"
-    ja: "ポーション"
-    en: "Throw Potion"
-  - key: "skill.1200.desc"
-    ja: "ポーションを解放する"
-    en: "Unlock potion"
-  - key: "skill.1201.name"
-    ja: "ポーション威力"
-    en: "Potion Power"
-  - key: "skill.1201.desc"
-    ja: "ダメージが [A] 増える"
-    en: "Damage increases by [A]"
-  - key: "skill.1202.name"
-    ja: "着弾率"
-    en: "Impact Rate"
-  - key: "skill.1202.desc"
-    ja: "範囲攻撃の発生率が [A] 増える"
-    en: "Area attack chance increases by [A]"
-  - key: "skill.1203.name"
-    ja: "着弾数"
-    en: "Impact Count"
-  - key: "skill.1203.desc"
-    ja: "範囲攻撃が [A] 増える"
-    en: "Area attacks increase by [A]"
-  - key: "skill.1204.name"
-    ja: "焦土"
-    en: "Scorched"
-  - key: "skill.1204.desc"
-    ja: "範囲が [A] 大きくなる"
-    en: "Area size increases by [A]"
-  - key: "skill.1205.name"
-    ja: "残留"
-    en: "Lingering"
-  - key: "skill.1205.desc"
-    ja: "範囲攻撃が [A] 長く残る"
-    en: "Area attacks last longer by [A]"
-  - key: "skill.1300.name"
-    ja: "ビーム"
-    en: "Beam"
-  - key: "skill.1300.desc"
-    ja: "ビームを解放する"
-    en: "Unlock Beam"
-  - key: "skill.1301.name"
-    ja: "ビーム威力"
-    en: "Beam Power"
-  - key: "skill.1301.desc"
-    ja: "ダメージが [A] 増える"
-    en: "Damage increases by [A]"
-  - key: "skill.1302.name"
-    ja: "ビーム発生率"
-    en: "Beam Rate"
-  - key: "skill.1302.desc"
-    ja: "レーザーの発生率が [A] 増える"
-    en: "Laser chance increases by [A]"
-  - key: "skill.1303.name"
-    ja: "ビーム数"
-    en: "Beam Count"
-  - key: "skill.1303.desc"
-    ja: "レーザーの本数が [A] 増える"
-    en: "Laser count increases by [A]"
-  - key: "skill.1304.name"
-    ja: "太ビーム"
-    en: "Thick Beam"
-  - key: "skill.1304.desc"
-    ja: "レーザーが [A] 太くなる"
-    en: "Laser width increases by [A]"
-  - key: "skill.37.name"
-    ja: "ガラス"
-    en: "Glass"
-  - key: "skill.37.desc"
-    ja: "敵の出現時、[A] の確率でガラスカプセルが出る。割ってからアイテムに触れる。"
-    en: "Glass capsules appear on [A] of spawns. Break one, then touch the item."
-  - key: "skill.38.name"
-    ja: "ボムボール"
-    en: "Bomb Ball"
-  - key: "skill.38.desc"
-    ja: "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で周囲を巻き込む。"
-    en: "Flies after a normal shot, in the same direction. On hit, 30% chance to burst around it."
-  - key: "skill.39.name"
-    ja: "レーザーボール"
-    en: "Laser Ball"
-  - key: "skill.39.desc"
-    ja: "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその列を焼く。"
-    en: "Flies after a normal shot, in the same direction. On hit, 30% chance to burn that column."
-  - key: "skill.40.name"
-    ja: "ヘビーボール"
-    en: "Heavy Ball"
-  - key: "skill.40.desc"
-    ja: "ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。"
-    en: "Flies after a normal shot, in the same direction. Slow, and it pierces blocks."
-  - key: "skill.41.name"
-    ja: "横レーザーボール"
-    en: "Row Laser Ball"
-  - key: "skill.41.desc"
-    ja: "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその段を焼く。"
-    en: "Flies after a normal shot, in the same direction. On hit, 30% chance to burn that row."
-  - key: "skill.42.name"
-    ja: "オービットボール"
-    en: "Orbit Ball"
-  - key: "skill.42.desc"
-    ja: "ノーマル弾のあとに同じ方向へ飛ぶ。周りを回る玉もブロックを削る。"
-    en: "Flies after a normal shot, in the same direction. Orbiting shots also chip blocks."
-  - key: "skill.43.name"
-    ja: "細片"
-    en: "Splinter"
-  - key: "skill.43.desc"
-    ja: "ステージの列数を基準に、ブロックを小さくして列を増やす。[A]"
-    en: "Shrink blocks and add columns from the stage column count. [A]"
-  - key: "milestone.10000.title"
-    ja: "ノーマル撃破"
-    en: "Normal Defeats"
-  - key: "milestone.10000.bonus"
-    ja: "この敵のドロップ"
-    en: "This Enemy Drop"
-  - key: "milestone.10001.title"
-    ja: "ライナー撃破"
-    en: "Liner Defeats"
-  - key: "milestone.10001.bonus"
-    ja: "この敵のドロップ"
-    en: "This Enemy Drop"
-  - key: "milestone.10002.title"
-    ja: "ブレーキ撃破"
-    en: "Brake Defeats"
-  - key: "milestone.10002.bonus"
-    ja: "この敵のドロップ"
-    en: "This Enemy Drop"
-  - key: "milestone.10003.title"
-    ja: "リコシェ撃破"
-    en: "Ricochet Defeats"
-  - key: "milestone.10003.bonus"
-    ja: "この敵のドロップ"
-    en: "This Enemy Drop"
-  - key: "milestone.10004.title"
-    ja: "ステップ撃破"
-    en: "Step Defeats"
-  - key: "milestone.10004.bonus"
-    ja: "この敵のドロップ"
-    en: "This Enemy Drop"
-  - key: "milestone.10005.title"
-    ja: "ジグザグ撃破"
-    en: "Zigzag Defeats"
-  - key: "milestone.10005.bonus"
-    ja: "この敵のドロップ"
-    en: "This Enemy Drop"
-  - key: "milestone.1.title"
-    ja: "総撃破"
-    en: "Total Defeats"
-  - key: "milestone.1.bonus"
-    ja: "カーソルダメージ"
-    en: "Cursor Damage"
-  - key: "milestone.2.title"
-    ja: "総ダメージ"
-    en: "Total Damage Dealt"
-  - key: "milestone.2.bonus"
-    ja: "クリティカル率"
-    en: "Critical Rate"
-  - key: "milestone.20000.title"
-    ja: "雷のダメージ"
-    en: "Lightning Damage Dealt"
-  - key: "milestone.20000.bonus"
-    ja: "雷の発生率"
-    en: "Lightning Rate"
-  - key: "milestone.20001.title"
-    ja: "貫通のダメージ"
-    en: "Pierce Damage Dealt"
-  - key: "milestone.20001.bonus"
-    ja: "貫通の弾数"
-    en: "Pierce Count"
-  - key: "milestone.20002.title"
-    ja: "範囲のダメージ"
-    en: "Area Damage Dealt"
-  - key: "milestone.20002.bonus"
-    ja: "範囲の大きさ"
-    en: "Area Size"
-  - key: "milestone.20003.title"
-    ja: "レーザーのダメージ"
-    en: "Laser Damage Dealt"
-  - key: "milestone.20003.bonus"
-    ja: "レーザーの時間"
-    en: "Laser Duration"
-  - key: "milestone.3.title"
-    ja: "総クリア時間"
-    en: "Total Clear Time"
-  - key: "milestone.3.bonus"
-    ja: "リソース獲得"
-    en: "Resource Gain"
-  - key: "milestone.4.title"
-    ja: "総クリア"
-    en: "Total Clears"
-  - key: "milestone.4.bonus"
-    ja: "リロード時間"
-    en: "Reload Time"
-  - key: "milestone.30000.title"
-    ja: "ステージ0クリア"
-    en: "Stage 0 Clears"
-  - key: "milestone.30000.bonus"
-    ja: "このステージのドロップ"
-    en: "This Stage Drop"
-  - key: "milestone.30001.title"
-    ja: "ステージ1クリア"
-    en: "Stage 1 Clears"
-  - key: "milestone.30001.bonus"
-    ja: "このステージのドロップ"
-    en: "This Stage Drop"
-  - key: "milestone.30002.title"
-    ja: "ステージ2クリア"
-    en: "Stage 2 Clears"
-  - key: "milestone.30002.bonus"
-    ja: "このステージのドロップ"
-    en: "This Stage Drop"
-  - key: "milestone.5.title"
-    ja: "総プレイ"
-    en: "Total Plays"
-  - key: "milestone.5.bonus"
-    ja: "最大HP"
-    en: "Max HP"
-  - key: "milestone.40000.title"
-    ja: "AAの獲得"
-    en: "Total AA Gained"
-  - key: "milestone.40000.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.40001.title"
-    ja: "BBの獲得"
-    en: "Total BB Gained"
-  - key: "milestone.40001.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.40002.title"
-    ja: "CCの獲得"
-    en: "Total CC Gained"
-  - key: "milestone.40002.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.40003.title"
-    ja: "DDの獲得"
-    en: "Total DD Gained"
-  - key: "milestone.40003.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.40004.title"
-    ja: "EEの獲得"
-    en: "Total EE Gained"
-  - key: "milestone.40004.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.40005.title"
-    ja: "FFの獲得"
-    en: "Total FF Gained"
-  - key: "milestone.40005.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.40006.title"
-    ja: "GGの獲得"
-    en: "Total GG Gained"
-  - key: "milestone.40006.bonus"
-    ja: "このリソースの獲得"
-    en: "This Resource Gain"
-  - key: "milestone.6.title"
-    ja: "クリティカル回数"
-    en: "Total Criticals"
-  - key: "milestone.6.bonus"
-    ja: "クリティカル率"
-    en: "Critical Rate"
-  - key: "milestone.7.title"
-    ja: "リロード回数"
-    en: "Total Reloads"
-  - key: "milestone.7.bonus"
-    ja: "装弾数"
-    en: "Magazine Ammo"
-  - key: "milestone.8.title"
-    ja: "被ダメージ"
-    en: "Total Damage Taken"
-  - key: "milestone.8.bonus"
-    ja: "最大HP"
-    en: "Max HP"
-  - key: "milestone.9.title"
-    ja: "最高ダメージ更新"
-    en: "Best Damage Updates"
-  - key: "milestone.9.bonus"
-    ja: "攻撃間隔"
-    en: "Attack Interval"
-  - key: "milestone.10.title"
-    ja: "最短クリア更新"
-    en: "Best Clear Updates"
-  - key: "milestone.10.bonus"
-    ja: "カーソルサイズ"
-    en: "Cursor Size"
+  - key: ui.result.clear
+    ja: "\u30B9\u30C6\u30FC\u30B8\u30AF\u30EA\u30A2"
+    en: Stage Clear
+  - key: ui.result.end
+    ja: "\u30BB\u30C3\u30B7\u30E7\u30F3\u7D42\u4E86"
+    en: Session End
+  - key: ui.result.progress
+    ja: "\u9032\u6357"
+    en: Progress
+  - key: ui.result.resources
+    ja: "\u7372\u5F97\u30EA\u30BD\u30FC\u30B9"
+    en: Get Resources
+  - key: ui.ball.hud
+    ja: "\u767A\u5C04 {0}\n\u6240\u6301 {1}"
+    en: 'Launch {0}
+
+      Held {1}'
+  - key: ui.stage.select
+    ja: "\u30B9\u30C6\u30FC\u30B8\u9078\u629E"
+    en: Stage Select
+  - key: ui.title
+    ja: "\u30B2\u30FC\u30E0\u30BF\u30A4\u30C8\u30EB"
+    en: Game Title
+  - key: ui.hp
+    ja: HP
+    en: HP
+  - key: ui.exp
+    ja: "\u7D4C\u9A13\u5024"
+    en: EXP
+  - key: ui.gun.on
+    ja: ON
+    en: ON
+  - key: ui.gun.off
+    ja: OFF
+    en: OFF
+  - key: ui.gun.reload
+    ja: "\u30EA\u30ED\u30FC\u30C9"
+    en: Reload
+  - key: ui.unit.sec
+    ja: "\u79D2"
+    en: sec
+  - key: ui.skill.level
+    ja: <size=75%>Lv.</size>{0} <size=75%> / {1}</size>
+    en: <size=75%>Lv.</size>{0} <size=75%> / {1}</size>
+  - key: ui.skill.level.max
+    ja: <size=75%>Lv.</size>MAX
+    en: <size=75%>Lv.</size>MAX
+  - key: Claim
+    ja: "\u53D7\u3051\u53D6\u308B"
+    en: Claim
+  - key: Start
+    ja: "\u30B9\u30BF\u30FC\u30C8"
+    en: Start
+  - key: Retry
+    ja: "\u30EA\u30C8\u30E9\u30A4"
+    en: Retry
+  - key: UPgrade
+    ja: "\u5F37\u5316"
+    en: Upgrade
+  - key: UpGrade
+    ja: "\u5F37\u5316"
+    en: Upgrade
+  - key: Skill Tree
+    ja: "\u30B9\u30AD\u30EB\u30C4\u30EA\u30FC"
+    en: Skill Tree
+  - key: Mile Stone
+    ja: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
+    en: Milestone
+  - key: End sessin
+    ja: "\u30BB\u30C3\u30B7\u30E7\u30F3\u7D42\u4E86"
+    en: End Session
+  - key: skill.0.name
+    ja: "\u5A01\u529B"
+    en: Power
+  - key: skill.0.desc
+    ja: "\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
+    en: 'Damage increases by [A]'
+  - key: skill.1.name
+    ja: "\u62E1\u5F35\u30DE\u30AC\u30B8\u30F3"
+    en: Extended Magazine
+  - key: skill.1.desc
+    ja: "1\u30DE\u30AC\u30B8\u30F3\u306E\u5F3E\u6570\u304C [A] \u5897\u3048\u308B"
+    en: 'Rounds per magazine increase by [A]'
+  - key: skill.2.name
+    ja: "\u9023\u5C04"
+    en: Rapid Fire
+  - key: skill.2.desc
+    ja: "\u653B\u6483\u9593\u9694\u304C [A] \u5909\u308F\u308B"
+    en: 'Attack interval changes by [A]'
+  - key: skill.3.name
+    ja: "\u9AD8\u901F\u30EA\u30ED\u30FC\u30C9"
+    en: Fast Reload
+  - key: skill.3.desc
+    ja: "\u30EA\u30ED\u30FC\u30C9\u6642\u9593\u304C [A] \u5909\u308F\u308B"
+    en: 'Reload time changes by [A]'
+  - key: skill.4.name
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+    en: Critical
+  - key: skill.4.desc
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387\u304C [A] \u5897\u3048\u308B"
+    en: 'Critical rate increases by [A]'
+  - key: skill.5.name
+    ja: "\u81F4\u547D"
+    en: Fatal
+  - key: skill.5.desc
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u500D\u7387\u304C [A] \u5897\u3048\u308B"
+    en: 'Critical multiplier increases by [A]'
+  - key: skill.6.name
+    ja: "\u5F71\u97FF\u7BC4\u56F2"
+    en: Influence
+  - key: skill.6.desc
+    ja: "\u30AB\u30FC\u30BD\u30EB\u30B5\u30A4\u30BA\u304C [A] \u5897\u3048\u308B"
+    en: 'Cursor size increases by [A]'
+  - key: skill.7.name
+    ja: "\u9023\u9396"
+    en: Chain
+  - key: skill.7.desc
+    ja: "\u540C\u3058\u7BC4\u56F2\u306E\u65751\u4F53\u306B\u3064\u304D\u30C0\u30E1\u30FC\u30B8\u304C
+      [A] \u5897\u3048\u308B"
+    en: Damage increases by [A] for each enemy in the same area
+  - key: skill.8.name
+    ja: "\u30DC\u30B9\u6BBA\u3057"
+    en: Boss Slayer
+  - key: skill.8.desc
+    ja: "\u30DC\u30B9\u3078\u306E\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
+    en: 'Damage to bosses increases by [A]'
+  - key: skill.100.name
+    ja: "\u53CE\u7A6B"
+    en: Harvest
+  - key: skill.100.desc
+    ja: "\u6483\u7834\u6642\u306E\u30C9\u30ED\u30C3\u30D7\u304C [A] \u5897\u3048\u308B"
+    en: 'Drops on defeat increase by [A]'
+  - key: skill.101.name
+    ja: "\u78C1\u77F3"
+    en: Magnet
+  - key: skill.101.desc
+    ja: "\u62FE\u5F97\u7BC4\u56F2\u304C [A] \u5E83\u304C\u308B"
+    en: 'Pickup range increases by [A]'
+  - key: skill.102.name
+    ja: "\u5F3E\u56DE\u53CE"
+    en: Bullet Regain
+  - key: skill.102.desc
+    ja: "\u9283\u3067\u5012\u3059\u3068 [A] \u306E\u78BA\u7387\u3067\u5F3E\u304C1\u623B\u308B"
+    en: A gun kill has a [A] chance to restore 1 round
+  - key: skill.103.name
+    ja: "\u7A7A\u6483\u3061\u8FD4\u9084"
+    en: Blank Refund
+  - key: skill.103.desc
+    ja: "\u5F53\u305F\u3089\u306A\u304B\u3063\u305F\u5F3E\u306F [A] \u306E\u78BA\u7387\u3067\u6D88\u8CBB\u3057\u306A\u3044"
+    en: A shot that hits nothing has a [A] chance to not consume a round
+  - key: skill.104.name
+    ja: "\u606F\u7D99\u304E"
+    en: Breath
+  - key: skill.104.desc
+    ja: "\u5C04\u6483\u3092\u6B62\u3081\u3066\u3044\u308B\u9593\u3001\u6BCE\u79D2
+      [A] \u5F3E\u304C\u623B\u308B"
+    en: While fire is stopped, restore [A] rounds per second
+  - key: skill.105.name
+    ja: "\u30AB\u30D0\u30FC\u30EA\u30ED\u30FC\u30C9"
+    en: Cover Reload
+  - key: skill.105.desc
+    ja: "\u30EA\u30ED\u30FC\u30C9\u4E2D\u306E\u88AB\u30C0\u30E1\u30FC\u30B8\u304C
+      [A] \u6E1B\u308B"
+    en: 'Damage taken during reload decreases by [A]'
+  - key: skill.200.name
+    ja: "\u8010\u4E45"
+    en: Endurance
+  - key: skill.200.desc
+    ja: "\u6700\u5927HP\u304C [A] \u5897\u3048\u308B"
+    en: 'Max HP increases by [A]'
+  - key: skill.201.name
+    ja: "\u518D\u751F"
+    en: Regen
+  - key: skill.201.desc
+    ja: "\u6BCE\u79D2 [A] \u56DE\u5FA9\u3059\u308B"
+    en: Restore [A] per second
+  - key: skill.202.name
+    ja: "\u88C5\u7532"
+    en: Armor
+  - key: skill.202.desc
+    ja: "\u88AB\u30C0\u30E1\u30FC\u30B8\u304C [A] \u6E1B\u308B"
+    en: 'Damage taken decreases by [A]'
+  - key: skill.203.name
+    ja: "\u5927\u7FA4"
+    en: Swarm
+  - key: skill.203.desc
+    ja: "\u6575\u306E\u6E67\u304D\u6570\u304C [A] \u5897\u3048\u308B"
+    en: 'Enemy spawn rate increases by [A]'
+  - key: skill.1000.name
+    ja: "\u96F7"
+    en: Lightning
+  - key: skill.1000.desc
+    ja: "\u96F7\u3092\u89E3\u653E\u3059\u308B"
+    en: Unlock Lightning
+  - key: skill.1001.name
+    ja: "\u96F7\u5A01\u529B"
+    en: Lightning Power
+  - key: skill.1001.desc
+    ja: "\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
+    en: 'Damage increases by [A]'
+  - key: skill.1002.name
+    ja: "\u96F7\u767A\u751F\u7387"
+    en: Lightning Rate
+  - key: skill.1002.desc
+    ja: "\u96F7\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B"
+    en: 'Lightning chance increases by [A]'
+  - key: skill.1003.name
+    ja: "\u96F7\u306E\u672C\u6570"
+    en: Lightning Count
+  - key: skill.1003.desc
+    ja: "\u96F7\u306E\u672C\u6570\u304C [A] \u5897\u3048\u308B"
+    en: 'Lightning bolts increase by [A]'
+  - key: skill.1100.name
+    ja: "EX\u5F3E"
+    en: EX Bullet
+  - key: skill.1100.desc
+    ja: "EX\u5F3E\u3092\u89E3\u653E\u3059\u308B"
+    en: Unlock ExBullet
+  - key: skill.1101.name
+    ja: "\u5F3E\u5A01\u529B"
+    en: Bullet Power
+  - key: skill.1101.desc
+    ja: "\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
+    en: 'Damage increases by [A]'
+  - key: skill.1102.name
+    ja: "\u6589\u5C04\u7387"
+    en: Volley Rate
+  - key: skill.1102.desc
+    ja: "\u8CAB\u901A\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B"
+    en: 'Pierce chance increases by [A]'
+  - key: skill.1103.name
+    ja: "\u6589\u5C04\u6570"
+    en: Volley Count
+  - key: skill.1103.desc
+    ja: "\u8CAB\u901A\u5F3E\u304C [A] \u5897\u3048\u308B"
+    en: 'Pierce shots increase by [A]'
+  - key: skill.1104.name
+    ja: "\u5F3E\u901F"
+    en: Bullet Speed
+  - key: skill.1104.desc
+    ja: "\u8CAB\u901A\u5F3E\u304C [A] \u901F\u304F\u306A\u308B"
+    en: 'Pierce shots get faster by [A]'
+  - key: skill.1105.name
+    ja: "\u5F3E\u306E\u5927\u304D\u3055"
+    en: Bullet Size
+  - key: skill.1105.desc
+    ja: "\u8CAB\u901A\u306E\u5F53\u305F\u308A\u5224\u5B9A\u304C [A] \u5927\u304D\u304F\u306A\u308B"
+    en: 'Pierce hit size increases by [A]'
+  - key: skill.1200.name
+    ja: "\u30DD\u30FC\u30B7\u30E7\u30F3"
+    en: Throw Potion
+  - key: skill.1200.desc
+    ja: "\u30DD\u30FC\u30B7\u30E7\u30F3\u3092\u89E3\u653E\u3059\u308B"
+    en: Unlock potion
+  - key: skill.1201.name
+    ja: "\u30DD\u30FC\u30B7\u30E7\u30F3\u5A01\u529B"
+    en: Potion Power
+  - key: skill.1201.desc
+    ja: "\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
+    en: 'Damage increases by [A]'
+  - key: skill.1202.name
+    ja: "\u7740\u5F3E\u7387"
+    en: Impact Rate
+  - key: skill.1202.desc
+    ja: "\u7BC4\u56F2\u653B\u6483\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B"
+    en: 'Area attack chance increases by [A]'
+  - key: skill.1203.name
+    ja: "\u7740\u5F3E\u6570"
+    en: Impact Count
+  - key: skill.1203.desc
+    ja: "\u7BC4\u56F2\u653B\u6483\u304C [A] \u5897\u3048\u308B"
+    en: 'Area attacks increase by [A]'
+  - key: skill.1204.name
+    ja: "\u7126\u571F"
+    en: Scorched
+  - key: skill.1204.desc
+    ja: "\u7BC4\u56F2\u304C [A] \u5927\u304D\u304F\u306A\u308B"
+    en: 'Area size increases by [A]'
+  - key: skill.1205.name
+    ja: "\u6B8B\u7559"
+    en: Lingering
+  - key: skill.1205.desc
+    ja: "\u7BC4\u56F2\u653B\u6483\u304C [A] \u9577\u304F\u6B8B\u308B"
+    en: 'Area attacks last longer by [A]'
+  - key: skill.1300.name
+    ja: "\u30D3\u30FC\u30E0"
+    en: Beam
+  - key: skill.1300.desc
+    ja: "\u30D3\u30FC\u30E0\u3092\u89E3\u653E\u3059\u308B"
+    en: Unlock Beam
+  - key: skill.1301.name
+    ja: "\u30D3\u30FC\u30E0\u5A01\u529B"
+    en: Beam Power
+  - key: skill.1301.desc
+    ja: "\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
+    en: 'Damage increases by [A]'
+  - key: skill.1302.name
+    ja: "\u30D3\u30FC\u30E0\u767A\u751F\u7387"
+    en: Beam Rate
+  - key: skill.1302.desc
+    ja: "\u30EC\u30FC\u30B6\u30FC\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B"
+    en: 'Laser chance increases by [A]'
+  - key: skill.1303.name
+    ja: "\u30D3\u30FC\u30E0\u6570"
+    en: Beam Count
+  - key: skill.1303.desc
+    ja: "\u30EC\u30FC\u30B6\u30FC\u306E\u672C\u6570\u304C [A] \u5897\u3048\u308B"
+    en: 'Laser count increases by [A]'
+  - key: skill.1304.name
+    ja: "\u592A\u30D3\u30FC\u30E0"
+    en: Thick Beam
+  - key: skill.1304.desc
+    ja: "\u30EC\u30FC\u30B6\u30FC\u304C [A] \u592A\u304F\u306A\u308B"
+    en: 'Laser width increases by [A]'
+  - key: skill.37.name
+    ja: "\u30AC\u30E9\u30B9"
+    en: Glass
+  - key: skill.37.desc
+    ja: "\u6575\u306E\u51FA\u73FE\u6642\u3001[A] \u306E\u78BA\u7387\u3067\u30AC\u30E9\u30B9\u30AB\u30D7\u30BB\u30EB\u304C\u51FA\u308B\u3002\u5272\u3063\u3066\u304B\u3089\u30A2\u30A4\u30C6\u30E0\u306B\u89E6\u308C\u308B\u3002"
+    en: Glass capsules appear on [A] of spawns. Break one, then touch the item.
+  - key: skill.38.name
+    ja: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+    en: Bomb Ball
+  - key: skill.38.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u5468\u56F2\u3092\u5DFB\u304D\u8FBC\u3080\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to burst
+      around it.
+  - key: skill.39.name
+    ja: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    en: Laser Ball
+  - key: skill.39.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u305D\u306E\u5217\u3092\u713C\u304F\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to burn
+      that column.
+  - key: skill.40.name
+    ja: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+    en: Heavy Ball
+  - key: skill.40.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u9045\u304F\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u8CAB\u901A\u3059\u308B\u3002"
+    en: Flies after a normal shot, in the same direction. Slow, and it pierces blocks.
+  - key: skill.41.name
+    ja: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    en: Row Laser Ball
+  - key: skill.41.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u305D\u306E\u6BB5\u3092\u713C\u304F\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to burn
+      that row.
+  - key: skill.42.name
+    ja: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+    en: Orbit Ball
+  - key: skill.42.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5468\u308A\u3092\u56DE\u308B\u7389\u3082\u30D6\u30ED\u30C3\u30AF\u3092\u524A\u308B\u3002"
+    en: Flies after a normal shot, in the same direction. Orbiting shots also chip
+      blocks.
+  - key: skill.43.name
+    ja: "\u7D30\u7247"
+    en: Splinter
+  - key: skill.43.desc
+    ja: "\u30B9\u30C6\u30FC\u30B8\u306E\u5217\u6570\u3092\u57FA\u6E96\u306B\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u5C0F\u3055\u304F\u3057\u3066\u5217\u3092\u5897\u3084\u3059\u3002[A]"
+    en: 'Shrink blocks and add columns from the stage column count. [A]'
+  - key: milestone.10000.title
+    ja: "\u30CE\u30FC\u30DE\u30EB\u6483\u7834"
+    en: Normal Defeats
+  - key: milestone.10000.bonus
+    ja: "\u3053\u306E\u6575\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Enemy Drop
+  - key: milestone.10001.title
+    ja: "\u30E9\u30A4\u30CA\u30FC\u6483\u7834"
+    en: Liner Defeats
+  - key: milestone.10001.bonus
+    ja: "\u3053\u306E\u6575\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Enemy Drop
+  - key: milestone.10002.title
+    ja: "\u30D6\u30EC\u30FC\u30AD\u6483\u7834"
+    en: Brake Defeats
+  - key: milestone.10002.bonus
+    ja: "\u3053\u306E\u6575\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Enemy Drop
+  - key: milestone.10003.title
+    ja: "\u30EA\u30B3\u30B7\u30A7\u6483\u7834"
+    en: Ricochet Defeats
+  - key: milestone.10003.bonus
+    ja: "\u3053\u306E\u6575\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Enemy Drop
+  - key: milestone.10004.title
+    ja: "\u30B9\u30C6\u30C3\u30D7\u6483\u7834"
+    en: Step Defeats
+  - key: milestone.10004.bonus
+    ja: "\u3053\u306E\u6575\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Enemy Drop
+  - key: milestone.10005.title
+    ja: "\u30B8\u30B0\u30B6\u30B0\u6483\u7834"
+    en: Zigzag Defeats
+  - key: milestone.10005.bonus
+    ja: "\u3053\u306E\u6575\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Enemy Drop
+  - key: milestone.1.title
+    ja: "\u7DCF\u6483\u7834"
+    en: Total Defeats
+  - key: milestone.1.bonus
+    ja: "\u30AB\u30FC\u30BD\u30EB\u30C0\u30E1\u30FC\u30B8"
+    en: Cursor Damage
+  - key: milestone.2.title
+    ja: "\u7DCF\u30C0\u30E1\u30FC\u30B8"
+    en: Total Damage Dealt
+  - key: milestone.2.bonus
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387"
+    en: Critical Rate
+  - key: milestone.20000.title
+    ja: "\u96F7\u306E\u30C0\u30E1\u30FC\u30B8"
+    en: Lightning Damage Dealt
+  - key: milestone.20000.bonus
+    ja: "\u96F7\u306E\u767A\u751F\u7387"
+    en: Lightning Rate
+  - key: milestone.20001.title
+    ja: "\u8CAB\u901A\u306E\u30C0\u30E1\u30FC\u30B8"
+    en: Pierce Damage Dealt
+  - key: milestone.20001.bonus
+    ja: "\u8CAB\u901A\u306E\u5F3E\u6570"
+    en: Pierce Count
+  - key: milestone.20002.title
+    ja: "\u7BC4\u56F2\u306E\u30C0\u30E1\u30FC\u30B8"
+    en: Area Damage Dealt
+  - key: milestone.20002.bonus
+    ja: "\u7BC4\u56F2\u306E\u5927\u304D\u3055"
+    en: Area Size
+  - key: milestone.20003.title
+    ja: "\u30EC\u30FC\u30B6\u30FC\u306E\u30C0\u30E1\u30FC\u30B8"
+    en: Laser Damage Dealt
+  - key: milestone.20003.bonus
+    ja: "\u30EC\u30FC\u30B6\u30FC\u306E\u6642\u9593"
+    en: Laser Duration
+  - key: milestone.3.title
+    ja: "\u7DCF\u30AF\u30EA\u30A2\u6642\u9593"
+    en: Total Clear Time
+  - key: milestone.3.bonus
+    ja: "\u30EA\u30BD\u30FC\u30B9\u7372\u5F97"
+    en: Resource Gain
+  - key: milestone.4.title
+    ja: "\u7DCF\u30AF\u30EA\u30A2"
+    en: Total Clears
+  - key: milestone.4.bonus
+    ja: "\u30EA\u30ED\u30FC\u30C9\u6642\u9593"
+    en: Reload Time
+  - key: milestone.30000.title
+    ja: "\u30B9\u30C6\u30FC\u30B80\u30AF\u30EA\u30A2"
+    en: Stage 0 Clears
+  - key: milestone.30000.bonus
+    ja: "\u3053\u306E\u30B9\u30C6\u30FC\u30B8\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Stage Drop
+  - key: milestone.30001.title
+    ja: "\u30B9\u30C6\u30FC\u30B81\u30AF\u30EA\u30A2"
+    en: Stage 1 Clears
+  - key: milestone.30001.bonus
+    ja: "\u3053\u306E\u30B9\u30C6\u30FC\u30B8\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Stage Drop
+  - key: milestone.30002.title
+    ja: "\u30B9\u30C6\u30FC\u30B82\u30AF\u30EA\u30A2"
+    en: Stage 2 Clears
+  - key: milestone.30002.bonus
+    ja: "\u3053\u306E\u30B9\u30C6\u30FC\u30B8\u306E\u30C9\u30ED\u30C3\u30D7"
+    en: This Stage Drop
+  - key: milestone.5.title
+    ja: "\u7DCF\u30D7\u30EC\u30A4"
+    en: Total Plays
+  - key: milestone.5.bonus
+    ja: "\u6700\u5927HP"
+    en: Max HP
+  - key: milestone.40000.title
+    ja: "AA\u306E\u7372\u5F97"
+    en: Total AA Gained
+  - key: milestone.40000.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.40001.title
+    ja: "BB\u306E\u7372\u5F97"
+    en: Total BB Gained
+  - key: milestone.40001.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.40002.title
+    ja: "CC\u306E\u7372\u5F97"
+    en: Total CC Gained
+  - key: milestone.40002.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.40003.title
+    ja: "DD\u306E\u7372\u5F97"
+    en: Total DD Gained
+  - key: milestone.40003.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.40004.title
+    ja: "EE\u306E\u7372\u5F97"
+    en: Total EE Gained
+  - key: milestone.40004.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.40005.title
+    ja: "FF\u306E\u7372\u5F97"
+    en: Total FF Gained
+  - key: milestone.40005.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.40006.title
+    ja: "GG\u306E\u7372\u5F97"
+    en: Total GG Gained
+  - key: milestone.40006.bonus
+    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
+    en: This Resource Gain
+  - key: milestone.6.title
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u56DE\u6570"
+    en: Total Criticals
+  - key: milestone.6.bonus
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387"
+    en: Critical Rate
+  - key: milestone.7.title
+    ja: "\u30EA\u30ED\u30FC\u30C9\u56DE\u6570"
+    en: Total Reloads
+  - key: milestone.7.bonus
+    ja: "\u88C5\u5F3E\u6570"
+    en: Magazine Ammo
+  - key: milestone.8.title
+    ja: "\u88AB\u30C0\u30E1\u30FC\u30B8"
+    en: Total Damage Taken
+  - key: milestone.8.bonus
+    ja: "\u6700\u5927HP"
+    en: Max HP
+  - key: milestone.9.title
+    ja: "\u6700\u9AD8\u30C0\u30E1\u30FC\u30B8\u66F4\u65B0"
+    en: Best Damage Updates
+  - key: milestone.9.bonus
+    ja: "\u653B\u6483\u9593\u9694"
+    en: Attack Interval
+  - key: milestone.10.title
+    ja: "\u6700\u77ED\u30AF\u30EA\u30A2\u66F4\u65B0"
+    en: Best Clear Updates
+  - key: milestone.10.bonus
+    ja: "\u30AB\u30FC\u30BD\u30EB\u30B5\u30A4\u30BA"
+    en: Cursor Size

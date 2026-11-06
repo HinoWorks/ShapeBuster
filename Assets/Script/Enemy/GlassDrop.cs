@@ -108,7 +108,7 @@ public class GlassDrop : MonoBehaviour, IDamagable
             glassRenderer.transform.DOPunchScale(Vector3.one * 0.18f, 0.08f, 1, 0.4f);
         }
 
-        owner?.SpawnLooseResource(transform.position, contents);
+        owner?.SpawnLooseResource(transform.position, contents, fallSpeed);
         Release();
     }
 

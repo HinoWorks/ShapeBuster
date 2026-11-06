@@ -213,16 +213,13 @@ public class BlockBall : MonoBehaviour
         var piece = collision.collider.GetComponent<BlockPiece>();
         if (piece != null)
         {
-            Vector2 point = collision.contactCount > 0
-                ? collision.GetContact(0).point
-                : (Vector2)transform.position;
             piece.Hit(damage);
             if (Kind == BlockBallKind.Bomb && Random.value < ProcChance)
-                BlockSession.Inst?.Explode(point);
+                BlockSession.Inst?.Explode(piece);
             else if (Kind == BlockBallKind.Laser && Random.value < ProcChance)
-                BlockSession.Inst?.Beam(point.x);
+                BlockSession.Inst?.Beam(piece);
             else if (Kind == BlockBallKind.LaserRow && Random.value < ProcChance)
-                BlockSession.Inst?.BeamRow(point.y);
+                BlockSession.Inst?.BeamRow(piece);
 
             if (Kind == BlockBallKind.Heavy)
             {

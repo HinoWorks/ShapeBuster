@@ -13,34 +13,52 @@ MonoBehaviour:
   m_Name: SO_StageData
   m_EditorClassIdentifier: Assembly-CSharp::SO_StageData
   stageDatas:
-  - stageIndex: 1
-    stageTime: 0
-    blockColumns: 0
-    enemyPowerRate: 0
+  - stageIndex: 0
+    stageTime: 15
+    blockColumns: 8
+    enemyPowerRate: 1
     enemyHpRate: 1
-    enemySpeedRate: 0
+    enemySpeedRate: 0.5
     enemyResourceRate: 1
-    timeEnhanceRate: 0
+    bossIndex: 0
+  - stageIndex: 1
+    stageTime: 30
+    blockColumns: 8
+    enemyPowerRate: 1
+    enemyHpRate: 2
+    enemySpeedRate: 0.75
+    enemyResourceRate: 2
     bossIndex: 0
   - stageIndex: 2
-    stageTime: 0
-    blockColumns: 0
-    enemyPowerRate: 0
-    enemyHpRate: 2
-    enemySpeedRate: 0
-    enemyResourceRate: 2
-    timeEnhanceRate: 0
+    stageTime: 30
+    blockColumns: 10
+    enemyPowerRate: 1
+    enemyHpRate: 3
+    enemySpeedRate: 1
+    enemyResourceRate: 3
     bossIndex: 0
   - stageIndex: 3
-    stageTime: 0
-    blockColumns: 0
-    enemyPowerRate: 0
+    stageTime: 30
+    blockColumns: 10
+    enemyPowerRate: 1
     enemyHpRate: 3
-    enemySpeedRate: 0
+    enemySpeedRate: 1
     enemyResourceRate: 3
-    timeEnhanceRate: 0
     bossIndex: 0
   stageLevelDatas:
+  - stageIndex: 0
+    startSecond: 0
+    endSecond: 0
+    spawnCount_forSecond: 0
+    rate_enemy1: 0
+    rate_enemy2: 0
+    rate_enemy3: 0
+    rate_enemy4: 0
+    rate_enemy5: 0
+    rate_enemy6: 0
+    rate_enemy7: 0
+    rate_enemy8: 0
+    rate_enemy9: 0
   - stageIndex: 1
     startSecond: 0
     endSecond: 0

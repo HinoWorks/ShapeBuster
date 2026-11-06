@@ -108,4 +108,5 @@ MonoBehaviour:
   solid: 0
   weight: 58
   hpScale: 1
+  bossIndex: -1
   sprite: {fileID: 100004}

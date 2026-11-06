@@ -2,13 +2,15 @@ using UnityEngine;
 
 /// <summary>
 /// ブロック1個。プレハブのマス数、色、HP倍率、壊れない設定を使う。
-/// 見た目は BlockLevelFill。現在レベルの色を下から塗り、空きは一つ下の色。レベル1の空きは透過。
+/// 見た目は BlockLevelFill。ボスのプレハブは BlockBossFill を付けたまま使う。
+/// 現在レベルの色を下から塗り、空きは一つ下の色。レベル1の空きは透過。
 /// 輪郭の太さはスケールが変わっても同じにする。
 /// 被弾で白く光り、一瞬大きくなる。破壊時も同じ演出を出し、その場に破壊エフェクトを出す。
 /// </summary>
 public class BlockPiece : MonoBehaviour
 {
     const string LevelShader = "ShapeBuster/BlockLevelFill";
+    const string BossShader = "ShapeBuster/BlockBossFill";
     const float HitHold = 0.05f;
     const float HitReturn = 0.08f;
     const float HitScale = 1.18f;
@@ -24,9 +26,9 @@ public class BlockPiece : MonoBehaviour
 
     static Material sharedFill;
 
-    [Tooltip("横のマス数")]
+    [Tooltip("横のマス数。ボスはこの幅に通常ブロックを出さない")]
     [SerializeField] int cellsX = 1;
-    [Tooltip("縦のマス数")]
+    [Tooltip("縦のマス数。ボスはこの高さに通常ブロックを出さない")]
     [SerializeField] int cellsY = 1;
     [Tooltip("壊せない。デッドラインに触れても終了しない")]
     [SerializeField] bool solid;
@@ -34,6 +36,8 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] float weight = 1f;
     [Tooltip("マス数による倍率に、さらに掛けるHP倍率")]
     [SerializeField] float hpScale = 1f;
+    [Tooltip("0以上ならボス。ステージSOの bossIndex と一致させる。通常ブロックは -1")]
+    [SerializeField] int bossIndex = -1;
     [SerializeField] SpriteRenderer sprite;
 
     BlockSession session;
@@ -65,12 +69,15 @@ public class BlockPiece : MonoBehaviour
     public int CellsY => Mathf.Max(1, cellsY);
     public float Weight => Mathf.Max(0f, weight);
     public float HpScale => Mathf.Max(0f, hpScale);
+    public int BossIndex => bossIndex;
     public bool IsAlive { get; private set; }
     public bool IsSolid => solid;
     public int Level => level;
     public int Hp => currentHp;
     public int HpMax => barMax;
     public float Bottom => transform.position.y - half;
+    /// <summary>ブロックの中心。ボールスキルの発生位置はここを基準にする。</summary>
+    public Vector2 Center => transform.position;
 
     void OnEnable()
     {
@@ -188,8 +195,7 @@ public class BlockPiece : MonoBehaviour
         sprite.color = Color.white;
         sprite.sortingOrder = 0;
 
-        if (!solid && (sprite.sharedMaterial == null || sprite.sharedMaterial.shader == null
-            || sprite.sharedMaterial.shader.name != LevelShader))
+        if (!solid && !HasLevelFill())
         {
             var material = SharedFill();
             if (material != null)
@@ -250,8 +256,8 @@ public class BlockPiece : MonoBehaviour
         float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate))
             * (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate));
         int reward = StageEnemyScale.ScaleResourceCount(rewardCells, rewardRate);
-        if (reward > 0)
-            GameEvent.UI.PublishResourceMod_Ingame(ResourceType.AA, reward);
+        if (reward > 0 && session != null)
+            session.DropResources(transform.position, reward);
 
         session.NotifyBroken(this);
         if (EffectManager.Inst != null)
@@ -293,11 +299,18 @@ public class BlockPiece : MonoBehaviour
         PushFill();
     }
 
+    bool HasLevelFill()
+    {
+        var material = sprite != null ? sprite.sharedMaterial : null;
+        var shader = material != null ? material.shader : null;
+        if (shader == null) return false;
+        var name = shader.name;
+        return name == LevelShader || name == BossShader;
+    }
+
     void PushFill()
     {
-        if (sprite == null) return;
-        if (sprite.sharedMaterial == null || sprite.sharedMaterial.shader == null) return;
-        if (sprite.sharedMaterial.shader.name != LevelShader) return;
+        if (sprite == null || !HasLevelFill()) return;
 
         if (propertyBlock == null)
             propertyBlock = new MaterialPropertyBlock();

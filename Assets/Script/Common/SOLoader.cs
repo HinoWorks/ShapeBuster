@@ -124,6 +124,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_BlockSession so_blockSession;
+    public static SO_BlockSession BlockSession
+    {
+        get
+        {
+            if (so_blockSession == null)
+            {
+                so_blockSession = LoadSO<SO_BlockSession>(pathBase + nameof(SO_BlockSession));
+            }
+            return so_blockSession;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

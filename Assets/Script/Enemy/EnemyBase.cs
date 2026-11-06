@@ -428,7 +428,7 @@ public class EnemyBase : MonoBehaviour, IDamagable
         if (owner != null && enemyData != null)
         {
             float bonus = blastResourceRate > 0f ? blastResourceRate : 1f;
-            owner.SpawnResources(transform.position, enemyData, bonus, isRare, sizeRate);
+            owner.SpawnResources(transform.position, enemyData, bonus, isRare, sizeRate, moveSpeed);
         }
         GameEvent.InGame.PublishEnemyDefeated(enemyData != null ? enemyData.enemyIndex : -1);
 

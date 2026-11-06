@@ -451,7 +451,7 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
     /// <summary>敵データの生成数・種類・プレハブに従って、撃破位置へリソースを出す。</summary>
-    public void SpawnResources(Vector3 origin, EnemyData enemyData, float bonusRate = 1f, bool rare = false, float sizeRate = 1f)
+    public void SpawnResources(Vector3 origin, EnemyData enemyData, float bonusRate = 1f, bool rare = false, float sizeRate = 1f, float fallSpeed = 1f)
     {
         if (enemyData == null) return;
 
@@ -474,7 +474,7 @@ public class EnemyGenerateManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var resource = RentResource(prefab);
-            resource.Activate(origin + ScatterOffset(), enemyData.resourceType);
+            resource.Activate(origin + ScatterOffset(), enemyData.resourceType, fallSpeed);
             resourceActive.Add(resource);
         }
     }
@@ -531,7 +531,7 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
     /// <summary>ガラスが割れたあとの中身。カーソルが触れると獲得する。</summary>
-    public void SpawnLooseResource(Vector3 origin, ResourceType resourceType)
+    public void SpawnLooseResource(Vector3 origin, ResourceType resourceType, float fallSpeed = 1f)
     {
         var resourceData = SOLoader.ResourceData != null
             ? SOLoader.ResourceData.GetResourceData(resourceType)
@@ -540,7 +540,7 @@ public class EnemyGenerateManager : MonoBehaviour
         if (prefab == null) return;
 
         var resource = RentResource(prefab);
-        resource.Activate(origin, resourceType);
+        resource.Activate(origin, resourceType, fallSpeed);
         resource.transform.localScale = Vector3.one * 0.35f;
         resource.transform.DOScale(Vector3.one, 0.16f).SetEase(Ease.OutBack).SetTarget(resource.transform);
         resourceActive.Add(resource);

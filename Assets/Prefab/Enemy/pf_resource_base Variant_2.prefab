@@ -52,13 +52,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: pf_resource_base Variant_2
       objectReference: {fileID: 0}
+    - target: {fileID: 7931676728788018962, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.050000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931676728788018962, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.050000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931676728788018962, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.050000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8260792399498716864, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
+      propertyPath: m_Size.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8260792399498716864, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
+      propertyPath: m_Size.y
+      value: 5.12
+      objectReference: {fileID: 0}
     - target: {fileID: 8260792399498716864, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -7607125382520649678, guid: 94a89e7e24d824194bea960a9340a18c, type: 3}
+      objectReference: {fileID: 21300000, guid: 4fb10d78a49253246880a851928e2f11, type: 3}
     - target: {fileID: 8260792399498716864, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
       propertyPath: m_Color.g
       value: 0.37850553
+      objectReference: {fileID: 0}
+    - target: {fileID: 8260792399498716864, guid: 3374e9968da8a4aa3a8b67b27f3a0484, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

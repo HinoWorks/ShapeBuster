@@ -8,6 +8,7 @@ using System;
 public class StageData
 {
     public int stageIndex;
+    /// <summary>未クリアのとき、この秒数でボスを出す。0以下は出さない。</summary>
     public int stageTime;
     /// <summary>横に並べるブロック数。0以下は10列。</summary>
     public int blockColumns;
@@ -15,8 +16,7 @@ public class StageData
     public float enemyHpRate;
     public float enemySpeedRate;
     public float enemyResourceRate;
-    /// <summary>旧仕様の経過強化。現在のステージ進行では使わない。</summary>
-    public float timeEnhanceRate;
+    /// <summary>Resources/Boss の bossIndex と一致するプレハブを出す。</summary>
     public int bossIndex;
 
 
