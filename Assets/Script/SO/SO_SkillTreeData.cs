@@ -39,6 +39,31 @@ public enum SkillParamStat
     // == Block ==
     BlockCompact = 29, // 1レベルで一辺6%縮小し、ステージ列数から列を増やす。破壊資源は1レベル+12%
 
+    // == Ball tree ==
+    BallCount = 30, // ノーマル弾の本数
+    BallSpeed = 31, // 全ボールの速さへの倍率。0.15 で +15%
+    BallFlatDamage = 32, // ノーマル攻撃力への加算
+    BallCritRate = 33, // ボールのクリティカル率
+    BallCritDamage = 34, // クリティカル倍率への加算。素の2倍に足す
+    BallDamageRate = 35, // ノーマル攻撃力への倍率
+    BallChain = 36, // 1以上で、同じフライトの連続ヒットが次弾を強くする
+    BallBoss = 37, // ボスへの攻撃力倍率
+    BallProc = 38, // 特殊弾の発生率への加算。targetIndex はボム0から
+    BallRatio = 39, // 特殊弾の攻撃力がノーマルに対して増える分。0.5 で 50% が 100% になる
+    BallExtra = 40, // その特殊弾の本数
+    BallHeavySpeed = 41, // ヘビーの速さの割合への加算。素の30%に足す
+    BallOrbitCount = 42, // オービットの周回の数
+    BlockFallSlow = 43, // ブロック下降を遅くする割合
+    BlockHarvest = 44, // ブロックが落とすAへの倍率
+    BlockMagnet = 45, // 拾得半径への倍率
+    BlockLinger = 46, // 1以上で、資源がデッドラインに残る
+    RegenSpawn = 47, // 再生ブロックの生成重み。0.04 で通常群の4%
+    ArmorSpawn = 48, // 壁ブロックの生成重み
+    RegenDrop = 49, // 再生ブロックの固有ドロップへの加算
+    ArmorDrop = 50, // 壁ブロックの固有ドロップへの加算
+    ConvertUnlock = 51, // 1以上で Convert タブを出す
+    ConvertRate = 52, // Convert の必要AAを減らす段
+
     // == Player ==
     MaxHp = 6, // 最大HPへの加算。ラン開始時に反映
     Regen = 15, // 毎秒の体力回復
@@ -310,6 +335,122 @@ public class SO_SkillTreeData : ScriptableObject
             level = 1,
             cost_AA = 20
         });
+        skillTreeUnits = units.ToArray();
+    }
+
+    public const int BallVolleySkill = 3000;
+    public const int BallSpeedSkill = 3001;
+    public const int BallPowerSkill = 3002;
+    public const int BallHeavyHitSkill = 3003;
+    public const int BallCritSkill = 3004;
+    public const int BallFatalSkill = 3005;
+    public const int BallAmpSkill = 3006;
+    public const int BallChainSkill = 3007;
+    public const int BallBossSkill = 3008;
+    public const int BlockSlowSkill = 3010;
+    public const int BlockHarvestSkill = 3020;
+    public const int BlockMagnetSkill = 3021;
+    public const int BlockLingerSkill = 3022;
+    public const int RegenSpawnSkill = 3030;
+    public const int ArmorSpawnSkill = 3031;
+    public const int RegenDropSkill = 3032;
+    public const int ArmorDropSkill = 3033;
+    public const int ConvertSkill = 3040;
+    public const int ConvertRateSkill = 3041;
+
+    /// <summary>
+    /// ボールツリーの強化を、シートが無くても買えるように足す。
+    /// </summary>
+    public void EnsureBlockTree()
+    {
+        AddSkill(BallVolleySkill, "連弾", "ノーマルボールが1発増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallCount, 1f, 20);
+        AddSkill(BallSpeedSkill, "球速", "すべてのボールが [A] 速くなる。", 3, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallSpeed, 0.15f, 15, 40, 90);
+        AddSkill(BallPowerSkill, "球威", "ボールの攻撃力が [A] 増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallFlatDamage, 1f, 20);
+        AddSkill(BallHeavyHitSkill, "強打", "ボールの攻撃力が [A] 増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallFlatDamage, 2f, 40);
+        AddSkill(BallCritSkill, "クリティカル", "ボールのクリティカル率が [A] 増える。", 4, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallCritRate, 0.1f, 20, 45, 90, 160);
+        AddSkill(BallFatalSkill, "致命", "クリティカルの倍率が1増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallCritDamage, 1f, 80);
+        AddSkill(BallAmpSkill, "増幅", "ボールの攻撃力が [A] 増える。", 2, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallDamageRate, 0.25f, 50, 120);
+        AddSkill(BallChainSkill, "連撃", "同じフライトで当てるたび、次のヒットが10%強くなる。上限50%。", 1, "NA", SkillParamTarget.Ball, 0, SkillParamStat.BallChain, 1f, 60);
+        AddSkill(BallBossSkill, "ボス特攻", "ボスへの攻撃力が [A] 増える。", 3, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallBoss, 0.1f, 30, 70, 140);
+
+        AddBallUpgrade(0, 3100, "爆風の発生", "ボムの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(0, 3101, "爆風の威力", "ボムの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(0, 3102, "ボム＋1", "ボムがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddBallUpgrade(1, 3110, "列の発生", "縦レーザーの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(1, 3111, "列の威力", "縦レーザーの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(1, 3112, "縦レーザー＋1", "縦レーザーがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddBallUpgrade(3, 3120, "段の発生", "横レーザーの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(3, 3121, "段の威力", "横レーザーの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(3, 3122, "横レーザー＋1", "横レーザーがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddBallUpgrade(2, 3130, "ヘビーの速さ", "ヘビーの速さがノーマルの50%になる。", SkillParamStat.BallHeavySpeed, 0.2f, "NA");
+        AddBallUpgrade(2, 3131, "ヘビーの威力", "ヘビーの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(2, 3132, "ヘビー＋1", "ヘビーがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddBallUpgrade(4, 3140, "衛星", "周回する玉が1つ増える。", SkillParamStat.BallOrbitCount, 1f, "Count");
+        AddBallUpgrade(4, 3141, "周回の威力", "オービットの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(4, 3142, "オービット＋1", "オービットがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddBallUpgrade(5, 3150, "斜めの発生", "クロスの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(5, 3151, "斜めの威力", "クロスの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(5, 3152, "クロス＋1", "クロスがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddBallUpgrade(6, 3160, "沼の発生", "ポイズンの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(6, 3161, "沼の威力", "ポイズンの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(6, 3162, "ポイズン＋1", "ポイズンがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+
+        AddSkill(BlockSlowSkill, "減速", "ブロックの下降が [A] 遅くなる。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockFallSlow, 0.1f, 20, 50, 110);
+        AddSkill(BlockHarvestSkill, "収穫", "ブロックが落とすAが [A] 増える。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockHarvest, 0.25f, 15, 40, 90);
+        AddSkill(BlockMagnetSkill, "磁石", "拾得半径が [A] 広がる。", 2, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockMagnet, 0.5f, 20, 50);
+        AddSkill(BlockLingerSkill, "残留", "資源がデッドラインで0.4秒残る。", 1, "NA", SkillParamTarget.Block, 0, SkillParamStat.BlockLinger, 1f, 30);
+        AddSkill(RegenSpawnSkill, "再生の出現", "再生ブロックの出やすさが [A] 増える。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.RegenSpawn, 0.04f, 25, 60, 120);
+        AddSkill(ArmorSpawnSkill, "壁の出現", "壁ブロックの出やすさが [A] 増える。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.ArmorSpawn, 0.04f, 25, 60, 120);
+        AddSkill(RegenDropSkill, "再生の収量", "再生ブロックのBが [A] 増える。", 2, "Count", SkillParamTarget.Block, 0, SkillParamStat.RegenDrop, 1f, 40, 90);
+        AddSkill(ArmorDropSkill, "壁の収量", "壁ブロックのCが [A] 増える。", 2, "Count", SkillParamTarget.Block, 0, SkillParamStat.ArmorDrop, 1f, 40, 90);
+        AddSkill(ConvertSkill, "Convert", "AAをB、C、Dに換えるタブが増える。", 1, "NA", SkillParamTarget.Block, 0, SkillParamStat.ConvertUnlock, 1f, 50);
+        AddSkill(ConvertRateSkill, "効率", "Convertに必要なAAが15%減る。", 3, "Count", SkillParamTarget.Block, 0, SkillParamStat.ConvertRate, 1f, 40, 90, 160);
+    }
+
+    void AddBallUpgrade(int targetIndex, int index, string skillName, string description, SkillParamStat stat, float delta, string unit)
+    {
+        AddSkill(index, skillName, description, 1, unit, SkillParamTarget.Ball, targetIndex, stat, delta, 30);
+    }
+
+    void AddSkill(int index, string skillName, string description, int maxLevel, string unit, SkillParamTarget target, int targetIndex, SkillParamStat stat, float delta, params int[] costs)
+    {
+        if (HasBase(index) || costs == null || costs.Length == 0) return;
+
+        var bases = new List<SkillTreeBase>();
+        if (skillTreeBases != null)
+            bases.AddRange(skillTreeBases);
+        bases.Add(new SkillTreeBase
+        {
+            baseSkillIndex = index,
+            skillName = skillName,
+            description = description,
+            maxLevel = maxLevel,
+            unit = unit,
+            paramTarget = target,
+            targetIndex = targetIndex,
+            paramStat = stat,
+            deltaValue = delta
+        });
+        skillTreeBases = bases.ToArray();
+
+        var units = new List<SkillTreeUnit>();
+        if (skillTreeUnits != null)
+            units.AddRange(skillTreeUnits);
+        for (int level = 1; level <= costs.Length; level++)
+        {
+            units.Add(new SkillTreeUnit
+            {
+                skillTreeIndex = index,
+                level = level,
+                cost_AA = costs[level - 1]
+            });
+        }
         skillTreeUnits = units.ToArray();
     }
 

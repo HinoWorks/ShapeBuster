@@ -83,6 +83,7 @@ public class UI_SkillTreeUnit : MonoBehaviour
         onUpdateNodeState = updateNodeState;
         if (button != null)
             button.onMouseOver += OnPointerEnter;
+        RebindClick();
         if (obj_debug != null)
             obj_debug.SetActive(false);
         if (eff_enhance != null)
@@ -102,6 +103,11 @@ public class UI_SkillTreeUnit : MonoBehaviour
         skillTreeUnit = unitData;
         if (image_icon != null && skillTree.icon != null)
             image_icon.sprite = skillTree.icon;
+    }
+
+    public void SetRoot(bool root)
+    {
+        isRoot = root;
     }
 
     public void SetNeighborSkillIndexes(int[] indexes)
@@ -263,6 +269,13 @@ public class UI_SkillTreeUnit : MonoBehaviour
     {
         if (unlockState == SkillTreeUnlockState.Hide) return;
         onMouseOver?.Invoke(isEnter, this);
+    }
+
+    public void RebindClick()
+    {
+        if (button == null) return;
+        button.onClick = new Button.ButtonClickedEvent();
+        button.onClick.AddListener(OnClick_Enhance);
     }
 
     public void OnClick_Enhance()

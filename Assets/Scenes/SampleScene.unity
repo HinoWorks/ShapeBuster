@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 137465485}
   - component: {fileID: 137465486}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3209,6 +3209,8 @@ MonoBehaviour:
   debugBallLaserRow: 1
   debugBallHeavy: 1
   debugBallOrbit: 1
+  debugBallCross: 1
+  debugBallPoison: 1
 --- !u!4 &927878392
 Transform:
   m_ObjectHideFlags: 0

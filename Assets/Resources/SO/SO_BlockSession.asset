@@ -46,6 +46,7 @@ MonoBehaviour:
   shotInterval: 0.2
   ballDamage: 1
   minPull: 0.28
+  launchTopInset: 4.5
   heavySpeedScale: 0.3
   bombRadiusInCells: 2.5
   poisonDuration: 2.5

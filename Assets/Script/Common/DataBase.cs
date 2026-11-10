@@ -135,6 +135,7 @@ public class DataBase : MonoBehaviour
         mSO_SkillTreeData.EnsureGlassSkill();
         mSO_SkillTreeData.EnsureBallSkills();
         mSO_SkillTreeData.EnsureBlockCompactSkill();
+        mSO_SkillTreeData.EnsureBlockTree();
     }
 
 

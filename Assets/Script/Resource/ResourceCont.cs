@@ -11,6 +11,7 @@ public class ResourceCont : MonoBehaviour
     Rigidbody2D body;
     bool inPool;
     float fallSpeed = 1f;
+    float linger;
     public bool isCollecting { get; private set; } = false;
 
     public ResourceType ResourceType { get; private set; }
@@ -39,6 +40,7 @@ public class ResourceCont : MonoBehaviour
         isCollecting = false;
         ResourceType = resourceType;
         fallSpeed = Mathf.Max(0.01f, speed);
+        linger = 0f;
         gameObject.SetActive(true);
         transform.DOKill();
         transform.localScale = Vector3.one;
@@ -56,7 +58,8 @@ public class ResourceCont : MonoBehaviour
         if (inPool || isCollecting || !PointerWorld.IsInsidePlayfield) return;
 
         var session = SOLoader.BlockSession;
-        float range = (session != null ? session.pickupRange : 0.4f) * (1f + Mathf.Max(0f, SkillTreeBonus.PickupRange));
+        float range = (session != null ? session.pickupRange : 0.4f)
+            * (1f + Mathf.Max(0f, SkillTreeBonus.PickupRange) + SkillTreeBonus.BlockMagnetRate);
         Vector2 delta = (Vector2)PointerWorld.Position - (Vector2)transform.position;
         if (delta.sqrMagnitude > range * range) return;
         Collect();
@@ -67,14 +70,26 @@ public class ResourceCont : MonoBehaviour
         if (inPool || isCollecting || body == null) return;
 
         body.linearVelocity = Vector2.down * fallSpeed;
-        if (body.position.y <= DeadlineTop())
-            Release();
+        if (body.position.y > DeadlineTop()) return;
+
+        if (SkillTreeBonus.BlockLinger && linger <= 0f)
+            linger = 0.4f;
+        if (linger > 0f)
+        {
+            linger -= Time.fixedDeltaTime;
+            body.linearVelocity = Vector2.zero;
+            if (linger > 0f) return;
+        }
+        Release();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (inPool || isCollecting) return;
         if (!other.CompareTag("DeadLine")) return;
+        if (SkillTreeBonus.BlockLinger && linger <= 0f)
+            linger = 0.4f;
+        if (linger > 0f) return;
         Release();
     }
 

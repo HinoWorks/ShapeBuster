@@ -21,7 +21,6 @@ public enum BlockBallKind
 /// </summary>
 public class BlockBall : MonoBehaviour
 {
-    const float ProcChance = 0.3f;
     const int OrbitCount = 3;
     const float OrbitRadius = 0.55f;
     const float OrbitHitRadius = 0.1f;
@@ -56,6 +55,7 @@ public class BlockBall : MonoBehaviour
     Transform[] orbits;
     List<BlockPiece>[] orbitTouch;
     float orbitAngle;
+    int hitsBefore;
 
     public BlockBallKind Kind { get; private set; }
     public bool IsHeld { get; private set; }
@@ -145,6 +145,7 @@ public class BlockBall : MonoBehaviour
         forceVelocity = false;
         ClearIgnored();
         SetVisible(true);
+        hitsBefore = 0;
         launchDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.up;
         approach = launchDirection * speed;
         body.simulated = true;
@@ -216,17 +217,31 @@ public class BlockBall : MonoBehaviour
         var piece = collision.collider.GetComponent<BlockPiece>();
         if (piece != null)
         {
-            piece.Hit(damage);
-            if (Kind == BlockBallKind.Bomb && Random.value < ProcChance)
-                BlockSession.Inst?.Explode(piece);
-            else if (Kind == BlockBallKind.Laser && Random.value < ProcChance)
-                BlockSession.Inst?.Beam(piece);
-            else if (Kind == BlockBallKind.LaserRow && Random.value < ProcChance)
-                BlockSession.Inst?.BeamRow(piece);
-            else if (Kind == BlockBallKind.Cross && Random.value < ProcChance)
-                BlockSession.Inst?.BeamCross(piece);
-            else if (Kind == BlockBallKind.Poison && Random.value < ProcChance)
-                BlockSession.Inst?.Poison(piece);
+            Vector2 hitPoint = collision.contactCount > 0
+                ? collision.GetContact(0).point
+                : (Vector2)transform.position;
+            bool boss = piece.BossIndex >= 0;
+            int rolled = SkillTreeBonus.RollHit(Kind, hitsBefore, boss);
+            damage = rolled;
+            if (!piece.HitFrom(damage, hitPoint))
+            {
+                KeepSpeed(launchDirection);
+                return;
+            }
+
+            hitsBefore++;
+            int area = SkillTreeBonus.RollHit(Kind, 0, boss);
+            float proc = SkillTreeBonus.ProcChance(Kind);
+            if (Kind == BlockBallKind.Bomb && Random.value < proc)
+                BlockSession.Inst?.Explode(piece, area);
+            else if (Kind == BlockBallKind.Laser && Random.value < proc)
+                BlockSession.Inst?.Beam(piece, area);
+            else if (Kind == BlockBallKind.LaserRow && Random.value < proc)
+                BlockSession.Inst?.BeamRow(piece, area);
+            else if (Kind == BlockBallKind.Cross && Random.value < proc)
+                BlockSession.Inst?.BeamCross(piece, area);
+            else if (Kind == BlockBallKind.Poison && Random.value < proc)
+                BlockSession.Inst?.Poison(piece, rolled);
 
             if (Kind == BlockBallKind.Heavy)
             {
@@ -357,11 +372,11 @@ public class BlockBall : MonoBehaviour
                 found.Add(child);
         }
 
-        if (found.Count == 0)
-        {
-            for (int i = 0; i < OrbitCount; i++)
-                found.Add(CreateOrbitDot().transform);
-        }
+        int wanted = Mathf.Max(OrbitCount, SkillTreeBonus.OrbitCount);
+        while (found.Count < wanted)
+            found.Add(CreateOrbitDot().transform);
+        if (found.Count > wanted)
+            found.RemoveRange(wanted, found.Count - wanted);
 
         orbits = found.ToArray();
         orbitTouch = new List<BlockPiece>[orbits.Length];
@@ -444,7 +459,7 @@ public class BlockBall : MonoBehaviour
             var piece = orbitHits[i] != null ? orbitHits[i].GetComponent<BlockPiece>() : null;
             if (piece == null || !piece.IsAlive || touching.Contains(piece)) continue;
             touching.Add(piece);
-            piece.Hit(damage);
+            piece.HitFrom(SkillTreeBonus.RollHit(Kind, 0, piece.BossIndex >= 0), pos);
         }
     }
 

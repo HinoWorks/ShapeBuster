@@ -53,6 +53,108 @@ public static class SkillTreeBonus
     /// <summary>ブロック破壊資源への加算倍率。1段で +12%。</summary>
     public static float BlockResourceUpRate => BlockCompactLevel * BlockResourcePerLevel;
 
+    public static int NormalBallCount => 1 + Mathf.RoundToInt(Sum(SkillParamTarget.Ball, SkillParamStat.BallCount));
+    public static float BallSpeedScale => 1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallSpeed));
+    public static float FallSpeedScale => Mathf.Max(0.4f, 1f - Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockFallSlow)));
+    public static float BlockHarvestRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockHarvest));
+    public static float BlockMagnetRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockMagnet));
+    public static bool BlockLinger => Sum(SkillParamTarget.Block, SkillParamStat.BlockLinger) >= 1f;
+    public static float RegenSpawnRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.RegenSpawn));
+    public static float ArmorSpawnRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.ArmorSpawn));
+    public static int RegenDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.RegenDrop));
+    public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
+    public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
+    public static int ConvertRateLevel => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ConvertRate));
+
+    public static int BallCopies(BlockBallKind kind)
+    {
+        int index = BallTarget(kind);
+        if (index < 0) return 0;
+        if (!OwnsBall(kind)) return 0;
+        int copies = 1;
+        if (SumBall(SkillParamStat.BallExtra, index) >= 1f && SumBall(SkillParamStat.BallRatio, index) > 0f)
+            copies++;
+        return copies;
+    }
+
+    public static float HeavySpeedScale => 0.3f + Mathf.Max(0f, SumBall(SkillParamStat.BallHeavySpeed, 2));
+    public static int OrbitCount => 3 + Mathf.RoundToInt(SumBall(SkillParamStat.BallOrbitCount, 4));
+    public static bool ChainHits => Sum(SkillParamTarget.Ball, SkillParamStat.BallChain) >= 1f;
+
+    public static float ProcChance(BlockBallKind kind)
+    {
+        int index = BallTarget(kind);
+        if (index < 0 || kind == BlockBallKind.Heavy || kind == BlockBallKind.Orbit || kind == BlockBallKind.Normal)
+            return 0f;
+        return Mathf.Clamp01(0.1f + Mathf.Max(0f, SumBall(SkillParamStat.BallProc, index)));
+    }
+
+    /// <summary>ノーマルの攻撃力に、特殊弾の割合を掛けた値。端数は最後にまとめて四捨五入する。</summary>
+    public static float AttackPower(BlockBallKind kind)
+    {
+        float normal = (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFlatDamage)))
+            * (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallDamageRate)));
+        if (kind == BlockBallKind.Normal) return normal;
+
+        int index = BallTarget(kind);
+        float ratio = 0.5f + (index >= 0 ? Mathf.Max(0f, SumBall(SkillParamStat.BallRatio, index)) : 0f);
+        return normal * ratio;
+    }
+
+    public static int RollHit(BlockBallKind kind, int hitsBefore, bool boss)
+    {
+        float power = AttackPower(kind);
+        if (ChainHits && hitsBefore > 0)
+            power *= 1f + Mathf.Min(0.5f, 0.1f * hitsBefore);
+        if (UnityEngine.Random.value < Mathf.Clamp01(Sum(SkillParamTarget.Ball, SkillParamStat.BallCritRate)))
+            power *= 2f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallCritDamage));
+        if (boss)
+            power *= 1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallBoss));
+        return Mathf.Max(1, RoundDamage(power));
+    }
+
+    public static int ConvertCost(ResourceType type)
+    {
+        int basis;
+        switch (type)
+        {
+            case ResourceType.BB: basis = 20; break;
+            case ResourceType.CC: basis = 40; break;
+            case ResourceType.DD: basis = 80; break;
+            default: return 0;
+        }
+        float scale = Mathf.Pow(0.85f, Mathf.Max(0, ConvertRateLevel));
+        return Mathf.Max(1, Mathf.RoundToInt(basis * scale));
+    }
+
+    static int BallTarget(BlockBallKind kind)
+    {
+        switch (kind)
+        {
+            case BlockBallKind.Bomb: return 0;
+            case BlockBallKind.Laser: return 1;
+            case BlockBallKind.Heavy: return 2;
+            case BlockBallKind.LaserRow: return 3;
+            case BlockBallKind.Orbit: return 4;
+            case BlockBallKind.Cross: return 5;
+            case BlockBallKind.Poison: return 6;
+            default: return -1;
+        }
+    }
+
+    static float SumBall(SkillParamStat stat, int targetIndex)
+    {
+        float total = 0f;
+        foreach (var contribution in bySkill.Values)
+        {
+            if (contribution.target != SkillParamTarget.Ball) continue;
+            if (contribution.targetIndex != targetIndex) continue;
+            if (contribution.stat != stat) continue;
+            total += contribution.value;
+        }
+        return total;
+    }
+
     /// <summary>ステージの列数を基準に、縮んだマスが同じ幅へ並ぶ列数へ増やす。</summary>
     public static int ColumnsFor(int baseColumns)
     {

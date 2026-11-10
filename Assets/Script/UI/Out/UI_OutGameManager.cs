@@ -8,6 +8,7 @@ public enum OutGame_MenuType
     Loading,
     SkillTree,
     MileStone,
+    Convert,
 }
 
 public class UI_OutGameManager : MonoBehaviour
@@ -32,6 +33,8 @@ public class UI_OutGameManager : MonoBehaviour
 
     [SerializeField] UI_StageSelect ui_stageSelect;
 
+    UI_ConvertPanel convertPanel;
+
 
 
     void Awake()
@@ -53,6 +56,9 @@ public class UI_OutGameManager : MonoBehaviour
         ui_skillTreeManager.Init_Once();
         if (ui_mileStoneManager != null)
             ui_mileStoneManager.Init_Once();
+        convertPanel = gameObject.AddComponent<UI_ConvertPanel>();
+        convertPanel.Build(this, FindTab(OutGame_MenuType.MileStone));
+        GameEvent.AchieveEvent.SkillTreeUnlock.Subscribe(_ => convertPanel.RefreshUnlock()).AddTo(this);
 
         Init(false);
     }
@@ -79,13 +85,18 @@ public class UI_OutGameManager : MonoBehaviour
         if (ui_mileStoneManager != null)
             ui_mileStoneManager.RefreshUnits();
 
+        convertPanel?.RefreshUnlock();
         ActiveTabChange(OutGame_MenuType.SkillTree);
     }
 
 
     void Init(bool show)
     {
-        if (!show) ui_stageSelect?.Close();
+        if (!show)
+        {
+            ui_stageSelect?.Close();
+            convertPanel?.Show(false);
+        }
         if (canvas != null) canvas.enabled = show;
         if (raycaster != null) raycaster.enabled = show;
     }
@@ -96,6 +107,17 @@ public class UI_OutGameManager : MonoBehaviour
         {
             ui_resourceCounter.CounterUpdateCheck();
         }
+    }
+
+    UI_OutGameTabBase FindTab(OutGame_MenuType menuType)
+    {
+        if (ui_outGameTabs == null) return null;
+        for (int i = 0; i < ui_outGameTabs.Length; i++)
+        {
+            if (ui_outGameTabs[i] != null && ui_outGameTabs[i].MenuType == menuType)
+                return ui_outGameTabs[i];
+        }
+        return null;
     }
 
     public void ActiveTabChange(OutGame_MenuType menuType)
@@ -109,6 +131,8 @@ public class UI_OutGameManager : MonoBehaviour
 
         ui_skillTreeManager.Init(menuType == OutGame_MenuType.SkillTree);
         ui_mileStoneManager.Init(menuType == OutGame_MenuType.MileStone);
+        if (convertPanel != null)
+            convertPanel.Show(menuType == OutGame_MenuType.Convert);
     }
 
 

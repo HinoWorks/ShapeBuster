@@ -245,10 +245,123 @@ public class UI_SkillTreeManager : MonoBehaviour
         RefreshUnits().Forget();
     }
 
+    bool ballNodesReady;
+
+    void EnsureBallTreeNodes()
+    {
+        if (ballNodesReady || skillTreeUnits == null || skillTreeUnits.Length == 0 || scrollContent == null)
+            return;
+        var template = skillTreeUnits[0];
+        if (template == null) return;
+
+        var placed = new List<UI_SkillTreeUnit>(skillTreeUnits);
+        const float gap = 220f;
+        float x = 2100f;
+        float y = 640f;
+        int[] open =
+        {
+            SO_SkillTreeData.BallVolleySkill,
+            SO_SkillTreeData.BallSpeedSkill,
+            SO_SkillTreeData.BallPowerSkill,
+            SO_SkillTreeData.BallCritSkill,
+            SO_SkillTreeData.BallAmpSkill,
+            SO_SkillTreeData.BallChainSkill,
+            SO_SkillTreeData.BallBossSkill,
+            SO_SkillTreeData.BallHeavyHitSkill,
+            SO_SkillTreeData.BallFatalSkill,
+            41,
+            SO_SkillTreeData.BlockSlowSkill,
+            SO_SkillTreeData.BlockHarvestSkill,
+            SO_SkillTreeData.BlockMagnetSkill,
+            SO_SkillTreeData.BlockLingerSkill,
+            SO_SkillTreeData.RegenSpawnSkill,
+            SO_SkillTreeData.ArmorSpawnSkill,
+            SO_SkillTreeData.RegenDropSkill,
+            SO_SkillTreeData.ArmorDropSkill,
+            SO_SkillTreeData.ConvertSkill,
+            SO_SkillTreeData.ConvertRateSkill,
+            3100, 3101, 3102,
+            3110, 3111, 3112,
+            3120, 3121, 3122,
+            3130, 3131, 3132,
+            3140, 3141, 3142,
+            3150, 3151, 3152,
+            3160, 3161, 3162
+        };
+        for (int i = 0; i < open.Length; i++)
+        {
+            bool gated = open[i] >= 3100
+                || open[i] == SO_SkillTreeData.BallHeavyHitSkill
+                || open[i] == SO_SkillTreeData.BallFatalSkill
+                || open[i] == SO_SkillTreeData.RegenDropSkill
+                || open[i] == SO_SkillTreeData.ArmorDropSkill
+                || open[i] == SO_SkillTreeData.ConvertRateSkill;
+            Place(placed, template, open[i], x + (i % 8) * gap, y - (i / 8) * gap, !gated);
+        }
+
+        skillTreeUnits = placed.ToArray();
+        ballNodesReady = true;
+    }
+
+    void ApplyBallGates()
+    {
+        Gate(SO_SkillTreeData.BallHeavyHitSkill, SO_SkillTreeData.BallPowerSkill);
+        Gate(SO_SkillTreeData.BallFatalSkill, SO_SkillTreeData.BallCritSkill);
+        Gate(SO_SkillTreeData.RegenDropSkill, SO_SkillTreeData.RegenSpawnSkill);
+        Gate(SO_SkillTreeData.ArmorDropSkill, SO_SkillTreeData.ArmorSpawnSkill);
+        Gate(SO_SkillTreeData.ConvertRateSkill, SO_SkillTreeData.ConvertSkill);
+
+        int[] balls = { 38, 39, 41, 40, 42, 44, 45 };
+        int[] proc = { 3100, 3110, 3120, 3130, 3140, 3150, 3160 };
+        int[] ratio = { 3101, 3111, 3121, 3131, 3141, 3151, 3161 };
+        int[] extra = { 3102, 3112, 3122, 3132, 3142, 3152, 3162 };
+        for (int i = 0; i < balls.Length; i++)
+        {
+            Gate(proc[i], balls[i]);
+            Gate(ratio[i], balls[i]);
+            Gate(extra[i], ratio[i]);
+        }
+    }
+
+    void Gate(int index, int required)
+    {
+        if (skillTreeUnits == null) return;
+        for (int i = 0; i < skillTreeUnits.Length; i++)
+        {
+            var unit = skillTreeUnits[i];
+            if (unit == null || unit.skillIndex != index) continue;
+            unit.SetRoot(false);
+            unit.SetNeighborSkillIndexes(new[] { required });
+            return;
+        }
+    }
+
+    UI_SkillTreeUnit Place(List<UI_SkillTreeUnit> placed, UI_SkillTreeUnit template, int index, float x, float y, bool root)
+    {
+        if (placed.Exists(unit => unit != null && unit.skillIndex == index))
+            return placed.Find(unit => unit != null && unit.skillIndex == index);
+
+        var clone = Instantiate(template, scrollContent);
+        clone.name = $"BallSkill_{index}";
+        clone.skillIndex = index;
+        clone.SetRoot(root);
+        var rect = clone.transform as RectTransform;
+        if (rect != null)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(x, y);
+        }
+        clone.AwakeCall(this, OnMouseOver, OnClick_Enhance, UpdateNodeState);
+        placed.Add(clone);
+        return clone;
+    }
+
     public async UniTask RefreshUnits()
     {
         if (skillTreeUnits == null) return;
+        EnsureBallTreeNodes();
         RebuildNeighborPrerequisites();
+        ApplyBallGates();
 
         var tasks = new List<UniTask>(skillTreeUnits.Length);
         foreach (var unit in skillTreeUnits)

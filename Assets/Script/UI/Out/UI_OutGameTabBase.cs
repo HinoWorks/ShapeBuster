@@ -7,6 +7,7 @@ public class UI_OutGameTabBase : MonoBehaviour
 {
     protected bool isReloadFin = false;
     [SerializeField] protected OutGame_MenuType thisMenuType;
+    public OutGame_MenuType MenuType => thisMenuType;
     private HButtonConnect hButtonConnect;
 
 

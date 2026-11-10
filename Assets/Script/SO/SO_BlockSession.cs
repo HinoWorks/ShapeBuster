@@ -76,6 +76,8 @@ public class SO_BlockSession : ScriptableObject
     public int ballDamage = 1;
     [Tooltip("これより短いドラッグは発射しない。ワールド単位。")]
     public float minPull = 0.28f;
+    [Tooltip("画面上端から、発射の基点にできない距離。ワールド単位。この線より上は基点にならない。0 なら制限しない。")]
+    public float launchTopInset = 4.5f;
     [Tooltip("ヘビーボールの速度倍率。")]
     public float heavySpeedScale = 0.5f;
     [Tooltip("爆発の半径。ブロック1マスを 1 とする。")]

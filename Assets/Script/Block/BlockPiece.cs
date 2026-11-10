@@ -6,6 +6,7 @@ using UnityEngine;
 /// 現在レベルの色を下から塗り、空きは一つ下の色。レベル1の空きは透過。
 /// 輪郭の太さはスケールが変わっても同じにする。
 /// 被弾で白く光り、一瞬大きくなる。破壊時も同じ演出を出し、その場に破壊エフェクトを出す。
+/// 装甲は下から来た弾を受けない。再生はヒットが途切れると失った段を戻す。
 /// </summary>
 public class BlockPiece : MonoBehaviour
 {
@@ -38,7 +39,15 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] float hpScale = 1f;
     [Tooltip("0以上ならボス。ステージSOの bossIndex と一致させる。通常ブロックは -1")]
     [SerializeField] int bossIndex = -1;
+    [Tooltip("下の面から来た弾はダメージにならない。爆発、レーザー、毒は通る。")]
+    [SerializeField] bool armorBottom;
+    [Tooltip("ヒットが途切れてから、失った段を1つ戻すまでの秒数。0 なら再生しない。")]
+    [SerializeField] float regenDelay;
     [SerializeField] SpriteRenderer sprite;
+    [Tooltip("装甲の板と山形。下から弾かれたとき白く光る。")]
+    [SerializeField] SpriteRenderer[] plateMarks;
+    [Tooltip("再生の中央印。溜まると大きくなる。")]
+    [SerializeField] Transform regenMark;
 
     BlockSession session;
     MaterialPropertyBlock propertyBlock;
@@ -64,12 +73,26 @@ public class BlockPiece : MonoBehaviour
     float reactTime = -1f;
     bool breaking;
     bool outlineReady;
+    int spawnLevel = 1;
+    int spawnHp = 1;
+    int spawnBar = 1;
+    float regenTimer;
+    float healTime;
+    float healPulse;
+    float plateFlash = -1f;
+    Vector3 regenMarkScale = Vector3.one;
+    Color[] plateColors;
+
+    const float HealPop = 0.28f;
+    static readonly Color RegenHot = new Color(0.72f, 1f, 0.78f, 1f);
 
     public int CellsX => Mathf.Max(1, cellsX);
     public int CellsY => Mathf.Max(1, cellsY);
     public float Weight => Mathf.Max(0f, weight);
     public float HpScale => Mathf.Max(0f, hpScale);
     public int BossIndex => bossIndex;
+    public bool Regenerates => regenDelay > 0f;
+    public bool ArmorsBottom => armorBottom;
     public bool IsAlive { get; private set; }
     public bool IsSolid => solid;
     public int Level => level;
@@ -113,6 +136,8 @@ public class BlockPiece : MonoBehaviour
 
     void Update()
     {
+        TickPlate();
+        TickRegen();
         if (reactTime < 0f) return;
 
         reactTime += Time.deltaTime;
@@ -176,6 +201,12 @@ public class BlockPiece : MonoBehaviour
         barMax = solid ? 1 : Mathf.Max(1, bar);
         stepHp = solid ? 1 : Mathf.Max(1, step);
         currentHp = solid ? 1 : Mathf.Clamp(hp, 0, barMax);
+        spawnLevel = level;
+        spawnHp = currentHp;
+        spawnBar = barMax;
+        regenTimer = 0f;
+        healTime = 0f;
+        healPulse = 0f;
         half = worldSize.y * 0.5f;
         restScale = transform.localScale;
         reactTime = -1f;
@@ -210,6 +241,20 @@ public class BlockPiece : MonoBehaviour
         gameObject.layer = BlockSession.BlockLayer;
         CacheOutline();
         RefreshColor();
+        BindTraitMarks();
+    }
+
+    /// <summary>当たった位置。装甲の下半分はダメージにしない。</summary>
+    public bool HitFrom(int damage, Vector2 worldPoint)
+    {
+        if (RejectsBottom(worldPoint))
+        {
+            PlayPlateDeflect();
+            return false;
+        }
+
+        Hit(damage);
+        return true;
     }
 
     public void Hit(int damage)
@@ -217,6 +262,7 @@ public class BlockPiece : MonoBehaviour
         if (!IsAlive || solid) return;
         if (session != null && !session.IsOnCamera(this)) return;
 
+        regenTimer = 0f;
         int applied = Mathf.Max(1, damage);
         int left = applied;
         while (left > 0 && level > 0)
@@ -254,16 +300,42 @@ public class BlockPiece : MonoBehaviour
             collider.enabled = false;
 
         float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate))
-            * (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate));
+            * (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
+            * (1f + SkillTreeBonus.BlockHarvestRate);
         int reward = StageEnemyScale.ScaleResourceCount(rewardCells, rewardRate);
         if (reward > 0 && session != null)
             session.DropResources(transform.position, reward);
+        if (session != null && Regenerates)
+            session.DropResources(transform.position, 1 + SkillTreeBonus.RegenDropAdd, ResourceType.BB);
+        if (session != null && ArmorsBottom)
+            session.DropResources(transform.position, 1 + SkillTreeBonus.ArmorDropAdd, ResourceType.CC);
 
         session.NotifyBroken(this);
+        if (BossIndex >= 0 && session != null && session.BeginBossDefeat(this))
+            return;
+
         if (EffectManager.Inst != null)
             EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Small);
+        PlayReact(true);
+    }
+
+    /// <summary>破壊直前の見た目で止める。時間はセッション側が止める。</summary>
+    public void HoldBreak()
+    {
+        reactTime = -1f;
+        breaking = false;
+        flash = 1f;
+        transform.localScale = restScale * HitScale;
+        InvalidateFill();
+        PushFill();
+    }
+
+    public void FinishBreak()
+    {
+        if (EffectManager.Inst != null)
+            EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
         PlayReact(true);
     }
 
@@ -321,7 +393,8 @@ public class BlockPiece : MonoBehaviour
             CacheOutline();
 
         float width = Mathf.Max(0.0001f, sprite.sharedMaterial.GetFloat(OutlineWidthId));
-        if (propertyBlock != null && width == pushedWidth && spanX == pushedX && spanY == pushedY
+        bool liveOutline = regenDelay > 0f && IsAlive;
+        if (!liveOutline && propertyBlock != null && width == pushedWidth && spanX == pushedX && spanY == pushedY
             && flash == pushedFlash && fillColor == pushedFill && underColor == pushedUnder)
             return;
 
@@ -337,7 +410,7 @@ public class BlockPiece : MonoBehaviour
         propertyBlock.SetVector(CellSpanId, new Vector4(spanX, spanY, 0f, 0f));
         propertyBlock.SetColor(FillColorId, fillColor);
         propertyBlock.SetColor(UnderColorId, underColor);
-        propertyBlock.SetColor(OutlineColorId, Color.Lerp(baseOutline, Color.white, flash));
+        propertyBlock.SetColor(OutlineColorId, TraitOutline());
         propertyBlock.SetFloat(FlashId, flash);
         sprite.SetPropertyBlock(propertyBlock);
     }
@@ -356,6 +429,194 @@ public class BlockPiece : MonoBehaviour
         if (sprite != null && sprite.sharedMaterial != null && sprite.sharedMaterial.HasProperty(OutlineColorId))
             baseOutline = sprite.sharedMaterial.GetColor(OutlineColorId);
         outlineReady = true;
+    }
+
+    Color TraitOutline()
+    {
+        Color outline = Color.Lerp(baseOutline, Color.white, flash);
+        if (regenDelay <= 0f) return outline;
+
+        float charge = RegenCharge();
+        float speed = MissingDurability() ? Mathf.Lerp(2.4f, 9f, charge) : 1.6f;
+        float wave = 0.5f + 0.5f * Mathf.Sin(Time.time * speed * Mathf.PI * 2f);
+        float amount = MissingDurability() ? Mathf.Lerp(0.25f, 1f, charge) * wave : 0.3f * wave;
+        return Color.Lerp(outline, RegenHot, Mathf.Max(amount, healPulse));
+    }
+
+    bool RejectsBottom(Vector2 worldPoint)
+    {
+        if (!armorBottom || !IsAlive || solid) return false;
+
+        Vector2 local = transform.InverseTransformPoint(worldPoint);
+        return local.y < -0.2f;
+    }
+
+    void PlayPlateDeflect()
+    {
+        plateFlash = 0.16f;
+    }
+
+    void TickPlate()
+    {
+        if (plateMarks == null || plateFlash < 0f) return;
+
+        plateFlash -= Time.deltaTime;
+        float white = plateFlash <= 0f ? 0f : Mathf.Clamp01(plateFlash / 0.1f);
+        for (int i = 0; i < plateMarks.Length; i++)
+        {
+            if (plateMarks[i] == null) continue;
+            plateMarks[i].color = Color.Lerp(plateColors[i], Color.white, white);
+        }
+        if (plateFlash <= 0f)
+            plateFlash = -1f;
+    }
+
+    void TickRegen()
+    {
+        if (healTime > 0f)
+        {
+            healTime -= Time.deltaTime;
+            healPulse = Mathf.Clamp01(healTime / HealPop);
+            if (reactTime < 0f)
+                transform.localScale = restScale * (1f + 0.08f * healPulse);
+            if (healTime <= 0f)
+            {
+                healTime = 0f;
+                healPulse = 0f;
+                if (reactTime < 0f)
+                    transform.localScale = restScale;
+            }
+            InvalidateFill();
+        }
+
+        PulseRegenMark();
+        if (regenDelay <= 0f || !IsAlive || solid || breaking) return;
+        if (!MissingDurability())
+        {
+            regenTimer = 0f;
+            return;
+        }
+
+        regenTimer += Time.deltaTime;
+        if (regenTimer < regenDelay) return;
+
+        regenTimer = 0f;
+        RestoreStep();
+    }
+
+    float RegenCharge()
+    {
+        if (regenDelay <= 0f || !MissingDurability()) return 0f;
+        return Mathf.Clamp01(regenTimer / regenDelay);
+    }
+
+    bool MissingDurability()
+    {
+        return level < spawnLevel || currentHp < spawnHp;
+    }
+
+    void RestoreStep()
+    {
+        if (level < spawnLevel)
+        {
+            level++;
+            if (level >= spawnLevel)
+            {
+                level = spawnLevel;
+                barMax = spawnBar;
+                currentHp = spawnHp;
+            }
+            else
+            {
+                barMax = Mathf.Max(1, stepHp);
+                currentHp = barMax;
+            }
+        }
+        else if (currentHp < spawnHp)
+        {
+            currentHp = spawnHp;
+            barMax = spawnBar;
+        }
+        else
+            return;
+
+        RefreshColor();
+        healTime = HealPop;
+        healPulse = 1f;
+        InvalidateFill();
+        PushFill();
+    }
+
+    void PulseRegenMark()
+    {
+        if (regenMark == null) return;
+
+        float charge = RegenCharge();
+        float speed = MissingDurability() ? Mathf.Lerp(2.4f, 9f, charge) : 1.6f;
+        float wave = 0.5f + 0.5f * Mathf.Sin(Time.time * speed * Mathf.PI * 2f);
+        float pop = healPulse * 0.55f;
+        float scale = (Mathf.Lerp(0.92f, 1.22f, charge) * Mathf.Lerp(0.94f, 1.08f, wave)) + pop;
+        regenMark.localScale = regenMarkScale * scale;
+        if (regenDelay > 0f && IsAlive)
+            InvalidateFill();
+    }
+
+    void BindTraitMarks()
+    {
+        if (armorBottom && !HasLiveMarks(plateMarks))
+            plateMarks = ChildMarks();
+
+        if (HasLiveMarks(plateMarks))
+        {
+            plateColors = new Color[plateMarks.Length];
+            for (int i = 0; i < plateMarks.Length; i++)
+                plateColors[i] = plateMarks[i] != null ? plateMarks[i].color : Color.white;
+        }
+
+        if (regenMark == null && regenDelay > 0f)
+            regenMark = FindChild("Regen");
+
+        if (regenMark != null)
+            regenMarkScale = regenMark.localScale;
+    }
+
+    static bool HasLiveMarks(SpriteRenderer[] marks)
+    {
+        if (marks == null) return false;
+        for (int i = 0; i < marks.Length; i++)
+            if (marks[i] != null) return true;
+        return false;
+    }
+
+    SpriteRenderer[] ChildMarks()
+    {
+        var found = GetComponentsInChildren<SpriteRenderer>(true);
+        int count = 0;
+        for (int i = 0; i < found.Length; i++)
+            if (found[i] != null && found[i] != sprite)
+                count++;
+        if (count == 0) return null;
+
+        var marks = new SpriteRenderer[count];
+        int n = 0;
+        for (int i = 0; i < found.Length; i++)
+        {
+            if (found[i] == null || found[i] == sprite) continue;
+            marks[n++] = found[i];
+        }
+        return marks;
+    }
+
+    Transform FindChild(string childName)
+    {
+        var children = GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < children.Length; i++)
+        {
+            var child = children[i];
+            if (child != null && child != transform && child.name == childName)
+                return child;
+        }
+        return null;
     }
 
     static Material SharedFill()
