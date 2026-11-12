@@ -121,7 +121,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     static string FormatDescription(SkillTreeBase skill, int currentLevel, bool isMaxLevel)
     {
-        string template = Loc.Content(Loc.SkillDesc(skill.baseSkillIndex), skill.description);
+        string template = Loc.Content(Loc.SkillDesc(skill.baseSkillIndex), "");
         if (string.IsNullOrEmpty(template)) return "";
         int paramLevel = isMaxLevel ? currentLevel : currentLevel + 1;
         string value = FormatParams(skill, paramLevel);
@@ -192,32 +192,12 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     int AttackDamageAt(SkillTreeBase skill, int atLevel)
     {
-        float bonus = SkillTreeBonus.AttackValue(skill.targetIndex, SkillParamStat.Damage);
-        int appliedLevel = currentUnit != null ? currentUnit.level : 0;
-        bonus += skill.deltaValue * (atLevel - appliedLevel);
-
-        float baseDamage = 0f;
-        var attacks = SOLoader.AttackUnitData;
-        var attack = attacks != null ? attacks.Find(skill.targetIndex) : null;
-        if (attack != null)
-            baseDamage = attack.baseDamage;
-
-        return SkillTreeBonus.RoundDamage(baseDamage + bonus);
+        return SkillTreeBonus.RoundDamage(skill.deltaValue * atLevel);
     }
 
     float AttackIntervalAt(SkillTreeBase skill, int atLevel)
     {
-        float bonus = SkillTreeBonus.CursorAttackInterval;
-        int appliedLevel = currentUnit != null ? currentUnit.level : 0;
-        bonus += skill.deltaValue * (atLevel - appliedLevel);
-
-        float baseInterval = 0f;
-        var cursor = SOLoader.CursorUnitData != null ? SOLoader.CursorUnitData.GetCursorUnitData(0) : null;
-        if (cursor != null)
-            baseInterval = cursor.attackInterval;
-
-        float withSkill = Mathf.Max(0.05f, baseInterval + bonus);
-        return Mathf.Max(0.05f, withSkill + MilestoneBonus.AttackIntervalAdd);
+        return Mathf.Max(0.05f, skill.deltaValue * atLevel);
     }
 
     static bool HasDisplayUnit(string unit)

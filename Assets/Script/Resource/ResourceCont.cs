@@ -59,7 +59,7 @@ public class ResourceCont : MonoBehaviour
 
         var session = SOLoader.BlockSession;
         float range = (session != null ? session.pickupRange : 0.4f)
-            * (1f + Mathf.Max(0f, SkillTreeBonus.PickupRange) + SkillTreeBonus.BlockMagnetRate);
+            * (1f + SkillTreeBonus.BlockMagnetRate);
         Vector2 delta = (Vector2)PointerWorld.Position - (Vector2)transform.position;
         if (delta.sqrMagnitude > range * range) return;
         Collect();
@@ -68,6 +68,10 @@ public class ResourceCont : MonoBehaviour
     void FixedUpdate()
     {
         if (inPool || isCollecting || body == null) return;
+
+        var session = BlockSession.Inst;
+        if (session != null)
+            fallSpeed = Mathf.Max(0.01f, session.BlockFallSpeed);
 
         body.linearVelocity = Vector2.down * fallSpeed;
         if (body.position.y > DeadlineTop()) return;
@@ -143,13 +147,6 @@ public class ResourceCont : MonoBehaviour
     static Vector3 CursorPoint(float z)
     {
         Vector3 point = PointerWorld.Position;
-        if (!PointerWorld.IsInsidePlayfield)
-        {
-            var cursor = AttackManager.Inst != null ? AttackManager.Inst.CursorTransform : null;
-            if (cursor != null)
-                point = cursor.position;
-        }
-
         point.z = z;
         return point;
     }

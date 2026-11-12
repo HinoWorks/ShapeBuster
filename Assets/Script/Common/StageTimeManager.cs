@@ -89,8 +89,7 @@ public class StageTimeManager : MonoBehaviour
         isStageCleared = true;
         isTimeRunning = false;
         stageTime = stageMaxTime;
-        EnemyGenerateManager.Inst?.Set_GenerateState(false);
-        AttackManager.Inst?.Set_AttackState(false);
+        EnemyGenerateManager.Inst?.Clear();
         SaveLoader.Inst?.Request_SaveClearedStage(activeStageIndex);
         GameEvent.Stage.PublishCleared();
         GameWatcher.Inst.SetGameState(GameStateType.InGame_End);

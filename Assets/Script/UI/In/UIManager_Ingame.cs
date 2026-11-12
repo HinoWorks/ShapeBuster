@@ -5,11 +5,8 @@ using UniRx;
 public class UIManager_Ingame : MonoBehaviour
 {
     public static UIManager_Ingame Inst { get; private set; }
-    [SerializeField] UI_PlayerHpCont playerHpCont;
     [SerializeField] UI_stageProgressCont stageProgressCont;
     [SerializeField] UI_ResourceCounter[] resourceCounters;
-    [SerializeField] UI_HUD_MagazineInfo bulletInfo;
-    public UI_HUD_MagazineInfo BulletInfo => bulletInfo;
     [SerializeField] Canvas dynamicCanvas;
     public Canvas DynamicHudCanvas => dynamicCanvas;
 
@@ -40,7 +37,6 @@ public class UIManager_Ingame : MonoBehaviour
 
     private void Start()
     {
-        playerHpCont.InitOnce();
         stageProgressCont.InitOnce();
         foreach (var resourceCounter in resourceCounters)
         {
@@ -90,7 +86,7 @@ public class UIManager_Ingame : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ForceEnd()
     {
-        PlayerManager.Inst.PlayerHPCont.Set_ForceEnd();
+        GameWatcher.Inst?.SetGameState(GameStateType.InGame_End);
     }
     #endregion
 }

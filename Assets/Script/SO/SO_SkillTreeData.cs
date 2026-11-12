@@ -87,7 +87,7 @@ public class SkillTreeBase
 {
     public int baseSkillIndex; //スキル定義の固定ID。SkillTreeUnit の baseSkillIndex と一致させる
     public string skillName; //翻訳が無いときの名前。表示は skill.{id}.name
-    public string description; //翻訳が無いときの説明。[A] は効果量。表示は skill.{id}.desc
+    public string jpSkillName; //シートの [JP]skillName。読み込み後に skillName へ移す
     public Sprite icon; //スキルアイコン。空でもよい
     public int maxLevel = 1; //上限レベル。1レベル分の効果は deltaValue
     public string unit = "NA"; //表示単位。% は100倍、Sec は秒、Count は整数。NA は数値を出さない
@@ -200,55 +200,143 @@ public class SO_SkillTreeData : ScriptableObject
         return data;
     }
 
-    public const int GlassSkillIndex = 37;
-    public const int BallBombSkillIndex = 38;
-    public const int BallLaserSkillIndex = 39;
-    public const int BallHeavySkillIndex = 40;
-    public const int BallLaserRowSkillIndex = 41;
-    public const int BallOrbitSkillIndex = 42;
-    public const int BallCrossSkillIndex = 44;
-    public const int BallPoisonSkillIndex = 45;
-    public const int BlockCompactSkillIndex = 43;
+    public const int GlassSkillIndex = 4020;
+    public const int BallBombSkillIndex = 2000;
+    public const int BallLaserSkillIndex = 2010;
+    public const int BallLaserRowSkillIndex = 2020;
+    public const int BallCrossSkillIndex = 2030;
+    public const int BallPoisonSkillIndex = 2040;
+    public const int BallHeavySkillIndex = 2050;
+    public const int BallOrbitSkillIndex = 2060;
+    public const int BlockCompactSkillIndex = 4010;
 
     /// <summary>
     /// シートにガラスの行が無くても、スキル37として出現率を買えるように足す。
     /// 同じ効果の行が既にあれば何もしない。
     /// </summary>
+    public void RemapLegacyIds()
+    {
+        if (skillTreeBases != null)
+        {
+            for (int i = 0; i < skillTreeBases.Length; i++)
+            {
+                var basis = skillTreeBases[i];
+                if (basis != null && LegacySkillIds.TryGetValue(basis.baseSkillIndex, out int next))
+                    basis.baseSkillIndex = next;
+            }
+        }
+
+        if (skillTreeUnits != null)
+        {
+            for (int i = 0; i < skillTreeUnits.Length; i++)
+            {
+                var unit = skillTreeUnits[i];
+                if (unit != null && LegacySkillIds.TryGetValue(unit.skillTreeIndex, out int next))
+                    unit.skillTreeIndex = next;
+            }
+        }
+    }
+
+    static readonly Dictionary<int, int> LegacySkillIds = new Dictionary<int, int>
+    {
+        { 37, GlassSkillIndex },
+        { 38, BallBombSkillIndex },
+        { 39, BallLaserSkillIndex },
+        { 40, BallHeavySkillIndex },
+        { 41, BallLaserRowSkillIndex },
+        { 42, BallOrbitSkillIndex },
+        { 43, BlockCompactSkillIndex },
+        { 44, BallCrossSkillIndex },
+        { 45, BallPoisonSkillIndex },
+        { 3000, BallVolleySkill },
+        { 3001, BallSpeedSkill },
+        { 3002, BallPowerSkill },
+        { 3003, BallHeavyHitSkill },
+        { 3004, BallCritSkill },
+        { 3005, BallFatalSkill },
+        { 3006, BallAmpSkill },
+        { 3007, BallChainSkill },
+        { 3008, BallBossSkill },
+        { 3010, BlockSlowSkill },
+        { 3020, BlockHarvestSkill },
+        { 3021, BlockMagnetSkill },
+        { 3022, BlockLingerSkill },
+        { 3030, RegenSpawnSkill },
+        { 3031, ArmorSpawnSkill },
+        { 3032, RegenDropSkill },
+        { 3033, ArmorDropSkill },
+        { 3040, ConvertSkill },
+        { 3041, ConvertRateSkill },
+        { 3100, BallBombSkillIndex + 1 },
+        { 3101, BallBombSkillIndex + 2 },
+        { 3102, BallBombSkillIndex + 3 },
+        { 3110, BallLaserSkillIndex + 1 },
+        { 3111, BallLaserSkillIndex + 2 },
+        { 3112, BallLaserSkillIndex + 3 },
+        { 3120, BallLaserRowSkillIndex + 1 },
+        { 3121, BallLaserRowSkillIndex + 2 },
+        { 3122, BallLaserRowSkillIndex + 3 },
+        { 3130, BallHeavySkillIndex + 1 },
+        { 3131, BallHeavySkillIndex + 2 },
+        { 3132, BallHeavySkillIndex + 3 },
+        { 3140, BallOrbitSkillIndex + 1 },
+        { 3141, BallOrbitSkillIndex + 2 },
+        { 3142, BallOrbitSkillIndex + 3 },
+        { 3150, BallCrossSkillIndex + 1 },
+        { 3151, BallCrossSkillIndex + 2 },
+        { 3152, BallCrossSkillIndex + 3 },
+        { 3160, BallPoisonSkillIndex + 1 },
+        { 3161, BallPoisonSkillIndex + 2 },
+        { 3162, BallPoisonSkillIndex + 3 },
+    };
+
+    public void ApplyImportedText()
+    {
+        if (skillTreeBases == null) return;
+        for (int i = 0; i < skillTreeBases.Length; i++)
+        {
+            var basis = skillTreeBases[i];
+            if (basis == null) continue;
+            if (!string.IsNullOrEmpty(basis.jpSkillName))
+                basis.skillName = basis.jpSkillName;
+        }
+    }
+
+    public void DropOrphanUnits()
+    {
+        if (skillTreeUnits == null) return;
+        var kept = new List<SkillTreeUnit>();
+        for (int i = 0; i < skillTreeUnits.Length; i++)
+        {
+            var unit = skillTreeUnits[i];
+            if (unit != null && HasBase(unit.skillTreeIndex))
+                kept.Add(unit);
+        }
+        skillTreeUnits = kept.ToArray();
+    }
+
     public void EnsureGlassSkill()
     {
-        if (HasGlassSkill()) return;
-
-        var bases = new List<SkillTreeBase>();
-        if (skillTreeBases != null)
-            bases.AddRange(skillTreeBases);
-        bases.Add(new SkillTreeBase
+        if (!HasGlassSkill())
         {
-            baseSkillIndex = GlassSkillIndex,
-            skillName = "Glass",
-            description = "Glass capsules appear on [A] of spawns. Break one, then touch the item.",
-            maxLevel = 5,
-            unit = "%",
-            paramTarget = SkillParamTarget.Player,
-            targetIndex = 0,
-            paramStat = SkillParamStat.GlassSpawnRate,
-            deltaValue = 0.05f
-        });
-        skillTreeBases = bases.ToArray();
-
-        var units = new List<SkillTreeUnit>();
-        if (skillTreeUnits != null)
-            units.AddRange(skillTreeUnits);
-        int[] costs = { 15, 40, 90, 180, 320 };
-        for (int level = 1; level <= costs.Length; level++)
-        {
-            units.Add(new SkillTreeUnit
+            var bases = new List<SkillTreeBase>();
+            if (skillTreeBases != null)
+                bases.AddRange(skillTreeBases);
+            bases.Add(new SkillTreeBase
             {
-                skillTreeIndex = GlassSkillIndex,
-                level = level,
-                cost_AA = costs[level - 1]
+                baseSkillIndex = GlassSkillIndex,
+                skillName = "ガラス",
+                maxLevel = 5,
+                unit = "%",
+                paramTarget = SkillParamTarget.Player,
+                targetIndex = 0,
+                paramStat = SkillParamStat.GlassSpawnRate,
+                deltaValue = 0.05f
             });
+            skillTreeBases = bases.ToArray();
         }
-        skillTreeUnits = units.ToArray();
+
+        EnsureCosts(GlassSkillIndex, 15, 40, 90, 180, 320);
     }
 
     /// <summary>
@@ -256,13 +344,13 @@ public class SO_SkillTreeData : ScriptableObject
     /// </summary>
     public void EnsureBallSkills()
     {
-        EnsureBallSkill(BallBombSkillIndex, 0, "ボムボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で周囲を巻き込む。");
-        EnsureBallSkill(BallLaserSkillIndex, 1, "レーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその列を焼く。");
-        EnsureBallSkill(BallLaserRowSkillIndex, 3, "横レーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%でその段を焼く。");
-        EnsureBallSkill(BallHeavySkillIndex, 2, "ヘビーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。遅く、ブロックを貫通する。");
-        EnsureBallSkill(BallOrbitSkillIndex, 4, "オービットボール", "ノーマル弾のあとに同じ方向へ飛ぶ。周りを回る玉もブロックを削る。");
-        EnsureBallSkill(BallCrossSkillIndex, 5, "クロスレーザーボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で斜め2本のレーザーを出す。");
-        EnsureBallSkill(BallPoisonSkillIndex, 6, "ポイズンボール", "ノーマル弾のあとに同じ方向へ飛ぶ。当たると30%で沼を残し、数秒間まわりを溶かす。");
+        EnsureBallSkill(BallBombSkillIndex, 0, "ボムボール");
+        EnsureBallSkill(BallLaserSkillIndex, 1, "レーザーボール");
+        EnsureBallSkill(BallLaserRowSkillIndex, 3, "横レーザーボール");
+        EnsureBallSkill(BallHeavySkillIndex, 2, "ヘビーボール");
+        EnsureBallSkill(BallOrbitSkillIndex, 4, "オービットボール");
+        EnsureBallSkill(BallCrossSkillIndex, 5, "クロスレーザーボール");
+        EnsureBallSkill(BallPoisonSkillIndex, 6, "ポイズンボール");
     }
 
     /// <summary>
@@ -270,174 +358,161 @@ public class SO_SkillTreeData : ScriptableObject
     /// </summary>
     public void EnsureBlockCompactSkill()
     {
-        if (HasBase(BlockCompactSkillIndex)) return;
-
-        var bases = new List<SkillTreeBase>();
-        if (skillTreeBases != null)
-            bases.AddRange(skillTreeBases);
-        bases.Add(new SkillTreeBase
+        if (!HasBase(BlockCompactSkillIndex))
         {
-            baseSkillIndex = BlockCompactSkillIndex,
-            skillName = "細片",
-            description = "ステージの列数を基準に、ブロックを小さくして列を増やす。[A]",
-            maxLevel = 5,
-            unit = "NA",
-            paramTarget = SkillParamTarget.Block,
-            targetIndex = 0,
-            paramStat = SkillParamStat.BlockCompact,
-            deltaValue = 1f
-        });
-        skillTreeBases = bases.ToArray();
-
-        var units = new List<SkillTreeUnit>();
-        if (skillTreeUnits != null)
-            units.AddRange(skillTreeUnits);
-        int[] costs = { 25, 60, 120, 220, 380 };
-        for (int level = 1; level <= costs.Length; level++)
-        {
-            units.Add(new SkillTreeUnit
+            var bases = new List<SkillTreeBase>();
+            if (skillTreeBases != null)
+                bases.AddRange(skillTreeBases);
+            bases.Add(new SkillTreeBase
             {
-                skillTreeIndex = BlockCompactSkillIndex,
-                level = level,
-                cost_AA = costs[level - 1]
+                baseSkillIndex = BlockCompactSkillIndex,
+                skillName = "細片",
+                maxLevel = 5,
+                unit = "NA",
+                paramTarget = SkillParamTarget.Block,
+                targetIndex = 0,
+                paramStat = SkillParamStat.BlockCompact,
+                deltaValue = 1f
             });
+            skillTreeBases = bases.ToArray();
         }
-        skillTreeUnits = units.ToArray();
+
+        EnsureCosts(BlockCompactSkillIndex, 25, 60, 120, 220, 380);
     }
 
-    void EnsureBallSkill(int index, int targetIndex, string skillName, string description)
+    void EnsureBallSkill(int index, int targetIndex, string skillName)
     {
-        if (HasBase(index)) return;
-
-        var bases = new List<SkillTreeBase>();
-        if (skillTreeBases != null)
-            bases.AddRange(skillTreeBases);
-        bases.Add(new SkillTreeBase
+        if (!HasBase(index))
         {
-            baseSkillIndex = index,
-            skillName = skillName,
-            description = description,
-            maxLevel = 1,
-            unit = "NA",
-            paramTarget = SkillParamTarget.Ball,
-            targetIndex = targetIndex,
-            paramStat = SkillParamStat.BallUnlock,
-            deltaValue = 1f
-        });
-        skillTreeBases = bases.ToArray();
+            var bases = new List<SkillTreeBase>();
+            if (skillTreeBases != null)
+                bases.AddRange(skillTreeBases);
+            bases.Add(new SkillTreeBase
+            {
+                baseSkillIndex = index,
+                skillName = skillName,
+                maxLevel = 1,
+                unit = "NA",
+                paramTarget = SkillParamTarget.Ball,
+                targetIndex = targetIndex,
+                paramStat = SkillParamStat.BallUnlock,
+                deltaValue = 1f
+            });
+            skillTreeBases = bases.ToArray();
+        }
 
-        var units = new List<SkillTreeUnit>();
-        if (skillTreeUnits != null)
-            units.AddRange(skillTreeUnits);
-        units.Add(new SkillTreeUnit
-        {
-            skillTreeIndex = index,
-            level = 1,
-            cost_AA = 20
-        });
-        skillTreeUnits = units.ToArray();
+        EnsureCosts(index, 20);
     }
 
-    public const int BallVolleySkill = 3000;
-    public const int BallSpeedSkill = 3001;
-    public const int BallPowerSkill = 3002;
-    public const int BallHeavyHitSkill = 3003;
-    public const int BallCritSkill = 3004;
-    public const int BallFatalSkill = 3005;
-    public const int BallAmpSkill = 3006;
-    public const int BallChainSkill = 3007;
-    public const int BallBossSkill = 3008;
-    public const int BlockSlowSkill = 3010;
-    public const int BlockHarvestSkill = 3020;
-    public const int BlockMagnetSkill = 3021;
-    public const int BlockLingerSkill = 3022;
-    public const int RegenSpawnSkill = 3030;
-    public const int ArmorSpawnSkill = 3031;
-    public const int RegenDropSkill = 3032;
-    public const int ArmorDropSkill = 3033;
-    public const int ConvertSkill = 3040;
-    public const int ConvertRateSkill = 3041;
+    public const int BallVolleySkill = 1000;
+    public const int BallSpeedSkill = 1001;
+    public const int BallPowerSkill = 1002;
+    public const int BallHeavyHitSkill = 1003;
+    public const int BallCritSkill = 1004;
+    public const int BallFatalSkill = 1005;
+    public const int BallAmpSkill = 1006;
+    public const int BallChainSkill = 1007;
+    public const int BallBossSkill = 1008;
+    public const int BlockSlowSkill = 4000;
+    public const int BlockHarvestSkill = 3000;
+    public const int BlockMagnetSkill = 3001;
+    public const int BlockLingerSkill = 3002;
+    public const int RegenSpawnSkill = 3010;
+    public const int RegenDropSkill = 3011;
+    public const int ArmorSpawnSkill = 3020;
+    public const int ArmorDropSkill = 3021;
+    public const int ConvertSkill = 3030;
+    public const int ConvertRateSkill = 3031;
 
     /// <summary>
     /// ボールツリーの強化を、シートが無くても買えるように足す。
     /// </summary>
     public void EnsureBlockTree()
     {
-        AddSkill(BallVolleySkill, "連弾", "ノーマルボールが1発増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallCount, 1f, 20);
-        AddSkill(BallSpeedSkill, "球速", "すべてのボールが [A] 速くなる。", 3, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallSpeed, 0.15f, 15, 40, 90);
-        AddSkill(BallPowerSkill, "球威", "ボールの攻撃力が [A] 増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallFlatDamage, 1f, 20);
-        AddSkill(BallHeavyHitSkill, "強打", "ボールの攻撃力が [A] 増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallFlatDamage, 2f, 40);
-        AddSkill(BallCritSkill, "クリティカル", "ボールのクリティカル率が [A] 増える。", 4, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallCritRate, 0.1f, 20, 45, 90, 160);
-        AddSkill(BallFatalSkill, "致命", "クリティカルの倍率が1増える。", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallCritDamage, 1f, 80);
-        AddSkill(BallAmpSkill, "増幅", "ボールの攻撃力が [A] 増える。", 2, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallDamageRate, 0.25f, 50, 120);
-        AddSkill(BallChainSkill, "連撃", "同じフライトで当てるたび、次のヒットが10%強くなる。上限50%。", 1, "NA", SkillParamTarget.Ball, 0, SkillParamStat.BallChain, 1f, 60);
-        AddSkill(BallBossSkill, "ボス特攻", "ボスへの攻撃力が [A] 増える。", 3, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallBoss, 0.1f, 30, 70, 140);
+        AddSkill(BallVolleySkill, "連弾", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallCount, 1f, 20);
+        AddSkill(BallSpeedSkill, "球速", 3, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallSpeed, 0.15f, 15, 40, 90);
+        AddSkill(BallPowerSkill, "球威", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallFlatDamage, 1f, 20);
+        AddSkill(BallHeavyHitSkill, "強打", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallFlatDamage, 2f, 40);
+        AddSkill(BallCritSkill, "クリティカル", 4, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallCritRate, 0.1f, 20, 45, 90, 160);
+        AddSkill(BallFatalSkill, "致命", 1, "Count", SkillParamTarget.Ball, 0, SkillParamStat.BallCritDamage, 1f, 80);
+        AddSkill(BallAmpSkill, "増幅", 2, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallDamageRate, 0.25f, 50, 120);
+        AddSkill(BallChainSkill, "連撃", 1, "NA", SkillParamTarget.Ball, 0, SkillParamStat.BallChain, 1f, 60);
+        AddSkill(BallBossSkill, "ボス特攻", 3, "%", SkillParamTarget.Ball, 0, SkillParamStat.BallBoss, 0.1f, 30, 70, 140);
 
-        AddBallUpgrade(0, 3100, "爆風の発生", "ボムの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
-        AddBallUpgrade(0, 3101, "爆風の威力", "ボムの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(0, 3102, "ボム＋1", "ボムがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(0, BallBombSkillIndex + 1, "爆風の発生", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(0, BallBombSkillIndex + 2, "爆風の威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(0, BallBombSkillIndex + 3, "ボム＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddBallUpgrade(1, 3110, "列の発生", "縦レーザーの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
-        AddBallUpgrade(1, 3111, "列の威力", "縦レーザーの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(1, 3112, "縦レーザー＋1", "縦レーザーがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(1, BallLaserSkillIndex + 1, "列の発生", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(1, BallLaserSkillIndex + 2, "列の威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(1, BallLaserSkillIndex + 3, "縦レーザー＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddBallUpgrade(3, 3120, "段の発生", "横レーザーの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
-        AddBallUpgrade(3, 3121, "段の威力", "横レーザーの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(3, 3122, "横レーザー＋1", "横レーザーがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(3, BallLaserRowSkillIndex + 1, "段の発生", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(3, BallLaserRowSkillIndex + 2, "段の威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(3, BallLaserRowSkillIndex + 3, "横レーザー＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddBallUpgrade(2, 3130, "ヘビーの速さ", "ヘビーの速さがノーマルの50%になる。", SkillParamStat.BallHeavySpeed, 0.2f, "NA");
-        AddBallUpgrade(2, 3131, "ヘビーの威力", "ヘビーの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(2, 3132, "ヘビー＋1", "ヘビーがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(2, BallHeavySkillIndex + 1, "ヘビーの速さ", SkillParamStat.BallHeavySpeed, 0.2f, "NA");
+        AddBallUpgrade(2, BallHeavySkillIndex + 2, "ヘビーの威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(2, BallHeavySkillIndex + 3, "ヘビー＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddBallUpgrade(4, 3140, "衛星", "周回する玉が1つ増える。", SkillParamStat.BallOrbitCount, 1f, "Count");
-        AddBallUpgrade(4, 3141, "周回の威力", "オービットの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(4, 3142, "オービット＋1", "オービットがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(4, BallOrbitSkillIndex + 1, "衛星", SkillParamStat.BallOrbitCount, 1f, "Count");
+        AddBallUpgrade(4, BallOrbitSkillIndex + 2, "周回の威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(4, BallOrbitSkillIndex + 3, "オービット＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddBallUpgrade(5, 3150, "斜めの発生", "クロスの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
-        AddBallUpgrade(5, 3151, "斜めの威力", "クロスの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(5, 3152, "クロス＋1", "クロスがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(5, BallCrossSkillIndex + 1, "斜めの発生", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(5, BallCrossSkillIndex + 2, "斜めの威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(5, BallCrossSkillIndex + 3, "クロス＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddBallUpgrade(6, 3160, "沼の発生", "ポイズンの発生率が [A] 増える。", SkillParamStat.BallProc, 0.4f, "%");
-        AddBallUpgrade(6, 3161, "沼の威力", "ポイズンの攻撃力がノーマルの100%になる。", SkillParamStat.BallRatio, 0.5f, "NA");
-        AddBallUpgrade(6, 3162, "ポイズン＋1", "ポイズンがもう1発増える。", SkillParamStat.BallExtra, 1f, "Count");
+        AddBallUpgrade(6, BallPoisonSkillIndex + 1, "沼の発生", SkillParamStat.BallProc, 0.4f, "%");
+        AddBallUpgrade(6, BallPoisonSkillIndex + 2, "沼の威力", SkillParamStat.BallRatio, 0.5f, "NA");
+        AddBallUpgrade(6, BallPoisonSkillIndex + 3, "ポイズン＋1", SkillParamStat.BallExtra, 1f, "Count");
 
-        AddSkill(BlockSlowSkill, "減速", "ブロックの下降が [A] 遅くなる。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockFallSlow, 0.1f, 20, 50, 110);
-        AddSkill(BlockHarvestSkill, "収穫", "ブロックが落とすAが [A] 増える。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockHarvest, 0.25f, 15, 40, 90);
-        AddSkill(BlockMagnetSkill, "磁石", "拾得半径が [A] 広がる。", 2, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockMagnet, 0.5f, 20, 50);
-        AddSkill(BlockLingerSkill, "残留", "資源がデッドラインで0.4秒残る。", 1, "NA", SkillParamTarget.Block, 0, SkillParamStat.BlockLinger, 1f, 30);
-        AddSkill(RegenSpawnSkill, "再生の出現", "再生ブロックの出やすさが [A] 増える。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.RegenSpawn, 0.04f, 25, 60, 120);
-        AddSkill(ArmorSpawnSkill, "壁の出現", "壁ブロックの出やすさが [A] 増える。", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.ArmorSpawn, 0.04f, 25, 60, 120);
-        AddSkill(RegenDropSkill, "再生の収量", "再生ブロックのBが [A] 増える。", 2, "Count", SkillParamTarget.Block, 0, SkillParamStat.RegenDrop, 1f, 40, 90);
-        AddSkill(ArmorDropSkill, "壁の収量", "壁ブロックのCが [A] 増える。", 2, "Count", SkillParamTarget.Block, 0, SkillParamStat.ArmorDrop, 1f, 40, 90);
-        AddSkill(ConvertSkill, "Convert", "AAをB、C、Dに換えるタブが増える。", 1, "NA", SkillParamTarget.Block, 0, SkillParamStat.ConvertUnlock, 1f, 50);
-        AddSkill(ConvertRateSkill, "効率", "Convertに必要なAAが15%減る。", 3, "Count", SkillParamTarget.Block, 0, SkillParamStat.ConvertRate, 1f, 40, 90, 160);
+        AddSkill(BlockSlowSkill, "減速", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockFallSlow, 0.1f, 20, 50, 110);
+        AddSkill(BlockHarvestSkill, "収穫", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockHarvest, 0.25f, 15, 40, 90);
+        AddSkill(BlockMagnetSkill, "磁石", 2, "%", SkillParamTarget.Block, 0, SkillParamStat.BlockMagnet, 0.5f, 20, 50);
+        AddSkill(BlockLingerSkill, "残留", 1, "NA", SkillParamTarget.Block, 0, SkillParamStat.BlockLinger, 1f, 30);
+        AddSkill(RegenSpawnSkill, "再生の出現", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.RegenSpawn, 0.04f, 25, 60, 120);
+        AddSkill(ArmorSpawnSkill, "壁の出現", 3, "%", SkillParamTarget.Block, 0, SkillParamStat.ArmorSpawn, 0.04f, 25, 60, 120);
+        AddSkill(RegenDropSkill, "再生の収量", 2, "Count", SkillParamTarget.Block, 0, SkillParamStat.RegenDrop, 1f, 40, 90);
+        AddSkill(ArmorDropSkill, "壁の収量", 2, "Count", SkillParamTarget.Block, 0, SkillParamStat.ArmorDrop, 1f, 40, 90);
+        AddSkill(ConvertSkill, "Convert", 1, "NA", SkillParamTarget.Block, 0, SkillParamStat.ConvertUnlock, 1f, 50);
+        AddSkill(ConvertRateSkill, "効率", 3, "Count", SkillParamTarget.Block, 0, SkillParamStat.ConvertRate, 1f, 40, 90, 160);
     }
 
-    void AddBallUpgrade(int targetIndex, int index, string skillName, string description, SkillParamStat stat, float delta, string unit)
+    void AddBallUpgrade(int targetIndex, int index, string skillName, SkillParamStat stat, float delta, string unit)
     {
-        AddSkill(index, skillName, description, 1, unit, SkillParamTarget.Ball, targetIndex, stat, delta, 30);
+        AddSkill(index, skillName, 1, unit, SkillParamTarget.Ball, targetIndex, stat, delta, 30);
     }
 
-    void AddSkill(int index, string skillName, string description, int maxLevel, string unit, SkillParamTarget target, int targetIndex, SkillParamStat stat, float delta, params int[] costs)
+    void AddSkill(int index, string skillName, int maxLevel, string unit, SkillParamTarget target, int targetIndex, SkillParamStat stat, float delta, params int[] costs)
     {
-        if (HasBase(index) || costs == null || costs.Length == 0) return;
+        if (costs == null || costs.Length == 0) return;
 
-        var bases = new List<SkillTreeBase>();
-        if (skillTreeBases != null)
-            bases.AddRange(skillTreeBases);
-        bases.Add(new SkillTreeBase
+        if (!HasBase(index))
         {
-            baseSkillIndex = index,
-            skillName = skillName,
-            description = description,
-            maxLevel = maxLevel,
-            unit = unit,
-            paramTarget = target,
-            targetIndex = targetIndex,
-            paramStat = stat,
-            deltaValue = delta
-        });
-        skillTreeBases = bases.ToArray();
+            var bases = new List<SkillTreeBase>();
+            if (skillTreeBases != null)
+                bases.AddRange(skillTreeBases);
+            bases.Add(new SkillTreeBase
+            {
+                baseSkillIndex = index,
+                skillName = skillName,
+                maxLevel = maxLevel,
+                unit = unit,
+                paramTarget = target,
+                targetIndex = targetIndex,
+                paramStat = stat,
+                deltaValue = delta
+            });
+            skillTreeBases = bases.ToArray();
+        }
+
+        EnsureCosts(index, costs);
+    }
+
+    void EnsureCosts(int index, params int[] costs)
+    {
+        if (costs == null || costs.Length == 0 || HasUnit(index)) return;
 
         var units = new List<SkillTreeUnit>();
         if (skillTreeUnits != null)
@@ -452,6 +527,18 @@ public class SO_SkillTreeData : ScriptableObject
             });
         }
         skillTreeUnits = units.ToArray();
+    }
+
+    bool HasUnit(int index)
+    {
+        if (skillTreeUnits == null) return false;
+        for (int i = 0; i < skillTreeUnits.Length; i++)
+        {
+            var unit = skillTreeUnits[i];
+            if (unit != null && unit.skillTreeIndex == index)
+                return true;
+        }
+        return false;
     }
 
     bool HasBase(int index)

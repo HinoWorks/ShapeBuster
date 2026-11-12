@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_StageData
   stageDatas:
   - stageIndex: 0
-    stageTime: 15
+    stageTime: 60
     blockColumns: 8
     blockHpRate: 1
     blockSpeedRate: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
     enemyResourceRate: 1
     bossIndex: 0
   - stageIndex: 1
-    stageTime: 30
+    stageTime: 60
     blockColumns: 8
     blockHpRate: 1
     blockSpeedRate: 1
@@ -34,7 +34,7 @@ MonoBehaviour:
     enemyResourceRate: 2
     bossIndex: 0
   - stageIndex: 2
-    stageTime: 30
+    stageTime: 60
     blockColumns: 10
     blockHpRate: 1
     blockSpeedRate: 1
@@ -44,7 +44,7 @@ MonoBehaviour:
     enemyResourceRate: 3
     bossIndex: 0
   - stageIndex: 3
-    stageTime: 30
+    stageTime: 60
     blockColumns: 10
     blockHpRate: 1
     blockSpeedRate: 1

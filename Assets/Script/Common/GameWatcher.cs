@@ -84,7 +84,6 @@ public class GameWatcher : MonoBehaviour
     void BeginIngameReady()
     {
         int version = ++ingameReadyVersion;
-        PlayerManager.Inst?.Init();
         GameParamManager.Init_IngameStart();
         EnterIngame(version);
     }

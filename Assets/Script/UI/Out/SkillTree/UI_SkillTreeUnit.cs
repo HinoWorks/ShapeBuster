@@ -138,7 +138,8 @@ public class UI_SkillTreeUnit : MonoBehaviour
         if (skillTree == null || skillTreeUnit == null)
         {
             level = 0;
-            unlockState = isRoot ? SkillTreeUnlockState.EnhanceReady : SkillTreeUnlockState.Hide;
+            unlockState = SkillTreeUnlockState.Hide;
+            gameObject.SetActive(false);
             if (version != initVersion) return;
             PublishState();
             return;

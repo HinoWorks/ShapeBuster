@@ -204,29 +204,29 @@ MonoBehaviour:
     ja: "\u6575\u306E\u6E67\u304D\u6570\u304C [A] \u5897\u3048\u308B"
     en: 'Enemy spawn rate increases by [A]'
   - key: skill.1000.name
-    ja: "\u96F7"
-    en: Lightning
+    ja: "\u9023\u5F3E"
+    en: Extra Ball
   - key: skill.1000.desc
-    ja: "\u96F7\u3092\u89E3\u653E\u3059\u308B"
-    en: Unlock Lightning
+    ja: "\u30CE\u30FC\u30DE\u30EB\u30DC\u30FC\u30EB\u304C1\u767A\u5897\u3048\u308B\u3002"
+    en: Normal balls increase by [A].
   - key: skill.1001.name
-    ja: "\u96F7\u5A01\u529B"
-    en: Lightning Power
+    ja: "\u7403\u901F"
+    en: Ball Speed
   - key: skill.1001.desc
-    ja: "\u30C0\u30E1\u30FC\u30B8\u304C [A] \u5897\u3048\u308B"
-    en: 'Damage increases by [A]'
+    ja: "\u3059\u3079\u3066\u306E\u30DC\u30FC\u30EB\u304C [A] \u901F\u304F\u306A\u308B\u3002"
+    en: Every ball gets [A] faster.
   - key: skill.1002.name
-    ja: "\u96F7\u767A\u751F\u7387"
-    en: Lightning Rate
+    ja: "\u7403\u5A01"
+    en: Ball Power
   - key: skill.1002.desc
-    ja: "\u96F7\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B"
-    en: 'Lightning chance increases by [A]'
+    ja: "\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Ball attack increases by [A].
   - key: skill.1003.name
-    ja: "\u96F7\u306E\u672C\u6570"
-    en: Lightning Count
+    ja: "\u5F37\u6253"
+    en: Heavy Hit
   - key: skill.1003.desc
-    ja: "\u96F7\u306E\u672C\u6570\u304C [A] \u5897\u3048\u308B"
-    en: 'Lightning bolts increase by [A]'
+    ja: "\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Ball attack increases by [A].
   - key: skill.1100.name
     ja: "EX\u5F3E"
     en: EX Bullet
@@ -555,3 +555,282 @@ MonoBehaviour:
   - key: milestone.10.bonus
     ja: "\u30AB\u30FC\u30BD\u30EB\u30B5\u30A4\u30BA"
     en: Cursor Size
+  - key: skill.1004.name
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+    en: Ball Critical
+  - key: skill.1004.desc
+    ja: "\u30DC\u30FC\u30EB\u306E\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387\u304C
+      [A] \u5897\u3048\u308B\u3002"
+    en: Ball critical rate increases by [A].
+  - key: skill.1005.name
+    ja: "\u81F4\u547D"
+    en: Ball Fatal
+  - key: skill.1005.desc
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u306E\u500D\u7387\u304C1\u5897\u3048\u308B\u3002"
+    en: Critical multiplier increases by 1.
+  - key: skill.1006.name
+    ja: "\u5897\u5E45"
+    en: Amplify
+  - key: skill.1006.desc
+    ja: "\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Ball attack increases by [A].
+  - key: skill.1007.name
+    ja: "\u9023\u6483"
+    en: Chain Hit
+  - key: skill.1007.desc
+    ja: "\u540C\u3058\u30D5\u30E9\u30A4\u30C8\u3067\u5F53\u3066\u308B\u305F\u3073\u3001\u6B21\u306E\u30D2\u30C3\u30C8\u304C10%\u5F37\u304F\u306A\u308B\u3002\u4E0A\u965050%\u3002"
+    en: Each block hit in the same flight makes the next hit 10% stronger, up to
+      50%.
+  - key: skill.1008.name
+    ja: "\u30DC\u30B9\u7279\u653B"
+    en: Boss Hunt
+  - key: skill.1008.desc
+    ja: "\u30DC\u30B9\u3078\u306E\u653B\u6483\u529B\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Attack against bosses increases by [A].
+  - key: skill.2000.name
+    ja: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+    en: Bomb Ball
+  - key: skill.2000.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u5468\u56F2\u3092\u5DFB\u304D\u8FBC\u3080\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to burst
+      around it.
+  - key: skill.2001.name
+    ja: "\u7206\u98A8\u306E\u767A\u751F"
+    en: Blast Chance
+  - key: skill.2001.desc
+    ja: "\u30DC\u30E0\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Bomb proc chance increases by [A].
+  - key: skill.2002.name
+    ja: "\u7206\u98A8\u306E\u5A01\u529B"
+    en: Blast Power
+  - key: skill.2002.desc
+    ja: "\u30DC\u30E0\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Bomb attack becomes 100% of a normal ball.
+  - key: skill.2003.name
+    ja: "\u30DC\u30E0\uFF0B1"
+    en: Bomb +1
+  - key: skill.2003.desc
+    ja: "\u30DC\u30E0\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more bomb ball.
+  - key: skill.2010.name
+    ja: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    en: Laser Ball
+  - key: skill.2010.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u305D\u306E\u5217\u3092\u713C\u304F\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to burn
+      that column.
+  - key: skill.2011.name
+    ja: "\u5217\u306E\u767A\u751F"
+    en: Column Chance
+  - key: skill.2011.desc
+    ja: "\u7E26\u30EC\u30FC\u30B6\u30FC\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Vertical laser proc chance increases by [A].
+  - key: skill.2012.name
+    ja: "\u5217\u306E\u5A01\u529B"
+    en: Column Power
+  - key: skill.2012.desc
+    ja: "\u7E26\u30EC\u30FC\u30B6\u30FC\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Vertical laser attack becomes 100% of a normal ball.
+  - key: skill.2013.name
+    ja: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    en: Vertical Laser +1
+  - key: skill.2013.desc
+    ja: "\u7E26\u30EC\u30FC\u30B6\u30FC\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more vertical laser ball.
+  - key: skill.2020.name
+    ja: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    en: Row Laser Ball
+  - key: skill.2020.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u305D\u306E\u6BB5\u3092\u713C\u304F\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to burn
+      that row.
+  - key: skill.2021.name
+    ja: "\u6BB5\u306E\u767A\u751F"
+    en: Row Chance
+  - key: skill.2021.desc
+    ja: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Horizontal laser proc chance increases by [A].
+  - key: skill.2022.name
+    ja: "\u6BB5\u306E\u5A01\u529B"
+    en: Row Power
+  - key: skill.2022.desc
+    ja: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Horizontal laser attack becomes 100% of a normal ball.
+  - key: skill.2023.name
+    ja: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    en: Horizontal Laser +1
+  - key: skill.2023.desc
+    ja: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more horizontal laser ball.
+  - key: skill.2030.name
+    ja: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    en: Cross Ball
+  - key: skill.2030.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u659C\u30812\u672C\u306E\u30EC\u30FC\u30B6\u30FC\u3092\u51FA\u3059\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to fire
+      two diagonal lasers.
+  - key: skill.2031.name
+    ja: "\u659C\u3081\u306E\u767A\u751F"
+    en: Diagonal Chance
+  - key: skill.2031.desc
+    ja: "\u30AF\u30ED\u30B9\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Cross proc chance increases by [A].
+  - key: skill.2032.name
+    ja: "\u659C\u3081\u306E\u5A01\u529B"
+    en: Diagonal Power
+  - key: skill.2032.desc
+    ja: "\u30AF\u30ED\u30B9\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Cross attack becomes 100% of a normal ball.
+  - key: skill.2033.name
+    ja: "\u30AF\u30ED\u30B9\uFF0B1"
+    en: Cross +1
+  - key: skill.2033.desc
+    ja: "\u30AF\u30ED\u30B9\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more cross ball.
+  - key: skill.2040.name
+    ja: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
+    en: Poison Ball
+  - key: skill.2040.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5F53\u305F\u308B\u306830%\u3067\u6CBC\u3092\u6B8B\u3057\u3001\u6570\u79D2\u9593\u307E\u308F\u308A\u3092\u6EB6\u304B\u3059\u3002"
+    en: Flies after a normal shot, in the same direction. On hit, 30% chance to leave
+      a pool that melts nearby blocks.
+  - key: skill.2041.name
+    ja: "\u6CBC\u306E\u767A\u751F"
+    en: Pool Chance
+  - key: skill.2041.desc
+    ja: "\u30DD\u30A4\u30BA\u30F3\u306E\u767A\u751F\u7387\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Poison proc chance increases by [A].
+  - key: skill.2042.name
+    ja: "\u6CBC\u306E\u5A01\u529B"
+    en: Pool Power
+  - key: skill.2042.desc
+    ja: "\u30DD\u30A4\u30BA\u30F3\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Poison attack becomes 100% of a normal ball.
+  - key: skill.2043.name
+    ja: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
+    en: Poison +1
+  - key: skill.2043.desc
+    ja: "\u30DD\u30A4\u30BA\u30F3\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more poison ball.
+  - key: skill.2050.name
+    ja: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+    en: Heavy Ball
+  - key: skill.2050.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u9045\u304F\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u8CAB\u901A\u3059\u308B\u3002"
+    en: Flies after a normal shot, in the same direction. Slow, and it pierces blocks.
+  - key: skill.2051.name
+    ja: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
+    en: Heavy Speed
+  - key: skill.2051.desc
+    ja: "\u30D8\u30D3\u30FC\u306E\u901F\u3055\u304C\u30CE\u30FC\u30DE\u30EB\u306E50%\u306B\u306A\u308B\u3002"
+    en: Heavy speed becomes 50% of a normal ball.
+  - key: skill.2052.name
+    ja: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
+    en: Heavy Power
+  - key: skill.2052.desc
+    ja: "\u30D8\u30D3\u30FC\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Heavy attack becomes 100% of a normal ball.
+  - key: skill.2053.name
+    ja: "\u30D8\u30D3\u30FC\uFF0B1"
+    en: Heavy +1
+  - key: skill.2053.desc
+    ja: "\u30D8\u30D3\u30FC\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more heavy ball.
+  - key: skill.2060.name
+    ja: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+    en: Orbit Ball
+  - key: skill.2060.desc
+    ja: "\u30CE\u30FC\u30DE\u30EB\u5F3E\u306E\u3042\u3068\u306B\u540C\u3058\u65B9\u5411\u3078\u98DB\u3076\u3002\u5468\u308A\u3092\u56DE\u308B\u7389\u3082\u30D6\u30ED\u30C3\u30AF\u3092\u524A\u308B\u3002"
+    en: Flies after a normal shot, in the same direction. Orbiting shots also chip
+      blocks.
+  - key: skill.2061.name
+    ja: "\u885B\u661F"
+    en: Satellite
+  - key: skill.2061.desc
+    ja: "\u5468\u56DE\u3059\u308B\u7389\u304C1\u3064\u5897\u3048\u308B\u3002"
+    en: Orbiting shots increase by 1.
+  - key: skill.2062.name
+    ja: "\u5468\u56DE\u306E\u5A01\u529B"
+    en: Orbit Power
+  - key: skill.2062.desc
+    ja: "\u30AA\u30FC\u30D3\u30C3\u30C8\u306E\u653B\u6483\u529B\u304C\u30CE\u30FC\u30DE\u30EB\u306E100%\u306B\u306A\u308B\u3002"
+    en: Orbit attack becomes 100% of a normal ball.
+  - key: skill.2063.name
+    ja: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
+    en: Orbit +1
+  - key: skill.2063.desc
+    ja: "\u30AA\u30FC\u30D3\u30C3\u30C8\u304C\u3082\u30461\u767A\u5897\u3048\u308B\u3002"
+    en: Adds one more orbit ball.
+  - key: skill.3000.name
+    ja: "\u53CE\u7A6B"
+    en: Harvest
+  - key: skill.3000.desc
+    ja: "\u30D6\u30ED\u30C3\u30AF\u304C\u843D\u3068\u3059A\u304C [A] \u5897\u3048\u308B\u3002"
+    en: A dropped by blocks increases by [A].
+  - key: skill.3001.name
+    ja: "\u78C1\u77F3"
+    en: Magnet
+  - key: skill.3001.desc
+    ja: "\u62FE\u5F97\u534A\u5F84\u304C [A] \u5E83\u304C\u308B\u3002"
+    en: Pickup radius increases by [A].
+  - key: skill.3002.name
+    ja: "\u6B8B\u7559"
+    en: Linger
+  - key: skill.3002.desc
+    ja: "\u8CC7\u6E90\u304C\u30C7\u30C3\u30C9\u30E9\u30A4\u30F3\u30670.4\u79D2\u6B8B\u308B\u3002"
+    en: Resources stay at the deadline for 0.4 seconds.
+  - key: skill.3010.name
+    ja: "\u518D\u751F\u306E\u51FA\u73FE"
+    en: Regen Spawn
+  - key: skill.3010.desc
+    ja: "\u518D\u751F\u30D6\u30ED\u30C3\u30AF\u306E\u51FA\u3084\u3059\u3055\u304C
+      [A] \u5897\u3048\u308B\u3002"
+    en: Regen blocks become [A] more common.
+  - key: skill.3011.name
+    ja: "\u518D\u751F\u306E\u53CE\u91CF"
+    en: Regen Yield
+  - key: skill.3011.desc
+    ja: "\u518D\u751F\u30D6\u30ED\u30C3\u30AF\u306EB\u304C [A] \u5897\u3048\u308B\u3002"
+    en: B dropped by regen blocks increases by [A].
+  - key: skill.3020.name
+    ja: "\u58C1\u306E\u51FA\u73FE"
+    en: Wall Spawn
+  - key: skill.3020.desc
+    ja: "\u58C1\u30D6\u30ED\u30C3\u30AF\u306E\u51FA\u3084\u3059\u3055\u304C [A] \u5897\u3048\u308B\u3002"
+    en: Wall blocks become [A] more common.
+  - key: skill.3021.name
+    ja: "\u58C1\u306E\u53CE\u91CF"
+    en: Wall Yield
+  - key: skill.3021.desc
+    ja: "\u58C1\u30D6\u30ED\u30C3\u30AF\u306EC\u304C [A] \u5897\u3048\u308B\u3002"
+    en: C dropped by wall blocks increases by [A].
+  - key: skill.3030.name
+    ja: Convert
+    en: Convert
+  - key: skill.3030.desc
+    ja: "AA\u3092B\u3001C\u3001D\u306B\u63DB\u3048\u308B\u30BF\u30D6\u304C\u5897\u3048\u308B\u3002"
+    en: Adds a tab that turns AA into B, C, and D.
+  - key: skill.3031.name
+    ja: "\u52B9\u7387"
+    en: Convert Rate
+  - key: skill.3031.desc
+    ja: "Convert\u306B\u5FC5\u8981\u306AAA\u304C15%\u6E1B\u308B\u3002"
+    en: AA required by Convert decreases by 15% per level.
+  - key: skill.4000.name
+    ja: "\u6E1B\u901F"
+    en: Slow Fall
+  - key: skill.4000.desc
+    ja: "\u30D6\u30ED\u30C3\u30AF\u306E\u4E0B\u964D\u304C [A] \u9045\u304F\u306A\u308B\u3002"
+    en: Block fall speed decreases by [A].
+  - key: skill.4010.name
+    ja: "\u7D30\u7247"
+    en: Splinter
+  - key: skill.4010.desc
+    ja: "\u30B9\u30C6\u30FC\u30B8\u306E\u5217\u6570\u3092\u57FA\u6E96\u306B\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u5C0F\u3055\u304F\u3057\u3066\u5217\u3092\u5897\u3084\u3059\u3002[A]"
+    en: 'Shrink blocks and add columns from the stage column count. [A]'
+  - key: skill.4020.name
+    ja: "\u30AC\u30E9\u30B9"
+    en: Glass
+  - key: skill.4020.desc
+    ja: "\u6575\u306E\u51FA\u73FE\u6642\u3001[A] \u306E\u78BA\u7387\u3067\u30AC\u30E9\u30B9\u30AB\u30D7\u30BB\u30EB\u304C\u51FA\u308B\u3002\u5272\u3063\u3066\u304B\u3089\u30A2\u30A4\u30C6\u30E0\u306B\u89E6\u308C\u308B\u3002"
+    en: Glass capsules appear on [A] of spawns. Break one, then touch the item.

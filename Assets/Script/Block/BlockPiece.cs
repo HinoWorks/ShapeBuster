@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 /// <summary>
@@ -64,6 +65,17 @@ public class BlockPiece : MonoBehaviour
     int pushedX = -1;
     int pushedY = -1;
     Vector3 restScale = Vector3.one;
+
+    public Vector3 PlacedScale => restScale;
+    public float PlacedLocalTop => transform.localPosition.y + restScale.y * 0.5f;
+
+    void PlaySpawnPop()
+    {
+        var target = restScale;
+        transform.DOKill();
+        transform.localScale = Vector3.zero;
+        transform.DOScale(target, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
+    }
     Color fillColor = Color.white;
     Color underColor = new Color(0f, 0f, 0f, 0f);
     Color pushedFill = new Color(-1f, -1f, -1f, -1f);
@@ -209,6 +221,7 @@ public class BlockPiece : MonoBehaviour
         healPulse = 0f;
         half = worldSize.y * 0.5f;
         restScale = transform.localScale;
+        PlaySpawnPop();
         reactTime = -1f;
         breaking = false;
         flash = 0f;
@@ -299,8 +312,7 @@ public class BlockPiece : MonoBehaviour
         if (collider != null)
             collider.enabled = false;
 
-        float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate))
-            * (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
+        float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
             * (1f + SkillTreeBonus.BlockHarvestRate);
         int reward = StageEnemyScale.ScaleResourceCount(rewardCells, rewardRate);
         if (reward > 0 && session != null)
@@ -327,6 +339,7 @@ public class BlockPiece : MonoBehaviour
         reactTime = -1f;
         breaking = false;
         flash = 1f;
+        transform.DOKill();
         transform.localScale = restScale * HitScale;
         InvalidateFill();
         PushFill();
@@ -346,6 +359,7 @@ public class BlockPiece : MonoBehaviour
 
         reactTime = 0f;
         flash = 1f;
+        transform.DOKill();
         transform.localScale = restScale * HitScale;
         InvalidateFill();
         PushFill();
@@ -477,13 +491,13 @@ public class BlockPiece : MonoBehaviour
         {
             healTime -= Time.deltaTime;
             healPulse = Mathf.Clamp01(healTime / HealPop);
-            if (reactTime < 0f)
+            if (reactTime < 0f && !DOTween.IsTweening(transform))
                 transform.localScale = restScale * (1f + 0.08f * healPulse);
             if (healTime <= 0f)
             {
                 healTime = 0f;
                 healPulse = 0f;
-                if (reactTime < 0f)
+                if (reactTime < 0f && !DOTween.IsTweening(transform))
                     transform.localScale = restScale;
             }
             InvalidateFill();

@@ -7,18 +7,6 @@ public static class SOLoader
 
     // =====================
 
-    private static SO_CursorUnitData so_cursorUnitData;
-    public static SO_CursorUnitData CursorUnitData
-    {
-        get
-        {
-            if (so_cursorUnitData == null)
-            {
-                so_cursorUnitData = LoadSO<SO_CursorUnitData>(pathBase + nameof(SO_CursorUnitData));
-            }
-            return so_cursorUnitData;
-        }
-    }
     private static SO_StageData so_stageData;
     public static SO_StageData StageData
     {
@@ -29,19 +17,6 @@ public static class SOLoader
                 so_stageData = LoadSO<SO_StageData>(pathBase + nameof(SO_StageData));
             }
             return so_stageData;
-        }
-    }
-
-    private static SO_EnemyData so_enemyData;
-    public static SO_EnemyData EnemyData
-    {
-        get
-        {
-            if (so_enemyData == null)
-            {
-                so_enemyData = LoadSO<SO_EnemyData>(pathBase + nameof(SO_EnemyData));
-            }
-            return so_enemyData;
         }
     }
 
@@ -56,19 +31,6 @@ public static class SOLoader
             }
 
             return so_resourceData;
-        }
-    }
-
-    private static SO_AttackUnitData so_attackUnitData;
-    public static SO_AttackUnitData AttackUnitData
-    {
-        get
-        {
-            if (so_attackUnitData == null)
-            {
-                so_attackUnitData = LoadSO<SO_AttackUnitData>(pathBase + nameof(SO_AttackUnitData));
-            }
-            return so_attackUnitData;
         }
     }
 

@@ -51,8 +51,7 @@ public static class MilestoneBonus
         float bonus = Get(MilestoneBonusStat.EnemyDropRate, enemyIndex)
             + Get(MilestoneBonusStat.ResourceTypeRate, (int)resourceType)
             + Get(MilestoneBonusStat.ResourceGainRate, 0)
-            + (stageIndex >= 0 ? Get(MilestoneBonusStat.StageDropRate, stageIndex) : 0f)
-            + Mathf.Max(0f, SkillTreeBonus.CursorResourceUpRate);
+            + (stageIndex >= 0 ? Get(MilestoneBonusStat.StageDropRate, stageIndex) : 0f);
         if (bonus <= 0f) return baseCount;
 
         float scaled = baseCount * (1f + bonus);
@@ -60,27 +59,6 @@ public static class MilestoneBonus
         if (Random.value < scaled - whole)
             whole++;
         return Mathf.Max(0, whole);
-    }
-
-    public static void ApplyAttack(AttackUnitData data)
-    {
-        if (data == null) return;
-
-        float rate = Get(MilestoneBonusStat.AttackRate, data.index);
-        if (rate != 0f)
-            data.attackRate *= 1f + rate;
-
-        float size = Get(MilestoneBonusStat.AttackSize, data.index);
-        if (size != 0f)
-            data.size *= 1f + size;
-
-        float duration = Get(MilestoneBonusStat.AttackDuration, data.index);
-        if (duration != 0f)
-            data.duration += duration;
-
-        float count = Get(MilestoneBonusStat.AttackGenerateCount, data.index);
-        if (count != 0f)
-            data.generateCount = Mathf.Max(0, data.generateCount + Mathf.RoundToInt(count));
     }
 
     static void Rebuild()

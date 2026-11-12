@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 /// ブロック崩しの1セッション。
 /// 配置率、HP、下降速度、ボール数などの数値は SO_BlockSession。HPと速度はステージの倍率も掛ける。
 /// 未クリアのステージは、stageTime の次の生成でボスを画面外に出す。
-/// 新しい群の下限は画面上部1/4。ブロックがデッドラインに触れると終了する。
+/// ブロックは1列ずつ。上に1.5マス空いたら出し、出した後は上端に0.5マス残す。デッドラインで終了する。
 /// 狙った方向へ、手持ちを戻ってきた順に続けて打つ。下のラインで回収する。
 /// 画面上端から launchTopInset までは、発射の基点にならない。
 /// </summary>
@@ -18,6 +18,15 @@ public class BlockSession : MonoBehaviour
     public const int BlockLayer = 8;
     public const int BallLayer = 9;
     public const float BallDiameter = 0.32f;
+    /// <summary>生成後に画面上端へ残す空き。ボールが潜り込む。</summary>
+    const float TopClearanceCells = 0.5f;
+    /// <summary>上端の空きがこれ以上になったら、1列出す。</summary>
+    const float SpawnGapCells = 1.5f;
+    const int OpeningRows = 3;
+    const int ClearBonusCount = 3;
+    /// <summary>全消し後、3列分の空きができるまで掛ける下降速度。</summary>
+    const float ClearFallBoost = 10f;
+    const float ClearGapCells = 3f;
 
     public static BlockSession Inst { get; private set; }
 
@@ -49,6 +58,9 @@ public class BlockSession : MonoBehaviour
     public static Sprite CircleSprite => circleSprite != null ? circleSprite : (circleSprite = MakeSprite(true));
 
     readonly List<BlockPiece> pieces = new();
+    bool hadBreakable;
+    bool clearRush;
+    Vector3 clearPoint;
     readonly List<GameObject> arena = new();
 
     Transform formation;
@@ -86,14 +98,12 @@ public class BlockSession : MonoBehaviour
     float shotTimer;
     Vector2 shotDirection;
     float elapsed;
-    float waveTimer;
     float deadlineY;
     float ceilingY;
     float screenLeft;
     float screenRight;
     float screenBottom;
     float screenTop;
-    float spawnFloorY;
     float fieldLeft;
     float fieldRight;
     float cell;
@@ -174,20 +184,23 @@ public class BlockSession : MonoBehaviour
         if (bossStopLeft > 0f)
         {
             bossStopLeft -= Time.unscaledDeltaTime;
-            if (bossStopLeft > 0f) return;
+            if (bossStopLeft > 0f)
+            {
+                if (running)
+                    TryClearRefill();
+                return;
+            }
             FinishBossDefeat();
         }
 
         if (!running) return;
 
-        waveTimer += Time.deltaTime;
-        float interval = CurrentInterval;
+        TryClearRefill();
         TickBoss();
-        if (waveTimer >= interval)
-        {
-            waveTimer -= interval;
+        if (clearRush)
+            TickClearRush();
+        else if (TopGapReady())
             SpawnWave();
-        }
     }
 
     void FixedUpdate()
@@ -195,7 +208,7 @@ public class BlockSession : MonoBehaviour
         if (!running || pendingFail || formationBody == null) return;
 
         elapsed += Time.fixedDeltaTime;
-        formationBody.MovePosition(formationBody.position + Vector2.down * (CurrentSpeed * Time.fixedDeltaTime));
+        formationBody.MovePosition(formationBody.position + Vector2.down * (BlockFallSpeed * Time.fixedDeltaTime));
         if (ReachedDeadline())
         {
             pendingFail = true;
@@ -205,7 +218,51 @@ public class BlockSession : MonoBehaviour
 
     public void NotifyBroken(BlockPiece piece)
     {
+        if (piece != null)
+            clearPoint = piece.transform.position;
         pieces.Remove(piece);
+    }
+
+    /// <summary>壊せるブロックが画面から無くなったら、AAを落として下降を速める。</summary>
+    void TryClearRefill()
+    {
+        bool breakable = HasBreakableOnScreen();
+        if (hadBreakable && !breakable && !clearRush)
+        {
+            DropResources(clearPoint, ClearBonusCount, ResourceType.AA);
+            clearRush = true;
+        }
+        hadBreakable = breakable;
+    }
+
+    /// <summary>3マス空いたら3列出して、加速を戻す。</summary>
+    void TickClearRush()
+    {
+        if (!ClearGapReady()) return;
+        SpawnClearRows();
+        clearRush = false;
+    }
+
+    bool ClearGapReady()
+    {
+        if (formation == null || cell <= 0.001f) return false;
+
+        float local = HighestLocalTop();
+        if (float.IsNegativeInfinity(local)) return true;
+
+        float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
+        return screenTop - (parentY + local) >= ClearGapCells * cell - 0.001f;
+    }
+
+    bool HasBreakableOnScreen()
+    {
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive || piece.IsSolid) continue;
+            if (PlacedOnScreen(piece)) return true;
+        }
+        return false;
     }
 
     /// <summary>撃破の瞬間にゲームを止め、白く膨らんだ状態で保持する。止めたあと破壊する。</summary>
@@ -242,13 +299,12 @@ public class BlockSession : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var offset = (Vector3)(Random.insideUnitCircle * 0.2f);
-            manager.SpawnLooseResource(point + offset, type, CurrentSpeed);
+            manager.SpawnLooseResource(point + offset, type, BlockFallSpeed);
         }
     }
 
     float CurrentSpeed => (Rule.baseSpeed + elapsed * Rule.speedPerSecond) * blockSpeedRate * SkillTreeBonus.FallSpeedScale;
-
-    float CurrentInterval => Mathf.Max(Rule.minInterval, Rule.baseInterval - elapsed * Rule.intervalShrinkPerSecond);
+    public float BlockFallSpeed => CurrentSpeed * (clearRush ? ClearFallBoost : 1f);
 
     float CurrentFill
     {
@@ -269,11 +325,10 @@ public class BlockSession : MonoBehaviour
         ResolveStageRates();
         running = true;
         elapsed = 0f;
-        waveTimer = 0f;
         BuildArena();
         LoadBlockPrefabs();
         ArmBoss();
-        SpawnWave();
+        SpawnOpeningRows();
         SpawnBalls();
     }
 
@@ -308,7 +363,6 @@ public class BlockSession : MonoBehaviour
         flashes.Clear();
         poisons.Clear();
         elapsed = 0f;
-        waveTimer = 0f;
         bossArmed = false;
         bossDue = false;
         bossSpawned = false;
@@ -319,6 +373,8 @@ public class BlockSession : MonoBehaviour
             Time.timeScale = 1f;
         bossStopLeft = 0f;
         bossBreaking = null;
+        hadBreakable = false;
+        clearRush = false;
         pieces.Clear();
 
         if (formation != null)
@@ -343,9 +399,30 @@ public class BlockSession : MonoBehaviour
         arena.Clear();
     }
 
+    /// <summary>メインカメラの見える範囲。正射影だけ。</summary>
+    static bool TryGetView(out Rect rect)
+    {
+        var camera = Camera.main;
+        if (camera == null || !camera.orthographic)
+        {
+            rect = default;
+            return false;
+        }
+
+        float halfHeight = camera.orthographicSize;
+        float halfWidth = halfHeight * camera.aspect;
+        var center = camera.transform.position;
+        rect = Rect.MinMaxRect(
+            center.x - halfWidth,
+            center.y - halfHeight,
+            center.x + halfWidth,
+            center.y + halfHeight);
+        return true;
+    }
+
     void BuildArena()
     {
-        if (!AttackPlayfield.TryGetRect(out var view))
+        if (!TryGetView(out var view))
             view = new Rect(-5f, -5f, 10f, 10f);
 
         deadlineY = view.yMin + 0.45f;
@@ -354,7 +431,6 @@ public class BlockSession : MonoBehaviour
         screenRight = view.xMax;
         screenBottom = view.yMin;
         screenTop = view.yMax;
-        spawnFloorY = view.yMax - view.height * 0.25f;
 
         int baseColumns = ResolveBaseColumns();
         float midX = (view.xMin + view.xMax) * 0.5f;
@@ -615,8 +691,6 @@ public class BlockSession : MonoBehaviour
 
     static bool Owns(BlockBallKind kind)
     {
-        if (AttackManager.Inst != null && AttackManager.Inst.OwnsDebugBall(kind))
-            return true;
         return SkillTreeBonus.OwnsBall(kind);
     }
 
@@ -1289,7 +1363,7 @@ public class BlockSession : MonoBehaviour
     /// <summary>カメラに少しでも重なっていれば真。</summary>
     public bool IsOnCamera(BlockPiece piece)
     {
-        if (!AttackPlayfield.TryGetRect(out var view)) return false;
+        if (!TryGetView(out var view)) return false;
 
         var scale = piece.transform.lossyScale;
         float halfX = Mathf.Abs(scale.x) * 0.5f;
@@ -1466,7 +1540,8 @@ public class BlockSession : MonoBehaviour
 
         float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
         float stackedBottom = HighestLocalTop();
-        float worldBottom = screenTop;
+        float span = cell * Mathf.Max(1, prefab.CellsY);
+        float worldBottom = screenTop - TopClearanceCells * cell - span + Rule.blockGap * 0.5f;
         if (!float.IsNegativeInfinity(stackedBottom))
         {
             float above = parentY + stackedBottom + Rule.blockGap * 0.5f;
@@ -1483,92 +1558,220 @@ public class BlockSession : MonoBehaviour
         bossSpawned = true;
     }
 
-    void SpawnWave()
+    void SpawnOpeningRows()
     {
-        if (!StackOrigin(out float localLeft, out float localBottom)) return;
+        if (bossDue)
+            SpawnDueBoss();
+        if (formation == null) return;
+
+        float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
+        float topBottom = screenTop - TopClearanceCells * cell - cell + Rule.blockGap * 0.5f;
+        float localLeft = -cell * columns * 0.5f;
+        for (int i = 0; i < OpeningRows; i++)
+        {
+            float worldBottom = topBottom - (OpeningRows - 1 - i) * cell;
+            float localBottom = worldBottom - parentY;
+            SpawnRow(localLeft, localBottom);
+        }
+    }
+
+    /// <summary>画面上端から下へ、空いている列を3つ出す。</summary>
+    void SpawnClearRows()
+    {
+        if (formation == null || cell <= 0.001f) return;
 
         if (bossDue)
             SpawnDueBoss();
 
-        float fill = CurrentFill;
-        var used = new bool[columns, Rows];
-        ReserveBossCells(used, localLeft, localBottom);
-        bool placed = false;
-
-        for (int y = 0; y < Rows; y++)
+        float parentY = formation.position.y;
+        float topBottom = screenTop - TopClearanceCells * cell - cell + Rule.blockGap * 0.5f;
+        float localLeft = -cell * columns * 0.5f;
+        int spawned = 0;
+        for (int i = 0; spawned < OpeningRows && i < 24; i++)
         {
-            for (int x = 0; x < columns; x++)
-            {
-                if (used[x, y] || Random.value > fill) continue;
-                if (TryPlace(used, x, y, localLeft, localBottom, PickPrefab()))
-                    placed = true;
-            }
-        }
-
-        if (!placed && !TryPlace(used, columns / 2, 0, localLeft, localBottom, PickPrefab()))
-        {
-            for (int y = 0; y < Rows && !placed; y++)
-            {
-                for (int x = 0; x < columns; x++)
-                {
-                    if (used[x, y]) continue;
-                    if (!TryPlace(used, x, y, localLeft, localBottom, PickPrefab())) continue;
-                    placed = true;
-                    break;
-                }
-            }
+            float worldBottom = topBottom - i * cell;
+            if (worldBottom + cell < screenBottom) break;
+            float localBottom = worldBottom - parentY;
+            if (!RowHasGap(localLeft, localBottom)) continue;
+            if (SpawnRow(localLeft, localBottom))
+                spawned++;
         }
     }
 
-    /// <summary>ボスのマスには通常ブロックを置かない。サイズはプレハブの横マス・縦マス。</summary>
-    void ReserveBossCells(bool[,] used, float localLeft, float localBottom)
+    bool RowHasGap(float localLeft, float localBottom)
+    {
+        for (int x = 0; x < columns; x++)
+        {
+            if (!CellOccupied(localLeft, localBottom, x))
+                return true;
+        }
+        return false;
+    }
+
+    bool CellOccupied(float localLeft, float localBottom, int x)
+    {
+        float minX = localLeft + x * cell;
+        float maxX = minX + cell;
+        float minY = localBottom;
+        float maxY = localBottom + cell;
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive) continue;
+            if (OverlapsCell(piece, minX, maxX, minY, maxY))
+                return true;
+        }
+        return false;
+    }
+
+    static bool OverlapsCell(BlockPiece piece, float minX, float maxX, float minY, float maxY)
+    {
+        var pos = piece.transform.localPosition;
+        var scale = piece.PlacedScale;
+        float left = pos.x - Mathf.Abs(scale.x) * 0.5f;
+        float right = pos.x + Mathf.Abs(scale.x) * 0.5f;
+        float bottom = pos.y - Mathf.Abs(scale.y) * 0.5f;
+        float top = pos.y + Mathf.Abs(scale.y) * 0.5f;
+        return left < maxX - 0.001f && right > minX + 0.001f
+            && bottom < maxY - 0.001f && top > minY + 0.001f;
+    }
+
+    bool PlacedOnScreen(BlockPiece piece)
+    {
+        if (!TryGetView(out var view)) return false;
+
+        var pos = piece.transform.position;
+        var scale = piece.PlacedScale;
+        float halfX = Mathf.Abs(scale.x) * 0.5f;
+        float halfY = Mathf.Abs(scale.y) * 0.5f;
+        return pos.x + halfX > view.xMin && pos.x - halfX < view.xMax
+            && pos.y + halfY > view.yMin && pos.y - halfY < view.yMax;
+    }
+
+    void SpawnWave()
+    {
+        if (!TryNextRow(out float localLeft, out float localBottom)) return;
+
+        if (bossDue)
+            SpawnDueBoss();
+
+        SpawnRow(localLeft, localBottom);
+    }
+
+    /// <summary>次の列は、いちばん高いブロックの底から1マス上。縦長が塞ぐ列はそのまま残す。</summary>
+    bool TryNextRow(out float localLeft, out float localBottom)
+    {
+        localLeft = -cell * columns * 0.5f;
+        localBottom = 0f;
+        if (formation == null || cell <= 0.001f) return false;
+
+        float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
+        float bottom = HighestVisualBottom();
+        if (float.IsNegativeInfinity(bottom))
+        {
+            float worldBottom = screenTop - TopClearanceCells * cell - cell + Rule.blockGap * 0.5f;
+            localBottom = worldBottom - parentY;
+            return true;
+        }
+
+        float gap = Rule.blockGap;
+        localBottom = bottom - gap * 0.5f + cell;
+        float limit = HighestLocalTop() + gap;
+        for (int step = 0; step < 8; step++)
+        {
+            if (RowHasGap(localLeft, localBottom))
+                return true;
+            if (localBottom > limit)
+                return false;
+            localBottom += cell;
+        }
+        return RowHasGap(localLeft, localBottom);
+    }
+
+    bool SpawnRow(float localLeft, float localBottom)
+    {
+        float fill = CurrentFill;
+        var used = new bool[columns, 1];
+        ReserveAliveCells(used, localLeft, localBottom);
+        bool placed = false;
+
+        for (int x = 0; x < columns; x++)
+        {
+            if (used[x, 0] || Random.value > fill) continue;
+            if (TryPlace(used, x, 0, localLeft, localBottom, PickPrefab()))
+                placed = true;
+        }
+
+        if (placed) return true;
+
+        for (int x = 0; x < columns; x++)
+        {
+            int index = (columns / 2 + x) % columns;
+            if (used[index, 0]) continue;
+            if (TryPlace(used, index, 0, localLeft, localBottom, PickPrefab()))
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>次の列の下端から、画面上端まで1.5マス以上空いている。</summary>
+    bool TopGapReady()
+    {
+        if (formation == null || cell <= 0.001f) return false;
+        if (float.IsNegativeInfinity(HighestVisualBottom())) return true;
+        if (!TryNextRow(out _, out float localBottom)) return false;
+
+        float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
+        float anchorTop = parentY + localBottom - Rule.blockGap;
+        return screenTop - anchorTop >= SpawnGapCells * cell - 0.001f;
+    }
+
+    /// <summary>すでにいるブロックのマスには重ねない。</summary>
+    void ReserveAliveCells(bool[,] used, float localLeft, float localBottom)
     {
         for (int i = 0; i < pieces.Count; i++)
         {
             var piece = pieces[i];
-            if (piece == null || !piece.IsAlive || piece.BossIndex < 0) continue;
+            if (piece == null || !piece.IsAlive) continue;
+            MarkCells(used, piece, localLeft, localBottom);
+        }
+    }
 
-            var pos = piece.transform.localPosition;
-            var scale = piece.transform.localScale;
-            float minX = pos.x - scale.x * 0.5f;
-            float maxX = pos.x + scale.x * 0.5f;
-            float minY = pos.y - scale.y * 0.5f;
-            float maxY = pos.y + scale.y * 0.5f;
-            int x0 = Mathf.FloorToInt((minX - localLeft) / cell);
-            int x1 = Mathf.FloorToInt((maxX - localLeft) / cell);
-            int y0 = Mathf.FloorToInt((minY - localBottom) / cell);
-            int y1 = Mathf.FloorToInt((maxY - localBottom) / cell);
-            for (int y = y0; y <= y1; y++)
+    void MarkCells(bool[,] used, BlockPiece piece, float localLeft, float localBottom)
+    {
+        var pos = piece.transform.localPosition;
+        var scale = piece.PlacedScale;
+        float minX = pos.x - scale.x * 0.5f;
+        float maxX = pos.x + scale.x * 0.5f;
+        float minY = pos.y - scale.y * 0.5f;
+        float maxY = pos.y + scale.y * 0.5f;
+        int x0 = Mathf.FloorToInt((minX - localLeft) / cell);
+        int x1 = Mathf.FloorToInt((maxX - localLeft) / cell);
+        int y0 = Mathf.FloorToInt((minY - localBottom) / cell);
+        int y1 = Mathf.FloorToInt((maxY - localBottom) / cell);
+        for (int y = y0; y <= y1; y++)
+        {
+            if (y < 0 || y >= used.GetLength(1)) continue;
+            for (int x = x0; x <= x1; x++)
             {
-                if (y < 0 || y >= Rows) continue;
-                for (int x = x0; x <= x1; x++)
-                {
-                    if (x < 0 || x >= columns) continue;
-                    used[x, y] = true;
-                }
+                if (x < 0 || x >= columns) continue;
+                used[x, y] = true;
             }
         }
     }
 
-    /// <summary>既存の山のすぐ上。通常群はここへ積んで、同じ速度で下ろす。</summary>
-    bool StackOrigin(out float localLeft, out float localBottom)
+    float HighestVisualBottom()
     {
-        localLeft = 0f;
-        localBottom = 0f;
-        if (formation == null) return false;
-
-        float stackedBottom = HighestLocalTop();
-        float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
-        float worldBottom = spawnFloorY;
-        if (!float.IsNegativeInfinity(stackedBottom))
+        float bottom = float.NegativeInfinity;
+        for (int i = 0; i < pieces.Count; i++)
         {
-            float above = parentY + stackedBottom + Rule.blockGap * 0.5f;
-            worldBottom = Mathf.Max(worldBottom, above);
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive) continue;
+            float y = piece.transform.localPosition.y - Mathf.Abs(piece.PlacedScale.y) * 0.5f;
+            if (y > bottom)
+                bottom = y;
         }
-
-        localBottom = worldBottom - parentY;
-        localLeft = -cell * columns * 0.5f;
-        return true;
+        return bottom;
     }
 
     void LoadBlockPrefabs()
@@ -1652,12 +1855,15 @@ public class BlockSession : MonoBehaviour
 
     bool CanOccupy(bool[,] used, int x, int y, int cellsX, int cellsY)
     {
-        if (x < 0 || y < 0 || x + cellsX > columns || y + cellsY > Rows) return false;
+        int rows = used.GetLength(1);
+        if (x < 0 || y < 0 || x + cellsX > columns) return false;
         for (int iy = 0; iy < cellsY; iy++)
         {
+            int row = y + iy;
+            if (row >= rows) continue;
             for (int ix = 0; ix < cellsX; ix++)
             {
-                if (used[x + ix, y + iy]) return false;
+                if (used[x + ix, row]) return false;
             }
         }
         return true;
@@ -1665,10 +1871,13 @@ public class BlockSession : MonoBehaviour
 
     static void Occupy(bool[,] used, int x, int y, int cellsX, int cellsY)
     {
+        int rows = used.GetLength(1);
         for (int iy = 0; iy < cellsY; iy++)
         {
+            int row = y + iy;
+            if (row >= rows) continue;
             for (int ix = 0; ix < cellsX; ix++)
-                used[x + ix, y + iy] = true;
+                used[x + ix, row] = true;
         }
     }
 
@@ -1741,7 +1950,7 @@ public class BlockSession : MonoBehaviour
         {
             var piece = pieces[i];
             if (piece == null) continue;
-            float localTop = piece.transform.localPosition.y + piece.transform.localScale.y * 0.5f;
+            float localTop = piece.PlacedLocalTop;
             if (localTop > top)
                 top = localTop;
         }

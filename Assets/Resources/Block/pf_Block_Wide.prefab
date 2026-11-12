@@ -109,4 +109,8 @@ MonoBehaviour:
   weight: 16
   hpScale: 1
   bossIndex: -1
+  armorBottom: 0
+  regenDelay: 0
   sprite: {fileID: 100004}
+  plateMarks: []
+  regenMark: {fileID: 0}

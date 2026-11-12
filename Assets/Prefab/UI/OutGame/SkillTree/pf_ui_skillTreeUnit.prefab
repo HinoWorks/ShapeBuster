@@ -128,7 +128,6 @@ MonoBehaviour:
   skillTree:
     baseSkillIndex: 0
     skillName: skillName_0
-    description: aaaaa
     icon: {fileID: 0}
     maxLevel: 3
     unit: '%'

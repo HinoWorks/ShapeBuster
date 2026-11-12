@@ -265,113 +265,12 @@ public class GameBaseParam
 
 
 /// <summary>
-/// ピッケルのパラメータ
-/// </summary>
-public class CursorParam
-{
-    public CursorUnitData so;
-    public int damage;
-    public float attackInterval;
-    public float criticalRate;
-    public float resourceUpRate;
-    public float size;
-    public int magazineAmmo;
-    public float reloadTime;
-
-    public void Init(CursorUnitData _cursorUnitData)
-    {
-        so = _cursorUnitData;
-        damage = _cursorUnitData.damage;
-        attackInterval = _cursorUnitData.attackInterval;
-        criticalRate = _cursorUnitData.criticalRate;
-        resourceUpRate = _cursorUnitData.resourceUpRate;
-        size = _cursorUnitData.size;
-        magazineAmmo = _cursorUnitData.magazineAmmo;
-        reloadTime = _cursorUnitData.reloadTime;
-    }
-}
-
-
-/// <summary>
-/// アタックユニットのパラメータ
-/// </summary>
-public class AttackParam
-{
-    /*
-    public bool isActive { get; private set; } = false;
-
-    public float damageRate => damageRate_enhanced + so.damageRate;
-    public float attackInterval => (1f - attackInterval_enhanced) * so.attackInterval;
-    public float criticalRate => criticalRate_enhanced + so.criticalRate;
-    public float size => size_enhanced + so.size;
-    public float aliveTime => aliveTime_enhanced + so.aliveTime;
-    public float speed => so.speed + speed_enhanced;
-    public int count => count_enhanced + so.count;
-    public int exLevel => 1 + exLevel_enhanced;
-
-
-    // -- local enhanced --
-    private float damageRate_enhanced = 0f;
-    private float speed_enhanced = 0f;
-    private int count_enhanced = 0;
-    private float attackInterval_enhanced = 0f;
-    private float criticalRate_enhanced = 0f;
-    private float size_enhanced = 0f;
-    private int exLevel_enhanced = 0;
-    private float aliveTime_enhanced = 0f;
-
-    public void Init(AttackUnitData _attackUnitData)
-    {
-        so = _attackUnitData;
-    }
-
-    /*
-        public void Set_Param(ParamType _paramType, float _setParam)
-        {
-            switch (_paramType)
-            {
-                case ParamType.Unlock:
-                    isActive = true;
-                    break;
-                case ParamType.Damage:
-                    damageRate_enhanced += _setParam;
-                    break;
-                case ParamType.Interval:
-                    attackInterval_enhanced += _setParam;
-                    break;
-                case ParamType.Speed:
-                    speed_enhanced += _setParam;
-                    break;
-                case ParamType.Count:
-                    count_enhanced += (int)_setParam;
-                    break;
-                case ParamType.Size:
-                    size_enhanced += _setParam;
-                    break;
-                case ParamType.CriticalRate:
-                    criticalRate_enhanced += _setParam;
-                    break;
-                case ParamType.AliveTime:
-                    aliveTime_enhanced += _setParam;
-                    break;
-                case ParamType.ExLevel:
-                    exLevel_enhanced += (int)_setParam;
-                    break;
-            }
-        }
-        */
-}
-
-
-/// <summary>
 /// ゲームのパラメータを管理するクラス
 /// 全てのパラはここを参照して取得する
 /// </summary>
 public static class GameParamManager
 {
     public readonly static GameBaseParam gameBaseParam = new GameBaseParam();
-    public readonly static List<AttackParam> list_attackParam = new List<AttackParam>();
-    public readonly static List<CursorParam> list_cursorParam = new List<CursorParam>();
     public static bool isInitEnd = false;
 
 
@@ -431,15 +330,6 @@ public static class GameParamManager
             return targetSubSkill;
         }
         */
-    public static CursorParam Get_CursorParam(int _cursorIndex)
-    {
-        var targetCursor = list_cursorParam.Find(x => x.so.cursorIndex == _cursorIndex);
-        if (targetCursor == null)
-        {
-            Debug.LogError($"CursorUnitData is not found: {_cursorIndex} // ==> 初期ロードで読み込み失敗");
-        }
-        return targetCursor;
-    }
 
     #endregion
 
@@ -527,6 +417,8 @@ public static class GameParamManager
 
         var table = SOLoader.SkillTreeData;
         if (table == null) return;
+        table.RemapLegacyIds();
+        table.DropOrphanUnits();
         table.EnsureGlassSkill();
         table.EnsureBallSkills();
         table.EnsureBlockCompactSkill();

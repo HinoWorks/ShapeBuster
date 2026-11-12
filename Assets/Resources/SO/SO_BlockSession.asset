@@ -29,7 +29,7 @@ MonoBehaviour:
   cursorInfo: {fileID: 100003, guid: d5e9f2b38c604d1fab4c7e208f815326, type: 3}
   cursorBase: {fileID: 4190715106081716764, guid: 09814f1f1dd4049c4b182aad67ab0dad, type: 3}
   aimGuide: {fileID: 200003, guid: b8c4d5e6f7084910bc23de45f0678901, type: 3}
-  baseFill: 0.7
+  baseFill: 0.5
   bossFillScale: 0.7
   maxFill: 0.85
   fillPerSecond: 0.002
@@ -55,7 +55,7 @@ MonoBehaviour:
   poisonMax: 2
   blockGap: 0.1
   blockSizeScale: 0.5
-  defaultColumns: 10
+  defaultColumns: 15
   wallThickness: 0.3
   wallOverscan: 2
   beamLife: 0.32
