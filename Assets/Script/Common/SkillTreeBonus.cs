@@ -2,6 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>1ヒット分のダメージと、そのヒットがクリティカルだったか。</summary>
+public struct BallHitRoll
+{
+    public int damage;
+    public bool critical;
+}
+
 /// <summary>
 /// スキルごとの効果は「1レベル分の差分 × 現在レベル」で置き換える。
 /// 起動時の復元と強化の両方がこれを通るので、同じ効果が二重に足されない。
@@ -17,29 +24,7 @@ public static class SkillTreeBonus
     }
 
     static readonly Dictionary<int, Contribution> bySkill = new();
-    static float armorRemainder;
-    static float reloadGuardRemainder;
 
-    public static int CursorDamage => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.Damage));
-    public static float CursorAttackInterval => Sum(SkillParamTarget.Cursor, SkillParamStat.AttackInterval);
-    public static float CursorCriticalRate => Sum(SkillParamTarget.Cursor, SkillParamStat.CriticalRate);
-    public static float CursorSize => Sum(SkillParamTarget.Cursor, SkillParamStat.Size);
-    public static float CursorResourceUpRate => Sum(SkillParamTarget.Cursor, SkillParamStat.ResourceUpRate);
-    public static float ConditionalDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.ConditionalDamage);
-    public static float CriticalDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.CriticalDamage);
-    public static float BossDamage => Sum(SkillParamTarget.Cursor, SkillParamStat.BossDamage);
-    public static float PickupRange => Sum(SkillParamTarget.Cursor, SkillParamStat.PickupRange);
-    public static float BulletRegain => Sum(SkillParamTarget.Cursor, SkillParamStat.BulletRegain);
-    public static float ReloadReduction => Sum(SkillParamTarget.Cursor, SkillParamStat.ReloadReduction);
-    public static float ReloadTimeScale => Mathf.Max(0f, 1f - Mathf.Max(0f, ReloadReduction));
-    public static int MagazineAmmoAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Cursor, SkillParamStat.MagazineAmmo));
-    public static float MissRefund => Sum(SkillParamTarget.Cursor, SkillParamStat.MissRefund);
-    public static float StoppedAmmoRegen => Sum(SkillParamTarget.Cursor, SkillParamStat.StoppedAmmoRegen);
-    public static float ReloadGuard => Sum(SkillParamTarget.Cursor, SkillParamStat.ReloadGuard);
-    public static int PlayerMaxHp => Mathf.RoundToInt(Sum(SkillParamTarget.Player, SkillParamStat.MaxHp));
-    public static float Regen => Sum(SkillParamTarget.Player, SkillParamStat.Regen);
-    public static float Armor => Sum(SkillParamTarget.Player, SkillParamStat.Armor);
-    public static float SpawnRate => Sum(SkillParamTarget.Player, SkillParamStat.SpawnRate);
     public static float GlassSpawnRate => Mathf.Clamp01(Sum(SkillParamTarget.Player, SkillParamStat.GlassSpawnRate));
 
     public const float BlockCellShrinkPerLevel = 0.06f;
@@ -53,9 +38,9 @@ public static class SkillTreeBonus
     /// <summary>ブロック破壊資源への加算倍率。1段で +12%。</summary>
     public static float BlockResourceUpRate => BlockCompactLevel * BlockResourcePerLevel;
 
-    public static int NormalBallCount => 1 + Mathf.RoundToInt(Sum(SkillParamTarget.Ball, SkillParamStat.BallCount));
-    public static float BallSpeedScale => 1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallSpeed));
-    public static float FallSpeedScale => Mathf.Max(0.4f, 1f - Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockFallSlow)));
+    public static int NormalBallCount => 1 + Mathf.RoundToInt(Sum(SkillParamTarget.Ball, SkillParamStat.BallCount)) + MilestoneBonus.BallCount;
+    public static float BallSpeedScale => (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallSpeed))) * (1f + MilestoneBonus.BallSpeed);
+    public static float FallSpeedScale => Mathf.Max(0.4f, 1f - Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockFallSlow)) + MilestoneBonus.BlockFallSlow);
     public static float BlockHarvestRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockHarvest));
     public static float BlockMagnetRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockMagnet));
     public static bool BlockLinger => Sum(SkillParamTarget.Block, SkillParamStat.BlockLinger) >= 1f;
@@ -65,6 +50,8 @@ public static class SkillTreeBonus
     public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
     public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
     public static int ConvertRateLevel => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ConvertRate));
+    public static bool OwnsTurret => Sum(SkillParamTarget.Player, SkillParamStat.TurretUnlock) >= 1f;
+    public static bool OwnsRowBeam => Sum(SkillParamTarget.Player, SkillParamStat.RowBeamUnlock) >= 1f;
 
     public static int BallCopies(BlockBallKind kind)
     {
@@ -77,40 +64,84 @@ public static class SkillTreeBonus
         return copies;
     }
 
-    public static float HeavySpeedScale => 0.3f + Mathf.Max(0f, SumBall(SkillParamStat.BallHeavySpeed, 2));
-    public static int OrbitCount => 3 + Mathf.RoundToInt(SumBall(SkillParamStat.BallOrbitCount, 4));
+    public static float HeavySpeedScale => 0.3f + Mathf.Max(0f, SumBall(SkillParamStat.BallHeavySpeed, 2)) + MilestoneBonus.HeavySpeed;
+    public static int OrbitCount => 3 + Mathf.RoundToInt(SumBall(SkillParamStat.BallOrbitCount, 4)) + MilestoneBonus.OrbitCount;
     public static bool ChainHits => Sum(SkillParamTarget.Ball, SkillParamStat.BallChain) >= 1f;
 
     public static float ProcChance(BlockBallKind kind)
     {
+        float rate = BaseProcRate(kind);
         int index = BallTarget(kind);
-        if (index < 0 || kind == BlockBallKind.Heavy || kind == BlockBallKind.Orbit || kind == BlockBallKind.Normal)
-            return 0f;
-        return Mathf.Clamp01(0.1f + Mathf.Max(0f, SumBall(SkillParamStat.BallProc, index)));
+        if (index >= 0)
+            rate += Mathf.Max(0f, SumBall(SkillParamStat.BallProc, index));
+        return Mathf.Clamp01(rate + MilestoneBonus.Proc(kind));
     }
 
-    /// <summary>ノーマルの攻撃力に、特殊弾の割合を掛けた値。端数は最後にまとめて四捨五入する。</summary>
+    /// <summary>Ball シートの baseProcRate。行が無いボム、レーザー、クロス、ポイズンは 0.1。</summary>
+    static float BaseProcRate(BlockBallKind kind)
+    {
+        var table = SOLoader.BallData;
+        var data = table != null ? table.Find(kind) : null;
+        if (data != null)
+            return Mathf.Max(0f, data.baseProcRate);
+        switch (kind)
+        {
+            case BlockBallKind.Bomb:
+            case BlockBallKind.Laser:
+            case BlockBallKind.LaserRow:
+            case BlockBallKind.Cross:
+            case BlockBallKind.Poison:
+                return 0.1f;
+            default:
+                return 0f;
+        }
+    }
+
+    /// <summary>ノーマルの攻撃力に、その弾の素の比率を掛けた値。端数は最後にまとめて四捨五入する。</summary>
     public static float AttackPower(BlockBallKind kind)
     {
         float normal = (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFlatDamage)))
-            * (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallDamageRate)));
-        if (kind == BlockBallKind.Normal) return normal;
+            * (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallDamageRate)))
+            * (1f + MilestoneBonus.BallDamageRate);
+        float ratio = BaseDamageRate(kind);
+        if (kind == BlockBallKind.Normal)
+            return normal * ratio * (1f + MilestoneBonus.KindDamage(kind));
 
         int index = BallTarget(kind);
-        float ratio = 0.5f + (index >= 0 ? Mathf.Max(0f, SumBall(SkillParamStat.BallRatio, index)) : 0f);
+        if (index >= 0)
+            ratio += Mathf.Max(0f, SumBall(SkillParamStat.BallRatio, index));
         return normal * ratio;
     }
 
-    public static int RollHit(BlockBallKind kind, int hitsBefore, bool boss)
+    /// <summary>Ball シートの baseDamageRate。未設定の特殊弾は 0.5、ノーマルは 1。</summary>
+    static float BaseDamageRate(BlockBallKind kind)
+    {
+        var table = SOLoader.BallData;
+        var data = table != null ? table.Find(kind) : null;
+        if (data != null && data.baseDamageRate > 0f)
+            return data.baseDamageRate;
+        return kind == BlockBallKind.Normal ? 1f : 0.5f;
+    }
+
+    public static BallHitRoll RollHit(BlockBallKind kind, int hitsBefore, bool boss)
     {
         float power = AttackPower(kind);
         if (ChainHits && hitsBefore > 0)
             power *= 1f + Mathf.Min(0.5f, 0.1f * hitsBefore);
-        if (UnityEngine.Random.value < Mathf.Clamp01(Sum(SkillParamTarget.Ball, SkillParamStat.BallCritRate)))
-            power *= 2f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallCritDamage));
+        bool critical = false;
+        if (UnityEngine.Random.value < Mathf.Clamp01(Sum(SkillParamTarget.Ball, SkillParamStat.BallCritRate) + MilestoneBonus.BallCritRate))
+        {
+            power *= 2f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallCritDamage)) + MilestoneBonus.BallCritDamage;
+            critical = true;
+            GameEvent.InGame.PublishCriticalHit();
+        }
         if (boss)
-            power *= 1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallBoss));
-        return Mathf.Max(1, RoundDamage(power));
+            power *= 1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallBoss)) + MilestoneBonus.BallBoss;
+        return new BallHitRoll
+        {
+            damage = Mathf.Max(1, RoundDamage(power)),
+            critical = critical,
+        };
     }
 
     public static int ConvertCost(ResourceType type)
@@ -213,50 +244,9 @@ public static class SkillTreeBonus
         return total >= 1f;
     }
 
-    public const float ArmorCap = 0.8f;
-
-    public static int ScaleDealtDamage(int damage, int enemiesInArea, bool isBoss)
-    {
-        if (damage <= 0) return 0;
-
-        float scale = 1f + Mathf.Max(0f, ConditionalDamage) * Mathf.Max(0, enemiesInArea);
-        if (isBoss)
-            scale *= 1f + Mathf.Max(0f, BossDamage);
-        return Mathf.Max(1, Mathf.RoundToInt(damage * scale));
-    }
-
-    public static int ApplyArmor(int damage)
-    {
-        return ApplyFractionalReduction(damage, Armor, ref armorRemainder);
-    }
-
-    public static int ApplyReloadGuard(int damage)
-    {
-        return ApplyFractionalReduction(damage, ReloadGuard, ref reloadGuardRemainder);
-    }
-
-    static int ApplyFractionalReduction(int damage, float reduction, ref float remainder)
-    {
-        if (damage <= 0) return 0;
-
-        reduction = Mathf.Clamp(reduction, 0f, ArmorCap);
-        float reduced = damage * (1f - reduction);
-        int applied = Mathf.FloorToInt(reduced);
-        remainder += reduced - applied;
-        if (remainder >= 1f)
-        {
-            int carry = Mathf.FloorToInt(remainder);
-            applied += carry;
-            remainder -= carry;
-        }
-        return applied;
-    }
-
     public static void Clear()
     {
         bySkill.Clear();
-        armorRemainder = 0f;
-        reloadGuardRemainder = 0f;
     }
 
     public static void SetLevel(int skillIndex, SkillTreeBase skill, int level)

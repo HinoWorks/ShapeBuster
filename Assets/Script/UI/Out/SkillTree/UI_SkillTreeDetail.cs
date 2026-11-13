@@ -145,17 +145,13 @@ public class UI_SkillTreeDetail : MonoBehaviour
         if (skill.paramStat == SkillParamStat.BlockCompact)
             return SkillTreeBonus.FormatBlockCompact(value);
         if (!HasDisplayUnit(skill.unit))
-        {
-            if (IsAttackDamage(skill))
-                return PlainSigned(value);
             return "";
-        }
         return FormatParam(skill.unit, value);
     }
 
     void SetParamValues(SkillTreeBase skill, int currentLevel, bool maxed)
     {
-        bool showValue = HasDisplayUnit(skill.unit) || IsAttackDamage(skill) || skill.paramStat == SkillParamStat.BlockCompact;
+        bool showValue = HasDisplayUnit(skill.unit) || skill.paramStat == SkillParamStat.BlockCompact;
         if (obj_param != null)
             obj_param.SetActive(showValue);
 
@@ -178,26 +174,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     string FormatParamDisplay(SkillTreeBase skill, int atLevel)
     {
-        if (skill.paramStat == SkillParamStat.AttackInterval)
-            return AttackIntervalAt(skill, atLevel).ToString("F2") + " " + Loc.Text("ui.unit.sec");
-        if (IsAttackDamage(skill))
-            return AttackDamageAt(skill, atLevel).ToString();
         return FormatParams(skill, atLevel);
-    }
-
-    static bool IsAttackDamage(SkillTreeBase skill)
-    {
-        return skill.paramTarget == SkillParamTarget.Attack && skill.paramStat == SkillParamStat.Damage;
-    }
-
-    int AttackDamageAt(SkillTreeBase skill, int atLevel)
-    {
-        return SkillTreeBonus.RoundDamage(skill.deltaValue * atLevel);
-    }
-
-    float AttackIntervalAt(SkillTreeBase skill, int atLevel)
-    {
-        return Mathf.Max(0.05f, skill.deltaValue * atLevel);
     }
 
     static bool HasDisplayUnit(string unit)
@@ -222,12 +199,6 @@ public class UI_SkillTreeDetail : MonoBehaviour
             default:
                 return $"{Signed(value, "F1")} {unit}";
         }
-    }
-
-    static string PlainSigned(float value)
-    {
-        bool whole = Mathf.Abs(value - Mathf.Round(value)) < 0.001f;
-        return Signed(value, whole ? "F0" : "F1");
     }
 
     static string Signed(float value, string format)
@@ -321,9 +292,15 @@ public class UI_SkillTreeDetail : MonoBehaviour
             var cont = FindResourceCounter(resource.resourceType);
             if (cont == null) continue;
 
-            var IsResourceEnough = StaticManager.IsResourceEnough(resource.resourceType, resource.requiredCount);
             cont.gameObject.SetActive(true);
-            cont.SetCount(resource.requiredCount, IsResourceEnough);
+            bool known = SaveLoader.Inst != null && SaveLoader.Inst.Check_ResourceKeyExists(resource.resourceType);
+            if (!known)
+                cont.SetUnknown();
+            else
+            {
+                var IsResourceEnough = StaticManager.IsResourceEnough(resource.resourceType, resource.requiredCount);
+                cont.SetCount(resource.requiredCount, IsResourceEnough);
+            }
         }
     }
 

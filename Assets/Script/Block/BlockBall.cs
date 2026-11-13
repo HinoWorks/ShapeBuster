@@ -70,11 +70,11 @@ public class BlockBall : MonoBehaviour
         }
     }
 
-    public void Init(PhysicsMaterial2D material, int ballDamage, float ballSpeed, BlockBallKind kind)
+    public void Init(PhysicsMaterial2D material, float ballSpeed, BlockBallKind kind)
     {
         Kind = kind;
         speed = Mathf.Max(0.1f, ballSpeed);
-        damage = Mathf.Max(1, ballDamage);
+        damage = 1;
         trails = GetComponentsInChildren<TrailRenderer>(true);
         CutTrail();
 
@@ -221,27 +221,28 @@ public class BlockBall : MonoBehaviour
                 ? collision.GetContact(0).point
                 : (Vector2)transform.position;
             bool boss = piece.BossIndex >= 0;
-            int rolled = SkillTreeBonus.RollHit(Kind, hitsBefore, boss);
-            damage = rolled;
-            if (!piece.HitFrom(damage, hitPoint))
+            var direct = SkillTreeBonus.RollHit(Kind, hitsBefore, boss);
+            damage = direct.damage;
+            if (!piece.HitFrom(damage, hitPoint, (int)Kind, direct.critical))
             {
                 KeepSpeed(launchDirection);
                 return;
             }
 
             hitsBefore++;
-            int area = SkillTreeBonus.RollHit(Kind, 0, boss);
+            var splash = SkillTreeBonus.RollHit(Kind, 0, boss);
+            int area = splash.damage;
             float proc = SkillTreeBonus.ProcChance(Kind);
             if (Kind == BlockBallKind.Bomb && Random.value < proc)
-                BlockSession.Inst?.Explode(piece, area);
+                BlockSession.Inst?.Explode(piece, area, splash.critical);
             else if (Kind == BlockBallKind.Laser && Random.value < proc)
-                BlockSession.Inst?.Beam(piece, area);
+                BlockSession.Inst?.Beam(piece, area, splash.critical);
             else if (Kind == BlockBallKind.LaserRow && Random.value < proc)
-                BlockSession.Inst?.BeamRow(piece, area);
+                BlockSession.Inst?.BeamRow(piece, area, splash.critical);
             else if (Kind == BlockBallKind.Cross && Random.value < proc)
-                BlockSession.Inst?.BeamCross(piece, area);
+                BlockSession.Inst?.BeamCross(piece, area, splash.critical);
             else if (Kind == BlockBallKind.Poison && Random.value < proc)
-                BlockSession.Inst?.Poison(piece, rolled);
+                BlockSession.Inst?.Poison(piece, damage);
 
             if (Kind == BlockBallKind.Heavy)
             {
@@ -459,7 +460,8 @@ public class BlockBall : MonoBehaviour
             var piece = orbitHits[i] != null ? orbitHits[i].GetComponent<BlockPiece>() : null;
             if (piece == null || !piece.IsAlive || touching.Contains(piece)) continue;
             touching.Add(piece);
-            piece.HitFrom(SkillTreeBonus.RollHit(Kind, 0, piece.BossIndex >= 0), pos);
+            var roll = SkillTreeBonus.RollHit(Kind, 0, piece.BossIndex >= 0);
+            piece.HitFrom(roll.damage, pos, (int)Kind, roll.critical);
         }
     }
 

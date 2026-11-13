@@ -10,7 +10,7 @@ using System;
 /// マイルストーンの進行。SaveLoader の起動時に Bind する。
 /// UI は CopyStates で一覧を取り、ProgressChanged と TierReached で更新する。
 /// ボーナスは TryClaim で受け取った段階だけ効く。
-/// ドロップ倍率は次の撃破から、マガジン弾数と攻撃パターンは次の InGame_Ready から効く。
+/// ドロップ倍率は次の破壊から、ノーマルの本数と衛星の数は次のラン開始時に効く。
 /// </summary>
 public static class MilestoneRuntime
 {
@@ -30,10 +30,7 @@ public static class MilestoneRuntime
         subscriptions = new CompositeDisposable();
 
         GameEvent.InGame.DamageDealt.Subscribe(OnDamageDealt).AddTo(subscriptions);
-        GameEvent.InGame.EnemyDefeated.Subscribe(OnEnemyDefeated).AddTo(subscriptions);
         GameEvent.InGame.CriticalHit.Subscribe(_ => Add(MilestoneTrack.CriticalCount, 0, BigInteger.One)).AddTo(subscriptions);
-        GameEvent.InGame.ReloadStarted.Subscribe(_ => Add(MilestoneTrack.ReloadCount, 0, BigInteger.One)).AddTo(subscriptions);
-        GameEvent.InGame.DamageTaken.Subscribe(OnDamageTaken).AddTo(subscriptions);
         GameEvent.UI.ResourceMod_Ingame.Subscribe(OnResource).AddTo(subscriptions);
         GameEvent.Stage.Cleared.Subscribe(_ => OnStageCleared()).AddTo(subscriptions);
         GameEvent.GameState.SetGameState.Subscribe(OnGameState).AddTo(subscriptions);
@@ -106,20 +103,24 @@ public static class MilestoneRuntime
         var amount = new BigInteger(info.damage);
         Add(MilestoneTrack.TotalDamage, 0, amount);
         if (info.attackIndex >= 0)
-            Add(MilestoneTrack.AttackDamage, info.attackIndex, amount);
+            Add(MilestoneTrack.BallDamage, info.attackIndex, amount);
     }
 
-    static void OnEnemyDefeated(int enemyIndex)
+    public static void NotifyBlockBroken(int kind)
     {
-        if (enemyIndex >= 0)
-            Add(MilestoneTrack.EnemyDefeat, enemyIndex, BigInteger.One);
+        if (kind >= 0)
+            Add(MilestoneTrack.BlockBreak, kind, BigInteger.One);
         Add(MilestoneTrack.TotalDefeat, 0, BigInteger.One);
     }
 
-    static void OnDamageTaken(int damage)
+    public static void NotifyLaunch()
     {
-        if (damage <= 0) return;
-        Add(MilestoneTrack.DamageTaken, 0, new BigInteger(damage));
+        Add(MilestoneTrack.LaunchCount, 0, BigInteger.One);
+    }
+
+    public static void NotifyReturn()
+    {
+        Add(MilestoneTrack.ReturnCount, 0, BigInteger.One);
     }
 
     static void OnResource((ResourceType type, BigInteger amount) resource)

@@ -99,6 +99,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_BallData so_ballData;
+    public static SO_BallData BallData
+    {
+        get
+        {
+            if (so_ballData == null)
+            {
+                so_ballData = LoadSO<SO_BallData>(pathBase + nameof(SO_BallData));
+            }
+            return so_ballData;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

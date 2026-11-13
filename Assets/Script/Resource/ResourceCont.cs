@@ -57,9 +57,8 @@ public class ResourceCont : MonoBehaviour
     {
         if (inPool || isCollecting || !PointerWorld.IsInsidePlayfield) return;
 
-        var session = SOLoader.BlockSession;
-        float range = (session != null ? session.pickupRange : 0.4f)
-            * (1f + SkillTreeBonus.BlockMagnetRate);
+        var player = SO_Player.Current;
+        float range = player.pickupRange * (1f + SkillTreeBonus.BlockMagnetRate + MilestoneBonus.PickupRange);
         Vector2 delta = (Vector2)PointerWorld.Position - (Vector2)transform.position;
         if (delta.sqrMagnitude > range * range) return;
         Collect();
@@ -120,10 +119,10 @@ public class ResourceCont : MonoBehaviour
             awayDir = Vector3.up;
         else
             awayDir.Normalize();
-        var session = SOLoader.BlockSession;
-        float kickDistance = session != null ? session.collectKickDistance : 0.45f;
-        float kickDuration = session != null ? session.collectKickDuration : 0.1f;
-        float pullDuration = session != null ? session.collectPullDuration : 0.18f;
+        var player = SO_Player.Current;
+        float kickDistance = player.collectKickDistance;
+        float kickDuration = player.collectKickDuration;
+        float pullDuration = player.collectPullDuration;
         var away = start + awayDir * kickDistance;
         away.z = start.z;
 

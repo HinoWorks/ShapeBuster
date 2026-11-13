@@ -2218,11 +2218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c4e2b91d6f48c0b5e3a9d47f12c806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_PlayerHpCont
-  greenFill: {fileID: 1604547254}
-  orangeFill: {fileID: 1376148998}
-  greenDuration: 0.15
-  orangeDelay: 0.5
-  orangeDuration: 0.35
 --- !u!1001 &715187220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2887,7 +2882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8beb7d67a3c8f4f2daf2ea2554ec019c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager_Ingame
-  playerHpCont: {fileID: 651802187}
   stageProgressCont: {fileID: 796353614}
   resourceCounters:
   - {fileID: 546502284}
@@ -2896,7 +2890,6 @@ MonoBehaviour:
   - {fileID: 1149547144}
   - {fileID: 2076064303}
   - {fileID: 890252596}
-  bulletInfo: {fileID: 0}
   dynamicCanvas: {fileID: 1919337279}
   ui_ResultManager: {fileID: 524598571}
 --- !u!1 &865253685
@@ -3202,15 +3195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f43650ecdbf48be8097ceef72390d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackManager
-  debugAttackIndices: 0300000001000000
-  debugAmmo999: 0
-  debugBallBomb: 1
-  debugBallLaser: 1
-  debugBallLaserRow: 1
-  debugBallHeavy: 1
-  debugBallOrbit: 1
-  debugBallCross: 1
-  debugBallPoison: 1
 --- !u!4 &927878392
 Transform:
   m_ObjectHideFlags: 0
@@ -3959,11 +3943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c4e2b91d6f48c0b5e3a9d47f12c806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_PlayerHpCont
-  greenFill: {fileID: 191219934}
-  orangeFill: {fileID: 467120627}
-  greenDuration: 0.15
-  orangeDelay: 0.5
-  orangeDuration: 0.35
 --- !u!1001 &1275915001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5086,13 +5065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fe42ec607284f55975bc852e2d633e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGenerateManager
-  spawnAreaMin: {x: -6, y: 5.5}
-  spawnAreaMax: {x: 6, y: 6}
-  glassPrefab: {fileID: 0}
-  screenTopMinY: 2.5
-  screenTopMaxY: 3.5
-  screenCenterMinY: -1
-  screenCenterMaxY: 1
 --- !u!114 &1871639610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5105,7 +5077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d9e65c816bd46449cc551097be7ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
-  playerHPCont: {fileID: 1871639611}
 --- !u!114 &1871639611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5118,8 +5089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0859270d2a3c64b188bc280fc6e2fb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHPCont
-  maxHp: 15
-  currentHp: 15
 --- !u!114 &1871639612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5451,6 +5420,7 @@ GameObject:
   - component: {fileID: 1919337279}
   - component: {fileID: 1919337278}
   - component: {fileID: 1919337277}
+  - component: {fileID: 1919337281}
   m_Layer: 5
   m_Name: Canvas_Ingame(dynamic)
   m_TagString: Untagged
@@ -5540,6 +5510,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1919337281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919337276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d9f2c38e704b1f0d4c6e8a2b3f5d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_DamageNumberPool
+  prefab: {fileID: 820003, guid: c6e0a3d49f814c208e5d7f9b3c4a6e82, type: 3}
+  prewarm: 32
+  scatter: 14
+  fallback: {r: 1, g: 1, b: 1, a: 1}
+  colors:
+  - kind: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - kind: 1
+    color: {r: 1, g: 0.55, b: 0.2, a: 1}
+  - kind: 2
+    color: {r: 1, g: 0.35, b: 0.35, a: 1}
+  - kind: 3
+    color: {r: 0.35, g: 0.9, b: 1, a: 1}
+  - kind: 4
+    color: {r: 1, g: 0.85, b: 0.35, a: 1}
+  - kind: 5
+    color: {r: 0.75, g: 0.5, b: 1, a: 1}
+  - kind: 6
+    color: {r: 1, g: 0.45, b: 0.9, a: 1}
+  - kind: 7
+    color: {r: 0.45, g: 1, b: 0.4, a: 1}
 --- !u!1 &1945959454
 GameObject:
   m_ObjectHideFlags: 0

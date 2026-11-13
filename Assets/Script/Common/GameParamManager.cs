@@ -418,11 +418,8 @@ public static class GameParamManager
         var table = SOLoader.SkillTreeData;
         if (table == null) return;
         table.RemapLegacyIds();
+        table.ApplyLimitsFromUnits();
         table.DropOrphanUnits();
-        table.EnsureGlassSkill();
-        table.EnsureBallSkills();
-        table.EnsureBlockCompactSkill();
-        table.EnsureBlockTree();
         if (table.skillTreeUnits == null) return;
 
         var applied = new HashSet<int>();

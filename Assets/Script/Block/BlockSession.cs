@@ -23,10 +23,7 @@ public class BlockSession : MonoBehaviour
     /// <summary>上端の空きがこれ以上になったら、1列出す。</summary>
     const float SpawnGapCells = 1.5f;
     const int OpeningRows = 3;
-    const int ClearBonusCount = 3;
-    /// <summary>全消し後、3列分の空きができるまで掛ける下降速度。</summary>
-    const float ClearFallBoost = 10f;
-    const float ClearGapCells = 3f;
+    const int ClearBonusCount = 10;
 
     public static BlockSession Inst { get; private set; }
 
@@ -48,6 +45,8 @@ public class BlockSession : MonoBehaviour
         }
     }
 
+    SO_Player Player => SO_Player.Current;
+
     /// <summary>インゲームはブロック崩し。敵の湧きとカーソル射撃は使わない。</summary>
     public const bool Enabled = true;
 
@@ -59,8 +58,6 @@ public class BlockSession : MonoBehaviour
 
     readonly List<BlockPiece> pieces = new();
     bool hadBreakable;
-    bool clearRush;
-    Vector3 clearPoint;
     readonly List<GameObject> arena = new();
 
     Transform formation;
@@ -76,7 +73,6 @@ public class BlockSession : MonoBehaviour
     UI_BlockCursorInfo cursorInfo;
     RectTransform cursorBase;
     BlockPiece[] blockPrefabs;
-    BlockPiece[] bossPrefabs;
     const float BossStopDuration = 0.4f;
 
     bool bossArmed;
@@ -109,6 +105,11 @@ public class BlockSession : MonoBehaviour
     float cell;
     int columns;
     Vector2 launchAnchor;
+    readonly List<BlockBall> turretShots = new();
+    BlockTurret[] turrets;
+    float[] turretTimers;
+    BlockRowEmitter rowEmitter;
+    float rowBeamTimer;
 
     public bool IsRunning => running;
     public float Elapsed => elapsed;
@@ -197,9 +198,7 @@ public class BlockSession : MonoBehaviour
 
         TryClearRefill();
         TickBoss();
-        if (clearRush)
-            TickClearRush();
-        else if (TopGapReady())
+        if (TopGapReady())
             SpawnWave();
     }
 
@@ -218,40 +217,47 @@ public class BlockSession : MonoBehaviour
 
     public void NotifyBroken(BlockPiece piece)
     {
-        if (piece != null)
-            clearPoint = piece.transform.position;
         pieces.Remove(piece);
     }
 
-    /// <summary>壊せるブロックが画面から無くなったら、AAを落として下降を速める。</summary>
+    /// <summary>壊せるブロックが画面から無くなったらの処理。中身は一旦止めている。</summary>
     void TryClearRefill()
     {
         bool breakable = HasBreakableOnScreen();
-        if (hadBreakable && !breakable && !clearRush)
+        if (hadBreakable && !breakable)
         {
-            DropResources(clearPoint, ClearBonusCount, ResourceType.AA);
-            clearRush = true;
+            // 全消し時の3列生成と、ボーナス（中央下にAAを10個）は一旦なし。
+            // 空きを待たずに列を足すと、残った破壊不能ブロックと位置がずれて見え方が安定しなかった。
+            // ボーナスの量と位置も合わせて見直すので、両方の処理は残して呼び出しだけ止めている。
+            // SpawnClearRows(OpeningRows);
+            // DropClearBonus();
+            // breakable = HasBreakableOnScreen();
         }
         hadBreakable = breakable;
     }
 
-    /// <summary>3マス空いたら3列出して、加速を戻す。</summary>
-    void TickClearRush()
+    /// <summary>全消しボーナス。フィールド中央の下へ、AAをまとめて出す。呼び出しは一旦止めている。</summary>
+    void DropClearBonus()
     {
-        if (!ClearGapReady()) return;
-        SpawnClearRows();
-        clearRush = false;
+        var manager = EnemyGenerateManager.Inst;
+        if (manager == null) return;
+
+        var point = new Vector3((fieldLeft + fieldRight) * 0.5f, deadlineY + cell * 3f, 0f);
+        for (int i = 0; i < ClearBonusCount; i++)
+        {
+            var offset = (Vector3)(Random.insideUnitCircle * 0.4f);
+            manager.SpawnLooseResource(point + offset, ResourceType.AA, BlockFallSpeed);
+        }
     }
 
-    bool ClearGapReady()
+    float RowOrigin()
     {
-        if (formation == null || cell <= 0.001f) return false;
+        return screenTop - TopClearanceCells * cell - cell + Rule.blockGap * 0.5f;
+    }
 
-        float local = HighestLocalTop();
-        if (float.IsNegativeInfinity(local)) return true;
-
-        float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
-        return screenTop - (parentY + local) >= ClearGapCells * cell - 0.001f;
+    float FormationY()
+    {
+        return formationBody != null ? formationBody.position.y : formation.position.y;
     }
 
     bool HasBreakableOnScreen()
@@ -288,6 +294,7 @@ public class BlockSession : MonoBehaviour
         bossBreaking = null;
         if (piece != null)
             piece.FinishBreak();
+        StageTimeManager.Inst?.ClearByBoss();
     }
 
     /// <summary>壊した位置へ資源を落とす。カーソルが触れるまで獲得にならない。</summary>
@@ -295,6 +302,13 @@ public class BlockSession : MonoBehaviour
     {
         var manager = EnemyGenerateManager.Inst;
         if (manager == null || count <= 0) return;
+
+        int stage = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
+        count = MilestoneBonus.ScaleDropCount(count, type, stage);
+        var row = SOLoader.StageData != null ? SOLoader.StageData.FindStage(stage) : null;
+        if (row != null && row.enemyResourceRate > 0f)
+            count = StageEnemyScale.ScaleResourceCount(count, row.enemyResourceRate);
+        if (count <= 0) return;
 
         for (int i = 0; i < count; i++)
         {
@@ -304,7 +318,7 @@ public class BlockSession : MonoBehaviour
     }
 
     float CurrentSpeed => (Rule.baseSpeed + elapsed * Rule.speedPerSecond) * blockSpeedRate * SkillTreeBonus.FallSpeedScale;
-    public float BlockFallSpeed => CurrentSpeed * (clearRush ? ClearFallBoost : 1f);
+    public float BlockFallSpeed => CurrentSpeed;
 
     float CurrentFill
     {
@@ -330,6 +344,8 @@ public class BlockSession : MonoBehaviour
         ArmBoss();
         SpawnOpeningRows();
         SpawnBalls();
+        SpawnTurrets();
+        SpawnRowBeam();
     }
 
     void Fail()
@@ -344,6 +360,7 @@ public class BlockSession : MonoBehaviour
                     balls[i].Stop();
             }
         }
+        StopTurretShots();
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Medium);
         Debug.Log("<color=yellow> ========= Deadline ========= </color>");
@@ -374,7 +391,6 @@ public class BlockSession : MonoBehaviour
         bossStopLeft = 0f;
         bossBreaking = null;
         hadBreakable = false;
-        clearRush = false;
         pieces.Clear();
 
         if (formation != null)
@@ -383,6 +399,11 @@ public class BlockSession : MonoBehaviour
         formationBody = null;
         balls = null;
         aimingBall = null;
+        turretShots.Clear();
+        turrets = null;
+        turretTimers = null;
+        rowEmitter = null;
+        rowBeamTimer = 0f;
         ballHud = null;
         cursorInfo = null;
         cursorBase = null;
@@ -608,11 +629,10 @@ public class BlockSession : MonoBehaviour
 
     void CreateAimGuide()
     {
-        var props = SOLoader.BlockSession;
-        var prefab = props != null ? props.aimGuide : null;
+        var prefab = Player.aimGuide;
         if (prefab == null)
         {
-            Debug.LogWarning("発射方向UIのプレハブがありません。 SO_BlockSession を確認してください。");
+            Debug.LogWarning("発射方向UIのプレハブがありません。 SO_Player を確認してください。");
             return;
         }
 
@@ -636,19 +656,18 @@ public class BlockSession : MonoBehaviour
     void SpawnBalls()
     {
         launchAnchor = new Vector2((fieldLeft + fieldRight) * 0.5f, deadlineY + 0.55f);
-        var props = SOLoader.BlockSession;
         var spawned = new List<BlockBall>(8);
         int normals = SkillTreeBonus.NormalBallCount;
         for (int i = 0; i < normals; i++)
-            AddBall(spawned, BlockBallKind.Normal, props != null ? props.normalBall : null, BallSpeed(BlockBallKind.Normal), true);
+            AddBall(spawned, BlockBallKind.Normal, true);
 
-        AddCopies(spawned, BlockBallKind.Bomb, props != null ? props.bombBall : null);
-        AddCopies(spawned, BlockBallKind.Laser, props != null ? props.laserBall : null);
-        AddCopies(spawned, BlockBallKind.LaserRow, props != null ? props.laserRowBall : null);
-        AddCopies(spawned, BlockBallKind.Orbit, props != null ? props.orbitBall : null);
-        AddCopies(spawned, BlockBallKind.Cross, props != null ? props.crossBall : null);
-        AddCopies(spawned, BlockBallKind.Poison, props != null ? props.poisonBall : null);
-        AddCopies(spawned, BlockBallKind.Heavy, props != null ? props.heavyBall : null);
+        AddCopies(spawned, BlockBallKind.Bomb);
+        AddCopies(spawned, BlockBallKind.Laser);
+        AddCopies(spawned, BlockBallKind.LaserRow);
+        AddCopies(spawned, BlockBallKind.Orbit);
+        AddCopies(spawned, BlockBallKind.Cross);
+        AddCopies(spawned, BlockBallKind.Poison);
+        AddCopies(spawned, BlockBallKind.Heavy);
         balls = spawned.ToArray();
         handOrder.Clear();
         handOrder.AddRange(spawned);
@@ -656,25 +675,53 @@ public class BlockSession : MonoBehaviour
             ballHud.Set(CountLaunchable(), balls.Length);
     }
 
-    float BallSpeed(BlockBallKind kind)
+    float BallSpeed(BlockBallKind kind, BallData data)
     {
-        float speed = Rule.ballSpeed * SkillTreeBonus.BallSpeedScale;
+        float speed = (data != null && data.baseSpeed > 0f ? data.baseSpeed : 13f) * SkillTreeBonus.BallSpeedScale;
         if (kind == BlockBallKind.Heavy)
-            speed *= SkillTreeBonus.HeavySpeedScale;
+            speed *= SkillTreeBonus.HeavySpeedScale / 0.3f;
         return speed;
     }
 
-    void AddCopies(List<BlockBall> spawned, BlockBallKind kind, BlockBall prefab)
+    static BallData BallInfo(BlockBallKind kind)
+    {
+        var table = SOLoader.BallData;
+        return table != null ? table.Find(kind) : null;
+    }
+
+    static float BallArea(BlockBallKind kind, float fallback)
+    {
+        var data = BallInfo(kind);
+        float radius = data != null && data.areaRadius > 0f ? data.areaRadius : fallback;
+        return radius * (1f + MilestoneBonus.Area(kind));
+    }
+
+    static float PoisonDuration()
+    {
+        var data = BallInfo(BlockBallKind.Poison);
+        float duration = data != null && data.effectDuration > 0f ? data.effectDuration : 2.5f;
+        return duration + MilestoneBonus.PoisonDuration;
+    }
+
+    static float PoisonInterval()
+    {
+        var data = BallInfo(BlockBallKind.Poison);
+        return data != null && data.effectInterval > 0f ? data.effectInterval : 0.4f;
+    }
+
+    void AddCopies(List<BlockBall> spawned, BlockBallKind kind)
     {
         int copies = SkillTreeBonus.BallCopies(kind);
         for (int i = 0; i < copies; i++)
-            AddBall(spawned, kind, prefab, BallSpeed(kind), false);
+            AddBall(spawned, kind, false);
     }
 
-    void AddBall(List<BlockBall> spawned, BlockBallKind kind, BlockBall prefab, float speed, bool always)
+    void AddBall(List<BlockBall> spawned, BlockBallKind kind, bool always)
     {
         if (!always && !Owns(kind)) return;
 
+        var data = SOLoader.BallData != null ? SOLoader.BallData.Find(kind) : null;
+        var prefab = data != null ? data.pf : null;
         if (prefab == null)
         {
             Debug.LogWarning($"ボールプレハブがありません。 {kind}");
@@ -682,11 +729,295 @@ public class BlockSession : MonoBehaviour
         }
 
         var ball = Instantiate(prefab);
-        ball.Init(bounce, Rule.ballDamage, speed, kind);
+        float size = data.baseSize > 0f ? data.baseSize : 1f;
+        if (!Mathf.Approximately(size, 1f))
+            ball.transform.localScale *= size;
+        ball.Init(bounce, BallSpeed(kind, data), kind);
         ball.Hold(launchAnchor);
         ball.SetVisible(false);
         spawned.Add(ball);
         arena.Add(ball.gameObject);
+    }
+
+    /// <summary>
+    /// 左下と右下の砲台。一番低いブロックへ、ノーマルと同じ威力の弾を一定間隔で撃つ。
+    /// 弾は手持ちに戻さず、デッドラインを越えたら消す。
+    /// </summary>
+    void SpawnTurrets()
+    {
+        turrets = null;
+        turretTimers = null;
+        if (!TurretsEnabled()) return;
+        if (Player.turretBall == null)
+        {
+            Debug.LogWarning("砲台のボールプレハブがありません。 SO_Player を確認してください。");
+            return;
+        }
+
+        float interval = TurretInterval();
+        float y = deadlineY + 0.36f;
+        var left = CreateTurret(new Vector2(fieldLeft + 0.28f, y));
+        var right = CreateTurret(new Vector2(fieldRight - 0.28f, y));
+        turrets = new[] { left, right };
+        turretTimers = new[] { interval, interval * 0.5f };
+    }
+
+    bool TurretsEnabled()
+    {
+        return Player.debugTurrets || SkillTreeBonus.OwnsTurret;
+    }
+
+    float TurretInterval()
+    {
+        return Mathf.Max(0.05f, Player.turretInterval);
+    }
+
+    BlockTurret CreateTurret(Vector2 position)
+    {
+        BlockTurret turret;
+        if (Player.turret != null)
+            turret = Instantiate(Player.turret);
+        else
+        {
+            Debug.LogWarning("砲台プレハブがありません。 SO_Player を確認してください。");
+            turret = CreateFallbackTurret();
+        }
+
+        turret.transform.position = new Vector3(position.x, position.y, 0f);
+        arena.Add(turret.gameObject);
+        return turret;
+    }
+
+    static BlockTurret CreateFallbackTurret()
+    {
+        var root = new GameObject("Turret");
+        var turret = root.AddComponent<BlockTurret>();
+        AddTurretMark(root.transform, "Base", Vector3.down * 0.16f, new Vector3(0.62f, 0.16f, 1f), new Color(0.35f, 0.28f, 0.22f), false);
+        AddTurretMark(root.transform, "Body", Vector3.zero, Vector3.one * 0.36f, new Color(0.55f, 0.38f, 0.18f), true);
+        AddTurretMark(root.transform, "Barrel", Vector3.up * 0.28f, new Vector3(0.16f, 0.5f, 1f), new Color(1f, 0.72f, 0.28f), false);
+        var muzzle = new GameObject("Muzzle");
+        muzzle.transform.SetParent(root.transform, false);
+        muzzle.transform.localPosition = Vector3.up * 0.7f;
+        return turret;
+    }
+
+    static void AddTurretMark(Transform parent, string name, Vector3 localPosition, Vector3 scale, Color color, bool circle)
+    {
+        var mark = new GameObject(name);
+        mark.transform.SetParent(parent, false);
+        mark.transform.localPosition = localPosition;
+        mark.transform.localScale = scale;
+        var sprite = mark.AddComponent<SpriteRenderer>();
+        sprite.sprite = circle ? CircleSprite : SquareSprite;
+        sprite.color = color;
+        sprite.sortingOrder = 4;
+    }
+
+    void TickTurrets()
+    {
+        if (turrets == null || turretTimers == null) return;
+
+        float interval = TurretInterval();
+        for (int i = 0; i < turrets.Length; i++)
+        {
+            var turret = turrets[i];
+            if (turret == null) continue;
+
+            var target = LowestPiece(turret.Muzzle);
+            if (target == null) continue;
+
+            turret.Aim(target.Center);
+            turretTimers[i] += Time.deltaTime;
+            if (turretTimers[i] < interval) continue;
+
+            turretTimers[i] = 0f;
+            FireTurret(turret, target);
+        }
+    }
+
+    /// <summary>一番下のブロック。同じ高さなら、その砲台に近い方。</summary>
+    BlockPiece LowestPiece(Vector2 from)
+    {
+        float lowest = float.PositiveInfinity;
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive) continue;
+            if (piece.Bottom < lowest)
+                lowest = piece.Bottom;
+        }
+        if (float.IsPositiveInfinity(lowest)) return null;
+
+        BlockPiece best = null;
+        float bestDist = float.PositiveInfinity;
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive) continue;
+            if (piece.Bottom > lowest + 0.02f) continue;
+
+            float dist = ((Vector2)piece.Center - from).sqrMagnitude;
+            if (dist >= bestDist) continue;
+            best = piece;
+            bestDist = dist;
+        }
+        return best;
+    }
+
+    void FireTurret(BlockTurret turret, BlockPiece target)
+    {
+        var prefab = Player.turretBall;
+        if (prefab == null || turret == null || target == null) return;
+
+        var data = BallInfo(BlockBallKind.Normal);
+        var ball = Instantiate(prefab);
+        float size = data != null && data.baseSize > 0f ? data.baseSize : 1f;
+        if (!Mathf.Approximately(size, 1f))
+            ball.transform.localScale *= size;
+
+        ball.Init(bounce, BallSpeed(BlockBallKind.Normal, data), BlockBallKind.Normal);
+        Vector2 origin = turret.Muzzle;
+        Vector2 dir = (Vector2)target.Center - origin;
+        if (dir.sqrMagnitude < 0.0001f)
+            dir = Vector2.up;
+        dir.Normalize();
+
+        float pad = BallDiameter;
+        Vector2 spawn = origin + dir * pad;
+        spawn.x = Mathf.Clamp(spawn.x, fieldLeft + pad, fieldRight - pad);
+        spawn.y = Mathf.Max(spawn.y, deadlineY + pad);
+        ball.Hold(spawn);
+        ball.Fly(dir);
+        turretShots.Add(ball);
+        arena.Add(ball.gameObject);
+    }
+
+    void RecycleTurretShots()
+    {
+        for (int i = turretShots.Count - 1; i >= 0; i--)
+        {
+            var ball = turretShots[i];
+            if (ball == null)
+            {
+                turretShots.RemoveAt(i);
+                continue;
+            }
+            if (ball.Bottom > deadlineY) continue;
+
+            turretShots.RemoveAt(i);
+            arena.Remove(ball.gameObject);
+            Destroy(ball.gameObject);
+        }
+    }
+
+    void StopTurretShots()
+    {
+        for (int i = 0; i < turretShots.Count; i++)
+        {
+            if (turretShots[i] != null)
+                turretShots[i].Stop();
+        }
+    }
+
+    /// <summary>
+    /// 左の壁の外から、一番下のブロックの高さへ横ビームを撃つ。
+    /// 発射体はその高さへ移動し、ビームは数秒に一度出す。
+    /// </summary>
+    void SpawnRowBeam()
+    {
+        rowEmitter = null;
+        rowBeamTimer = 0f;
+        if (!RowBeamEnabled()) return;
+        if (Player.rowBeam == null)
+        {
+            Debug.LogWarning("横ビームのプレハブがありません。 SO_Player を確認してください。");
+            return;
+        }
+
+        float x = Mathf.Clamp(fieldLeft - 0.55f, screenLeft + 0.25f, fieldLeft - 0.2f);
+        var piece = LowestPiece(new Vector2(x, deadlineY));
+        float y = piece != null ? piece.Center.y : (deadlineY + ceilingY) * 0.5f;
+        rowEmitter = CreateRowEmitter(new Vector2(x, y));
+    }
+
+    bool RowBeamEnabled()
+    {
+        return Player.debugRowBeam || SkillTreeBonus.OwnsRowBeam;
+    }
+
+    BlockRowEmitter CreateRowEmitter(Vector2 position)
+    {
+        BlockRowEmitter emitter;
+        if (Player.rowEmitter != null)
+            emitter = Instantiate(Player.rowEmitter);
+        else
+        {
+            Debug.LogWarning("横ビームの発射体がありません。 SO_Player を確認してください。");
+            emitter = CreateFallbackRowEmitter();
+        }
+
+        emitter.transform.position = new Vector3(position.x, position.y, 0f);
+        arena.Add(emitter.gameObject);
+        return emitter;
+    }
+
+    static BlockRowEmitter CreateFallbackRowEmitter()
+    {
+        var root = new GameObject("RowEmitter");
+        var emitter = root.AddComponent<BlockRowEmitter>();
+        AddTurretMark(root.transform, "Body", Vector3.zero, Vector3.one * 0.36f, new Color(0.28f, 0.42f, 0.48f), true);
+        AddTurretMark(root.transform, "Barrel", Vector3.right * 0.28f, new Vector3(0.5f, 0.16f, 1f), new Color(0.25f, 0.95f, 1f), false);
+        var muzzle = new GameObject("Muzzle");
+        muzzle.transform.SetParent(root.transform, false);
+        muzzle.transform.localPosition = Vector3.right * 0.55f;
+        return emitter;
+    }
+
+    void TickRowBeam()
+    {
+        if (rowEmitter == null) return;
+
+        var target = LowestPiece(rowEmitter.Muzzle);
+        if (target == null) return;
+
+        float y = target.Center.y;
+        var pos = rowEmitter.transform.position;
+        float speed = Mathf.Max(0.1f, Player.rowBeamMoveSpeed);
+        pos.y = Mathf.MoveTowards(pos.y, y, speed * Time.deltaTime);
+        rowEmitter.transform.position = pos;
+
+        rowBeamTimer += Time.deltaTime;
+        if (rowBeamTimer < Mathf.Max(0.2f, Player.rowBeamInterval)) return;
+        if (Mathf.Abs(pos.y - y) > 0.12f) return;
+
+        rowBeamTimer = 0f;
+        FireRowBeam(pos.y);
+    }
+
+    void FireRowBeam(float y)
+    {
+        float rate = Mathf.Max(0f, Player.rowBeamDamageRate);
+        int damage = Mathf.Max(1, SkillTreeBonus.RoundDamage(SkillTreeBonus.AttackPower(BlockBallKind.Normal) * rate));
+        float pad = RowBeamPad();
+        for (int i = pieces.Count - 1; i >= 0; i--)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
+            if (!InRow(piece, y, pad)) continue;
+            piece.Hit(damage, (int)BlockBallKind.LaserRow);
+        }
+
+        float x0 = rowEmitter != null ? rowEmitter.Muzzle.x : fieldLeft;
+        float x1 = fieldRight;
+        float length = Mathf.Max(0.2f, x1 - x0);
+        ShowBeam(new Vector2((x0 + x1) * 0.5f, y), length, 90f, Player.rowBeam);
+    }
+
+    float RowBeamPad()
+    {
+        var prefab = Player.rowBeam;
+        if (prefab == null) return 0.14f;
+        return Mathf.Max(0.04f, Mathf.Abs(prefab.transform.localScale.x) * 0.5f);
     }
 
     static bool Owns(BlockBallKind kind)
@@ -714,11 +1045,10 @@ public class BlockSession : MonoBehaviour
         var canvas = UIManager_Ingame.Inst != null ? UIManager_Ingame.Inst.DynamicHudCanvas : null;
         if (canvas == null) return;
 
-        var props = SOLoader.BlockSession;
-        var prefab = props != null ? props.cursorInfo : null;
+        var prefab = Player.cursorInfo;
         if (prefab == null)
         {
-            Debug.LogWarning("追従UIのプレハブがありません。 SO_BlockSession を確認してください。");
+            Debug.LogWarning("追従UIのプレハブがありません。 SO_Player を確認してください。");
             return;
         }
 
@@ -732,11 +1062,10 @@ public class BlockSession : MonoBehaviour
         var canvas = UIManager_Ingame.Inst != null ? UIManager_Ingame.Inst.DynamicHudCanvas : null;
         if (canvas == null) return;
 
-        var props = SOLoader.BlockSession;
-        var prefab = props != null ? props.cursorBase : null;
+        var prefab = Player.cursorBase;
         if (prefab == null)
         {
-            Debug.LogWarning("カーソル目印のプレハブがありません。 SO_BlockSession を確認してください。");
+            Debug.LogWarning("カーソル目印のプレハブがありません。 SO_Player を確認してください。");
             return;
         }
 
@@ -812,6 +1141,9 @@ public class BlockSession : MonoBehaviour
         TickPoisons();
         if (ballHud != null)
             ballHud.Set(CountLaunchable(), balls.Length);
+        RecycleTurretShots();
+        TickTurrets();
+        TickRowBeam();
     }
 
     int CountLaunchable()
@@ -840,13 +1172,14 @@ public class BlockSession : MonoBehaviour
     void TickAim()
     {
         var mouse = Mouse.current;
-        if (mouse == null)
+        var fire = Keyboard.current != null ? Keyboard.current.fKey : null;
+        if (mouse == null || fire == null)
         {
             aimGuide?.Hide();
             return;
         }
 
-        if (mouse.leftButton.wasPressedThisFrame && PointerWorld.IsInsidePlayfield && aimingBall == null && !volley
+        if (fire.wasPressedThisFrame && PointerWorld.IsInsidePlayfield && aimingBall == null && !volley
             && BlockUnderPointer() == null && !AboveLaunchLimit())
         {
             var ready = FindReadyBall();
@@ -859,9 +1192,9 @@ public class BlockSession : MonoBehaviour
             aiming = true;
         }
 
-        if (!aiming || !mouse.leftButton.isPressed)
+        if (!aiming || !fire.isPressed)
         {
-            if (aiming && mouse.leftButton.wasReleasedThisFrame)
+            if (aiming && fire.wasReleasedThisFrame)
                 ReleaseAim();
             return;
         }
@@ -875,7 +1208,7 @@ public class BlockSession : MonoBehaviour
 
         if (aimGuide == null) return;
 
-        BuildAimPath(-pull.normalized);
+        BuildAimPath(pull);
         aimGuide.Show(launchAnchor, pull, aimPath);
     }
 
@@ -894,7 +1227,7 @@ public class BlockSession : MonoBehaviour
         float floorY = deadlineY + radius;
         aimPath.Add(pos);
 
-        for (int leg = 0; leg < Rule.aimBounces && left > 0.05f; leg++)
+        for (int leg = 0; leg < Player.aimBounces && left > 0.05f; leg++)
         {
             if (pos.y <= floorY)
                 return;
@@ -934,7 +1267,7 @@ public class BlockSession : MonoBehaviour
                 return;
 
             dir = Vector2.Reflect(dir, hit.normal).normalized;
-            pos += hit.normal * Rule.aimSkin;
+            pos += hit.normal * Player.aimSkin;
         }
     }
 
@@ -942,7 +1275,7 @@ public class BlockSession : MonoBehaviour
     {
         var extents = collider.bounds.extents;
         float span = Mathf.Abs(extents.x * direction.x) + Mathf.Abs(extents.y * direction.y);
-        return span * 2f + radius + Rule.aimSkin;
+        return span * 2f + radius + Player.aimSkin;
     }
 
     static float BallRadius(BlockBall ball)
@@ -963,14 +1296,14 @@ public class BlockSession : MonoBehaviour
         if (ball == null) return;
 
         Vector2 pull = (Vector2)PointerWorld.Position - launchAnchor;
-        if (pull.magnitude < Rule.minPull)
+        if (pull.magnitude < Player.minPull)
         {
             ball.SetVisible(false);
             pinCursorUi = false;
             return;
         }
 
-        BeginVolley(ball, -pull);
+        BeginVolley(ball, pull);
     }
 
     void BeginVolley(BlockBall first, Vector2 direction)
@@ -998,9 +1331,10 @@ public class BlockSession : MonoBehaviour
         if (!volley || shotQueue.Count == 0) return;
 
         shotTimer += Time.deltaTime;
-        if (shotTimer < Rule.shotInterval) return;
+        float interval = MilestoneBonus.ShotInterval;
+        if (shotTimer < interval) return;
 
-        shotTimer -= Rule.shotInterval;
+        shotTimer -= interval;
         FireQueued();
     }
 
@@ -1014,6 +1348,7 @@ public class BlockSession : MonoBehaviour
 
             ball.Hold(launchAnchor);
             ball.Fly(shotDirection);
+            MilestoneRuntime.NotifyLaunch();
             volley = shotQueue.Count > 0;
             if (!volley)
                 pinCursorUi = false;
@@ -1036,13 +1371,13 @@ public class BlockSession : MonoBehaviour
     float LaunchOriginMaxY()
     {
         float pad = LaunchPad();
-        float limit = ceilingY - Mathf.Max(0f, Rule.launchTopInset);
+        float limit = ceilingY - Mathf.Max(0f, Player.launchTopInset);
         return Mathf.Clamp(limit, deadlineY + pad, ceilingY - pad);
     }
 
     bool ShowsLaunchLimit()
     {
-        return Rule.launchTopInset > LaunchPad() + 0.02f;
+        return Player.launchTopInset > LaunchPad() + 0.02f;
     }
 
     bool AboveLaunchLimit()
@@ -1112,6 +1447,7 @@ public class BlockSession : MonoBehaviour
         ball.SetVisible(false);
         handOrder.Remove(ball);
         handOrder.Add(ball);
+        MilestoneRuntime.NotifyReturn();
     }
 
     /// <summary>ボールスキルの発生位置。当たったブロックの中心を使う。</summary>
@@ -1120,16 +1456,16 @@ public class BlockSession : MonoBehaviour
         return piece != null ? piece.Center : Vector2.zero;
     }
 
-    public void Explode(BlockPiece source, int damage)
+    public void Explode(BlockPiece source, int damage, bool critical = false)
     {
         Vector2 point = SkillOrigin(source);
-        float radius = cell * Rule.bombRadiusInCells;
+        float radius = cell * BallArea(BlockBallKind.Bomb, 2.5f);
         for (int i = pieces.Count - 1; i >= 0; i--)
         {
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!Within(piece, point, radius)) continue;
-            piece.Hit(Mathf.Max(1, damage));
+            piece.Hit(Mathf.Max(1, damage), (int)BlockBallKind.Bomb, critical);
         }
 
         ShowFlash(
@@ -1141,7 +1477,7 @@ public class BlockSession : MonoBehaviour
             0.36f);
     }
 
-    public void Beam(BlockPiece source, int damage)
+    public void Beam(BlockPiece source, int damage, bool critical = false)
     {
         float x = SkillOrigin(source).x;
         float pad = cell * 0.55f;
@@ -1150,13 +1486,13 @@ public class BlockSession : MonoBehaviour
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!InColumn(piece, x, pad)) continue;
-            piece.Hit(Mathf.Max(1, damage));
+            piece.Hit(Mathf.Max(1, damage), (int)BlockBallKind.Laser, critical);
         }
 
         ShowBeam(new Vector2(x, (screenBottom + screenTop) * 0.5f), Mathf.Max(0.2f, screenTop - screenBottom), false);
     }
 
-    public void BeamRow(BlockPiece source, int damage)
+    public void BeamRow(BlockPiece source, int damage, bool critical = false)
     {
         float y = SkillOrigin(source).y;
         float pad = cell * 0.55f;
@@ -1165,13 +1501,13 @@ public class BlockSession : MonoBehaviour
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!InRow(piece, y, pad)) continue;
-            piece.Hit(Mathf.Max(1, damage));
+            piece.Hit(Mathf.Max(1, damage), (int)BlockBallKind.LaserRow, critical);
         }
 
         ShowBeam(new Vector2((screenLeft + screenRight) * 0.5f, y), Mathf.Max(0.2f, screenRight - screenLeft), true);
     }
 
-    public void BeamCross(BlockPiece source, int damage)
+    public void BeamCross(BlockPiece source, int damage, bool critical = false)
     {
         Vector2 origin = SkillOrigin(source);
         float pad = cell * 0.55f;
@@ -1182,7 +1518,7 @@ public class BlockSession : MonoBehaviour
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!OnDiagonal(piece, origin, upRight, pad) && !OnDiagonal(piece, origin, downRight, pad)) continue;
-            piece.Hit(Mathf.Max(1, damage));
+            piece.Hit(Mathf.Max(1, damage), (int)BlockBallKind.Cross, critical);
         }
 
         float spanX = screenRight - screenLeft;
@@ -1199,7 +1535,7 @@ public class BlockSession : MonoBehaviour
         if (poisons.Count >= PoisonCap) return;
 
         Vector2 point = SkillOrigin(source);
-        float radius = cell * Rule.poisonRadiusInCells;
+        float radius = cell * BallArea(BlockBallKind.Poison, 1.6f);
         int hit = Mathf.Max(1, damage);
         DamagePoison(point, radius, hit);
 
@@ -1217,8 +1553,16 @@ public class BlockSession : MonoBehaviour
         });
     }
 
-    /// <summary>同時に置ける沼。初期値は SO の poisonMax。スキルツリーの加算はあとから足す。</summary>
-    int PoisonCap => Mathf.Max(0, Rule.poisonMax);
+    /// <summary>同時に置ける沼。初期値はボールデータの effectMax。</summary>
+    int PoisonCap
+    {
+        get
+        {
+            var data = BallInfo(BlockBallKind.Poison);
+            int max = data != null && data.effectMax > 0 ? data.effectMax : 2;
+            return Mathf.Max(0, max);
+        }
+    }
 
     void TickPoisons()
     {
@@ -1227,12 +1571,12 @@ public class BlockSession : MonoBehaviour
         {
             var zone = poisons[i];
             zone.age += Time.deltaTime;
-            float life = Mathf.Max(0.2f, Rule.poisonDuration);
+            float life = Mathf.Max(0.2f, PoisonDuration());
             float fadeStart = Mathf.Max(0f, life - exit);
             if (zone.age < fadeStart)
             {
                 zone.tick += Time.deltaTime;
-                if (zone.tick >= Mathf.Max(0.05f, Rule.poisonInterval))
+                if (zone.tick >= Mathf.Max(0.05f, PoisonInterval()))
                 {
                     zone.tick = 0f;
                     DamagePoison(zone.point, zone.radius, zone.damage);
@@ -1261,7 +1605,7 @@ public class BlockSession : MonoBehaviour
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
             if (!Within(piece, point, radius)) continue;
-            piece.Hit(Mathf.Max(1, damage));
+            piece.Hit(Mathf.Max(1, damage), (int)BlockBallKind.Poison);
         }
     }
 
@@ -1340,8 +1684,8 @@ public class BlockSession : MonoBehaviour
         {
             transform = instance.transform,
             sprite = sprite,
-            life = Rule.beamLife,
-            hold = Rule.beamHold,
+            life = Player.beamLife,
+            hold = Player.beamHold,
             shrinkShort = true,
             color = color,
             from = scale,
@@ -1575,19 +1919,16 @@ public class BlockSession : MonoBehaviour
         }
     }
 
-    /// <summary>画面上端から下へ、空いている列を3つ出す。</summary>
-    void SpawnClearRows()
+    /// <summary>画面上端から下へ、空いている列を出す。置けた数を返す。</summary>
+    int SpawnClearRows(int count)
     {
-        if (formation == null || cell <= 0.001f) return;
+        if (formation == null || cell <= 0.001f || count <= 0) return 0;
 
-        if (bossDue)
-            SpawnDueBoss();
-
-        float parentY = formation.position.y;
-        float topBottom = screenTop - TopClearanceCells * cell - cell + Rule.blockGap * 0.5f;
+        float parentY = FormationY();
+        float topBottom = RowOrigin();
         float localLeft = -cell * columns * 0.5f;
         int spawned = 0;
-        for (int i = 0; spawned < OpeningRows && i < 24; i++)
+        for (int i = 0; spawned < count && i < 24; i++)
         {
             float worldBottom = topBottom - i * cell;
             if (worldBottom + cell < screenBottom) break;
@@ -1596,6 +1937,10 @@ public class BlockSession : MonoBehaviour
             if (SpawnRow(localLeft, localBottom))
                 spawned++;
         }
+
+        if (bossDue)
+            SpawnDueBoss();
+        return spawned;
     }
 
     bool RowHasGap(float localLeft, float localBottom)
@@ -1777,21 +2122,22 @@ public class BlockSession : MonoBehaviour
     void LoadBlockPrefabs()
     {
         if (blockPrefabs != null && blockPrefabs.Length > 0) return;
-        blockPrefabs = Resources.LoadAll<BlockPiece>("Block");
+        blockPrefabs = new[]
+        {
+            Rule.square,
+            Rule.wide,
+            Rule.tall,
+            Rule.solid,
+            Rule.armor,
+            Rule.regen
+        };
     }
 
     BlockPiece FindBossPrefab(int index)
     {
-        if (bossPrefabs == null || bossPrefabs.Length == 0)
-            bossPrefabs = Resources.LoadAll<BlockPiece>("Boss");
-        if (bossPrefabs == null) return null;
-
-        for (int i = 0; i < bossPrefabs.Length; i++)
-        {
-            var prefab = bossPrefabs[i];
-            if (prefab != null && prefab.BossIndex == index)
-                return prefab;
-        }
+        var prefab = Rule.boss;
+        if (prefab != null && prefab.BossIndex == index)
+            return prefab;
         return null;
     }
 
@@ -1800,12 +2146,15 @@ public class BlockSession : MonoBehaviour
         LoadBlockPrefabs();
         if (blockPrefabs == null || blockPrefabs.Length == 0) return null;
 
+        var stage = CurrentStage();
+        bool staged = stage != null && stage.HasBlockWeights;
+
         float normal = 0f;
         for (int i = 0; i < blockPrefabs.Length; i++)
         {
             var prefab = blockPrefabs[i];
             if (prefab == null || prefab.BossIndex >= 0 || prefab.Regenerates || prefab.ArmorsBottom) continue;
-            normal += prefab.Weight;
+            normal += staged ? stage.WeightOf(prefab) : prefab.Weight;
         }
 
         float total = 0f;
@@ -1813,7 +2162,7 @@ public class BlockSession : MonoBehaviour
         {
             var prefab = blockPrefabs[i];
             if (prefab != null && prefab.BossIndex < 0)
-                total += SpawnWeight(prefab, normal);
+                total += SpawnWeight(prefab, normal, stage, staged);
         }
         if (total <= 0f) return blockPrefabs[0];
 
@@ -1822,18 +2171,34 @@ public class BlockSession : MonoBehaviour
         {
             var prefab = blockPrefabs[i];
             if (prefab == null || prefab.BossIndex >= 0) continue;
-            roll -= SpawnWeight(prefab, normal);
+            roll -= SpawnWeight(prefab, normal, stage, staged);
             if (roll <= 0f) return prefab;
         }
         return blockPrefabs[blockPrefabs.Length - 1];
     }
 
-    static float SpawnWeight(BlockPiece prefab, float normal)
+    StageData CurrentStage()
+    {
+        var time = StageTimeManager.Inst;
+        var table = SOLoader.StageData;
+        if (time == null || table == null) return null;
+        return table.FindStage(time.StageIndex);
+    }
+
+    static float SpawnWeight(BlockPiece prefab, float normal, StageData stage, bool staged)
     {
         if (prefab.Regenerates)
-            return normal * SkillTreeBonus.RegenSpawnRate;
+        {
+            float weight = staged ? stage.weightRegen : 0f;
+            return weight + normal * SkillTreeBonus.RegenSpawnRate;
+        }
         if (prefab.ArmorsBottom)
-            return normal * SkillTreeBonus.ArmorSpawnRate;
+        {
+            float weight = staged ? stage.weightArmor : 0f;
+            return weight + normal * SkillTreeBonus.ArmorSpawnRate;
+        }
+        if (staged)
+            return stage.WeightOf(prefab);
         return prefab.Weight;
     }
 
@@ -1949,7 +2314,7 @@ public class BlockSession : MonoBehaviour
         for (int i = 0; i < pieces.Count; i++)
         {
             var piece = pieces[i];
-            if (piece == null) continue;
+            if (piece == null || !piece.IsAlive) continue;
             float localTop = piece.PlacedLocalTop;
             if (localTop > top)
                 top = localTop;

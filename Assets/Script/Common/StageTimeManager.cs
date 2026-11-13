@@ -82,6 +82,12 @@ public class StageTimeManager : MonoBehaviour
         isTimeRunning = true;
     }
 
+    /// <summary>ボスを倒した。次の段が選べるようにして、ランを終える。</summary>
+    public void ClearByBoss()
+    {
+        FinishStage();
+    }
+
     void FinishStage()
     {
         if (isStageCleared || isFailed) return;

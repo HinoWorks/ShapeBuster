@@ -105,6 +105,17 @@ public class BlockPiece : MonoBehaviour
     public int BossIndex => bossIndex;
     public bool Regenerates => regenDelay > 0f;
     public bool ArmorsBottom => armorBottom;
+    /// <summary>マイルストーンのブロック種別。通常 0、装甲 1、再生 2、ボス 3。</summary>
+    public int BreakKey
+    {
+        get
+        {
+            if (BossIndex >= 0) return 3;
+            if (ArmorsBottom) return 1;
+            if (Regenerates) return 2;
+            return 0;
+        }
+    }
     public bool IsAlive { get; private set; }
     public bool IsSolid => solid;
     public int Level => level;
@@ -257,8 +268,8 @@ public class BlockPiece : MonoBehaviour
         BindTraitMarks();
     }
 
-    /// <summary>当たった位置。装甲の下半分はダメージにしない。</summary>
-    public bool HitFrom(int damage, Vector2 worldPoint)
+    /// <summary>当たった位置。装甲の下半分はダメージにしない。ballKind は BlockBallKind。不明なら -1。</summary>
+    public bool HitFrom(int damage, Vector2 worldPoint, int ballKind = -1, bool critical = false)
     {
         if (RejectsBottom(worldPoint))
         {
@@ -266,11 +277,16 @@ public class BlockPiece : MonoBehaviour
             return false;
         }
 
-        Hit(damage);
+        ApplyHit(damage, ballKind, critical, worldPoint);
         return true;
     }
 
-    public void Hit(int damage)
+    public void Hit(int damage, int ballKind = -1, bool critical = false)
+    {
+        ApplyHit(damage, ballKind, critical, Center);
+    }
+
+    void ApplyHit(int damage, int ballKind, bool critical, Vector2 popupPoint)
     {
         if (!IsAlive || solid) return;
         if (session != null && !session.IsOnCamera(this)) return;
@@ -299,7 +315,8 @@ public class BlockPiece : MonoBehaviour
             currentHp = barMax;
         }
 
-        GameEvent.InGame.PublishDamageDealt(applied, -1);
+        GameEvent.InGame.PublishDamageDealt(applied, ballKind);
+        UI_DamageNumberPool.Show(popupPoint, applied, ballKind, critical);
         if (level > 0)
         {
             RefreshColor();
@@ -322,6 +339,7 @@ public class BlockPiece : MonoBehaviour
         if (session != null && ArmorsBottom)
             session.DropResources(transform.position, 1 + SkillTreeBonus.ArmorDropAdd, ResourceType.CC);
 
+        MilestoneRuntime.NotifyBlockBroken(BreakKey);
         session.NotifyBroken(this);
         if (BossIndex >= 0 && session != null && session.BeginBossDefeat(this))
             return;

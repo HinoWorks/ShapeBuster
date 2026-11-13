@@ -5,18 +5,18 @@ using System.Numerics;
 /// <summary>マイルストーンが数える累計。BestDamage、BestClearMillis、ClaimedTier は内部記録で、シートの行には書かない。</summary>
 public enum MilestoneTrack
 {
-    EnemyDefeat = 0, //その敵の破壊数。trackKey は敵 index
-    TotalDefeat = 1, //全部の敵の破壊数
+    BlockBreak = 0, //そのブロックの破壊数。trackKey は通常 0、装甲 1、再生 2、ボス 3
+    TotalDefeat = 1, //壊したブロックの合計
     TotalDamage = 2, //与えたダメージの合計
-    AttackDamage = 3, //その攻撃パターンの与ダメージ。trackKey は攻撃 index（雷 0、貫通 1、範囲 2、レーザー 3）
+    BallDamage = 3, //そのボールの与ダメージ。trackKey は BlockBallKind。直撃に爆風、レーザー、衛星、沼を含む
     ClearTime = 4, //クリア時間の合計。単位は秒
     ClearCount = 5, //クリア回数
     StageClearCount = 6, //そのステージのクリア回数。trackKey はステージ index
     PlayCount = 7, //プレイ回数。クリアした回も1プレイに含む
     ResourceGained = 8, //そのリソースの獲得数。trackKey は AA=0 … GG=6
     CriticalCount = 9, //クリティカルが出た回数
-    ReloadCount = 10, //リロードを始めた回数
-    DamageTaken = 11, //受けたダメージの合計
+    LaunchCount = 10, //ボールを放った回数
+    ReturnCount = 11, //デッドライン下へ戻った回数
     BestDamage = 12, //内部記録。自己ベストダメージの値
     BestDamageUpdates = 13, //自己ベストダメージを更新した回数。記録値そのものは BestDamage が持つ
     BestClearMillis = 14, //内部記録。ステージごとの最短クリア（ミリ秒）
@@ -30,21 +30,24 @@ public enum MilestoneTrack
 /// </summary>
 public enum MilestoneBonusStat
 {
-    EnemyDropRate = 0, //その敵のドロップ数。bonusKey は敵 index
-    CursorDamageRate = 1, //カーソルダメージ
-    CriticalRate = 2, //クリティカル率
-    AttackRate = 3, //その攻撃の発生率。bonusKey は攻撃 index。雷の素の発生率は 100% なので、発生率が 100% 未満になってから効く
-    AttackGenerateCount = 4, //その攻撃の発生数。貫通の弾数。bonusKey は攻撃 index
-    AttackSize = 5, //その攻撃の大きさ。範囲のサイズ。bonusKey は攻撃 index
-    AttackDuration = 6, //その攻撃の持続。レーザーの照射時間に秒で足す。bonusKey は攻撃 index
+    BallDamageRate = 0, //全ボールの攻撃力。bonusKey は 0
+    BallKindDamage = 1, //そのボールだけの攻撃力。bonusKey は BlockBallKind
+    BallCritRate = 2, //ボールのクリティカル率
+    BallProc = 3, //そのボールの発生率。bonusKey は BlockBallKind。素の 10% に足す
+    BallHeavySpeed = 4, //ヘビーの速さ。素の 30% に足す
+    BallArea = 5, //爆風や沼の半径。bonusKey は BlockBallKind
+    PoisonDuration = 6, //沼が残る秒数
     ResourceGainRate = 7, //すべてのドロップ数
     ResourceTypeRate = 8, //そのリソースのドロップ数。bonusKey はリソース番号
     StageDropRate = 9, //そのステージでのドロップ数。bonusKey はステージ index
-    ReloadReduction = 10, //リロード時間。マイナスで短くなる。元の時間の 50% が下限
-    PlayerMaxHp = 11, //最大HP。次のラン開始時に反映
-    MagazineAmmo = 12, //マガジン弾数。次の InGame Ready で反映
-    AttackInterval = 13, //カーソルの攻撃間隔（秒）。マイナスで短くなる。0.05 秒が下限
-    CursorSize = 14, //カーソルサイズ。実数で足す
+    ShotInterval = 10, //発射間隔（秒）。マイナスで短くなる。0.08 秒が下限
+    BallSpeed = 11, //全ボールの速さ
+    BallCount = 12, //ノーマルの本数。次のラン開始時に反映
+    BallCritDamage = 13, //クリティカル倍率。素の 2 倍に足す
+    PickupRange = 14, //拾得範囲
+    BallBoss = 15, //ボスへの攻撃力
+    BallOrbitCount = 16, //オービットの衛星の数。次のラン開始時に反映
+    BlockFallSlow = 17, //ブロック下降。マイナスで遅くなる。スキルと同じ 40% が下限
 }
 
 /// <summary>bonusPerTier の足し方。</summary>
@@ -71,13 +74,13 @@ public static class MilestoneId
     public const int ClearCount = 4;
     public const int PlayCount = 5;
     public const int Critical = 6;
-    public const int Reload = 7;
-    public const int DamageTaken = 8;
+    public const int Launch = 7;
+    public const int Return = 8;
     public const int BestDamage = 9;
     public const int BestClear = 10;
 
-    public const int EnemyDefeatBase = 10000;
-    public const int AttackDamageBase = 20000;
+    public const int BlockBreakBase = 10000;
+    public const int BallDamageBase = 20000;
     public const int StageClearBase = 30000;
     public const int ResourceGainedBase = 40000;
 }

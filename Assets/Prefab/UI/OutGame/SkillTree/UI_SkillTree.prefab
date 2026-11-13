@@ -2213,7 +2213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Name
-      value: "skill_4000_再生の出現"
+      value: "skill_4000_減速"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: isRoot
@@ -2225,15 +2225,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "再生の出現"
+      value: "減速"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "再生の出現"
+      value: "減速"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
-      value: "'%'"
+      value: '%'
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
@@ -2241,11 +2241,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramStat
-      value: 47
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.deltaValue
-      value: 0.04
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -5568,7 +5568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Name
-      value: "skill_3020_効率"
+      value: "skill_3020_壁の出現"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: isRoot
@@ -5580,15 +5580,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "効率"
+      value: "壁の出現"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "効率"
+      value: "壁の出現"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
-      value: "Count"
+      value: '%'
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
@@ -5596,11 +5596,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramStat
-      value: 52
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.deltaValue
-      value: 1
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -7330,7 +7330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Name
-      value: "skill_3000_壁の出現"
+      value: "skill_3000_収穫"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: isRoot
@@ -7342,15 +7342,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "壁の出現"
+      value: "収穫"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "壁の出現"
+      value: "収穫"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
-      value: "'%'"
+      value: '%'
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
@@ -7358,11 +7358,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramStat
-      value: 48
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.deltaValue
-      value: 0.04
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -7507,7 +7507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Name
-      value: "skill_3001_壁の収量"
+      value: "skill_3001_磁石"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: isRoot
@@ -7519,15 +7519,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "壁の収量"
+      value: "磁石"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "壁の収量"
+      value: "磁石"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
-      value: "Count"
+      value: '%'
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
@@ -7535,11 +7535,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramStat
-      value: 50
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.deltaValue
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -7857,7 +7857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Name
-      value: "skill_3010_Convert"
+      value: "skill_3010_再生の出現"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: isRoot
@@ -7869,27 +7869,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "Convert"
+      value: "再生の出現"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "Convert"
+      value: "再生の出現"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
-      value: "NA"
+      value: '%'
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramStat
-      value: 51
+      value: 47
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.deltaValue
-      value: 1
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget

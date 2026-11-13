@@ -35,6 +35,7 @@ public class DataBase : MonoBehaviour
     [SerializeField] SO_SkillTreeData mSO_SkillTreeData;
     [SerializeField] SO_MilestoneData mSO_MilestoneData;
     [SerializeField] SO_Locale mSO_Locale;
+    [SerializeField] SO_BallData mSO_BallData;
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
@@ -42,6 +43,7 @@ public class DataBase : MonoBehaviour
         await DataLoad_SkillTreeData();
         await DataLoad_MilestoneData();
         await DataLoad_Locale();
+        await DataLoad_BallData();
 
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
@@ -54,6 +56,8 @@ public class DataBase : MonoBehaviour
             EditorUtility.SetDirty(mSO_MilestoneData);
         if (mSO_Locale != null)
             EditorUtility.SetDirty(mSO_Locale);
+        if (mSO_BallData != null)
+            EditorUtility.SetDirty(mSO_BallData);
         Loc.Reload();
 
         // -- save --
@@ -76,25 +80,14 @@ public class DataBase : MonoBehaviour
         var loadData = await DataLoad("Stage");
         var convData = CSVSerializer.Deserialize<StageData>(loadData);
         mSO_StageData.stageDatas = convData;
+        mSO_StageData.ApplyBlockCampaign();
 
-        loadData = await DataLoad("StageLevel");
-        var convData2 = CSVSerializer.Deserialize<StageLevelData>(loadData);
-        mSO_StageData.stageLevelDatas = convData2;
-
-        try
-        {
-            loadData = await DataLoad("StageSpawnOrder");
-            mSO_StageData.stageSpawnOrders = CSVSerializer.Deserialize<StageSpawnOrder>(loadData);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning($"StageSpawnOrder の読み込みをスキップしました。{e.Message}");
-        }
     }
     private async UniTask DataLoad_SkillTreeData()
     {
         var loadData = await DataLoad("SkillBase");
         var convData = CSVSerializer.Deserialize<SkillTreeBase>(loadData);
+        mSO_SkillTreeData.KeepIcons(convData);
         mSO_SkillTreeData.skillTreeBases = convData;
 
         loadData = await DataLoad("SkillTreeUnit");
@@ -102,11 +95,10 @@ public class DataBase : MonoBehaviour
         mSO_SkillTreeData.skillTreeUnits = convData2;
         mSO_SkillTreeData.RemapLegacyIds();
         mSO_SkillTreeData.ApplyImportedText();
+        mSO_SkillTreeData.ApplyLimitsFromUnits();
         mSO_SkillTreeData.DropOrphanUnits();
-        mSO_SkillTreeData.EnsureGlassSkill();
-        mSO_SkillTreeData.EnsureBallSkills();
-        mSO_SkillTreeData.EnsureBlockCompactSkill();
-        mSO_SkillTreeData.EnsureBlockTree();
+        mSO_SkillTreeData.EnsureTurretSkill();
+        mSO_SkillTreeData.EnsureRowBeamSkill();
     }
 
 
@@ -122,6 +114,21 @@ public class DataBase : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogWarning($"MilestoneData の読み込みをスキップしました。{e.Message}");
+        }
+    }
+
+    private async UniTask DataLoad_BallData()
+    {
+        if (mSO_BallData == null) return;
+
+        try
+        {
+            var loadData = await DataLoad("Ball");
+            mSO_BallData.ApplyImported(CSVSerializer.Deserialize<BallData>(loadData));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Ball の読み込みをスキップしました。{e.Message}");
         }
     }
 

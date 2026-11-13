@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3e91b4d2f4c08b6a5e4d3c2b1a090, type: 3}
+  m_Name: SO_BallData
+  m_EditorClassIdentifier: Assembly-CSharp::SO_BallData
+  ballDatas:
+  - index: 0
+    ballName: "\u30CE\u30FC\u30DE\u30EB"
+    pf: {fileID: 500003, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
+    baseDamageRate: 1
+    baseProcRate: 0
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 0
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 1
+    ballName: "\u30DC\u30E0"
+    pf: {fileID: 8101000000000434466, guid: c4e8a1b0bb000001a1b0bb000001b0b1, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0.1
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 2.5
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 2
+    ballName: "\u30EC\u30FC\u30B6\u30FC"
+    pf: {fileID: 8101000000000434472, guid: c4e8a1b0bb000001a1b0bb000001b0b2, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0.1
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 0
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 3
+    ballName: "\u6A2A\u30EC\u30FC\u30B6\u30FC"
+    pf: {fileID: 8101000000000434486, guid: c4e8a1b0bb000001a1b0bb000001b0b5, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0.1
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 0
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 4
+    ballName: "\u30D8\u30D3\u30FC"
+    pf: {fileID: 8101000000000434486, guid: c4e8a1b0bb000001a1b0bb000001b0b3, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0
+    baseSize: 1
+    baseSpeed: 3.9
+    areaRadius: 0
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 5
+    ballName: "\u30AA\u30FC\u30D3\u30C3\u30C8"
+    pf: {fileID: 8101000000000434492, guid: e1a7c3b05d4e4f21a9b8c7d6e5f40312, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 0
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 6
+    ballName: "\u30AF\u30ED\u30B9"
+    pf: {fileID: 8101000000000434442, guid: a2c4e6f81b3d4a5c9e0f1a2b3c4d5e6f, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0.1
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 0
+    effectDuration: 0
+    effectInterval: 0
+    effectMax: 0
+  - index: 7
+    ballName: "\u30DD\u30A4\u30BA\u30F3"
+    pf: {fileID: 8101000000000434448, guid: b3d5f7a92c4e4b6d0f1a2b3c4d5e6f70, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0.1
+    baseSize: 1
+    baseSpeed: 13
+    areaRadius: 1.6
+    effectDuration: 2.5
+    effectInterval: 0.4
+    effectMax: 2

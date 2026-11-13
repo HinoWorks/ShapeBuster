@@ -43,7 +43,7 @@ public static class GameEvent
 */
 
         /// <summary>
-        /// 敵に与えたダメージ。attackIndex が 0 未満のときはカーソル攻撃。
+        /// ブロックに与えたダメージ。attackIndex は BlockBallKind。0 未満は種別なし。
         /// </summary>
         private static readonly Subject<(int damage, int attackIndex)> damageDealt = new();
         public static IObservable<(int damage, int attackIndex)> DamageDealt => damageDealt.AsObservable();

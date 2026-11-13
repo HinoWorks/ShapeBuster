@@ -13,86 +13,14 @@ MonoBehaviour:
   m_Name: SO_MilestoneData
   m_EditorClassIdentifier: Assembly-CSharp::SO_MilestoneData
   milestoneDatas:
-  - id: 10000
-    title: Normal Defeats
-    icon: {fileID: 0}
-    bonusLabel: This Enemy Drop
-    track: 0
-    trackKey: 0
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 0
-    bonusKey: 0
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 0
-  - id: 10001
-    title: Liner Defeats
-    icon: {fileID: 0}
-    bonusLabel: This Enemy Drop
-    track: 0
-    trackKey: 1
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 0
-    bonusKey: 1
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 0
-  - id: 10002
-    title: Brake Defeats
-    icon: {fileID: 0}
-    bonusLabel: This Enemy Drop
-    track: 0
-    trackKey: 2
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 0
-    bonusKey: 2
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 0
-  - id: 10003
-    title: Ricochet Defeats
-    icon: {fileID: 0}
-    bonusLabel: This Enemy Drop
-    track: 0
-    trackKey: 3
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 0
-    bonusKey: 3
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 0
-  - id: 10004
-    title: Step Defeats
-    icon: {fileID: 0}
-    bonusLabel: This Enemy Drop
-    track: 0
-    trackKey: 4
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 0
-    bonusKey: 4
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 0
-  - id: 10005
-    title: Zigzag Defeats
-    icon: {fileID: 0}
-    bonusLabel: This Enemy Drop
-    track: 0
-    trackKey: 5
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 0
-    bonusKey: 5
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 0
   - id: 1
-    title: Total Defeats
+    title: Total Breaks
     icon: {fileID: 0}
-    bonusLabel: Cursor Damage
+    bonusLabel: All Ball Damage
     track: 1
     trackKey: 0
     thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 1
+    stat: 0
     bonusKey: 0
     bonusPerTier: 0.01
     apply: 1
@@ -109,58 +37,10 @@ MonoBehaviour:
     bonusPerTier: 0.005
     apply: 1
     unit: 1
-  - id: 20000
-    title: Lightning Damage Dealt
-    icon: {fileID: 0}
-    bonusLabel: Lightning Rate
-    track: 3
-    trackKey: 0
-    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
-    stat: 3
-    bonusKey: 0
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 1
-  - id: 20001
-    title: Pierce Damage Dealt
-    icon: {fileID: 0}
-    bonusLabel: Pierce Count
-    track: 3
-    trackKey: 1
-    thresholds: e8030000000000001027000000000000a08601000000000040420f00000000008096980000000000
-    stat: 4
-    bonusKey: 1
-    bonusPerTier: 1
-    apply: 0
-    unit: 1
-  - id: 20002
-    title: Area Damage Dealt
-    icon: {fileID: 0}
-    bonusLabel: Area Size
-    track: 3
-    trackKey: 2
-    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
-    stat: 5
-    bonusKey: 2
-    bonusPerTier: 0.05
-    apply: 1
-    unit: 1
-  - id: 20003
-    title: Laser Damage Dealt
-    icon: {fileID: 0}
-    bonusLabel: Laser Duration
-    track: 3
-    trackKey: 3
-    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
-    stat: 6
-    bonusKey: 3
-    bonusPerTier: 0.05
-    apply: 0
-    unit: 1
   - id: 3
     title: Total Clear Time
     icon: {fileID: 0}
-    bonusLabel: Resource Gain
+    bonusLabel: Break Resources
     track: 4
     trackKey: 0
     thresholds: 3c00000000000000b40000000000000058020000000000000807000000000000100e000000000000302a000000000000a08c000000000000e0a5010000000000
@@ -172,15 +52,231 @@ MonoBehaviour:
   - id: 4
     title: Total Clears
     icon: {fileID: 0}
-    bonusLabel: Reload Time
+    bonusLabel: Shot Interval
     track: 5
     trackKey: 0
     thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
     stat: 10
     bonusKey: 0
-    bonusPerTier: -0.02
+    bonusPerTier: -0.005
+    apply: 0
+    unit: 0
+  - id: 5
+    title: Total Plays
+    icon: {fileID: 0}
+    bonusLabel: Ball Speed
+    track: 7
+    trackKey: 0
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 11
+    bonusKey: 0
+    bonusPerTier: 0.01
     apply: 1
     unit: 0
+  - id: 6
+    title: Total Criticals
+    icon: {fileID: 0}
+    bonusLabel: Critical Damage
+    track: 9
+    trackKey: 0
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 13
+    bonusKey: 0
+    bonusPerTier: 0.05
+    apply: 0
+    unit: 0
+  - id: 7
+    title: Launches
+    icon: {fileID: 0}
+    bonusLabel: Normal Balls
+    track: 10
+    trackKey: 0
+    thresholds: 6400000000000000e8030000000000001027000000000000
+    stat: 12
+    bonusKey: 0
+    bonusPerTier: 1
+    apply: 0
+    unit: 0
+  - id: 8
+    title: Returns
+    icon: {fileID: 0}
+    bonusLabel: Pickup Range
+    track: 11
+    trackKey: 0
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 14
+    bonusKey: 0
+    bonusPerTier: 0.02
+    apply: 1
+    unit: 0
+  - id: 9
+    title: Best Damage Updates
+    icon: {fileID: 0}
+    bonusLabel: Ball Speed
+    track: 13
+    trackKey: 0
+    thresholds: 010000000000000002000000000000000300000000000000050000000000000008000000000000000d000000000000001500000000000000
+    stat: 11
+    bonusKey: 0
+    bonusPerTier: 0.01
+    apply: 1
+    unit: 0
+  - id: 10
+    title: Best Clear Updates
+    icon: {fileID: 0}
+    bonusLabel: Block Fall
+    track: 15
+    trackKey: 0
+    thresholds: 010000000000000002000000000000000300000000000000050000000000000008000000000000000d000000000000001500000000000000
+    stat: 17
+    bonusKey: 0
+    bonusPerTier: -0.01
+    apply: 1
+    unit: 0
+  - id: 10000
+    title: Normal Block Breaks
+    icon: {fileID: 0}
+    bonusLabel: AA Gain
+    track: 0
+    trackKey: 0
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 8
+    bonusKey: 0
+    bonusPerTier: 0.05
+    apply: 1
+    unit: 0
+  - id: 10001
+    title: Armor Block Breaks
+    icon: {fileID: 0}
+    bonusLabel: CC Gain
+    track: 0
+    trackKey: 1
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 8
+    bonusKey: 2
+    bonusPerTier: 0.05
+    apply: 1
+    unit: 0
+  - id: 10002
+    title: Regen Block Breaks
+    icon: {fileID: 0}
+    bonusLabel: BB Gain
+    track: 0
+    trackKey: 2
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 8
+    bonusKey: 1
+    bonusPerTier: 0.05
+    apply: 1
+    unit: 0
+  - id: 10003
+    title: Boss Breaks
+    icon: {fileID: 0}
+    bonusLabel: Boss Damage
+    track: 0
+    trackKey: 3
+    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
+    stat: 15
+    bonusKey: 0
+    bonusPerTier: 0.02
+    apply: 1
+    unit: 0
+  - id: 20000
+    title: Normal Damage
+    icon: {fileID: 0}
+    bonusLabel: Normal Attack
+    track: 3
+    trackKey: 0
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 1
+    bonusKey: 0
+    bonusPerTier: 0.01
+    apply: 1
+    unit: 1
+  - id: 20001
+    title: Bomb Damage
+    icon: {fileID: 0}
+    bonusLabel: Blast Radius
+    track: 3
+    trackKey: 1
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 5
+    bonusKey: 1
+    bonusPerTier: 0.02
+    apply: 1
+    unit: 1
+  - id: 20002
+    title: Laser Damage
+    icon: {fileID: 0}
+    bonusLabel: Column Chance
+    track: 3
+    trackKey: 2
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 3
+    bonusKey: 2
+    bonusPerTier: 0.02
+    apply: 1
+    unit: 1
+  - id: 20003
+    title: Row Laser Damage
+    icon: {fileID: 0}
+    bonusLabel: Row Chance
+    track: 3
+    trackKey: 3
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 3
+    bonusKey: 3
+    bonusPerTier: 0.02
+    apply: 1
+    unit: 1
+  - id: 20004
+    title: Heavy Damage
+    icon: {fileID: 0}
+    bonusLabel: Heavy Speed
+    track: 3
+    trackKey: 4
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 4
+    bonusKey: 0
+    bonusPerTier: 0.02
+    apply: 0
+    unit: 1
+  - id: 20005
+    title: Orbit Damage
+    icon: {fileID: 0}
+    bonusLabel: Satellites
+    track: 3
+    trackKey: 5
+    thresholds: 50c300000000000090d003000000000040420f0000000000
+    stat: 16
+    bonusKey: 0
+    bonusPerTier: 1
+    apply: 0
+    unit: 1
+  - id: 20006
+    title: Cross Damage
+    icon: {fileID: 0}
+    bonusLabel: Diagonal Chance
+    track: 3
+    trackKey: 6
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 3
+    bonusKey: 6
+    bonusPerTier: 0.02
+    apply: 1
+    unit: 1
+  - id: 20007
+    title: Poison Damage
+    icon: {fileID: 0}
+    bonusLabel: Pool Duration
+    track: 3
+    trackKey: 7
+    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
+    stat: 6
+    bonusKey: 0
+    bonusPerTier: 0.1
+    apply: 0
+    unit: 1
   - id: 30000
     title: Stage 0 Clears
     icon: {fileID: 0}
@@ -216,18 +312,6 @@ MonoBehaviour:
     bonusKey: 2
     bonusPerTier: 0.05
     apply: 1
-    unit: 0
-  - id: 5
-    title: Total Plays
-    icon: {fileID: 0}
-    bonusLabel: Max HP
-    track: 7
-    trackKey: 0
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 11
-    bonusKey: 0
-    bonusPerTier: 2
-    apply: 0
     unit: 0
   - id: 40000
     title: Total AA Gained
@@ -312,64 +396,4 @@ MonoBehaviour:
     bonusKey: 6
     bonusPerTier: 0.02
     apply: 1
-    unit: 0
-  - id: 6
-    title: Total Criticals
-    icon: {fileID: 0}
-    bonusLabel: Critical Rate
-    track: 9
-    trackKey: 0
-    thresholds: 0a00000000000000190000000000000032000000000000006400000000000000fa00000000000000f401000000000000e803000000000000c40900000000000088130000000000001027000000000000a86100000000000050c3000000000000a086010000000000
-    stat: 2
-    bonusKey: 0
-    bonusPerTier: 0.005
-    apply: 1
-    unit: 0
-  - id: 7
-    title: Total Reloads
-    icon: {fileID: 0}
-    bonusLabel: Magazine Ammo
-    track: 10
-    trackKey: 0
-    thresholds: 320000000000000096000000000000009001000000000000e803000000000000c409000000000000
-    stat: 12
-    bonusKey: 0
-    bonusPerTier: 1
-    apply: 0
-    unit: 0
-  - id: 8
-    title: Total Damage Taken
-    icon: {fileID: 0}
-    bonusLabel: Max HP
-    track: 11
-    trackKey: 0
-    thresholds: 6400000000000000f401000000000000c409000000000000102700000000000050c300000000000090d003000000000040420f0000000000404b4c000000000040787d010000000000e1f50500000000
-    stat: 11
-    bonusKey: 0
-    bonusPerTier: 2
-    apply: 0
-    unit: 1
-  - id: 9
-    title: Best Damage Updates
-    icon: {fileID: 0}
-    bonusLabel: Attack Interval
-    track: 13
-    trackKey: 0
-    thresholds: 010000000000000002000000000000000300000000000000050000000000000008000000000000000d000000000000001500000000000000
-    stat: 13
-    bonusKey: 0
-    bonusPerTier: -0.01
-    apply: 0
-    unit: 0
-  - id: 10
-    title: Best Clear Updates
-    icon: {fileID: 0}
-    bonusLabel: Cursor Size
-    track: 15
-    trackKey: 0
-    thresholds: 010000000000000002000000000000000300000000000000050000000000000008000000000000000d000000000000001500000000000000
-    stat: 14
-    bonusKey: 0
-    bonusPerTier: 0.02
-    apply: 0
     unit: 0

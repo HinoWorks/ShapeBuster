@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 引っ張った逆方向へ、反射を含んだ予測線と先端を出す。太さや見た目はプレハブで調整する。
+/// カーソル方向へ、反射を含んだ点線と先端を出す。太さや見た目はプレハブで調整する。
 /// </summary>
 public class BlockAimGuide : MonoBehaviour
 {
@@ -10,8 +10,10 @@ public class BlockAimGuide : MonoBehaviour
     [SerializeField] Transform shotBar;
     [SerializeField] Transform shotTip;
     [SerializeField] float maxLength = 36f;
+    [SerializeField] float dotLength = 0.08f;
+    [SerializeField] float dotGap = 0.1f;
 
-    readonly List<Transform> extraBars = new();
+    readonly List<Transform> dots = new();
     float shotThickness = 0.07f;
     Vector3 tipScale = Vector3.one * 0.18f;
 
@@ -36,15 +38,16 @@ public class BlockAimGuide : MonoBehaviour
             return;
         }
 
-        ShowPull(origin, pull);
+        SetActive(pullBar, false);
         int segments = path == null ? 0 : path.Count - 1;
+        int used = 0;
         for (int i = 0; i < segments; i++)
-            ShowBar(Bar(i), path[i], path[i + 1], shotThickness);
+            used = ShowDots(path[i], path[i + 1], used);
 
-        if (segments == 0)
+        if (used == 0)
             SetActive(shotBar, false);
-        for (int i = Mathf.Max(0, segments - 1); i < extraBars.Count; i++)
-            SetActive(extraBars[i], false);
+        for (int i = used; i < dots.Count; i++)
+            SetActive(dots[i], false);
 
         if (shotTip == null || segments <= 0)
         {
@@ -63,31 +66,45 @@ public class BlockAimGuide : MonoBehaviour
         SetActive(pullBar, false);
         SetActive(shotBar, false);
         SetActive(shotTip, false);
-        for (int i = 0; i < extraBars.Count; i++)
-            SetActive(extraBars[i], false);
+        for (int i = 0; i < dots.Count; i++)
+            SetActive(dots[i], false);
     }
 
-    Transform Bar(int index)
+    int ShowDots(Vector2 from, Vector2 to, int used)
     {
-        if (index <= 0 || shotBar == null)
-            return shotBar;
+        Vector2 delta = to - from;
+        float length = delta.magnitude;
+        if (length < 0.02f) return used;
 
-        while (extraBars.Count < index)
+        float mark = Mathf.Max(0.02f, dotLength);
+        float gap = Mathf.Max(0.02f, dotGap);
+        float step = mark + gap;
+        Vector2 dir = delta / length;
+        float cursor = 0f;
+        while (cursor < length - 0.01f)
+        {
+            float dash = Mathf.Min(mark, length - cursor);
+            if (dash < 0.02f) break;
+            ShowBar(Dot(used), from + dir * cursor, from + dir * (cursor + dash), shotThickness);
+            used++;
+            cursor += step;
+        }
+        return used;
+    }
+
+    Transform Dot(int index)
+    {
+        if (shotBar == null) return null;
+        if (dots.Count == 0)
+            dots.Add(shotBar);
+
+        while (dots.Count <= index)
         {
             var copy = Instantiate(shotBar, shotBar.parent);
             copy.gameObject.SetActive(false);
-            extraBars.Add(copy);
+            dots.Add(copy);
         }
-        return extraBars[index - 1];
-    }
-
-    void ShowPull(Vector2 origin, Vector2 pull)
-    {
-        if (pullBar == null) return;
-
-        pullBar.gameObject.SetActive(true);
-        pullBar.position = new Vector3(origin.x, origin.y, 0f);
-        pullBar.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(pull.y, pull.x) * Mathf.Rad2Deg);
+        return dots[index];
     }
 
     static void EnsureSprite(Transform target, bool circle)

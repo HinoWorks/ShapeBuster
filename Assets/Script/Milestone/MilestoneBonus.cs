@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 受け取り済み段階の合計。ドロップは取得時、カーソルの弾数と攻撃パターンは次の Ready で反映する。
-/// リロード短縮は 50% まで。攻撃間隔は呼び出し側で 0.05 秒を下限にする。
+/// 受け取り済み段階の合計。ドロップは次の破壊から、ボールの本数と衛星は次のラン開始時に反映する。
+/// 発射間隔は 0.08 秒まで。ブロック下降はスキルと同じく 40% が下限。
 /// </summary>
 public static class MilestoneBonus
 {
+    public const float ShotIntervalFloor = 0.08f;
+
     static readonly Dictionary<long, float> values = new();
     static bool dirty = true;
 
@@ -22,34 +24,50 @@ public static class MilestoneBonus
         return value;
     }
 
-    public static int ScaleCursorDamage(int damage)
+    public static float BallDamageRate => Mathf.Max(0f, Get(MilestoneBonusStat.BallDamageRate, 0));
+
+    public static float KindDamage(BlockBallKind kind)
     {
-        float rate = Get(MilestoneBonusStat.CursorDamageRate, 0);
-        if (rate == 0f) return Mathf.Max(1, damage);
-        return Mathf.Max(1, Mathf.RoundToInt(damage * (1f + rate)));
+        return Mathf.Max(0f, Get(MilestoneBonusStat.BallKindDamage, (int)kind));
     }
 
-    public static float ReloadScale
+    public static float BallCritRate => Mathf.Max(0f, Get(MilestoneBonusStat.BallCritRate, 0));
+    public static float BallCritDamage => Mathf.Max(0f, Get(MilestoneBonusStat.BallCritDamage, 0));
+    public static float BallBoss => Mathf.Max(0f, Get(MilestoneBonusStat.BallBoss, 0));
+    public static float BallSpeed => Mathf.Max(0f, Get(MilestoneBonusStat.BallSpeed, 0));
+    public static int BallCount => Mathf.Max(0, Mathf.RoundToInt(Get(MilestoneBonusStat.BallCount, 0)));
+    public static float HeavySpeed => Mathf.Max(0f, Get(MilestoneBonusStat.BallHeavySpeed, 0));
+    public static int OrbitCount => Mathf.Max(0, Mathf.RoundToInt(Get(MilestoneBonusStat.BallOrbitCount, 0)));
+    public static float PoisonDuration => Mathf.Max(0f, Get(MilestoneBonusStat.PoisonDuration, 0));
+    public static float PickupRange => Mathf.Max(0f, Get(MilestoneBonusStat.PickupRange, 0));
+
+    /// <summary>下降速度への加算。段階の値が負なので、足すと遅くなる。</summary>
+    public static float BlockFallSlow => Get(MilestoneBonusStat.BlockFallSlow, 0);
+
+    public static float Proc(BlockBallKind kind)
+    {
+        return Mathf.Max(0f, Get(MilestoneBonusStat.BallProc, (int)kind));
+    }
+
+    public static float Area(BlockBallKind kind)
+    {
+        return Mathf.Max(0f, Get(MilestoneBonusStat.BallArea, (int)kind));
+    }
+
+    public static float ShotInterval
     {
         get
         {
-            float reduction = Get(MilestoneBonusStat.ReloadReduction, 0);
-            return Mathf.Max(0.5f, 1f + Mathf.Min(0f, reduction));
+            float add = Get(MilestoneBonusStat.ShotInterval, 0);
+            return Mathf.Max(ShotIntervalFloor, SO_Player.Current.shotInterval + add);
         }
     }
 
-    public static int PlayerMaxHp => Mathf.RoundToInt(Get(MilestoneBonusStat.PlayerMaxHp, 0));
-    public static int MagazineAmmo => Mathf.RoundToInt(Get(MilestoneBonusStat.MagazineAmmo, 0));
-    public static float CriticalRate => Get(MilestoneBonusStat.CriticalRate, 0);
-    public static float AttackIntervalAdd => Get(MilestoneBonusStat.AttackInterval, 0);
-    public static float CursorSizeAdd => Get(MilestoneBonusStat.CursorSize, 0);
-
-    public static int ScaleDropCount(int baseCount, int enemyIndex, ResourceType resourceType, int stageIndex)
+    public static int ScaleDropCount(int baseCount, ResourceType resourceType, int stageIndex)
     {
         if (baseCount <= 0) return 0;
 
-        float bonus = Get(MilestoneBonusStat.EnemyDropRate, enemyIndex)
-            + Get(MilestoneBonusStat.ResourceTypeRate, (int)resourceType)
+        float bonus = Get(MilestoneBonusStat.ResourceTypeRate, (int)resourceType)
             + Get(MilestoneBonusStat.ResourceGainRate, 0)
             + (stageIndex >= 0 ? Get(MilestoneBonusStat.StageDropRate, stageIndex) : 0f);
         if (bonus <= 0f) return baseCount;

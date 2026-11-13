@@ -13,29 +13,9 @@ MonoBehaviour:
   m_Name: SO_SkillTreeData
   m_EditorClassIdentifier: Assembly-CSharp::SO_SkillTreeData
   skillTreeBases:
-  - baseSkillIndex: 1000
-    skillName: "\u9023\u5F3E"
-    jpSkillName: "\u9023\u5F3E"
-    icon: {fileID: 0}
-    maxLevel: 1
-    unit: Count
-    paramTarget: 4
-    targetIndex: 0
-    paramStat: 30
-    deltaValue: 1
-  - baseSkillIndex: 1001
-    skillName: "\u7403\u901F"
-    jpSkillName: "\u7403\u901F"
-    icon: {fileID: 0}
-    maxLevel: 3
-    unit: '%'
-    paramTarget: 4
-    targetIndex: 0
-    paramStat: 31
-    deltaValue: 0.15
   - baseSkillIndex: 1002
-    skillName: "\u7403\u5A01"
-    jpSkillName: "\u7403\u5A01"
+    skillName: "球威"
+    jpSkillName: "球威"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -44,8 +24,8 @@ MonoBehaviour:
     paramStat: 32
     deltaValue: 1
   - baseSkillIndex: 1003
-    skillName: "\u5F37\u6253"
-    jpSkillName: "\u5F37\u6253"
+    skillName: "強打"
+    jpSkillName: "強打"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -53,9 +33,29 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 32
     deltaValue: 2
+  - baseSkillIndex: 1000
+    skillName: "連弾"
+    jpSkillName: "連弾"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: Count
+    paramTarget: 4
+    targetIndex: 0
+    paramStat: 30
+    deltaValue: 1
+  - baseSkillIndex: 1001
+    skillName: "球速"
+    jpSkillName: "球速"
+    icon: {fileID: 0}
+    maxLevel: 3
+    unit: '%'
+    paramTarget: 4
+    targetIndex: 0
+    paramStat: 31
+    deltaValue: 0.15
   - baseSkillIndex: 1004
-    skillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
-    jpSkillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+    skillName: "クリティカル"
+    jpSkillName: "クリティカル"
     icon: {fileID: 0}
     maxLevel: 4
     unit: '%'
@@ -63,19 +63,9 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 33
     deltaValue: 0.1
-  - baseSkillIndex: 1005
-    skillName: "\u81F4\u547D"
-    jpSkillName: "\u81F4\u547D"
-    icon: {fileID: 0}
-    maxLevel: 1
-    unit: Count
-    paramTarget: 4
-    targetIndex: 0
-    paramStat: 34
-    deltaValue: 1
   - baseSkillIndex: 1006
-    skillName: "\u5897\u5E45"
-    jpSkillName: "\u5897\u5E45"
+    skillName: "増幅"
+    jpSkillName: "増幅"
     icon: {fileID: 0}
     maxLevel: 2
     unit: '%'
@@ -83,9 +73,19 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 35
     deltaValue: 0.25
+  - baseSkillIndex: 1005
+    skillName: "致命"
+    jpSkillName: "致命"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: Count
+    paramTarget: 4
+    targetIndex: 0
+    paramStat: 34
+    deltaValue: 1
   - baseSkillIndex: 1007
-    skillName: "\u9023\u6483"
-    jpSkillName: "\u9023\u6483"
+    skillName: "連撃"
+    jpSkillName: "連撃"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -94,8 +94,8 @@ MonoBehaviour:
     paramStat: 36
     deltaValue: 1
   - baseSkillIndex: 1008
-    skillName: "\u30DC\u30B9\u7279\u653B"
-    jpSkillName: "\u30DC\u30B9\u7279\u653B"
+    skillName: "ボス特攻"
+    jpSkillName: "ボス特攻"
     icon: {fileID: 0}
     maxLevel: 3
     unit: '%'
@@ -104,8 +104,8 @@ MonoBehaviour:
     paramStat: 37
     deltaValue: 0.1
   - baseSkillIndex: 2000
-    skillName: "\u30DC\u30E0\u30DC\u30FC\u30EB"
-    jpSkillName: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+    skillName: "ボムボール"
+    jpSkillName: "ボムボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -114,8 +114,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2001
-    skillName: "\u7206\u98A8\u306E\u767A\u751F"
-    jpSkillName: "\u7206\u98A8\u306E\u767A\u751F"
+    skillName: "爆風の発生"
+    jpSkillName: "爆風の発生"
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
@@ -124,8 +124,8 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.4
   - baseSkillIndex: 2002
-    skillName: "\u7206\u98A8\u306E\u5A01\u529B"
-    jpSkillName: "\u7206\u98A8\u306E\u5A01\u529B"
+    skillName: "爆風の威力"
+    jpSkillName: "爆風の威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -134,8 +134,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2003
-    skillName: "\u30DC\u30E0\uFF0B1"
-    jpSkillName: "\u30DC\u30E0\uFF0B1"
+    skillName: "ボム＋1"
+    jpSkillName: "ボム＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -144,8 +144,8 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2010
-    skillName: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
-    jpSkillName: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    skillName: "レーザーボール"
+    jpSkillName: "レーザーボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -154,8 +154,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2011
-    skillName: "\u5217\u306E\u767A\u751F"
-    jpSkillName: "\u5217\u306E\u767A\u751F"
+    skillName: "列の発生"
+    jpSkillName: "列の発生"
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
@@ -164,8 +164,8 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.4
   - baseSkillIndex: 2012
-    skillName: "\u5217\u306E\u5A01\u529B"
-    jpSkillName: "\u5217\u306E\u5A01\u529B"
+    skillName: "列の威力"
+    jpSkillName: "列の威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -174,8 +174,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2013
-    skillName: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
-    jpSkillName: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    skillName: "縦レーザー＋1"
+    jpSkillName: "縦レーザー＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -184,8 +184,8 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2020
-    skillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
-    jpSkillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    skillName: "横レーザーボール"
+    jpSkillName: "横レーザーボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -194,8 +194,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2021
-    skillName: "\u6BB5\u306E\u767A\u751F"
-    jpSkillName: "\u6BB5\u306E\u767A\u751F"
+    skillName: "段の発生"
+    jpSkillName: "段の発生"
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
@@ -204,8 +204,8 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.4
   - baseSkillIndex: 2022
-    skillName: "\u6BB5\u306E\u5A01\u529B"
-    jpSkillName: "\u6BB5\u306E\u5A01\u529B"
+    skillName: "段の威力"
+    jpSkillName: "段の威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -214,8 +214,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2023
-    skillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
-    jpSkillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    skillName: "横レーザー＋1"
+    jpSkillName: "横レーザー＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -224,8 +224,8 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2030
-    skillName: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
-    jpSkillName: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    skillName: "クロスレーザーボール"
+    jpSkillName: "クロスレーザーボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -234,8 +234,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2031
-    skillName: "\u659C\u3081\u306E\u767A\u751F"
-    jpSkillName: "\u659C\u3081\u306E\u767A\u751F"
+    skillName: "斜めの発生"
+    jpSkillName: "斜めの発生"
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
@@ -244,8 +244,8 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.4
   - baseSkillIndex: 2032
-    skillName: "\u659C\u3081\u306E\u5A01\u529B"
-    jpSkillName: "\u659C\u3081\u306E\u5A01\u529B"
+    skillName: "斜めの威力"
+    jpSkillName: "斜めの威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -254,8 +254,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2033
-    skillName: "\u30AF\u30ED\u30B9\uFF0B1"
-    jpSkillName: "\u30AF\u30ED\u30B9\uFF0B1"
+    skillName: "クロス＋1"
+    jpSkillName: "クロス＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -264,8 +264,8 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2040
-    skillName: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
-    jpSkillName: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
+    skillName: "ポイズンボール"
+    jpSkillName: "ポイズンボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -274,8 +274,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2041
-    skillName: "\u6CBC\u306E\u767A\u751F"
-    jpSkillName: "\u6CBC\u306E\u767A\u751F"
+    skillName: "沼の発生"
+    jpSkillName: "沼の発生"
     icon: {fileID: 0}
     maxLevel: 1
     unit: '%'
@@ -284,8 +284,8 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.4
   - baseSkillIndex: 2042
-    skillName: "\u6CBC\u306E\u5A01\u529B"
-    jpSkillName: "\u6CBC\u306E\u5A01\u529B"
+    skillName: "沼の威力"
+    jpSkillName: "沼の威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -294,8 +294,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2043
-    skillName: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
-    jpSkillName: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
+    skillName: "ポイズン＋1"
+    jpSkillName: "ポイズン＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -304,8 +304,8 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2050
-    skillName: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
-    jpSkillName: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+    skillName: "ヘビーボール"
+    jpSkillName: "ヘビーボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -314,8 +314,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2051
-    skillName: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
-    jpSkillName: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
+    skillName: "ヘビーの速さ"
+    jpSkillName: "ヘビーの速さ"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -324,8 +324,8 @@ MonoBehaviour:
     paramStat: 41
     deltaValue: 0.2
   - baseSkillIndex: 2052
-    skillName: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
-    jpSkillName: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
+    skillName: "ヘビーの威力"
+    jpSkillName: "ヘビーの威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -334,8 +334,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2053
-    skillName: "\u30D8\u30D3\u30FC\uFF0B1"
-    jpSkillName: "\u30D8\u30D3\u30FC\uFF0B1"
+    skillName: "ヘビー＋1"
+    jpSkillName: "ヘビー＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -344,8 +344,8 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2060
-    skillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
-    jpSkillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+    skillName: "オービットボール"
+    jpSkillName: "オービットボール"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -354,8 +354,8 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2061
-    skillName: "\u885B\u661F"
-    jpSkillName: "\u885B\u661F"
+    skillName: "衛星"
+    jpSkillName: "衛星"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -364,8 +364,8 @@ MonoBehaviour:
     paramStat: 42
     deltaValue: 1
   - baseSkillIndex: 2062
-    skillName: "\u5468\u56DE\u306E\u5A01\u529B"
-    jpSkillName: "\u5468\u56DE\u306E\u5A01\u529B"
+    skillName: "周回の威力"
+    jpSkillName: "周回の威力"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -374,8 +374,8 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.5
   - baseSkillIndex: 2063
-    skillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
-    jpSkillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
+    skillName: "オービット＋1"
+    jpSkillName: "オービット＋1"
     icon: {fileID: 0}
     maxLevel: 1
     unit: Count
@@ -383,9 +383,9 @@ MonoBehaviour:
     targetIndex: 4
     paramStat: 40
     deltaValue: 1
-  - baseSkillIndex: 1000
-    skillName: "\u53CE\u7A6B"
-    jpSkillName: "\u53CE\u7A6B"
+  - baseSkillIndex: 3000
+    skillName: "収穫"
+    jpSkillName: "収穫"
     icon: {fileID: 0}
     maxLevel: 3
     unit: '%'
@@ -393,9 +393,9 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 44
     deltaValue: 0.25
-  - baseSkillIndex: 1001
-    skillName: "\u78C1\u77F3"
-    jpSkillName: "\u78C1\u77F3"
+  - baseSkillIndex: 3001
+    skillName: "磁石"
+    jpSkillName: "磁石"
     icon: {fileID: 0}
     maxLevel: 2
     unit: '%'
@@ -403,9 +403,9 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 45
     deltaValue: 0.5
-  - baseSkillIndex: 1002
-    skillName: "\u6B8B\u7559"
-    jpSkillName: "\u6B8B\u7559"
+  - baseSkillIndex: 3002
+    skillName: "残留"
+    jpSkillName: "残留"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -413,9 +413,9 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 46
     deltaValue: 1
-  - baseSkillIndex: 4000
-    skillName: "\u518D\u751F\u306E\u51FA\u73FE"
-    jpSkillName: "\u518D\u751F\u306E\u51FA\u73FE"
+  - baseSkillIndex: 3010
+    skillName: "再生の出現"
+    jpSkillName: "再生の出現"
     icon: {fileID: 0}
     maxLevel: 3
     unit: '%'
@@ -424,8 +424,8 @@ MonoBehaviour:
     paramStat: 47
     deltaValue: 0.04
   - baseSkillIndex: 3011
-    skillName: "\u518D\u751F\u306E\u53CE\u91CF"
-    jpSkillName: "\u518D\u751F\u306E\u53CE\u91CF"
+    skillName: "再生の収量"
+    jpSkillName: "再生の収量"
     icon: {fileID: 0}
     maxLevel: 2
     unit: Count
@@ -433,9 +433,9 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 49
     deltaValue: 1
-  - baseSkillIndex: 3000
-    skillName: "\u58C1\u306E\u51FA\u73FE"
-    jpSkillName: "\u58C1\u306E\u51FA\u73FE"
+  - baseSkillIndex: 3020
+    skillName: "壁の出現"
+    jpSkillName: "壁の出現"
     icon: {fileID: 0}
     maxLevel: 3
     unit: '%'
@@ -443,79 +443,9 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 48
     deltaValue: 0.04
-  - baseSkillIndex: 3001
-    skillName: "\u58C1\u306E\u53CE\u91CF"
-    jpSkillName: "\u58C1\u306E\u53CE\u91CF"
-    icon: {fileID: 0}
-    maxLevel: 2
-    unit: Count
-    paramTarget: 5
-    targetIndex: 0
-    paramStat: 50
-    deltaValue: 1
-  - baseSkillIndex: 3010
-    skillName: Convert
-    jpSkillName: Convert
-    icon: {fileID: 0}
-    maxLevel: 1
-    unit: NA
-    paramTarget: 5
-    targetIndex: 0
-    paramStat: 51
-    deltaValue: 1
-  - baseSkillIndex: 3020
-    skillName: "\u52B9\u7387"
-    jpSkillName: "\u52B9\u7387"
-    icon: {fileID: 0}
-    maxLevel: 3
-    unit: Count
-    paramTarget: 5
-    targetIndex: 0
-    paramStat: 52
-    deltaValue: 1
-  - baseSkillIndex: 4000
-    skillName: "\u6E1B\u901F"
-    jpSkillName: "\u6E1B\u901F"
-    icon: {fileID: 0}
-    maxLevel: 3
-    unit: '%'
-    paramTarget: 5
-    targetIndex: 0
-    paramStat: 43
-    deltaValue: 0.1
-  - baseSkillIndex: 4010
-    skillName: "\u7D30\u7247"
-    jpSkillName: "\u7D30\u7247"
-    icon: {fileID: 0}
-    maxLevel: 5
-    unit: NA
-    paramTarget: 5
-    targetIndex: 0
-    paramStat: 29
-    deltaValue: 1
-  - baseSkillIndex: 4020
-    skillName: "\u30AC\u30E9\u30B9"
-    jpSkillName: "\u30AC\u30E9\u30B9"
-    icon: {fileID: 0}
-    maxLevel: 5
-    unit: '%'
-    paramTarget: 2
-    targetIndex: 0
-    paramStat: 27
-    deltaValue: 0.05
-  - baseSkillIndex: 3002
-    skillName: "\u6B8B\u7559"
-    jpSkillName: 
-    icon: {fileID: 0}
-    maxLevel: 1
-    unit: NA
-    paramTarget: 5
-    targetIndex: 0
-    paramStat: 46
-    deltaValue: 1
   - baseSkillIndex: 3021
-    skillName: "\u58C1\u306E\u53CE\u91CF"
-    jpSkillName: 
+    skillName: "壁の収量"
+    jpSkillName: "壁の収量"
     icon: {fileID: 0}
     maxLevel: 2
     unit: Count
@@ -524,8 +454,8 @@ MonoBehaviour:
     paramStat: 50
     deltaValue: 1
   - baseSkillIndex: 3030
-    skillName: Convert
-    jpSkillName: 
+    skillName: "Convert"
+    jpSkillName: "Convert"
     icon: {fileID: 0}
     maxLevel: 1
     unit: NA
@@ -534,8 +464,8 @@ MonoBehaviour:
     paramStat: 51
     deltaValue: 1
   - baseSkillIndex: 3031
-    skillName: "\u52B9\u7387"
-    jpSkillName: 
+    skillName: "効率"
+    jpSkillName: "効率"
     icon: {fileID: 0}
     maxLevel: 3
     unit: Count
@@ -543,10 +473,78 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 52
     deltaValue: 1
+  - baseSkillIndex: 4000
+    skillName: "減速"
+    jpSkillName: "減速"
+    icon: {fileID: 0}
+    maxLevel: 3
+    unit: '%'
+    paramTarget: 5
+    targetIndex: 0
+    paramStat: 43
+    deltaValue: 0.1
+  - baseSkillIndex: 4010
+    skillName: "細片"
+    jpSkillName: "細片"
+    icon: {fileID: 0}
+    maxLevel: 5
+    unit: NA
+    paramTarget: 5
+    targetIndex: 0
+    paramStat: 29
+    deltaValue: 1
+  - baseSkillIndex: 4020
+    skillName: "ガラス"
+    jpSkillName: "ガラス"
+    icon: {fileID: 0}
+    maxLevel: 5
+    unit: '%'
+    paramTarget: 2
+    targetIndex: 0
+    paramStat: 27
+    deltaValue: 0.05
+  - baseSkillIndex: 5000
+    skillName: "\u7832\u53F0"
+    jpSkillName: "\u7832\u53F0"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: NA
+    paramTarget: 2
+    targetIndex: 0
+    paramStat: 53
+    deltaValue: 1
+  - baseSkillIndex: 5010
+    skillName: "\u6A2A\u30D3\u30FC\u30E0"
+    jpSkillName: "\u6A2A\u30D3\u30FC\u30E0"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: NA
+    paramTarget: 2
+    targetIndex: 0
+    paramStat: 54
+    deltaValue: 1
   skillTreeUnits:
+  - skillTreeIndex: 1002
+    level: 1
+    cost_AA: 12
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 1003
+    level: 1
+    cost_AA: 36
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
   - skillTreeIndex: 1000
     level: 1
-    cost_AA: 20
+    cost_AA: 18
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -580,27 +578,9 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 1002
-    level: 1
-    cost_AA: 20
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 1003
-    level: 1
-    cost_AA: 40
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
   - skillTreeIndex: 1004
     level: 1
-    cost_AA: 20
+    cost_AA: 22
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -609,7 +589,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 1004
     level: 2
-    cost_AA: 45
+    cost_AA: 50
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -618,7 +598,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 1004
     level: 3
-    cost_AA: 90
+    cost_AA: 100
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -627,16 +607,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 1004
     level: 4
-    cost_AA: 160
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 1005
-    level: 1
-    cost_AA: 80
+    cost_AA: 170
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -645,7 +616,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 1006
     level: 1
-    cost_AA: 50
+    cost_AA: 45
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -654,7 +625,16 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 1006
     level: 2
-    cost_AA: 120
+    cost_AA: 110
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 1005
+    level: 1
+    cost_AA: 90
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -663,7 +643,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 1007
     level: 1
-    cost_AA: 60
+    cost_AA: 80
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -699,44 +679,44 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2000
     level: 1
-    cost_AA: 20
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 16
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2001
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 24
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2002
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 28
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2003
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 36
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2010
     level: 1
-    cost_AA: 20
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 16
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -744,8 +724,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2011
     level: 1
-    cost_AA: 30
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 24
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -753,8 +733,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2012
     level: 1
-    cost_AA: 30
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 28
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -762,8 +742,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2013
     level: 1
-    cost_AA: 30
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 36
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -771,80 +751,80 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2020
     level: 1
-    cost_AA: 20
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 20
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2021
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 28
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2022
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 32
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2023
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 40
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2030
     level: 1
-    cost_AA: 20
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 36
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2031
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 40
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2032
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 48
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2033
     level: 1
-    cost_AA: 30
+    cost_AA: 0
     cost_BB: 0
-    cost_CC: 0
+    cost_CC: 60
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 2040
     level: 1
-    cost_AA: 20
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 36
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -852,8 +832,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2041
     level: 1
-    cost_AA: 30
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 40
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -861,8 +841,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2042
     level: 1
-    cost_AA: 30
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 48
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -870,8 +850,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2043
     level: 1
-    cost_AA: 30
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 60
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -879,7 +859,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2050
     level: 1
-    cost_AA: 20
+    cost_AA: 24
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -888,7 +868,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2051
     level: 1
-    cost_AA: 30
+    cost_AA: 20
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -897,7 +877,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2052
     level: 1
-    cost_AA: 30
+    cost_AA: 32
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -906,7 +886,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2053
     level: 1
-    cost_AA: 30
+    cost_AA: 40
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -915,7 +895,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2060
     level: 1
-    cost_AA: 20
+    cost_AA: 50
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -924,7 +904,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2061
     level: 1
-    cost_AA: 30
+    cost_AA: 40
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -933,7 +913,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2062
     level: 1
-    cost_AA: 30
+    cost_AA: 55
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -942,41 +922,14 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 2063
     level: 1
-    cost_AA: 30
+    cost_AA: 70
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 1000
-    level: 1
-    cost_AA: 15
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 1000
-    level: 2
-    cost_AA: 40
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 1000
-    level: 3
-    cost_AA: 90
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 1001
+  - skillTreeIndex: 3000
     level: 1
     cost_AA: 20
     cost_BB: 0
@@ -985,7 +938,7 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 1001
+  - skillTreeIndex: 3000
     level: 2
     cost_AA: 50
     cost_BB: 0
@@ -994,81 +947,9 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 1002
-    level: 1
-    cost_AA: 30
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 4000
-    level: 1
-    cost_AA: 25
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 4000
-    level: 2
-    cost_AA: 60
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 4000
-    level: 3
-    cost_AA: 120
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3011
-    level: 1
-    cost_AA: 40
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3011
-    level: 2
-    cost_AA: 90
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3000
-    level: 1
-    cost_AA: 25
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3000
-    level: 2
-    cost_AA: 60
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
   - skillTreeIndex: 3000
     level: 3
-    cost_AA: 120
+    cost_AA: 110
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1077,7 +958,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 3001
     level: 1
-    cost_AA: 40
+    cost_AA: 24
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1086,7 +967,16 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 3001
     level: 2
-    cost_AA: 90
+    cost_AA: 60
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3002
+    level: 1
+    cost_AA: 40
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1095,14 +985,104 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 3010
     level: 1
-    cost_AA: 50
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 28
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3010
+    level: 2
+    cost_AA: 0
+    cost_BB: 70
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3010
+    level: 3
+    cost_AA: 0
+    cost_BB: 140
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3011
+    level: 1
+    cost_AA: 0
+    cost_BB: 36
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3011
+    level: 2
+    cost_AA: 0
+    cost_BB: 80
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
   - skillTreeIndex: 3020
+    level: 1
+    cost_AA: 0
+    cost_BB: 0
+    cost_CC: 28
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3020
+    level: 2
+    cost_AA: 0
+    cost_BB: 0
+    cost_CC: 70
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3020
+    level: 3
+    cost_AA: 0
+    cost_BB: 0
+    cost_CC: 140
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3021
+    level: 1
+    cost_AA: 0
+    cost_BB: 0
+    cost_CC: 36
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3021
+    level: 2
+    cost_AA: 0
+    cost_BB: 0
+    cost_CC: 80
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3030
+    level: 1
+    cost_AA: 60
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 3031
     level: 1
     cost_AA: 40
     cost_BB: 0
@@ -1111,7 +1091,7 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 3020
+  - skillTreeIndex: 3031
     level: 2
     cost_AA: 90
     cost_BB: 0
@@ -1120,7 +1100,7 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 3020
+  - skillTreeIndex: 3031
     level: 3
     cost_AA: 160
     cost_BB: 0
@@ -1131,8 +1111,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4000
     level: 1
-    cost_AA: 20
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 18
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -1140,8 +1120,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4000
     level: 2
-    cost_AA: 50
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 45
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -1149,8 +1129,8 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4000
     level: 3
-    cost_AA: 110
-    cost_BB: 0
+    cost_AA: 0
+    cost_BB: 100
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -1158,7 +1138,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4010
     level: 1
-    cost_AA: 25
+    cost_AA: 40
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1167,7 +1147,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4010
     level: 2
-    cost_AA: 60
+    cost_AA: 90
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1176,7 +1156,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4010
     level: 3
-    cost_AA: 120
+    cost_AA: 160
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1185,7 +1165,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4010
     level: 4
-    cost_AA: 220
+    cost_AA: 260
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1194,7 +1174,7 @@ MonoBehaviour:
     cost_GG: 0
   - skillTreeIndex: 4010
     level: 5
-    cost_AA: 380
+    cost_AA: 400
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1246,63 +1226,20 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 3002
+  - skillTreeIndex: 5000
     level: 1
-    cost_AA: 30
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3021
-    level: 1
-    cost_AA: 40
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3021
-    level: 2
-    cost_AA: 90
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3030
-    level: 1
-    cost_AA: 50
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3031
-    level: 1
-    cost_AA: 40
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3031
-    level: 2
-    cost_AA: 90
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
-  - skillTreeIndex: 3031
-    level: 3
+    maxLevel: 1
     cost_AA: 160
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 5010
+    level: 1
+    maxLevel: 1
+    cost_AA: 220
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0

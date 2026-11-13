@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e8a4b27f3d4e59a0b6c5d4e3f2a190, type: 3}
+  m_Name: SO_Player
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Player
+  cursorInfo: {fileID: 100003, guid: d5e9f2b38c604d1fab4c7e208f815326, type: 3}
+  cursorBase: {fileID: 4190715106081716764, guid: 09814f1f1dd4049c4b182aad67ab0dad, type: 3}
+  aimGuide: {fileID: 200003, guid: b8c4d5e6f7084910bc23de45f0678901, type: 3}
+  shotInterval: 0.2
+  minPull: 0.28
+  launchTopInset: 4.5
+  beamLife: 0.32
+  beamHold: 0.18
+  aimBounces: 12
+  aimSkin: 0.02
+  pickupRange: 0.5
+  cursorPickupRadius: 0.5
+  collectKickDistance: 0.45
+  collectKickDuration: 0.1
+  collectPullDuration: 0.18
+  debugTurrets: 1
+  turretInterval: 1
+  turret: {fileID: 720003, guid: a9b8c7d6e5f44321a0b9c8d7e6f50413, type: 3}
+  turretBall: {fileID: 500003, guid: f1a2b3c4d5e64789a0b1c2d3e4f50617, type: 3}
+  debugRowBeam: 1
+  rowBeamInterval: 3.5
+  rowBeamDamageRate: 1
+  rowBeamMoveSpeed: 8
+  rowEmitter: {fileID: 730003, guid: 2d8f6b14c9a74e5b8c1d3f0a6e7b4521, type: 3}
+  rowBeam: {fileID: 740001, guid: 9c4e7a21d6b84f0e8a3c5d1f2b7e9046, type: 3}
