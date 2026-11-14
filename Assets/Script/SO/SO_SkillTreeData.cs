@@ -27,6 +27,9 @@ public enum SkillParamStat
     BallCritDamage = 34, // クリティカル倍率への加算。素の2倍に足す
     BallChain = 36, // 1以上で、同じフライトの連続ヒットが次弾を強くする
     BallBoss = 37, // ボスへの攻撃力倍率
+    BallFirstAttack = 61, // まだダメージを受けていないブロックへの攻撃力倍率。0.2 で +20%
+    BallLastAttack = 62, // 残りHPが25%以下のブロックへの攻撃力倍率
+    BallFullStack = 63, // ボールを全部回収してから撃ったときの攻撃力倍率
 
     // == Ball : 特殊弾 ==
     BallProc = 38, // 特殊弾の発生率への加算。targetIndex はボム0から
@@ -49,11 +52,17 @@ public enum SkillParamStat
     // == Convert ==
     ConvertUnlock = 51, // 1以上で Convert タブを出す
     ConvertRate = 52, // Convert の必要AAを減らす段
+    MilestoneUnlock = 60, // 1以上で Milestone タブを出す
 
     // == Player ==
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
     TurretUnlock = 53, // 1以上で、左右の下に固定砲台が付く
     RowBeamUnlock = 54, // 1以上で、一番下の段へ横ビームを撃つ
+    TurretDamage = 55, // タレット攻撃力への倍率。0.1 で +10%
+    TurretFireRate = 56, // タレットの攻撃速度への倍率。間隔をこの割合だけ短くする
+    TurretExtra = 57, // タレットが続けて撃つ追加弾
+    RowBeamDamage = 58, // オートビーム攻撃力への倍率
+    RowBeamInterval = 59, // オートビームの攻撃間隔への倍率。この割合だけ間隔を短くする
 }
 
 [Serializable]
@@ -175,117 +184,6 @@ public class SO_SkillTreeData : ScriptableObject
         return data;
     }
 
-    public const int GlassSkillIndex = 4020;
-    public const int BallBombSkillIndex = 2000;
-    public const int BallLaserSkillIndex = 2010;
-    public const int BallLaserRowSkillIndex = 2020;
-    public const int BallCrossSkillIndex = 2030;
-    public const int BallPoisonSkillIndex = 2040;
-    public const int BallHeavySkillIndex = 2050;
-    public const int BallOrbitSkillIndex = 2060;
-    public const int BlockCompactSkillIndex = 4010;
-    public const int BallVolleySkill = 1000;
-    public const int BallSpeedSkill = 1001;
-    public const int BallPowerSkill = 1002;
-    public const int BallHeavyHitSkill = 1003;
-    public const int BallCritSkill = 1004;
-    public const int BallFatalSkill = 1005;
-    public const int BallAmpSkill = 1006;
-    public const int BallChainSkill = 1007;
-    public const int BallBossSkill = 1008;
-    public const int BlockSlowSkill = 4000;
-    public const int BlockHarvestSkill = 3000;
-    public const int BlockMagnetSkill = 3001;
-    public const int BlockLingerSkill = 3002;
-    public const int RegenSpawnSkill = 3010;
-    public const int RegenDropSkill = 3011;
-    public const int ArmorSpawnSkill = 3020;
-    public const int ArmorDropSkill = 3021;
-    public const int ConvertSkill = 3030;
-    public const int ConvertRateSkill = 3031;
-    public const int TurretSkillIndex = 5000;
-    public const int RowBeamSkillIndex = 5010;
-
-    /// <summary>
-    /// シートにガラスの行が無くても、スキル37として出現率を買えるように足す。
-    /// 同じ効果の行が既にあれば何もしない。
-    /// </summary>
-    public void RemapLegacyIds()
-    {
-        if (skillTreeBases != null)
-        {
-            for (int i = 0; i < skillTreeBases.Length; i++)
-            {
-                var basis = skillTreeBases[i];
-                if (basis != null && LegacySkillIds.TryGetValue(basis.baseSkillIndex, out int next))
-                    basis.baseSkillIndex = next;
-            }
-        }
-
-        if (skillTreeUnits != null)
-        {
-            for (int i = 0; i < skillTreeUnits.Length; i++)
-            {
-                var unit = skillTreeUnits[i];
-                if (unit != null && LegacySkillIds.TryGetValue(unit.skillTreeIndex, out int next))
-                    unit.skillTreeIndex = next;
-            }
-        }
-    }
-
-    static readonly Dictionary<int, int> LegacySkillIds = new Dictionary<int, int>
-    {
-        { 37, GlassSkillIndex },
-        { 38, BallBombSkillIndex },
-        { 39, BallLaserSkillIndex },
-        { 40, BallHeavySkillIndex },
-        { 41, BallLaserRowSkillIndex },
-        { 42, BallOrbitSkillIndex },
-        { 43, BlockCompactSkillIndex },
-        { 44, BallCrossSkillIndex },
-        { 45, BallPoisonSkillIndex },
-        { 3000, BallVolleySkill },
-        { 3001, BallSpeedSkill },
-        { 3002, BallPowerSkill },
-        { 3003, BallHeavyHitSkill },
-        { 3004, BallCritSkill },
-        { 3005, BallFatalSkill },
-        { 3006, BallAmpSkill },
-        { 3007, BallChainSkill },
-        { 3008, BallBossSkill },
-        { 3010, BlockSlowSkill },
-        { 3020, BlockHarvestSkill },
-        { 3021, BlockMagnetSkill },
-        { 3022, BlockLingerSkill },
-        { 3030, RegenSpawnSkill },
-        { 3031, ArmorSpawnSkill },
-        { 3032, RegenDropSkill },
-        { 3033, ArmorDropSkill },
-        { 3040, ConvertSkill },
-        { 3041, ConvertRateSkill },
-        { 3100, BallBombSkillIndex + 1 },
-        { 3101, BallBombSkillIndex + 2 },
-        { 3102, BallBombSkillIndex + 3 },
-        { 3110, BallLaserSkillIndex + 1 },
-        { 3111, BallLaserSkillIndex + 2 },
-        { 3112, BallLaserSkillIndex + 3 },
-        { 3120, BallLaserRowSkillIndex + 1 },
-        { 3121, BallLaserRowSkillIndex + 2 },
-        { 3122, BallLaserRowSkillIndex + 3 },
-        { 3130, BallHeavySkillIndex + 1 },
-        { 3131, BallHeavySkillIndex + 2 },
-        { 3132, BallHeavySkillIndex + 3 },
-        { 3140, BallOrbitSkillIndex + 1 },
-        { 3141, BallOrbitSkillIndex + 2 },
-        { 3142, BallOrbitSkillIndex + 3 },
-        { 3150, BallCrossSkillIndex + 1 },
-        { 3151, BallCrossSkillIndex + 2 },
-        { 3152, BallCrossSkillIndex + 3 },
-        { 3160, BallPoisonSkillIndex + 1 },
-        { 3161, BallPoisonSkillIndex + 2 },
-        { 3162, BallPoisonSkillIndex + 3 },
-    };
-
     /// <summary>再取り込みで、シートにアイコン列が無いスキルのスプライトを残す。</summary>
     public void KeepIcons(SkillTreeBase[] incoming)
     {
@@ -350,102 +248,6 @@ public class SO_SkillTreeData : ScriptableObject
             if (max > 0)
                 basis.maxLevel = max;
         }
-    }
-
-    /// <summary>
-    /// シートに砲台が無くても、スキル5000として買えるように足す。
-    /// 同じ行が既にあれば何もしない。
-    /// </summary>
-    public void EnsureTurretSkill()
-    {
-        if (!HasBase(TurretSkillIndex))
-        {
-            var bases = skillTreeBases != null
-                ? new List<SkillTreeBase>(skillTreeBases)
-                : new List<SkillTreeBase>();
-            bases.Add(new SkillTreeBase
-            {
-                baseSkillIndex = TurretSkillIndex,
-                skillName = "砲台",
-                jpSkillName = "砲台",
-                maxLevel = 1,
-                unit = "NA",
-                paramTarget = SkillParamTarget.Player,
-                paramStat = SkillParamStat.TurretUnlock,
-                deltaValue = 1f,
-            });
-            skillTreeBases = bases.ToArray();
-        }
-
-        if (skillTreeUnits != null)
-        {
-            for (int i = 0; i < skillTreeUnits.Length; i++)
-            {
-                var unit = skillTreeUnits[i];
-                if (unit != null && unit.skillTreeIndex == TurretSkillIndex)
-                    return;
-            }
-        }
-
-        var units = skillTreeUnits != null
-            ? new List<SkillTreeUnit>(skillTreeUnits)
-            : new List<SkillTreeUnit>();
-        units.Add(new SkillTreeUnit
-        {
-            skillTreeIndex = TurretSkillIndex,
-            level = 1,
-            maxLevel = 1,
-            cost_AA = 120,
-        });
-        skillTreeUnits = units.ToArray();
-    }
-
-    /// <summary>
-    /// シートに横ビームが無くても、スキル5010として買えるように足す。
-    /// 同じ行が既にあれば何もしない。
-    /// </summary>
-    public void EnsureRowBeamSkill()
-    {
-        if (!HasBase(RowBeamSkillIndex))
-        {
-            var bases = skillTreeBases != null
-                ? new List<SkillTreeBase>(skillTreeBases)
-                : new List<SkillTreeBase>();
-            bases.Add(new SkillTreeBase
-            {
-                baseSkillIndex = RowBeamSkillIndex,
-                skillName = "横ビーム",
-                jpSkillName = "横ビーム",
-                maxLevel = 1,
-                unit = "NA",
-                paramTarget = SkillParamTarget.Player,
-                paramStat = SkillParamStat.RowBeamUnlock,
-                deltaValue = 1f,
-            });
-            skillTreeBases = bases.ToArray();
-        }
-
-        if (skillTreeUnits != null)
-        {
-            for (int i = 0; i < skillTreeUnits.Length; i++)
-            {
-                var unit = skillTreeUnits[i];
-                if (unit != null && unit.skillTreeIndex == RowBeamSkillIndex)
-                    return;
-            }
-        }
-
-        var units = skillTreeUnits != null
-            ? new List<SkillTreeUnit>(skillTreeUnits)
-            : new List<SkillTreeUnit>();
-        units.Add(new SkillTreeUnit
-        {
-            skillTreeIndex = RowBeamSkillIndex,
-            level = 1,
-            maxLevel = 1,
-            cost_AA = 220,
-        });
-        skillTreeUnits = units.ToArray();
     }
 
     bool HasBase(int index)

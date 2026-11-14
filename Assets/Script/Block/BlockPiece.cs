@@ -118,9 +118,22 @@ public class BlockPiece : MonoBehaviour
     }
     public bool IsAlive { get; private set; }
     public bool IsSolid => solid;
+    /// <summary>生成されてから、一度もダメージを受けていない。</summary>
+    public bool Unhurt { get; private set; }
     public int Level => level;
     public int Hp => currentHp;
     public int HpMax => barMax;
+    /// <summary>生成時の総HPに対する、いま残っている総HP。</summary>
+    public float HpRatio
+    {
+        get
+        {
+            int total = (spawnLevel - 1) * stepHp + spawnHp;
+            if (total <= 0) return 1f;
+            int left = (level - 1) * stepHp + currentHp;
+            return Mathf.Clamp01((float)left / total);
+        }
+    }
     public float Bottom => transform.position.y - half;
     /// <summary>ブロックの中心。ボールスキルの発生位置はここを基準にする。</summary>
     public Vector2 Center => transform.position;
@@ -227,6 +240,7 @@ public class BlockPiece : MonoBehaviour
         spawnLevel = level;
         spawnHp = currentHp;
         spawnBar = barMax;
+        Unhurt = !solid;
         regenTimer = 0f;
         healTime = 0f;
         healPulse = 0f;
@@ -269,7 +283,7 @@ public class BlockPiece : MonoBehaviour
     }
 
     /// <summary>当たった位置。装甲の下半分はダメージにしない。ballKind は BlockBallKind。不明なら -1。</summary>
-    public bool HitFrom(int damage, Vector2 worldPoint, int ballKind = -1, bool critical = false)
+    public bool HitFrom(int damage, Vector2 worldPoint, int ballKind = -1, bool critical = false, bool fullStack = false)
     {
         if (RejectsBottom(worldPoint))
         {
@@ -277,22 +291,24 @@ public class BlockPiece : MonoBehaviour
             return false;
         }
 
-        ApplyHit(damage, ballKind, critical, worldPoint);
+        ApplyHit(damage, ballKind, critical, worldPoint, fullStack);
         return true;
     }
 
-    public void Hit(int damage, int ballKind = -1, bool critical = false)
+    public void Hit(int damage, int ballKind = -1, bool critical = false, bool fullStack = false)
     {
-        ApplyHit(damage, ballKind, critical, Center);
+        ApplyHit(damage, ballKind, critical, Center, fullStack);
     }
 
-    void ApplyHit(int damage, int ballKind, bool critical, Vector2 popupPoint)
+    void ApplyHit(int damage, int ballKind, bool critical, Vector2 popupPoint, bool fullStack)
     {
         if (!IsAlive || solid) return;
         if (session != null && !session.IsOnCamera(this)) return;
 
         regenTimer = 0f;
-        int applied = Mathf.Max(1, damage);
+        float scale = SkillTreeBonus.StrikeScale(this, fullStack);
+        Unhurt = false;
+        int applied = Mathf.Max(1, SkillTreeBonus.RoundDamage(Mathf.Max(1, damage) * scale));
         int left = applied;
         while (left > 0 && level > 0)
         {

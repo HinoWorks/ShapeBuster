@@ -64,8 +64,6 @@ public class SO_Player : ScriptableObject
     [Header("砲台")]
     [Tooltip("オンのあいだは、スキル未取得でも左右の砲台を出す。")]
     public bool debugTurrets = true;
-    [Tooltip("砲台が撃つ間隔（秒）。弾は戻さず、この間隔で撃ち続ける。")]
-    public float turretInterval = 1f;
     public BlockTurret turret;
     public BlockBall turretBall;
 
@@ -73,11 +71,7 @@ public class SO_Player : ScriptableObject
     [Header("横ビーム")]
     [Tooltip("オンのあいだは、スキル未取得でも横ビームを撃つ。")]
     public bool debugRowBeam = true;
-    [Tooltip("横ビームの間隔（秒）。")]
-    public float rowBeamInterval = 3.5f;
-    [Tooltip("ノーマル攻撃力に掛ける係数。1 でノーマルと同じ。")]
-    public float rowBeamDamageRate = 1f;
-    [Tooltip("発射体が一番下のブロックへ寄る速さ。ワールド単位/秒。")]
+    [Tooltip("発射体が一番下のブロックへ寄る速さ。ワールド単位/秒。間隔と威力は Ball シート。")]
     public float rowBeamMoveSpeed = 8f;
     public BlockRowEmitter rowEmitter;
     [Tooltip("色はプレハブの SpriteRenderer で変える。")]

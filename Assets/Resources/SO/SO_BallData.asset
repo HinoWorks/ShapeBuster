@@ -19,7 +19,7 @@ MonoBehaviour:
     baseDamageRate: 1
     baseProcRate: 0
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 0
     effectDuration: 0
     effectInterval: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     baseDamageRate: 0.5
     baseProcRate: 0.1
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 2.5
     effectDuration: 0
     effectInterval: 0
@@ -38,10 +38,10 @@ MonoBehaviour:
   - index: 2
     ballName: "\u30EC\u30FC\u30B6\u30FC"
     pf: {fileID: 8101000000000434472, guid: c4e8a1b0bb000001a1b0bb000001b0b2, type: 3}
-    baseDamageRate: 0.5
+    baseDamageRate: 0.3
     baseProcRate: 0.1
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 0
     effectDuration: 0
     effectInterval: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
     baseDamageRate: 0.5
     baseProcRate: 0.1
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 0
     effectDuration: 0
     effectInterval: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     baseDamageRate: 0.5
     baseProcRate: 0
     baseSize: 1
-    baseSpeed: 3.9
+    baseSpeed: 2
     areaRadius: 0
     effectDuration: 0
     effectInterval: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
     baseDamageRate: 0.5
     baseProcRate: 0
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 0
     effectDuration: 0
     effectInterval: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
     baseDamageRate: 0.5
     baseProcRate: 0.1
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 0
     effectDuration: 0
     effectInterval: 0
@@ -96,8 +96,30 @@ MonoBehaviour:
     baseDamageRate: 0.5
     baseProcRate: 0.1
     baseSize: 1
-    baseSpeed: 13
+    baseSpeed: 6
     areaRadius: 1.6
     effectDuration: 2.5
     effectInterval: 0.4
     effectMax: 2
+  - index: 10
+    ballName: "\u30BF\u30EC\u30C3\u30C8"
+    pf: {fileID: 500003, guid: f1a2b3c4d5e64789a0b1c2d3e4f50617, type: 3}
+    baseDamageRate: 0.5
+    baseProcRate: 0
+    baseSize: 1
+    baseSpeed: 6
+    areaRadius: 0
+    effectDuration: 3
+    effectInterval: 0
+    effectMax: 0
+  - index: 11
+    ballName: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
+    pf: {fileID: 0}
+    baseDamageRate: 0.5
+    baseProcRate: 0
+    baseSize: 1
+    baseSpeed: 0
+    areaRadius: 0
+    effectDuration: 3
+    effectInterval: 0
+    effectMax: 0

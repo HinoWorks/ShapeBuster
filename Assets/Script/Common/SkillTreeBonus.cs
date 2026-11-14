@@ -49,9 +49,15 @@ public static class SkillTreeBonus
     public static int RegenDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.RegenDrop));
     public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
     public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
+    public static bool MilestoneUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.MilestoneUnlock) >= 1f;
     public static int ConvertRateLevel => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ConvertRate));
     public static bool OwnsTurret => Sum(SkillParamTarget.Player, SkillParamStat.TurretUnlock) >= 1f;
     public static bool OwnsRowBeam => Sum(SkillParamTarget.Player, SkillParamStat.RowBeamUnlock) >= 1f;
+    public static float TurretDamageRate => Mathf.Max(0f, Sum(SkillParamTarget.Player, SkillParamStat.TurretDamage));
+    public static float TurretFireRate => Mathf.Max(0f, Sum(SkillParamTarget.Player, SkillParamStat.TurretFireRate));
+    public static int TurretExtraShots => Mathf.Max(0, Mathf.RoundToInt(Sum(SkillParamTarget.Player, SkillParamStat.TurretExtra)));
+    public static float RowBeamDamageRate => Mathf.Max(0f, Sum(SkillParamTarget.Player, SkillParamStat.RowBeamDamage));
+    public static float RowBeamFireRate => Mathf.Max(0f, Sum(SkillParamTarget.Player, SkillParamStat.RowBeamInterval));
 
     public static int BallCopies(BlockBallKind kind)
     {
@@ -67,6 +73,23 @@ public static class SkillTreeBonus
     public static float HeavySpeedScale => 0.3f + Mathf.Max(0f, SumBall(SkillParamStat.BallHeavySpeed, 2)) + MilestoneBonus.HeavySpeed;
     public static int OrbitCount => 3 + Mathf.RoundToInt(SumBall(SkillParamStat.BallOrbitCount, 4)) + MilestoneBonus.OrbitCount;
     public static bool ChainHits => Sum(SkillParamTarget.Ball, SkillParamStat.BallChain) >= 1f;
+    public static float FirstAttackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFirstAttack));
+    public static float LastAttackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallLastAttack));
+    public static float FullStackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFullStack));
+    public const float LastAttackHp = 0.25f;
+
+    /// <summary>無傷、残り25%以下、全回収発射の倍率。掛かるものは掛け合わせる。</summary>
+    public static float StrikeScale(BlockPiece piece, bool fullStack)
+    {
+        float scale = 1f;
+        if (piece != null && piece.Unhurt)
+            scale *= 1f + FirstAttackRate;
+        if (piece != null && piece.HpRatio <= LastAttackHp)
+            scale *= 1f + LastAttackRate;
+        if (fullStack)
+            scale *= 1f + FullStackRate;
+        return scale;
+    }
 
     public static float ProcChance(BlockBallKind kind)
     {
@@ -110,7 +133,12 @@ public static class SkillTreeBonus
         int index = BallTarget(kind);
         if (index >= 0)
             ratio += Mathf.Max(0f, SumBall(SkillParamStat.BallRatio, index));
-        return normal * ratio;
+        float power = normal * ratio;
+        if (kind == BlockBallKind.Turret)
+            power *= 1f + TurretDamageRate;
+        else if (kind == BlockBallKind.AutoBeam)
+            power *= 1f + RowBeamDamageRate;
+        return power;
     }
 
     /// <summary>Ball シートの baseDamageRate。未設定の特殊弾は 0.5、ノーマルは 1。</summary>

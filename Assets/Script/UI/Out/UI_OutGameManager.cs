@@ -58,7 +58,12 @@ public class UI_OutGameManager : MonoBehaviour
             ui_mileStoneManager.Init_Once();
         convertPanel = gameObject.AddComponent<UI_ConvertPanel>();
         convertPanel.Build(this, FindTab(OutGame_MenuType.MileStone));
-        GameEvent.AchieveEvent.SkillTreeUnlock.Subscribe(_ => convertPanel.RefreshUnlock()).AddTo(this);
+        GameEvent.AchieveEvent.SkillTreeUnlock.Subscribe(_ =>
+        {
+            convertPanel.RefreshUnlock();
+            RefreshMilestoneTab();
+        }).AddTo(this);
+        RefreshMilestoneTab();
 
         Init(false);
     }
@@ -86,6 +91,7 @@ public class UI_OutGameManager : MonoBehaviour
             ui_mileStoneManager.RefreshUnits();
 
         convertPanel?.RefreshUnlock();
+        RefreshMilestoneTab();
         ActiveTabChange(OutGame_MenuType.SkillTree);
     }
 
@@ -120,8 +126,20 @@ public class UI_OutGameManager : MonoBehaviour
         return null;
     }
 
+    void RefreshMilestoneTab()
+    {
+        var tab = FindTab(OutGame_MenuType.MileStone);
+        bool open = SkillTreeBonus.MilestoneUnlocked;
+        if (tab != null)
+            tab.gameObject.SetActive(open);
+        if (!open && currentState == OutGame_MenuType.MileStone)
+            ActiveTabChange(OutGame_MenuType.SkillTree);
+    }
+
     public void ActiveTabChange(OutGame_MenuType menuType)
     {
+        if (menuType == OutGame_MenuType.MileStone && !SkillTreeBonus.MilestoneUnlocked)
+            menuType = OutGame_MenuType.SkillTree;
         if (currentState == menuType) return;
         currentState = menuType;
         foreach (var ui_outGameTab in ui_outGameTabs)

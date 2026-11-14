@@ -247,48 +247,47 @@ public class UI_SkillTreeManager : MonoBehaviour
 
     void ApplyBallGates()
     {
-        // 球威を根に、上へ強化、左へ特殊ボール、右へリソース。
-        Gate(SO_SkillTreeData.BallHeavyHitSkill, SO_SkillTreeData.BallPowerSkill);
-        Gate(SO_SkillTreeData.BallVolleySkill, SO_SkillTreeData.BallHeavyHitSkill);
-        Gate(SO_SkillTreeData.BallSpeedSkill, SO_SkillTreeData.BallVolleySkill);
-        Gate(SO_SkillTreeData.BallCritSkill, SO_SkillTreeData.BallVolleySkill);
-        Gate(SO_SkillTreeData.BallFatalSkill, SO_SkillTreeData.BallCritSkill);
-        Gate(SO_SkillTreeData.BallAmpSkill, SO_SkillTreeData.BallCritSkill);
-        Gate(SO_SkillTreeData.BallChainSkill, SO_SkillTreeData.BallAmpSkill);
-        Gate(SO_SkillTreeData.BallBossSkill, SO_SkillTreeData.BallChainSkill);
-
-        int[] balls =
+        // 仮配置の列。列の先頭は解放済み、下はその一つ上を条件にする。
+        int[][] columns =
         {
-            SO_SkillTreeData.BallBombSkillIndex,
-            SO_SkillTreeData.BallLaserSkillIndex,
-            SO_SkillTreeData.BallLaserRowSkillIndex,
-            SO_SkillTreeData.BallCrossSkillIndex,
-            SO_SkillTreeData.BallPoisonSkillIndex,
-            SO_SkillTreeData.BallHeavySkillIndex,
-            SO_SkillTreeData.BallOrbitSkillIndex
+            new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1100 },
+            new[] { 1010, 1011, 1020, 1021 },
+            new[] { 1030, 1031, 1032 },
+            new[] { 1040, 1041 },
+            new[] { 1050, 1051 },
+            new[] { 1060, 1061, 1062, 1063, 1070, 1071 },
+            new[] { 2000, 2001, 2002, 2003 },
+            new[] { 2010, 2011, 2012, 2013 },
+            new[] { 2020, 2021, 2022, 2023 },
+            new[] { 2030, 2031, 2032, 2033 },
+            new[] { 2040, 2041, 2042, 2043 },
+            new[] { 2050, 2051, 2052, 2053 },
+            new[] { 2060, 2061, 2062, 2063 },
+            new[] { 2100, 2101, 2102, 2103 },
+            new[] { 2110, 2111, 2112 },
+            new[] { 3000, 3010, 3011, 3020, 3050, 3051, 3060, 3061 },
+            new[] { 4000, 4001, 4002 },
+            new[] { 5000, 5001 },
         };
-        Gate(balls[0], SO_SkillTreeData.BallPowerSkill);
-        for (int i = 1; i < balls.Length; i++)
-            Gate(balls[i], balls[i - 1]);
-        for (int i = 0; i < balls.Length; i++)
+        for (int c = 0; c < columns.Length; c++)
         {
-            Gate(balls[i] + 1, balls[i]);
-            Gate(balls[i] + 2, balls[i] + 1);
-            Gate(balls[i] + 3, balls[i] + 2);
+            Root(columns[c][0]);
+            for (int i = 1; i < columns[c].Length; i++)
+                Gate(columns[c][i], columns[c][i - 1]);
         }
+    }
 
-        Gate(SO_SkillTreeData.BlockHarvestSkill, SO_SkillTreeData.BallPowerSkill);
-        Gate(SO_SkillTreeData.BlockMagnetSkill, SO_SkillTreeData.BlockHarvestSkill);
-        Gate(SO_SkillTreeData.BlockLingerSkill, SO_SkillTreeData.BlockMagnetSkill);
-        Gate(SO_SkillTreeData.RegenSpawnSkill, SO_SkillTreeData.BlockLingerSkill);
-        Gate(SO_SkillTreeData.RegenDropSkill, SO_SkillTreeData.RegenSpawnSkill);
-        Gate(SO_SkillTreeData.ArmorSpawnSkill, SO_SkillTreeData.RegenSpawnSkill);
-        Gate(SO_SkillTreeData.ArmorDropSkill, SO_SkillTreeData.ArmorSpawnSkill);
-        Gate(SO_SkillTreeData.ConvertSkill, SO_SkillTreeData.ArmorSpawnSkill);
-        Gate(SO_SkillTreeData.ConvertRateSkill, SO_SkillTreeData.ConvertSkill);
-        Gate(SO_SkillTreeData.BlockSlowSkill, SO_SkillTreeData.ConvertSkill);
-        Gate(SO_SkillTreeData.BlockCompactSkillIndex, SO_SkillTreeData.BlockSlowSkill);
-        Gate(SO_SkillTreeData.GlassSkillIndex, SO_SkillTreeData.BlockCompactSkillIndex);
+    void Root(int index)
+    {
+        if (skillTreeUnits == null) return;
+        for (int i = 0; i < skillTreeUnits.Length; i++)
+        {
+            var unit = skillTreeUnits[i];
+            if (unit == null || unit.skillIndex != index) continue;
+            unit.SetRoot(true);
+            unit.SetNeighborSkillIndexes(System.Array.Empty<int>());
+            return;
+        }
     }
 
     void Gate(int index, int required)

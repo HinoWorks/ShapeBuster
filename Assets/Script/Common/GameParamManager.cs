@@ -417,7 +417,6 @@ public static class GameParamManager
 
         var table = SOLoader.SkillTreeData;
         if (table == null) return;
-        table.RemapLegacyIds();
         table.ApplyLimitsFromUnits();
         table.DropOrphanUnits();
         if (table.skillTreeUnits == null) return;

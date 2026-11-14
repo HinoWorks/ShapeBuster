@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// ボール1種。index は BlockBallKind の並び。GSS の Ball シートで管理する。
-/// pf は Assets からのプレハブパス。空なら前回の参照を残す。
+/// ボール1種。index は BlockBallKind。GSS の Ball シートで管理する。
+/// タレットは 10、オートビームは 11。pf は Assets からのプレハブパス。空なら前回の参照を残す。
 /// </summary>
 [Serializable]
 public class BallData
@@ -21,7 +21,7 @@ public class BallData
     public float baseSpeed = 13f;
     /// <summary>爆風や沼の半径。ブロック1マスを 1 とする。使わない種類は 0。</summary>
     public float areaRadius;
-    /// <summary>沼が残る秒数。使わない種類は 0。</summary>
+    /// <summary>秒数。ポイズンは沼が残る時間。タレットとオートビームは攻撃間隔。</summary>
     public float effectDuration;
     /// <summary>沼が周囲を攻撃する間隔（秒）。使わない種類は 0。</summary>
     public float effectInterval;

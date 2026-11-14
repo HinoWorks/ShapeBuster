@@ -37,7 +37,10 @@ public class UI_OutGameTabBase : MonoBehaviour
             await UniTask.WaitUntil(() => isReloadFin);
             Init_ActiveTab();
         }
-        hButtonConnect.Set_SelectActive(isActive);
+        if (hButtonConnect == null)
+            hButtonConnect = GetComponent<HButtonConnect>();
+        if (hButtonConnect != null)
+            hButtonConnect.Set_SelectActive(isActive);
         //        this.gameObject.SetActive(isActive);
     }
 
