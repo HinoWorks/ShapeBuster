@@ -11,6 +11,8 @@ public class UI_BlockCursorInfo : MonoBehaviour
     [SerializeField] RectTransform rect;
     [SerializeField] TextMeshProUGUI label;
 
+    public static readonly Color BlockedColor = new Color(1f, 0.28f, 0.28f, 1f);
+
     int shownLaunch = -1;
     int shownTotal = -1;
 
@@ -22,7 +24,7 @@ public class UI_BlockCursorInfo : MonoBehaviour
             label = GetComponentInChildren<TextMeshProUGUI>(true);
     }
 
-    public void Show(int launchable, int total, Vector2 screen, bool blocked)
+    public void Show(int launchable, int total, Vector2 screen, bool cannotFire, bool noBalls)
     {
         if (label == null || rect == null)
         {
@@ -32,7 +34,8 @@ public class UI_BlockCursorInfo : MonoBehaviour
 
         gameObject.SetActive(true);
         if (imageCNT != null)
-            imageCNT.color = blocked ? new Color(1f, 0.28f, 0.28f, 1f) : Color.white;
+            imageCNT.color = cannotFire ? BlockedColor : Color.white;
+        label.color = noBalls ? BlockedColor : Color.white;
         if (launchable != shownLaunch || total != shownTotal)
         {
             shownLaunch = launchable;

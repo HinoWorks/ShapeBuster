@@ -59,21 +59,4 @@ public class SO_Player : ScriptableObject
     public float collectKickDuration = 0.1f;
     [Tooltip("跳ねたあと、カーソルへ吸い込む時間（秒）。")]
     public float collectPullDuration = 0.18f;
-
-    [Space(10)]
-    [Header("砲台")]
-    [Tooltip("オンのあいだは、スキル未取得でも左右の砲台を出す。")]
-    public bool debugTurrets = true;
-    public BlockTurret turret;
-    public BlockBall turretBall;
-
-    [Space(10)]
-    [Header("横ビーム")]
-    [Tooltip("オンのあいだは、スキル未取得でも横ビームを撃つ。")]
-    public bool debugRowBeam = true;
-    [Tooltip("発射体が一番下のブロックへ寄る速さ。ワールド単位/秒。間隔と威力は Ball シート。")]
-    public float rowBeamMoveSpeed = 8f;
-    public BlockRowEmitter rowEmitter;
-    [Tooltip("色はプレハブの SpriteRenderer で変える。")]
-    public GameObject rowBeam;
 }

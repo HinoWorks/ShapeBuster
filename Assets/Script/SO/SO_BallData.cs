@@ -35,6 +35,22 @@ public class SO_BallData : ScriptableObject
 {
     public BallData[] ballDatas;
 
+    [Space(10)]
+    [Header("砲台")]
+    [Tooltip("オンのあいだは、スキル未取得でも左右の砲台を出す。")]
+    public bool debugTurrets = true;
+    public BlockTurret turret;
+
+    [Space(10)]
+    [Header("横ビーム")]
+    [Tooltip("オンのあいだは、スキル未取得でも横ビームを撃つ。")]
+    public bool debugRowBeam = true;
+    [Tooltip("発射体が一番下のブロックへ寄る速さ。ワールド単位/秒。間隔と威力は Ball シート。")]
+    public float rowBeamMoveSpeed = 8f;
+    public BlockRowEmitter rowEmitter;
+    [Tooltip("色はプレハブの SpriteRenderer で変える。")]
+    public GameObject rowBeam;
+
     public BallData Find(BlockBallKind kind)
     {
         return Find((int)kind);

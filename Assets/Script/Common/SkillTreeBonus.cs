@@ -50,7 +50,6 @@ public static class SkillTreeBonus
     public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
     public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
     public static bool MilestoneUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.MilestoneUnlock) >= 1f;
-    public static int ConvertRateLevel => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ConvertRate));
     public static bool OwnsTurret => Sum(SkillParamTarget.Player, SkillParamStat.TurretUnlock) >= 1f;
     public static bool OwnsRowBeam => Sum(SkillParamTarget.Player, SkillParamStat.RowBeamUnlock) >= 1f;
     public static float TurretDamageRate => Mathf.Max(0f, Sum(SkillParamTarget.Player, SkillParamStat.TurretDamage));
@@ -170,20 +169,6 @@ public static class SkillTreeBonus
             damage = Mathf.Max(1, RoundDamage(power)),
             critical = critical,
         };
-    }
-
-    public static int ConvertCost(ResourceType type)
-    {
-        int basis;
-        switch (type)
-        {
-            case ResourceType.BB: basis = 20; break;
-            case ResourceType.CC: basis = 40; break;
-            case ResourceType.DD: basis = 80; break;
-            default: return 0;
-        }
-        float scale = Mathf.Pow(0.85f, Mathf.Max(0, ConvertRateLevel));
-        return Mathf.Max(1, Mathf.RoundToInt(basis * scale));
     }
 
     static int BallTarget(BlockBallKind kind)

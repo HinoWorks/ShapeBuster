@@ -10,6 +10,7 @@ public class SO_BlockSession : ScriptableObject
     public GameObject leftWall;
     public GameObject rightWall;
     public GameObject deadline;
+    public GameObject launchLimit;
     public GameObject laserBeam;
     public GameObject laserBeamCross;
     public GameObject poisonPool;
@@ -41,12 +42,6 @@ public class SO_BlockSession : ScriptableObject
     public float baseSpeed = 0.1f;
     [Tooltip("1秒ごとに足す下降速度。")]
     public float speedPerSecond = 0.005f;
-    [Tooltip("開始時の、次のブロック群までの秒数。")]
-    public float baseInterval = 8f;
-    [Tooltip("1秒ごとに短くなる生成間隔。")]
-    public float intervalShrinkPerSecond = 0.045f;
-    [Tooltip("生成間隔の下限（秒）。")]
-    public float minInterval = 4.2f;
 
     [Space(10)]
     [Header("HP")]
@@ -61,6 +56,8 @@ public class SO_BlockSession : ScriptableObject
     [Header("盤面")]
     [Tooltip("ブロック同士の隙間。ワールド単位。")]
     public float blockGap = 0.1f;
+    [Tooltip("端のブロックの外縁と、壁の内側面との隙間。ワールド単位。")]
+    public float wallSideGap = 0.15f;
     [Tooltip("10列のときのブロックサイズ。カメラ幅に対する比率。0.5 なら幅の 20分の1。")]
     public float blockSizeScale = 0.5f;
     [Tooltip("ステージの列数が 0 以下のときの列数。")]

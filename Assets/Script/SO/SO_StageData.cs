@@ -7,27 +7,31 @@ using System;
 [System.Serializable]
 public class StageData
 {
+    /// <summary>ステージ番号。FindStage はこの番号が一致する行を使う。</summary>
     public int stageIndex;
-    /// <summary>未クリアのとき、この秒数でボスを出す。0以下は出さない。</summary>
+    /// <summary>未クリアのとき、この秒数でボスを出す。経過時間の上限にもなる。0以下はボスを出さない。</summary>
     public int stageTime;
     /// <summary>横に並べるブロック数。0以下は10列。</summary>
     public int blockColumns;
-    /// <summary>ブロックHPへの倍率。0以下は1。</summary>
+    /// <summary>ブロックHPへの倍率。経過で増える基礎HPに掛ける。0以下は1。</summary>
     public float blockHpRate = 1f;
-    /// <summary>ブロック下降速度への倍率。0以下は1。</summary>
+    /// <summary>ブロック下降速度への倍率。経過で増える基礎速度に掛ける。0以下は1。</summary>
     public float blockSpeedRate = 1f;
-    public float enemyPowerRate;
-    public float enemyHpRate;
-    public float enemySpeedRate;
-    public float enemyResourceRate;
-    /// <summary>Resources/Boss の bossIndex と一致するプレハブを出す。</summary>
+    /// <summary>壊したブロックが落とす資源数への倍率。0以下は個数そのまま。1を超えた端数は、その確率で1個足す。</summary>
+    public float blockResourceRate;
+    /// <summary>出すボス。Resources/Boss のプレハブにある bossIndex と一致するものを使う。</summary>
     public int bossIndex;
-    /// <summary>この段に出す通常ブロックの重み。合計 0 ならプレハブの重みに戻す。</summary>
+    /// <summary>正方形ブロックの出現重み。6種の合計が0なら、各プレハブの重みで出す。</summary>
     public int weightSquare;
+    /// <summary>横長ブロックの出現重み。</summary>
     public int weightWide;
+    /// <summary>縦長ブロックの出現重み。</summary>
     public int weightTall;
+    /// <summary>壊れないブロックの出現重み。</summary>
     public int weightSolid;
+    /// <summary>下側が装甲のブロックの出現重み。</summary>
     public int weightArmor;
+    /// <summary>再生するブロックの出現重み。</summary>
     public int weightRegen;
 
     public bool HasBlockWeights =>
@@ -50,16 +54,10 @@ public struct StageEnemyScale
 {
     public const float TimeStepSeconds = 20f;
 
-    public float power;
-    public float hp;
-    public float speed;
     public float resource;
 
     public static StageEnemyScale Identity => new StageEnemyScale
     {
-        power = 1f,
-        hp = 1f,
-        speed = 1f,
         resource = 1f,
     };
 
@@ -122,8 +120,8 @@ public class SO_StageData : ScriptableObject
     }
 
     /// <summary>
-    /// ステージに設定した倍率を、経過時間にかかわらず返す。
-    /// 速度とドロップ倍率が 0 以下のときは未設定として 1。
+    /// ステージに設定した資源倍率を、経過時間にかかわらず返す。
+    /// 0 以下のときは未設定として 1。
     /// </summary>
     public StageEnemyScale GetEnemyScale(int stageIndex, float elapsedSecond)
     {
@@ -132,10 +130,7 @@ public class SO_StageData : ScriptableObject
 
         return new StageEnemyScale
         {
-            power = Mathf.Max(0f, stage.enemyPowerRate),
-            hp = Mathf.Max(0f, stage.enemyHpRate),
-            speed = stage.enemySpeedRate > 0f ? stage.enemySpeedRate : 1f,
-            resource = stage.enemyResourceRate > 0f ? stage.enemyResourceRate : 1f,
+            resource = stage.blockResourceRate > 0f ? stage.blockResourceRate : 1f,
         };
     }
 

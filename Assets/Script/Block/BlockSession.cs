@@ -3,6 +3,7 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// ブロック崩しの1セッション。
@@ -72,6 +73,7 @@ public class BlockSession : MonoBehaviour
     UI_BlockBallHud ballHud;
     UI_BlockCursorInfo cursorInfo;
     RectTransform cursorBase;
+    Image cursorBaseImage;
     BlockPiece[] blockPrefabs;
     const float BossStopDuration = 0.4f;
 
@@ -309,8 +311,8 @@ public class BlockSession : MonoBehaviour
         int stage = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
         count = MilestoneBonus.ScaleDropCount(count, type, stage);
         var row = SOLoader.StageData != null ? SOLoader.StageData.FindStage(stage) : null;
-        if (row != null && row.enemyResourceRate > 0f)
-            count = StageEnemyScale.ScaleResourceCount(count, row.enemyResourceRate);
+        if (row != null && row.blockResourceRate > 0f)
+            count = StageEnemyScale.ScaleResourceCount(count, row.blockResourceRate);
         if (count <= 0) return;
 
         for (int i = 0; i < count; i++)
@@ -411,6 +413,7 @@ public class BlockSession : MonoBehaviour
         ballHud = null;
         cursorInfo = null;
         cursorBase = null;
+        cursorBaseImage = null;
         aimGuide = null;
         if (bounce != null)
             Destroy(bounce);
@@ -467,8 +470,9 @@ public class BlockSession : MonoBehaviour
         float blockLeft = midX - cell * columns * 0.5f;
         float blockRight = midX + cell * columns * 0.5f;
         float edge = Rule.blockGap * 0.5f;
-        fieldLeft = blockLeft + edge;
-        fieldRight = blockRight - edge;
+        float side = Mathf.Max(0f, Rule.wallSideGap);
+        fieldLeft = blockLeft + edge - side;
+        fieldRight = blockRight - edge + side;
         var root = new GameObject("BlockFormation");
         formation = root.transform;
         root.layer = BlockLayer;
@@ -768,7 +772,8 @@ public class BlockSession : MonoBehaviour
 
     bool TurretsEnabled()
     {
-        return Player.debugTurrets || SkillTreeBonus.OwnsTurret;
+        var balls = SOLoader.BallData;
+        return (balls != null && balls.debugTurrets) || SkillTreeBonus.OwnsTurret;
     }
 
     float TurretInterval()
@@ -792,19 +797,18 @@ public class BlockSession : MonoBehaviour
     static BlockBall TurretBallPrefab()
     {
         var data = BallInfo(BlockBallKind.Turret);
-        if (data != null && data.pf != null)
-            return data.pf;
-        return SO_Player.Current.turretBall;
+        return data != null ? data.pf : null;
     }
 
     BlockTurret CreateTurret(Vector2 position)
     {
+        var balls = SOLoader.BallData;
         BlockTurret turret;
-        if (Player.turret != null)
-            turret = Instantiate(Player.turret);
+        if (balls != null && balls.turret != null)
+            turret = Instantiate(balls.turret);
         else
         {
-            Debug.LogWarning("砲台プレハブがありません。 SO_Player を確認してください。");
+            Debug.LogWarning("砲台プレハブがありません。 SO_BallData を確認してください。");
             turret = CreateFallbackTurret();
         }
 
@@ -992,9 +996,10 @@ public class BlockSession : MonoBehaviour
         rowEmitter = null;
         rowBeamTimer = 0f;
         if (!RowBeamEnabled()) return;
-        if (Player.rowBeam == null)
+        var balls = SOLoader.BallData;
+        if (balls == null || balls.rowBeam == null)
         {
-            Debug.LogWarning("横ビームのプレハブがありません。 SO_Player を確認してください。");
+            Debug.LogWarning("横ビームのプレハブがありません。 SO_BallData を確認してください。");
             return;
         }
 
@@ -1006,17 +1011,19 @@ public class BlockSession : MonoBehaviour
 
     bool RowBeamEnabled()
     {
-        return Player.debugRowBeam || SkillTreeBonus.OwnsRowBeam;
+        var balls = SOLoader.BallData;
+        return (balls != null && balls.debugRowBeam) || SkillTreeBonus.OwnsRowBeam;
     }
 
     BlockRowEmitter CreateRowEmitter(Vector2 position)
     {
+        var balls = SOLoader.BallData;
         BlockRowEmitter emitter;
-        if (Player.rowEmitter != null)
-            emitter = Instantiate(Player.rowEmitter);
+        if (balls != null && balls.rowEmitter != null)
+            emitter = Instantiate(balls.rowEmitter);
         else
         {
-            Debug.LogWarning("横ビームの発射体がありません。 SO_Player を確認してください。");
+            Debug.LogWarning("横ビームの発射体がありません。 SO_BallData を確認してください。");
             emitter = CreateFallbackRowEmitter();
         }
 
@@ -1046,7 +1053,8 @@ public class BlockSession : MonoBehaviour
 
         float y = target.Center.y;
         var pos = rowEmitter.transform.position;
-        float speed = Mathf.Max(0.1f, Player.rowBeamMoveSpeed);
+        var balls = SOLoader.BallData;
+        float speed = Mathf.Max(0.1f, balls != null ? balls.rowBeamMoveSpeed : 8f);
         pos.y = Mathf.MoveTowards(pos.y, y, speed * Time.deltaTime);
         rowEmitter.transform.position = pos;
 
@@ -1073,12 +1081,14 @@ public class BlockSession : MonoBehaviour
         float x0 = rowEmitter != null ? rowEmitter.Muzzle.x : fieldLeft;
         float x1 = fieldRight;
         float length = Mathf.Max(0.2f, x1 - x0);
-        ShowBeam(new Vector2((x0 + x1) * 0.5f, y), length, 90f, Player.rowBeam);
+        var balls = SOLoader.BallData;
+        ShowBeam(new Vector2((x0 + x1) * 0.5f, y), length, 90f, balls != null ? balls.rowBeam : null);
     }
 
     float RowBeamPad()
     {
-        var prefab = Player.rowBeam;
+        var balls = SOLoader.BallData;
+        var prefab = balls != null ? balls.rowBeam : null;
         if (prefab == null) return 0.14f;
         return Mathf.Max(0.04f, Mathf.Abs(prefab.transform.localScale.x) * 0.5f);
     }
@@ -1133,6 +1143,7 @@ public class BlockSession : MonoBehaviour
         }
 
         cursorBase = Instantiate(prefab, canvas.transform);
+        cursorBaseImage = cursorBase.GetComponentInChildren<Image>(true);
         cursorBase.SetAsFirstSibling();
         arena.Add(cursorBase.gameObject);
     }
@@ -1152,6 +1163,8 @@ public class BlockSession : MonoBehaviour
         if (parent != null && RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 parent, mouse.position.ReadValue(), cam, out var local))
             cursorBase.anchoredPosition = local;
+        if (cursorBaseImage != null)
+            cursorBaseImage.color = CannotFire() ? UI_BlockCursorInfo.BlockedColor : Color.white;
     }
 
     void TickCursorInfo()
@@ -1169,8 +1182,16 @@ public class BlockSession : MonoBehaviour
         var screen = pinCursorUi || mouse == null
             ? pinnedScreen
             : mouse.position.ReadValue();
-        bool blocked = !pinCursorUi && (BlockUnderPointer() != null || AboveLaunchLimit());
-        cursorInfo.Show(CountLaunchable(), total, screen, blocked);
+        int launchable = CountLaunchable();
+        cursorInfo.Show(launchable, total, screen, CannotFire(), !pinCursorUi && launchable <= 0);
+    }
+
+    bool CannotFire()
+    {
+        if (pinCursorUi) return false;
+        if (CountLaunchable() <= 0) return true;
+        return volley || !PointerWorld.IsInsidePlayfield
+            || BlockUnderPointer() != null || AboveLaunchLimit();
     }
 
     BlockPiece BlockUnderPointer()
@@ -1458,46 +1479,26 @@ public class BlockSession : MonoBehaviour
     }
 
     /// <summary>
-    /// 基点にできない上側の境界。点線なので、ボールは通過できる。
+    /// 基点にできない上側の境界。点の見た目はプレハブ。ボールは通過できる。
     /// </summary>
     void PlaceLaunchLimit()
     {
         if (!ShowsLaunchLimit()) return;
 
-        float y = LaunchOriginMaxY();
-        var root = new GameObject("LaunchLimit");
-        arena.Add(root);
-
-        var color = new Color(1f, 0.93f, 0.62f, 0.95f);
-        var hairline = new Color(color.r, color.g, color.b, 0.4f);
-        const float thick = 0.045f;
-        const float dash = 0.3f;
-        const float gap = 0.16f;
-        float midX = (fieldLeft + fieldRight) * 0.5f;
-        AddLaunchMark(root.transform, new Vector3(midX, y, 0f), new Vector3(fieldRight - fieldLeft, 0.02f, 1f), hairline);
-        float x = fieldLeft;
-        while (x < fieldRight - 0.001f)
+        var props = SOLoader.BlockSession;
+        var prefab = props != null ? props.launchLimit : null;
+        if (prefab == null)
         {
-            float length = Mathf.Min(dash, fieldRight - x);
-            AddLaunchMark(root.transform, new Vector3(x + length * 0.5f, y, 0f), new Vector3(length, thick, 1f), color);
-            x += dash + gap;
+            Debug.LogWarning("発射エリアの線のプレハブがありません。 SO_BlockSession を確認してください。");
+            return;
         }
 
-        const float tick = 0.24f;
-        AddLaunchMark(root.transform, new Vector3(fieldLeft, y, 0f), new Vector3(thick, tick, 1f), color);
-        AddLaunchMark(root.transform, new Vector3(fieldRight, y, 0f), new Vector3(thick, tick, 1f), color);
-    }
-
-    static void AddLaunchMark(Transform parent, Vector3 position, Vector3 scale, Color color)
-    {
-        var mark = new GameObject("Mark");
-        mark.transform.SetParent(parent, false);
-        mark.transform.position = position;
-        mark.transform.localScale = scale;
-        var sprite = mark.AddComponent<SpriteRenderer>();
-        sprite.sprite = SquareSprite;
-        sprite.color = color;
-        sprite.sortingOrder = 6;
+        var instance = Instantiate(prefab);
+        var line = instance.GetComponent<BlockLaunchLimit>();
+        if (line == null)
+            line = instance.AddComponent<BlockLaunchLimit>();
+        line.Place(fieldLeft, fieldRight, LaunchOriginMaxY());
+        arena.Add(instance);
     }
 
     void Park(BlockBall ball)

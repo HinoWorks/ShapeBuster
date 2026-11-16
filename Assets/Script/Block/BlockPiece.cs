@@ -354,6 +354,9 @@ public class BlockPiece : MonoBehaviour
             session.DropResources(transform.position, 1 + SkillTreeBonus.RegenDropAdd, ResourceType.BB);
         if (session != null && ArmorsBottom)
             session.DropResources(transform.position, 1 + SkillTreeBonus.ArmorDropAdd, ResourceType.CC);
+        // FはConvertの速度にだけ使う。DはConvert以外では増やさない。
+        if (session != null && BossIndex >= 0)
+            session.DropResources(transform.position, 1, ResourceType.FF);
 
         MilestoneRuntime.NotifyBlockBroken(BreakKey);
         session.NotifyBroken(this);

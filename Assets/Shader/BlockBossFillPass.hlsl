@@ -4,7 +4,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
 // 塗り・輪郭・被弾フラッシュは BlockLevelFill と同じ。
-// 表面だけ、重いドット、板の継ぎ目、這う亀裂、中央の裂け目、脈打つ内枠にする。
+// 表面だけ、重いドット、板の継ぎ目、這う亀裂、脈打つ内枠にする。
 struct Attributes
 {
     float3 positionOS : POSITION;
@@ -33,7 +33,6 @@ CBUFFER_START(UnityPerMaterial)
     float _DotSize;
     float4 _CellSpan;
     half4 _VeinColor;
-    half4 _CoreColor;
     float _Corruption;
     float _VeinStrength;
     float _VeinSpeed;
@@ -114,18 +113,6 @@ float Scar(float2 cellUv)
     return crack * region;
 }
 
-float2 Slit(float2 cellUv, float2 cells)
-{
-    float2 p = cellUv - cells * 0.5;
-    float halfH = min(cells.y * 0.28, 0.62);
-    float along = abs(p.y) / max(halfH, 0.0001);
-    float jag = Hash21(float2(floor(p.y * 14.0 + 4.0), 3.0));
-    float halfW = (0.05 + jag * 0.035) * lerp(1.0, 0.25, saturate(along));
-    float core = step(abs(p.x), halfW) * step(abs(p.y), halfH);
-    float rim = step(abs(p.x), halfW + 0.045) * step(abs(p.y), halfH + 0.04);
-    return float2(core, saturate(rim - core));
-}
-
 float InnerRim(float2 cellUv, float2 cells)
 {
     float2 edge = min(cellUv, cells - cellUv);
@@ -191,11 +178,6 @@ half4 UnlitFragment(Varyings input) : SV_Target
 
     float beat = Heartbeat(_Time.y * max(_PulseSpeed, 0.0));
     body = lerp(body, _VeinColor.rgb, InnerRim(cellUv, cells) * lerp(0.22, 1.0, beat));
-
-    float2 slit = Slit(cellUv, cells);
-    half3 hot = lerp(_VeinColor.rgb, half3(1.0, 0.88, 0.92), 0.45);
-    body = lerp(body, hot, slit.y * lerp(0.35, 1.0, beat));
-    body = lerp(body, _CoreColor.rgb, slit.x);
     body *= lerp(0.96, 1.06, beat);
 
     half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, saturate(uv));

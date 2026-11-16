@@ -47,17 +47,26 @@ public class UI_SkillTreeUnit : MonoBehaviour
 
 
 
+    void Awake()
+    {
+        if (obj_debug != null)
+            obj_debug.SetActive(false);
+    }
+
 #if UNITY_EDITOR
+    void OnValidate()
+    {
+        if (Application.isPlaying) return;
+        ShowDebugIndex();
+    }
+
     public void OnValidateCall(SkillTreeBase skillTreeBase, SkillTreeUnit unitData)
     {
         skillTree = skillTreeBase;
         skillTreeUnit = unitData;
         if (image_icon != null)
             image_icon.sprite = skillTree.icon;
-        if (obj_debug != null)
-            obj_debug.SetActive(true);
-        if (tmp_debug != null)
-            tmp_debug.SetText($"{skillIndex}");
+        ShowDebugIndex();
 
         if (ui_debug_requiredResources == null) return;
         var resourceTypes = (ResourceType[])Enum.GetValues(typeof(ResourceType));
@@ -67,6 +76,42 @@ public class UI_SkillTreeUnit : MonoBehaviour
             int count = i < resourceTypes.Length ? skillTreeUnit.CostOf(resourceTypes[i]) : 0;
             ui_debug_requiredResources[i].SetResourceCount(count);
         }
+    }
+
+    void ShowDebugIndex()
+    {
+        if (obj_debug != null)
+            obj_debug.SetActive(true);
+        if (tmp_debug == null) return;
+
+        string name = JapaneseSkillName();
+        tmp_debug.SetText(string.IsNullOrEmpty(name) ? skillIndex.ToString() : skillIndex + "\n" + name);
+    }
+
+    string JapaneseSkillName()
+    {
+        string fromLocale = JapaneseLocale(Loc.SkillName(skillIndex));
+        if (!string.IsNullOrEmpty(fromLocale)) return fromLocale;
+
+        var table = SOLoader.SkillTreeData;
+        var basis = table != null ? table.GetSkillTreeBaseData(skillIndex) : skillTree;
+        if (basis == null) return "";
+        if (!string.IsNullOrEmpty(basis.jpSkillName)) return basis.jpSkillName;
+        return basis.skillName ?? "";
+    }
+
+    static string JapaneseLocale(string key)
+    {
+        var table = SOLoader.Locale;
+        var entries = table != null ? table.entries : null;
+        if (entries == null || string.IsNullOrEmpty(key)) return "";
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var entry = entries[i];
+            if (entry != null && entry.key == key && !string.IsNullOrEmpty(entry.ja))
+                return entry.ja;
+        }
+        return "";
     }
 #endif
 
@@ -103,11 +148,6 @@ public class UI_SkillTreeUnit : MonoBehaviour
         skillTreeUnit = unitData;
         if (image_icon != null && skillTree.icon != null)
             image_icon.sprite = skillTree.icon;
-    }
-
-    public void SetRoot(bool root)
-    {
-        isRoot = root;
     }
 
     public void SetNeighborSkillIndexes(int[] indexes)

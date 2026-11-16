@@ -13,7 +13,6 @@ Shader "ShapeBuster/BlockBossFill"
         _DotSize ("ドットの大きさ", Range(0.4, 1)) = 0.8
         [HideInInspector] _CellSpan ("Cell Span", Vector) = (1,1,0,0)
         _VeinColor ("亀裂の色", Color) = (1, 0.14, 0.38, 1)
-        _CoreColor ("裂け目の色", Color) = (0.015, 0, 0.02, 1)
         _Corruption ("侵食", Range(0, 1)) = 0.34
         _VeinStrength ("亀裂の強さ", Range(0, 1)) = 1
         _VeinSpeed ("亀裂の速さ", Range(0, 2)) = 0.65

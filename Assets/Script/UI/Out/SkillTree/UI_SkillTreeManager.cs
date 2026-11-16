@@ -19,6 +19,13 @@ public enum SkillTreeUnlockState
     EnhanceComplete
 }
 
+[Serializable]
+public struct SkillTreeLinkCut
+{
+    public int skillA;
+    public int skillB;
+}
+
 public class UI_SkillTreeManager : MonoBehaviour
 {
     public UI_SkillTreeUnit[] skillTreeUnits;
@@ -33,6 +40,7 @@ public class UI_SkillTreeManager : MonoBehaviour
     [SerializeField] float nodeLineHeight = 4f;
     [SerializeField] float neighborStep = 160f;
     [SerializeField] float neighborTolerance = 36f;
+    [SerializeField] SkillTreeLinkCut[] linkCuts = Array.Empty<SkillTreeLinkCut>();
 
 
     [Space(10)]
@@ -122,6 +130,7 @@ public class UI_SkillTreeManager : MonoBehaviour
         foreach (var baseIndex in neighbors)
         {
             if (baseIndex < 0) continue;
+            if (IsLinkCut(unit.skillIndex, baseIndex)) continue;
             var baseUnit = Array.Find(skillTreeUnits, x => x != null && x.skillIndex == baseIndex);
             if (baseUnit == null || baseUnit == unit) continue;
 
@@ -185,7 +194,8 @@ public class UI_SkillTreeManager : MonoBehaviour
                 if (i == j) continue;
                 var other = skillTreeUnits[j];
                 if (other == null) continue;
-                if (!IsCardinalNeighbor(positions[i], positions[j])) continue;
+                if (!IsGridNeighbor(positions[i], positions[j])) continue;
+                if (IsLinkCut(unit.skillIndex, other.skillIndex)) continue;
                 if (!found.Contains(other.skillIndex))
                     found.Add(other.skillIndex);
             }
@@ -193,13 +203,31 @@ public class UI_SkillTreeManager : MonoBehaviour
         }
     }
 
-    bool IsCardinalNeighbor(Vector2 a, Vector2 b)
+    bool IsGridNeighbor(Vector2 a, Vector2 b)
     {
         float dx = Mathf.Abs(a.x - b.x);
         float dy = Mathf.Abs(a.y - b.y);
-        bool horizontal = Mathf.Abs(dx - neighborStep) <= neighborTolerance && dy <= neighborTolerance;
-        bool vertical = Mathf.Abs(dy - neighborStep) <= neighborTolerance && dx <= neighborTolerance;
-        return horizontal || vertical;
+        bool alongX = Mathf.Abs(dx - neighborStep) <= neighborTolerance;
+        bool alongY = Mathf.Abs(dy - neighborStep) <= neighborTolerance;
+        bool flatX = dx <= neighborTolerance;
+        bool flatY = dy <= neighborTolerance;
+        bool horizontal = alongX && flatY;
+        bool vertical = alongY && flatX;
+        bool diagonal = alongX && alongY;
+        return horizontal || vertical || diagonal;
+    }
+
+    bool IsLinkCut(int a, int b)
+    {
+        if (linkCuts == null) return false;
+        for (int i = 0; i < linkCuts.Length; i++)
+        {
+            int x = linkCuts[i].skillA;
+            int y = linkCuts[i].skillB;
+            if ((x == a && y == b) || (x == b && y == a))
+                return true;
+        }
+        return false;
     }
 
 
@@ -245,69 +273,10 @@ public class UI_SkillTreeManager : MonoBehaviour
         RefreshUnits().Forget();
     }
 
-    void ApplyBallGates()
-    {
-        // 仮配置の列。列の先頭は解放済み、下はその一つ上を条件にする。
-        int[][] columns =
-        {
-            new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1100 },
-            new[] { 1010, 1011, 1020, 1021 },
-            new[] { 1030, 1031, 1032 },
-            new[] { 1040, 1041 },
-            new[] { 1050, 1051 },
-            new[] { 1060, 1061, 1062, 1063, 1070, 1071 },
-            new[] { 2000, 2001, 2002, 2003 },
-            new[] { 2010, 2011, 2012, 2013 },
-            new[] { 2020, 2021, 2022, 2023 },
-            new[] { 2030, 2031, 2032, 2033 },
-            new[] { 2040, 2041, 2042, 2043 },
-            new[] { 2050, 2051, 2052, 2053 },
-            new[] { 2060, 2061, 2062, 2063 },
-            new[] { 2100, 2101, 2102, 2103 },
-            new[] { 2110, 2111, 2112 },
-            new[] { 3000, 3010, 3011, 3020, 3050, 3051, 3060, 3061 },
-            new[] { 4000, 4001, 4002 },
-            new[] { 5000, 5001 },
-        };
-        for (int c = 0; c < columns.Length; c++)
-        {
-            Root(columns[c][0]);
-            for (int i = 1; i < columns[c].Length; i++)
-                Gate(columns[c][i], columns[c][i - 1]);
-        }
-    }
-
-    void Root(int index)
-    {
-        if (skillTreeUnits == null) return;
-        for (int i = 0; i < skillTreeUnits.Length; i++)
-        {
-            var unit = skillTreeUnits[i];
-            if (unit == null || unit.skillIndex != index) continue;
-            unit.SetRoot(true);
-            unit.SetNeighborSkillIndexes(System.Array.Empty<int>());
-            return;
-        }
-    }
-
-    void Gate(int index, int required)
-    {
-        if (skillTreeUnits == null) return;
-        for (int i = 0; i < skillTreeUnits.Length; i++)
-        {
-            var unit = skillTreeUnits[i];
-            if (unit == null || unit.skillIndex != index) continue;
-            unit.SetRoot(false);
-            unit.SetNeighborSkillIndexes(new[] { required });
-            return;
-        }
-    }
-
     public async UniTask RefreshUnits()
     {
         if (skillTreeUnits == null) return;
         RebuildNeighborPrerequisites();
-        ApplyBallGates();
 
         var tasks = new List<UniTask>(skillTreeUnits.Length);
         foreach (var unit in skillTreeUnits)
@@ -509,9 +478,9 @@ public class UI_SkillTreeManager : MonoBehaviour
         if (costRow == null) return;
 
         var costs = costRow.CopyPositiveCosts();
-        bool skipCost = false;
+        bool skipCost = DebugMenu.SkipSkillCost;
 #if UNITY_EDITOR
-        skipCost = debugUpgradeWithoutCost;
+        skipCost |= debugUpgradeWithoutCost;
 #endif
         if (!skipCost && !StaticManager.IsResourceEnough(costs)) return;
 

@@ -32,8 +32,7 @@ public class UI_OutGameManager : MonoBehaviour
     public UI_MileStoneManager UI_MileStoneManager => ui_mileStoneManager;
 
     [SerializeField] UI_StageSelect ui_stageSelect;
-
-    UI_ConvertPanel convertPanel;
+    [SerializeField] UI_ConvertPanel convertPanel;
 
 
 
@@ -56,14 +55,12 @@ public class UI_OutGameManager : MonoBehaviour
         ui_skillTreeManager.Init_Once();
         if (ui_mileStoneManager != null)
             ui_mileStoneManager.Init_Once();
-        convertPanel = gameObject.AddComponent<UI_ConvertPanel>();
-        convertPanel.Build(this, FindTab(OutGame_MenuType.MileStone));
+        convertPanel?.Setup();
         GameEvent.AchieveEvent.SkillTreeUnlock.Subscribe(_ =>
         {
-            convertPanel.RefreshUnlock();
-            RefreshMilestoneTab();
+            RefreshUnlockTabs();
         }).AddTo(this);
-        RefreshMilestoneTab();
+        RefreshUnlockTabs();
 
         Init(false);
     }
@@ -90,8 +87,7 @@ public class UI_OutGameManager : MonoBehaviour
         if (ui_mileStoneManager != null)
             ui_mileStoneManager.RefreshUnits();
 
-        convertPanel?.RefreshUnlock();
-        RefreshMilestoneTab();
+        RefreshUnlockTabs();
         ActiveTabChange(OutGame_MenuType.SkillTree);
     }
 
@@ -126,19 +122,27 @@ public class UI_OutGameManager : MonoBehaviour
         return null;
     }
 
-    void RefreshMilestoneTab()
+    void RefreshUnlockTabs()
     {
-        var tab = FindTab(OutGame_MenuType.MileStone);
-        bool open = SkillTreeBonus.MilestoneUnlocked;
+        convertPanel?.RefreshUnlock();
+        RefreshHeaderTab(OutGame_MenuType.MileStone, SkillTreeBonus.MilestoneUnlocked);
+        RefreshHeaderTab(OutGame_MenuType.Convert, SkillTreeBonus.ConvertUnlocked);
+    }
+
+    void RefreshHeaderTab(OutGame_MenuType menuType, bool open)
+    {
+        var tab = FindTab(menuType);
         if (tab != null)
             tab.gameObject.SetActive(open);
-        if (!open && currentState == OutGame_MenuType.MileStone)
+        if (!open && currentState == menuType)
             ActiveTabChange(OutGame_MenuType.SkillTree);
     }
 
     public void ActiveTabChange(OutGame_MenuType menuType)
     {
         if (menuType == OutGame_MenuType.MileStone && !SkillTreeBonus.MilestoneUnlocked)
+            menuType = OutGame_MenuType.SkillTree;
+        if (menuType == OutGame_MenuType.Convert && !SkillTreeBonus.ConvertUnlocked)
             menuType = OutGame_MenuType.SkillTree;
         if (currentState == menuType) return;
         currentState = menuType;

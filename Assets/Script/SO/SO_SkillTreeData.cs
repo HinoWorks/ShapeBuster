@@ -51,7 +51,7 @@ public enum SkillParamStat
 
     // == Convert ==
     ConvertUnlock = 51, // 1以上で Convert タブを出す
-    ConvertRate = 52, // Convert の必要AAを減らす段
+    ConvertRate = 52, // 未使用。変換レートは固定で、速度だけがFで上がる
     MilestoneUnlock = 60, // 1以上で Milestone タブを出す
 
     // == Player ==

@@ -28,7 +28,9 @@ public class UI_ResourceCounter_Simple : MonoBehaviour
     public void SetCount(BigInteger count, bool isEnabled = true)
     {
         if (icon != null) icon.enabled = true;
-        tmp_resourceCount.text = StaticManager.Get_BigintegerToString(count);
+        tmp_resourceCount.text = resourceType == ResourceType.DD
+            ? ConvertMine.FormatUnits(count)
+            : StaticManager.Get_BigintegerToString(count);
         tmp_resourceCount.color = isEnabled ? color_enough : color_notEnough;
     }
 

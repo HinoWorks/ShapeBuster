@@ -15,6 +15,7 @@ MonoBehaviour:
   leftWall: {fileID: 710001, guid: b1f0e2a34c5d6789a0b1c2d3e4f50618, type: 3}
   rightWall: {fileID: 720001, guid: b1f0e2a34c5d6789a0b1c2d3e4f50619, type: 3}
   deadline: {fileID: 730001, guid: b1f0e2a34c5d6789a0b1c2d3e4f5061a, type: 3}
+  launchLimit: {fileID: 760001, guid: c8e4a1b27d6f4e09a3c5b8d1e7f20416, type: 3}
   laserBeam: {fileID: 740001, guid: c3a91e7b5d4f4a2e8b6c0d1f9a7e5b34, type: 3}
   laserBeamCross: {fileID: 740001, guid: 6fab99392497e4457abfc5daaeea8815, type: 3}
   poisonPool: {fileID: 750001, guid: c4e6a8b03d5f4c7e1a2b3c4d5e6f7081, type: 3}
@@ -31,13 +32,11 @@ MonoBehaviour:
   fillPerSecond: 0.002
   baseSpeed: 0.1
   speedPerSecond: 0.0025
-  baseInterval: 4
-  intervalShrinkPerSecond: 0.045
-  minInterval: 4.2
   baseHp: 4
   hpPerSecond: 0.1
   sizeHpScale: 1
   blockGap: 0.1
+  wallSideGap: 0.15
   blockSizeScale: 0.5
   defaultColumns: 10
   wallThickness: 0.3

@@ -50,7 +50,9 @@ public class UI_ResourceCounter : MonoBehaviour
 
         if (tmp_resourceCount == null) return;
         currentResourceFloat = 0f;
-        tmp_resourceCount.text = StaticManager.Get_BigintegerToString(count);
+        tmp_resourceCount.text = resourceType == ResourceType.DD
+            ? ConvertMine.FormatUnits(count)
+            : StaticManager.Get_BigintegerToString(count);
     }
 
     /// <summary>
@@ -84,10 +86,23 @@ public class UI_ResourceCounter : MonoBehaviour
         var resourceCount = SaveLoader.Inst.Get_ResourceCount(resourceType);
         Set_ResourceMod((resourceType, resourceCount));
     }
+    void Update()
+    {
+        if (resourceType != ResourceType.DD || tmp_resourceCount == null) return;
+        if (!gameObject.activeInHierarchy) return;
+        tmp_resourceCount.text = ConvertMine.OwnedText();
+    }
+
     private void Set_ResourceMod((ResourceType, BigInteger) _resourceMod)
     {
         if (_resourceMod.Item1 != resourceType) return;
         if (!this.gameObject.activeSelf) this.gameObject.SetActive(true);
+
+        if (resourceType == ResourceType.DD)
+        {
+            tmp_resourceCount.text = ConvertMine.OwnedText();
+            return;
+        }
 
         var modCoin = StaticManager.Get_BigintegerToUnit(_resourceMod.Item2);
         tmp_resourceCount.transform.DOScale(1.05f, 0.05f).SetEase(Ease.OutSine);
