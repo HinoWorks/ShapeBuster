@@ -72,17 +72,28 @@ public static class MilestoneCatalog
 
     static MilestoneDef ToDef(MilestoneData row)
     {
+        var stat = row.stat;
+        float perTier = row.bonusPerTier;
+        string label = row.bonusLabel;
+        if (stat == MilestoneBonusStat.BlockFallSlow)
+        {
+            stat = MilestoneBonusStat.BallDamageRate;
+            if (perTier < 0f)
+                perTier = -perTier;
+            label = "All Ball Damage";
+        }
+
         return new MilestoneDef
         {
             id = row.id,
             title = row.title,
-            bonusLabel = row.bonusLabel,
+            bonusLabel = label,
             track = row.track,
             trackKey = row.trackKey,
             thresholds = ToSteps(row.thresholds),
-            stat = row.stat,
+            stat = stat,
             bonusKey = row.bonusKey,
-            bonusPerTier = row.bonusPerTier,
+            bonusPerTier = perTier,
             apply = row.apply,
             unit = row.unit,
         };

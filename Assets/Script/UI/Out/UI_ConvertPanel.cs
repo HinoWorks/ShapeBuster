@@ -73,6 +73,17 @@ public class UI_ConvertPanel : MonoBehaviour
             Refresh();
     }
 
+    void OnApplicationPause(bool paused)
+    {
+        if (paused)
+            ConvertMine.Flush();
+    }
+
+    void OnApplicationQuit()
+    {
+        ConvertMine.Flush();
+    }
+
     void Wire()
     {
         if (wired) return;
@@ -114,7 +125,7 @@ public class UI_ConvertPanel : MonoBehaviour
         if (rateFrom != null) rateFrom.text = "1";
         if (rateTo != null) rateTo.text = ConvertMine.RateText();
         if (depositedLabel != null) depositedLabel.text = ConvertMine.Deposited.ToString();
-        if (returnsLabel != null) returnsLabel.text = ConvertMine.ReturnsText();
+        if (returnsLabel != null) returnsLabel.text = ConvertMine.OwnedText();
         if (timeLabel != null) timeLabel.text = ConvertMine.TimeText();
         if (speedLabel != null) speedLabel.text = Loc.Format("ui.convert.perSec", ConvertMine.Speed);
         if (nextSpeedLabel != null) nextSpeedLabel.text = Loc.Format("ui.convert.perSec", NextSpeed());

@@ -824,8 +824,8 @@ MonoBehaviour:
     ja: "\u7D30\u7247"
     en: More Block
   - key: skill.4000.desc
-    ja: "\u30B9\u30C6\u30FC\u30B8\u306E\u5217\u6570\u3092\u57FA\u6E96\u306B\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u5C0F\u3055\u304F\u3057\u3066\u5217\u3092\u5897\u3084\u3059\u3002[A]"
-    en: 'Shrink blocks and add columns from the stage column count. [A]'
+    ja: "\u51FA\u73FE\u3059\u308B\u30D6\u30ED\u30C3\u30AF\u306E\u5217\u304C [A] \u5897\u3048\u308B"
+    en: Adds [A] columns.
   - key: skill.4010.name
     ja: "\u7D30\u7247"
     en: Splinter
@@ -996,6 +996,12 @@ MonoBehaviour:
     ja: "\u30DC\u30FC\u30EB\u3092\u5168\u90E8\u56DE\u53CE\u3057\u3066\u304B\u3089\u6483\u3064\u3068\u3001\u653B\u6483\u529B\u304C
       [A] \u5897\u3048\u308B\u3002"
     en: Attack increases by [A] when you fire after every ball has returned.
+  - key: skill.1080.name
+    ja: "\u30AD\u30E3\u30C3\u30C1"
+    en: Catch
+  - key: skill.1080.desc
+    ja: "\u767A\u5C04\u30A8\u30EA\u30A2\u3067\u3001\u4E0B\u3078\u623B\u308B\u30DC\u30FC\u30EB\u306B\u30AB\u30FC\u30BD\u30EB\u304C\u89E6\u308C\u308B\u3068\u56DE\u53CE\u3059\u308B\u3002"
+    en: In the launch area, touching a ball moving down collects it.
   - key: skill.2100.name
     ja: "\u30BF\u30EC\u30C3\u30C8"
     en: Turret
@@ -1061,14 +1067,14 @@ MonoBehaviour:
     ja: "\u7D30\u7247\uFF0B"
     en: More Block+
   - key: skill.4001.desc
-    ja: "\u30B9\u30C6\u30FC\u30B8\u306E\u5217\u6570\u3092\u57FA\u6E96\u306B\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u5C0F\u3055\u304F\u3057\u3066\u5217\u3092\u5897\u3084\u3059\u3002[A]"
-    en: 'Shrink blocks and add columns from the stage column count. [A]'
+    ja: "\u51FA\u73FE\u3059\u308B\u30D6\u30ED\u30C3\u30AF\u306E\u5217\u304C [A] \u5897\u3048\u308B"
+    en: Adds [A] columns.
   - key: skill.4002.name
     ja: "\u7D30\u7247\uFF0B\uFF0B"
     en: More Block++
   - key: skill.4002.desc
-    ja: "\u30B9\u30C6\u30FC\u30B8\u306E\u5217\u6570\u3092\u57FA\u6E96\u306B\u3001\u30D6\u30ED\u30C3\u30AF\u3092\u5C0F\u3055\u304F\u3057\u3066\u5217\u3092\u5897\u3084\u3059\u3002[A]"
-    en: 'Shrink blocks and add columns from the stage column count. [A]'
+    ja: "\u51FA\u73FE\u3059\u308B\u30D6\u30ED\u30C3\u30AF\u306E\u5217\u304C [A] \u5897\u3048\u308B"
+    en: Adds [A] columns.
   - key: Convert
     ja: "\u5909\u63DB"
     en: Convert
@@ -1079,8 +1085,8 @@ MonoBehaviour:
     ja: "\u5909\u63DB\u4E2D"
     en: Converting
   - key: ui.convert.finish
-    ja: "\u53D7\u3051\u53D6\u308A"
-    en: Returns
+    ja: "\u6240\u6301"
+    en: Owned
   - key: ui.convert.time
     ja: "\u6B8B\u308A\u6642\u9593"
     en: Remaining Time

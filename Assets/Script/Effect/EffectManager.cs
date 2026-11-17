@@ -7,6 +7,8 @@ public enum EffectType
 {
     EnemyDead,
     BlockBreak,
+    BallCatch,
+    BallDeadline,
 }
 
 /// <summary>

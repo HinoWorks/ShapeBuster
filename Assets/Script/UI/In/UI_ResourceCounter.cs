@@ -15,12 +15,14 @@ public class UI_ResourceCounter : MonoBehaviour
     [SerializeField] Image icon;
     [SerializeField] TextMeshProUGUI tmp_resourceCount;
     private float currentResourceFloat;
+    bool showOwnedConvert;
 
     public Transform targetPosition => icon.transform;
 
 
     public void AwakeCall_Ingame()
     {
+        showOwnedConvert = false;
         IngameRecordManager.ResourceMod_Ingame.Subscribe(Set_ResourceMod).AddTo(this);
         icon.sprite = SOLoader.ResourceData.GetResourceData(resourceType).icon;
         ResourceUnlockCheck();
@@ -28,6 +30,7 @@ public class UI_ResourceCounter : MonoBehaviour
 
     public void AwakeCall_OutGame()
     {
+        showOwnedConvert = true;
         GameEvent.UI.ResourceMod.Subscribe(Set_ResourceMod).AddTo(this);
         icon.sprite = SOLoader.ResourceData.GetResourceData(resourceType).icon;
         ResourceUnlockCheck();
@@ -50,9 +53,7 @@ public class UI_ResourceCounter : MonoBehaviour
 
         if (tmp_resourceCount == null) return;
         currentResourceFloat = 0f;
-        tmp_resourceCount.text = resourceType == ResourceType.DD
-            ? ConvertMine.FormatUnits(count)
-            : StaticManager.Get_BigintegerToString(count);
+        tmp_resourceCount.text = StaticManager.Get_BigintegerToString(count);
     }
 
     /// <summary>
@@ -88,7 +89,7 @@ public class UI_ResourceCounter : MonoBehaviour
     }
     void Update()
     {
-        if (resourceType != ResourceType.DD || tmp_resourceCount == null) return;
+        if (!showOwnedConvert || resourceType != ResourceType.DD || tmp_resourceCount == null) return;
         if (!gameObject.activeInHierarchy) return;
         tmp_resourceCount.text = ConvertMine.OwnedText();
     }
@@ -98,7 +99,7 @@ public class UI_ResourceCounter : MonoBehaviour
         if (_resourceMod.Item1 != resourceType) return;
         if (!this.gameObject.activeSelf) this.gameObject.SetActive(true);
 
-        if (resourceType == ResourceType.DD)
+        if (showOwnedConvert && resourceType == ResourceType.DD)
         {
             tmp_resourceCount.text = ConvertMine.OwnedText();
             return;

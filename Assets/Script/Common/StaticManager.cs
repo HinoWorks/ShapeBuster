@@ -246,7 +246,10 @@ public class StaticManager : MonoBehaviour
     {
         if (requiredCount <= 0) return true;
         if (SaveLoader.Inst == null) return false;
-        return SaveLoader.Inst.Get_ResourceCount(resourceType) >= requiredCount;
+        var owned = SaveLoader.Inst.Get_ResourceCount(resourceType);
+        if (resourceType == ResourceType.DD)
+            owned += ConvertMine.UnsavedWhole;
+        return owned >= requiredCount;
     }
     #endregion
 }

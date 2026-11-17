@@ -30,17 +30,23 @@ public static class SkillTreeBonus
     public const float BlockCellShrinkPerLevel = 0.06f;
     public const float BlockResourcePerLevel = 0.12f;
 
+    /// <summary>More Block。1レベルで列を1つ増やす。</summary>
     public static float BlockCompactLevel => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockCompact));
 
-    /// <summary>1で元の大きさ。1段ごとに一辺が6%小さくなる。</summary>
-    public static float BlockCellScale => Mathf.Pow(1f - BlockCellShrinkPerLevel, BlockCompactLevel);
+    public static int AddedColumns => Mathf.Max(0, Mathf.RoundToInt(BlockCompactLevel));
 
-    /// <summary>ブロック破壊資源への加算倍率。1段で +12%。</summary>
-    public static float BlockResourceUpRate => BlockCompactLevel * BlockResourcePerLevel;
+    /// <summary>縮小スキル用。今はどのスキルも入れないので 0。</summary>
+    public static float BlockShrinkLevel => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockShrink));
+
+    /// <summary>1で元の大きさ。1段ごとに一辺が6%小さくなる。</summary>
+    public static float BlockCellScale => Mathf.Pow(1f - BlockCellShrinkPerLevel, BlockShrinkLevel);
+
+    /// <summary>ブロック破壊資源への加算倍率。1段で +12%。縮小スキル用。</summary>
+    public static float BlockResourceUpRate => BlockShrinkLevel * BlockResourcePerLevel;
 
     public static int NormalBallCount => 1 + Mathf.RoundToInt(Sum(SkillParamTarget.Ball, SkillParamStat.BallCount)) + MilestoneBonus.BallCount;
     public static float BallSpeedScale => (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallSpeed))) * (1f + MilestoneBonus.BallSpeed);
-    public static float FallSpeedScale => Mathf.Max(0.4f, 1f - Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockFallSlow)) + MilestoneBonus.BlockFallSlow);
+    public static float FallSpeedScale => Mathf.Max(0.4f, 1f + Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockFallFast)));
     public static float BlockHarvestRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockHarvest));
     public static float BlockMagnetRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockMagnet));
     public static bool BlockLinger => Sum(SkillParamTarget.Block, SkillParamStat.BlockLinger) >= 1f;
@@ -75,6 +81,7 @@ public static class SkillTreeBonus
     public static float FirstAttackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFirstAttack));
     public static float LastAttackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallLastAttack));
     public static float FullStackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFullStack));
+    public static bool CatchReturning => Sum(SkillParamTarget.Ball, SkillParamStat.BallCatch) >= 1f;
     public const float LastAttackHp = 0.25f;
 
     /// <summary>無傷、残り25%以下、全回収発射の倍率。掛かるものは掛け合わせる。</summary>
@@ -199,7 +206,7 @@ public static class SkillTreeBonus
         return total;
     }
 
-    /// <summary>ステージの列数を基準に、縮んだマスが同じ幅へ並ぶ列数へ増やす。</summary>
+    /// <summary>縮小で空いた同じ幅に並べる列数。More Block は使わない。</summary>
     public static int ColumnsFor(int baseColumns)
     {
         int columns = Mathf.Max(1, baseColumns);
@@ -210,10 +217,9 @@ public static class SkillTreeBonus
 
     public static string FormatBlockCompact(float level)
     {
-        float scale = Mathf.Pow(1f - BlockCellShrinkPerLevel, Mathf.Max(0f, level));
-        float shrink = (1f - scale) * 100f;
-        float resource = Mathf.Max(0f, level) * BlockResourcePerLevel * 100f;
-        return $"サイズ -{shrink:F0}%  資源 +{resource:F0}%";
+        int columns = Mathf.RoundToInt(level);
+        if (columns > 0) return "+" + columns;
+        return columns.ToString();
     }
 
     public static bool OwnsBall(BlockBallKind kind)

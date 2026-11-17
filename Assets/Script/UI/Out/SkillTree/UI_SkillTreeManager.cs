@@ -482,6 +482,7 @@ public class UI_SkillTreeManager : MonoBehaviour
 #if UNITY_EDITOR
         skipCost |= debugUpgradeWithoutCost;
 #endif
+        ConvertMine.Flush();
         if (!skipCost && !StaticManager.IsResourceEnough(costs)) return;
 
         currentState = state.Doing;

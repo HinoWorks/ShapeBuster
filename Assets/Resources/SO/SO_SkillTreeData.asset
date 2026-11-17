@@ -253,6 +253,16 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 63
     deltaValue: 0.5
+  - baseSkillIndex: 1080
+    skillName: "\u30AD\u30E3\u30C3\u30C1"
+    jpSkillName: "\u30AD\u30E3\u30C3\u30C1"
+    icon: {fileID: 0}
+    maxLevel: 1
+    unit: NA
+    paramTarget: 4
+    targetIndex: 0
+    paramStat: 65
+    deltaValue: 1
   - baseSkillIndex: 1100
     skillName: "\u5897\u5F3E"
     jpSkillName: "\u5897\u5F3E"
@@ -2008,6 +2018,16 @@ MonoBehaviour:
     level: 4
     maxLevel: 4
     cost_AA: 295
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+    cost_GG: 0
+  - skillTreeIndex: 1080
+    level: 1
+    maxLevel: 1
+    cost_AA: 40
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0

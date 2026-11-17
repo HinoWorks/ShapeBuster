@@ -27,12 +27,16 @@ public static class ConvertMine
     const string KeyDeposited = "shapebuster.convert.deposited";
     const string KeyCredit = "shapebuster.convert.credit";
     const string KeyLevel = "shapebuster.convert.speed";
+    const float SaveInterval = 2f;
 
     static bool loaded;
+    static bool dirty;
     static BigInteger deposited;
     static long credit;
     static int speedLevel;
+    static int unsavedWhole;
     static double bitCarry;
+    static float saveWait;
 
     public static BigInteger Deposited
     {
@@ -120,41 +124,70 @@ public static class ConvertMine
     public static void Tick(float deltaTime)
     {
         EnsureLoaded();
-        if (deposited <= 0 || SaveLoader.Inst == null) return;
-
         float step = Mathf.Clamp(deltaTime, 0f, 1f);
         if (step <= 0f) return;
+        saveWait += step;
 
-        bitCarry += Speed * (double)step;
-        if (bitCarry < 1d)
-            return;
-
-        long whole = (long)bitCarry;
-        bitCarry -= whole;
-        if (deposited < whole)
+        if (deposited > 0 && SaveLoader.Inst != null)
         {
-            whole = (long)deposited;
-            bitCarry = 0d;
+            bitCarry += Speed * (double)step;
+            if (bitCarry >= 1d)
+            {
+                long whole = (long)bitCarry;
+                bitCarry -= whole;
+                if (deposited < whole)
+                {
+                    whole = (long)deposited;
+                    bitCarry = 0d;
+                }
+
+                deposited -= whole;
+                credit += whole;
+                dirty = true;
+
+                int granted = 0;
+                while (credit >= BitsPerUnit)
+                {
+                    credit -= BitsPerUnit;
+                    granted++;
+                }
+
+                if (granted > 0)
+                    unsavedWhole += granted;
+                if (deposited == 0)
+                    bitCarry = 0d;
+            }
         }
 
-        deposited -= whole;
-        credit += whole;
+        if (dirty && (deposited == 0 || saveWait >= SaveInterval))
+            Flush();
+    }
 
-        int granted = 0;
-        while (credit >= BitsPerUnit)
+    /// <summary>まだディスクに書いていない整数D。購入判定はこれに足す。</summary>
+    public static int UnsavedWhole
+    {
+        get
         {
-            credit -= BitsPerUnit;
-            granted++;
+            EnsureLoaded();
+            return unsavedWhole;
+        }
+    }
+
+    /// <summary>溜まった整数Dと変換の途中経過を、まとめて一度だけ書く。</summary>
+    public static void Flush()
+    {
+        EnsureLoaded();
+        if (unsavedWhole > 0 && SaveLoader.Inst != null)
+        {
+            int grant = unsavedWhole;
+            unsavedWhole = 0;
+            SaveLoader.Inst.Request_SaveResource(ResourceType.DD, grant);
         }
 
-        if (deposited == 0)
-            bitCarry = 0d;
-
-        if (granted > 0)
-            SaveLoader.Inst.Request_SaveResource(ResourceType.DD, granted);
-
-        if (granted > 0 || deposited == 0)
+        if (dirty)
             Save();
+        dirty = false;
+        saveWait = 0f;
     }
 
     public static string RateText()
@@ -162,24 +195,21 @@ public static class ConvertMine
         return (1m / BitsPerUnit).ToString("0.###", CultureInfo.InvariantCulture);
     }
 
-    /// <summary>次の1Dになる前の溜まり。1Dを所持へ入れたあとは0から。</summary>
+    /// <summary>所持Dに、まだ書いていない整数と1未満の端数を足した表示。</summary>
     public static string OwnedText()
     {
         EnsureLoaded();
-        return FormatDecimal((decimal)credit / BitsPerUnit);
+        BigInteger whole = SaveLoader.Inst != null ? SaveLoader.Inst.Get_ResourceCount(ResourceType.DD) : BigInteger.Zero;
+        if (whole < 0) whole = BigInteger.Zero;
+        whole += unsavedWhole;
+        decimal pending = (decimal)credit / BitsPerUnit;
+        return FormatDecimal(ToDecimal(whole) + pending);
     }
 
     public static string FormatUnits(BigInteger units)
     {
         if (units < 0) units = BigInteger.Zero;
         return FormatDecimal(ToDecimal(units));
-    }
-
-    /// <summary>いま溜まっているD。1に達すると所持へ入り、0から溜め直す。</summary>
-    public static string ReturnsText()
-    {
-        EnsureLoaded();
-        return FormatDecimal((decimal)credit / BitsPerUnit);
     }
 
     static string FormatDecimal(decimal value)

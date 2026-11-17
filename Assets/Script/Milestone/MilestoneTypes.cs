@@ -47,7 +47,7 @@ public enum MilestoneBonusStat
     PickupRange = 14, //拾得範囲
     BallBoss = 15, //ボスへの攻撃力
     BallOrbitCount = 16, //オービットの衛星の数。次のラン開始時に反映
-    BlockFallSlow = 17, //ブロック下降。マイナスで遅くなる。スキルと同じ 40% が下限
+    BlockFallSlow = 17, //旧データ用。読み込み時に全ボール攻撃力へ置き換える
 }
 
 /// <summary>bonusPerTier の足し方。</summary>

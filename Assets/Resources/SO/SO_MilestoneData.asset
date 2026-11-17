@@ -124,13 +124,13 @@ MonoBehaviour:
   - id: 10
     title: Best Clear Updates
     icon: {fileID: 0}
-    bonusLabel: Block Fall
+    bonusLabel: All Ball Damage
     track: 15
     trackKey: 0
     thresholds: 010000000000000002000000000000000300000000000000050000000000000008000000000000000d000000000000001500000000000000
-    stat: 17
+    stat: 0
     bonusKey: 0
-    bonusPerTier: -0.01
+    bonusPerTier: 0.01
     apply: 1
     unit: 0
   - id: 10000

@@ -59,9 +59,18 @@ public class BlockBall : MonoBehaviour
     float orbitAngle;
     int hitsBefore;
     bool fullStack;
+    bool wentAboveLaunch;
 
     public BlockBallKind Kind { get; private set; }
     public bool FullStack => fullStack;
+    public bool WentAboveLaunch => wentAboveLaunch;
+
+    public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
+
+    public void NoteAboveLaunch()
+    {
+        wentAboveLaunch = true;
+    }
 
     public void SetFullStack(bool value)
     {
@@ -132,6 +141,7 @@ public class BlockBall : MonoBehaviour
     public void Hold(Vector2 position)
     {
         IsHeld = true;
+        wentAboveLaunch = false;
         forceVelocity = false;
         ClearIgnored();
         CutTrail();
@@ -151,6 +161,7 @@ public class BlockBall : MonoBehaviour
         if (body == null) return;
 
         IsHeld = false;
+        wentAboveLaunch = false;
         forceVelocity = false;
         ClearIgnored();
         SetVisible(true);

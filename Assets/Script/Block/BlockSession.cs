@@ -74,6 +74,7 @@ public class BlockSession : MonoBehaviour
     UI_BlockCursorInfo cursorInfo;
     RectTransform cursorBase;
     Image cursorBaseImage;
+    readonly Vector3[] cursorCorners = new Vector3[4];
     BlockPiece[] blockPrefabs;
     const float BossStopDuration = 0.4f;
 
@@ -465,8 +466,9 @@ public class BlockSession : MonoBehaviour
         float preferred = view.width / Rule.defaultColumns * Rule.blockSizeScale;
         float fitted = view.width / baseColumns;
         float baseCell = Mathf.Max(0.12f, Mathf.Min(preferred, fitted));
-        columns = SkillTreeBonus.ColumnsFor(baseColumns);
-        cell = Mathf.Max(0.08f, baseCell * baseColumns / columns);
+        float scale = Mathf.Clamp(SkillTreeBonus.BlockCellScale, 0.4f, 1f);
+        cell = Mathf.Max(0.08f, baseCell * scale);
+        columns = Mathf.Max(1, baseColumns + SkillTreeBonus.AddedColumns);
         float blockLeft = midX - cell * columns * 0.5f;
         float blockRight = midX + cell * columns * 0.5f;
         float edge = Rule.blockGap * 0.5f;
@@ -499,8 +501,8 @@ public class BlockSession : MonoBehaviour
         Physics2D.IgnoreLayerCollision(BallLayer, 0, false);
         Physics2D.IgnoreLayerCollision(BallLayer, BallLayer, true);
 
-        float outerLeft = view.xMin - Rule.wallOverscan;
-        float outerRight = view.xMax + Rule.wallOverscan;
+        float outerLeft = Mathf.Min(view.xMin, fieldLeft) - Rule.wallOverscan;
+        float outerRight = Mathf.Max(view.xMax, fieldRight) + Rule.wallOverscan;
         float outerBottom = view.yMin - Rule.wallOverscan;
         float outerTop = view.yMax + Rule.wallOverscan;
         var props = SOLoader.BlockSession;
@@ -972,6 +974,7 @@ public class BlockSession : MonoBehaviour
             }
             if (ball.Bottom > deadlineY) continue;
 
+            PlayBallEffect(EffectType.BallDeadline, ball.transform.position);
             turretShots.RemoveAt(i);
             arena.Remove(ball.gameObject);
             Destroy(ball.gameObject);
@@ -1214,9 +1217,10 @@ public class BlockSession : MonoBehaviour
             var ball = balls[i];
             if (ball == null || ball.IsHeld || ball == aimingBall) continue;
             if (ball.Bottom <= deadlineY)
-                Park(ball);
+                Park(ball, EffectType.BallDeadline);
         }
 
+        TickCatch();
         TickVolley();
         TickAim();
         TickCursorBase();
@@ -1501,9 +1505,68 @@ public class BlockSession : MonoBehaviour
         arena.Add(instance);
     }
 
-    void Park(BlockBall ball)
+    /// <summary>
+    /// 発射エリアへ戻ってきたボールにカーソルが触れたら回収する。
+    /// 上のエリアを出てから、y速度が下向きのときだけ。撃った直後の下向きは対象にしない。
+    /// </summary>
+    void TickCatch()
+    {
+        if (!SkillTreeBonus.CatchReturning || balls == null) return;
+
+        float limit = LaunchOriginMaxY();
+        Vector2 pointer = PointerWorld.Position;
+        bool canTouch = PointerWorld.IsInsidePlayfield && pointer.y <= limit;
+        float reach = canTouch ? CursorReach() : 0f;
+
+        for (int i = 0; i < balls.Length; i++)
+        {
+            var ball = balls[i];
+            if (ball == null || ball.IsHeld) continue;
+
+            Vector2 center = ball.transform.position;
+            if (center.y > limit)
+                ball.NoteAboveLaunch();
+            if (!canTouch || !ball.WentAboveLaunch || ball.Velocity.y >= 0f) continue;
+            if (center.y > limit) continue;
+
+            float range = reach + BallRadius(ball);
+            if (((Vector2)center - pointer).sqrMagnitude > range * range) continue;
+            Park(ball, EffectType.BallCatch);
+        }
+    }
+
+    /// <summary>カーソル画像の半径。プレイ平面のワールド単位。</summary>
+    float CursorReach()
+    {
+        var camera = Camera.main;
+        if (cursorBase == null || camera == null || !camera.orthographic || camera.pixelHeight <= 0)
+            return 0f;
+
+        var canvas = cursorBase.GetComponentInParent<Canvas>();
+        Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
+            ? canvas.worldCamera
+            : null;
+        cursorBase.GetWorldCorners(cursorCorners);
+        Vector2 left = RectTransformUtility.WorldToScreenPoint(uiCamera, cursorCorners[0]);
+        Vector2 right = RectTransformUtility.WorldToScreenPoint(uiCamera, cursorCorners[3]);
+        float pixels = Vector2.Distance(left, right) * 0.5f;
+        return pixels * (camera.orthographicSize * 2f / camera.pixelHeight);
+    }
+
+    static void PlayBallEffect(EffectType effect, Vector3 worldPosition)
+    {
+        if (EffectManager.Inst == null) return;
+        worldPosition.z = 0f;
+        EffectManager.Inst.Rent(effect, worldPosition);
+    }
+
+    void Park(BlockBall ball, EffectType effect)
     {
         if (ball == null) return;
+        Vector3 at = effect == EffectType.BallCatch
+            ? PointerWorld.Position
+            : ball.transform.position;
+        PlayBallEffect(effect, at);
         if (aimingBall == ball)
         {
             aiming = false;

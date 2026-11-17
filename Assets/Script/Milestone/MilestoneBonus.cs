@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// 受け取り済み段階の合計。ドロップは次の破壊から、ボールの本数と衛星は次のラン開始時に反映する。
-/// 発射間隔は 0.08 秒まで。ブロック下降はスキルと同じく 40% が下限。
+/// 発射間隔は 0.08 秒まで。
 /// </summary>
 public static class MilestoneBonus
 {
@@ -40,9 +40,6 @@ public static class MilestoneBonus
     public static int OrbitCount => Mathf.Max(0, Mathf.RoundToInt(Get(MilestoneBonusStat.BallOrbitCount, 0)));
     public static float PoisonDuration => Mathf.Max(0f, Get(MilestoneBonusStat.PoisonDuration, 0));
     public static float PickupRange => Mathf.Max(0f, Get(MilestoneBonusStat.PickupRange, 0));
-
-    /// <summary>下降速度への加算。段階の値が負なので、足すと遅くなる。</summary>
-    public static float BlockFallSlow => Get(MilestoneBonusStat.BlockFallSlow, 0);
 
     public static float Proc(BlockBallKind kind)
     {

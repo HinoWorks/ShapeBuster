@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -105,6 +106,59 @@ public static class Loc
         TMP_FontAsset font = FontOf(language);
         if (font != null)
             label.font = font;
+    }
+
+    /// <summary>
+    /// 日本語フォントの1枚目は埋まっている。続きを別アトラスへ足してから、表示文の文字を載せる。
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void PrepareJapaneseFont()
+    {
+        var table = SOLoader.Locale;
+        var font = table != null ? table.fontJa : null;
+        if (font == null) return;
+
+        font.isMultiAtlasTexturesEnabled = true;
+        var characters = new StringBuilder();
+        var entries = table.entries;
+        if (entries != null)
+        {
+            for (int i = 0; i < entries.Length; i++)
+            {
+                var entry = entries[i];
+                if (entry == null) continue;
+                if (!string.IsNullOrEmpty(entry.ja)) characters.Append(entry.ja);
+            }
+        }
+
+        var skills = SOLoader.SkillTreeData;
+        var bases = skills != null ? skills.skillTreeBases : null;
+        if (bases != null)
+        {
+            for (int i = 0; i < bases.Length; i++)
+            {
+                var basis = bases[i];
+                if (basis == null) continue;
+                if (!string.IsNullOrEmpty(basis.jpSkillName)) characters.Append(basis.jpSkillName);
+                if (!string.IsNullOrEmpty(basis.skillName)) characters.Append(basis.skillName);
+            }
+        }
+
+        var milestones = SOLoader.MilestoneData;
+        var rows = milestones != null ? milestones.milestoneDatas : null;
+        if (rows != null)
+        {
+            for (int i = 0; i < rows.Length; i++)
+            {
+                var row = rows[i];
+                if (row == null) continue;
+                if (!string.IsNullOrEmpty(row.title)) characters.Append(row.title);
+                if (!string.IsNullOrEmpty(row.bonusLabel)) characters.Append(row.bonusLabel);
+            }
+        }
+
+        if (characters.Length > 0)
+            font.TryAddCharacters(characters.ToString());
     }
 
     static TMP_FontAsset FontOf(GameLanguage value)

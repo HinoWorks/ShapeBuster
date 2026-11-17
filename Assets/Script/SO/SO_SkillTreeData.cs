@@ -30,6 +30,7 @@ public enum SkillParamStat
     BallFirstAttack = 61, // まだダメージを受けていないブロックへの攻撃力倍率。0.2 で +20%
     BallLastAttack = 62, // 残りHPが25%以下のブロックへの攻撃力倍率
     BallFullStack = 63, // ボールを全部回収してから撃ったときの攻撃力倍率
+    BallCatch = 65, // 1以上で、発射エリアへ戻るボールをカーソルで触れると回収する
 
     // == Ball : 特殊弾 ==
     BallProc = 38, // 特殊弾の発生率への加算。targetIndex はボム0から
@@ -39,8 +40,9 @@ public enum SkillParamStat
     BallOrbitCount = 42, // オービットの周回の数
 
     // == Block ==
-    BlockCompact = 29, // 1レベルで一辺6%縮小し、ステージ列数から列を増やす。破壊資源は1レベル+12%
-    BlockFallSlow = 43, // ブロック下降を遅くする割合
+    BlockCompact = 29, // 1レベルで列を1つ増やす。ブロックの大きさは変えない
+    BlockShrink = 64, // 未使用。1レベルで一辺6%縮小し、破壊資源は+12%。将来のスキル用
+    BlockFallFast = 43, // ブロック下降を速くする割合。0.1 で +10%
     BlockHarvest = 44, // ブロックが落とすAへの倍率
     BlockMagnet = 45, // 拾得半径への倍率
     BlockLinger = 46, // 1以上で、資源がデッドラインに残る
