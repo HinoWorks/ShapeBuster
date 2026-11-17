@@ -33,12 +33,12 @@ MonoBehaviour:
     blockSpeedRate: 1
     blockResourceRate: 2
     bossIndex: 0
-    weightSquare: 70
-    weightWide: 30
+    weightSquare: 50
+    weightWide: 10
     weightTall: 0
-    weightSolid: 0
-    weightArmor: 0
-    weightRegen: 0
+    weightSolid: 10
+    weightArmor: 10
+    weightRegen: 10
   - stageIndex: 2
     stageTime: 90
     blockColumns: 10

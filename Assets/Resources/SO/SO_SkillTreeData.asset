@@ -2024,16 +2024,6 @@ MonoBehaviour:
     cost_EE: 0
     cost_FF: 0
     cost_GG: 0
-  - skillTreeIndex: 1080
-    level: 1
-    maxLevel: 1
-    cost_AA: 40
-    cost_BB: 0
-    cost_CC: 0
-    cost_DD: 0
-    cost_EE: 0
-    cost_FF: 0
-    cost_GG: 0
   - skillTreeIndex: 1100
     level: 1
     maxLevel: 1

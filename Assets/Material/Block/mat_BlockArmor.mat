@@ -37,13 +37,13 @@ Material:
     - _DotSize: 0.784
     - _EnableExternalAlpha: 0
     - _Flash: 0
-    - _OutlineWidth: 0.05
+    - _OutlineWidth: 0.1
     m_Colors:
     - _CellSpan: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _FillColor: {r: 0.45, g: 0.62, b: 0.38, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 1}
+    - _OutlineColor: {r: 0.8018868, g: 0.62685096, b: 0.14751692, a: 1}
     - _OutlineWidthXY: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _UnderColor: {r: 0, g: 0, b: 0, a: 0}

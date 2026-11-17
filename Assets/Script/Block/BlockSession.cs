@@ -303,17 +303,60 @@ public class BlockSession : MonoBehaviour
         StageTimeManager.Inst?.ClearByBoss();
     }
 
-    /// <summary>壊した位置へ資源を落とす。カーソルが触れるまで獲得にならない。</summary>
-    public void DropResources(Vector3 point, int count, ResourceType type = ResourceType.AA)
+    /// <summary>
+    /// 壊したブロックは資源を1種類だけ出す。
+    /// 通常はAA、再生はBB、装甲はCC。ボスのFFはリザルトへ直行するため、その場には落とさず獲得へ足す。
+    /// </summary>
+    public void GrantBreakResource(BlockPiece piece, Vector3 point, int cells)
     {
-        var manager = EnemyGenerateManager.Inst;
-        if (manager == null || count <= 0) return;
+        if (piece == null) return;
+
+        if (piece.BossIndex >= 0)
+        {
+            int count = ScaleBreakCount(1, ResourceType.FF);
+            if (count > 0)
+                GameEvent.UI.PublishResourceMod_Ingame(ResourceType.FF, count);
+            return;
+        }
+
+        if (piece.Regenerates)
+        {
+            DropResources(point, 1 + SkillTreeBonus.RegenDropAdd, ResourceType.BB);
+            return;
+        }
+
+        if (piece.ArmorsBottom)
+        {
+            DropResources(point, 1 + SkillTreeBonus.ArmorDropAdd, ResourceType.CC);
+            return;
+        }
+
+        float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
+            * (1f + SkillTreeBonus.BlockHarvestRate);
+        int reward = StageEnemyScale.ScaleResourceCount(cells, rewardRate);
+        if (reward > 0)
+            DropResources(point, reward);
+    }
+
+    int ScaleBreakCount(int count, ResourceType type)
+    {
+        if (count <= 0) return 0;
 
         int stage = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
         count = MilestoneBonus.ScaleDropCount(count, type, stage);
         var row = SOLoader.StageData != null ? SOLoader.StageData.FindStage(stage) : null;
         if (row != null && row.blockResourceRate > 0f)
             count = StageEnemyScale.ScaleResourceCount(count, row.blockResourceRate);
+        return count;
+    }
+
+    /// <summary>壊した位置へ資源を落とす。カーソルが触れるまで獲得にならない。</summary>
+    public void DropResources(Vector3 point, int count, ResourceType type = ResourceType.AA)
+    {
+        var manager = EnemyGenerateManager.Inst;
+        if (manager == null) return;
+
+        count = ScaleBreakCount(count, type);
         if (count <= 0) return;
 
         for (int i = 0; i < count; i++)
@@ -2110,7 +2153,7 @@ public class BlockSession : MonoBehaviour
 
     static bool OverlapsCell(BlockPiece piece, float minX, float maxX, float minY, float maxY)
     {
-        var pos = piece.transform.localPosition;
+        var pos = piece.SlotLocalPosition;
         var scale = piece.PlacedScale;
         float left = pos.x - Mathf.Abs(scale.x) * 0.5f;
         float right = pos.x + Mathf.Abs(scale.x) * 0.5f;
@@ -2223,7 +2266,7 @@ public class BlockSession : MonoBehaviour
 
     void MarkCells(bool[,] used, BlockPiece piece, float localLeft, float localBottom)
     {
-        var pos = piece.transform.localPosition;
+        var pos = piece.SlotLocalPosition;
         var scale = piece.PlacedScale;
         float minX = pos.x - scale.x * 0.5f;
         float maxX = pos.x + scale.x * 0.5f;
@@ -2251,7 +2294,7 @@ public class BlockSession : MonoBehaviour
         {
             var piece = pieces[i];
             if (piece == null || !piece.IsAlive) continue;
-            float y = piece.transform.localPosition.y - Mathf.Abs(piece.PlacedScale.y) * 0.5f;
+            float y = piece.SlotLocalPosition.y - Mathf.Abs(piece.PlacedScale.y) * 0.5f;
             if (y > bottom)
                 bottom = y;
         }

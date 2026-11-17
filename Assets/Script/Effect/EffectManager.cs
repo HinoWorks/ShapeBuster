@@ -9,6 +9,7 @@ public enum EffectType
     BlockBreak,
     BallCatch,
     BallDeadline,
+    BloodStain,
 }
 
 /// <summary>

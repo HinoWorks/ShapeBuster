@@ -65,9 +65,74 @@ public class BlockPiece : MonoBehaviour
     int pushedX = -1;
     int pushedY = -1;
     Vector3 restScale = Vector3.one;
+    Vector3 slotLocal;
+    float stumbleClock;
+    float stumblePeriod = 1.2f;
+    float hold;
+    float holdOnRecover;
+    float lastParentY;
+    bool stumbleReady;
+    const byte StumbleWalk = 0;
+    const byte StumbleTrip = 1;
+    const byte StumbleRecover = 2;
+    byte stumblePhase;
+    const float StumbleTripStart = 0.4f;
+    const float StumbleTripEnd = 0.74f;
+    const float StumbleMaxHold = 0.08f;
 
     public Vector3 PlacedScale => restScale;
-    public float PlacedLocalTop => transform.localPosition.y + restScale.y * 0.5f;
+    /// <summary>生成時のマス位置。つまずきで見た目がずれても、列の空き判定はここを使う。</summary>
+    public Vector3 SlotLocalPosition => slotLocal;
+    public float PlacedLocalTop => slotLocal.y + restScale.y * 0.5f;
+
+    /// <summary>
+    /// 等速では落ちず、周期で止まって、それからマスへ落ち直す。
+    /// 止まれる距離には上限がある。速い落下でも隣のマスには入らない。
+    /// </summary>
+    void TickStumble()
+    {
+        if (!stumbleReady || !IsAlive || breaking) return;
+
+        var parent = transform.parent;
+        if (parent == null) return;
+
+        float parentY = parent.position.y;
+        float dropped = lastParentY - parentY;
+        lastParentY = parentY;
+        if (dropped < 0f) dropped = 0f;
+        else if (dropped > 0.5f) dropped = 0.5f;
+
+        stumbleClock += Time.deltaTime;
+        if (stumbleClock >= stumblePeriod)
+            stumbleClock -= stumblePeriod;
+        float u = stumblePeriod > 0.01f ? stumbleClock / stumblePeriod : 0f;
+
+        if (u < StumbleTripStart)
+        {
+            stumblePhase = StumbleWalk;
+            hold = 0f;
+        }
+        else if (u < StumbleTripEnd)
+        {
+            if (stumblePhase != StumbleTrip)
+                stumblePhase = StumbleTrip;
+            hold = Mathf.Min(StumbleMaxHold, hold + dropped);
+        }
+        else
+        {
+            if (stumblePhase != StumbleRecover)
+            {
+                stumblePhase = StumbleRecover;
+                holdOnRecover = hold;
+            }
+            float recover = (u - StumbleTripEnd) / (1f - StumbleTripEnd);
+            hold = holdOnRecover * (1f - recover);
+        }
+
+        var pos = slotLocal;
+        pos.y += hold;
+        transform.localPosition = pos;
+    }
 
     void PlaySpawnPop()
     {
@@ -172,6 +237,7 @@ public class BlockPiece : MonoBehaviour
 
     void Update()
     {
+        TickStumble();
         TickPlate();
         TickRegen();
         if (reactTime < 0f) return;
@@ -246,6 +312,13 @@ public class BlockPiece : MonoBehaviour
         healPulse = 0f;
         half = worldSize.y * 0.5f;
         restScale = transform.localScale;
+        slotLocal = transform.localPosition;
+        stumblePeriod = Random.Range(0.95f, 1.55f);
+        stumbleClock = Random.Range(0f, stumblePeriod);
+        hold = 0f;
+        stumblePhase = StumbleWalk;
+        lastParentY = transform.parent != null ? transform.parent.position.y : transform.position.y;
+        stumbleReady = true;
         PlaySpawnPop();
         reactTime = -1f;
         breaking = false;
@@ -345,18 +418,8 @@ public class BlockPiece : MonoBehaviour
         if (collider != null)
             collider.enabled = false;
 
-        float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
-            * (1f + SkillTreeBonus.BlockHarvestRate);
-        int reward = StageEnemyScale.ScaleResourceCount(rewardCells, rewardRate);
-        if (reward > 0 && session != null)
-            session.DropResources(transform.position, reward);
-        if (session != null && Regenerates)
-            session.DropResources(transform.position, 1 + SkillTreeBonus.RegenDropAdd, ResourceType.BB);
-        if (session != null && ArmorsBottom)
-            session.DropResources(transform.position, 1 + SkillTreeBonus.ArmorDropAdd, ResourceType.CC);
-        // FはConvertの速度にだけ使う。DはConvert以外では増やさない。
-        if (session != null && BossIndex >= 0)
-            session.DropResources(transform.position, 1, ResourceType.FF);
+        if (session != null)
+            session.GrantBreakResource(this, transform.position, rewardCells);
 
         MilestoneRuntime.NotifyBlockBroken(BreakKey);
         session.NotifyBroken(this);
@@ -364,7 +427,10 @@ public class BlockPiece : MonoBehaviour
             return;
 
         if (EffectManager.Inst != null)
+        {
             EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
+            EffectManager.Inst.Rent(EffectType.BloodStain, transform.position);
+        }
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Small);
         PlayReact(true);
@@ -385,7 +451,10 @@ public class BlockPiece : MonoBehaviour
     public void FinishBreak()
     {
         if (EffectManager.Inst != null)
+        {
             EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
+            EffectManager.Inst.Rent(EffectType.BloodStain, transform.position);
+        }
         PlayReact(true);
     }
 

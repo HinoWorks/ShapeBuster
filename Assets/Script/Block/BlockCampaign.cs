@@ -1,6 +1,6 @@
 /// <summary>
 /// 段0から段12までの進行。
-/// AAは通常破壊、BBは再生、CCは装甲が落とす。
+/// 通常はAA、再生はBB、装甲はCCだけを落とす。ボスのFFは直接付与する。
 /// </summary>
 public static class BlockCampaign
 {
