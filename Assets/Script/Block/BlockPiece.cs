@@ -7,7 +7,7 @@ using UnityEngine;
 /// 現在レベルの色を下から塗り、空きは一つ下の色。レベル1の空きは透過。
 /// 輪郭の太さはスケールが変わっても同じにする。
 /// 被弾で白く光り、一瞬大きくなる。破壊時も同じ演出を出し、その場に破壊エフェクトを出す。
-/// 装甲は下から来た弾を受けない。再生はヒットが途切れると失った段を戻す。
+/// 装甲は下端か左右の端だけを受けない。出現のたびにどちらかになる。再生はヒットが途切れると失った段を戻す。
 /// </summary>
 public class BlockPiece : MonoBehaviour
 {
@@ -72,6 +72,7 @@ public class BlockPiece : MonoBehaviour
     float holdOnRecover;
     float lastParentY;
     bool stumbleReady;
+    bool armorSides;
     const byte StumbleWalk = 0;
     const byte StumbleTrip = 1;
     const byte StumbleRecover = 2;
@@ -352,13 +353,14 @@ public class BlockPiece : MonoBehaviour
         gameObject.layer = BlockSession.BlockLayer;
         CacheOutline();
         RefreshColor();
+        ChooseArmorFace();
         BindTraitMarks();
     }
 
-    /// <summary>当たった位置。装甲の下半分はダメージにしない。ballKind は BlockBallKind。不明なら -1。</summary>
+    /// <summary>当たった位置。下シールドは下端、左右シールドは左右の端をダメージにしない。ballKind は BlockBallKind。不明なら -1。</summary>
     public bool HitFrom(int damage, Vector2 worldPoint, int ballKind = -1, bool critical = false, bool fullStack = false)
     {
-        if (RejectsBottom(worldPoint))
+        if (RejectsArmor(worldPoint))
         {
             PlayPlateDeflect();
             return false;
@@ -563,12 +565,33 @@ public class BlockPiece : MonoBehaviour
         return Color.Lerp(outline, RegenHot, Mathf.Max(amount, healPulse));
     }
 
-    bool RejectsBottom(Vector2 worldPoint)
+    bool RejectsArmor(Vector2 worldPoint)
     {
         if (!armorBottom || !IsAlive || solid) return false;
 
         Vector2 local = transform.InverseTransformPoint(worldPoint);
+        if (armorSides)
+            return local.x < -0.2f || local.x > 0.2f;
         return local.y < -0.2f;
+    }
+
+    void ChooseArmorFace()
+    {
+        armorSides = false;
+        if (!armorBottom) return;
+
+        var under = FindChild("obj_under");
+        var side = FindChild("obj_side");
+        armorSides = side != null && Random.value < 0.5f;
+        if (under != null)
+            under.gameObject.SetActive(!armorSides);
+        if (side != null)
+            side.gameObject.SetActive(armorSides);
+
+        var active = armorSides ? side : under;
+        if (active == null) return;
+
+        plateMarks = active.GetComponentsInChildren<SpriteRenderer>(true);
     }
 
     void PlayPlateDeflect()

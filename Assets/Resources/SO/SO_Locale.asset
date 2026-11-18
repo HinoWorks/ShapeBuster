@@ -385,14 +385,14 @@ MonoBehaviour:
     ja: "\u88C5\u7532\u30D6\u30ED\u30C3\u30AF\u7834\u58CA"
     en: Armor Block Breaks
   - key: milestone.10001.bonus
-    ja: "CC\u306E\u5165\u624B"
-    en: CC Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.10002.title
     ja: "\u518D\u751F\u30D6\u30ED\u30C3\u30AF\u7834\u58CA"
     en: Regen Block Breaks
   - key: milestone.10002.bonus
-    ja: "BB\u306E\u5165\u624B"
-    en: BB Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.10003.title
     ja: "\u30DC\u30B9\u7834\u58CA"
     en: Boss Breaks
@@ -463,8 +463,8 @@ MonoBehaviour:
     ja: "\u7DCF\u30AF\u30EA\u30A2\u6642\u9593"
     en: Total Clear Time
   - key: milestone.3.bonus
-    ja: "\u7834\u58CA\u8CC7\u6E90"
-    en: Break Resources
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.4.title
     ja: "\u7DCF\u30AF\u30EA\u30A2"
     en: Total Clears
@@ -475,20 +475,20 @@ MonoBehaviour:
     ja: "\u30B9\u30C6\u30FC\u30B80\u30AF\u30EA\u30A2"
     en: Stage 0 Clears
   - key: milestone.30000.bonus
-    ja: "\u3053\u306E\u30B9\u30C6\u30FC\u30B8\u306E\u30C9\u30ED\u30C3\u30D7"
-    en: This Stage Drop
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.30001.title
     ja: "\u30B9\u30C6\u30FC\u30B81\u30AF\u30EA\u30A2"
     en: Stage 1 Clears
   - key: milestone.30001.bonus
-    ja: "\u3053\u306E\u30B9\u30C6\u30FC\u30B8\u306E\u30C9\u30ED\u30C3\u30D7"
-    en: This Stage Drop
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.30002.title
     ja: "\u30B9\u30C6\u30FC\u30B82\u30AF\u30EA\u30A2"
     en: Stage 2 Clears
   - key: milestone.30002.bonus
-    ja: "\u3053\u306E\u30B9\u30C6\u30FC\u30B8\u306E\u30C9\u30ED\u30C3\u30D7"
-    en: This Stage Drop
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.5.title
     ja: "\u7DCF\u30D7\u30EC\u30A4"
     en: Total Plays
@@ -499,44 +499,44 @@ MonoBehaviour:
     ja: "AA\u306E\u7372\u5F97"
     en: Total AA Gained
   - key: milestone.40000.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.40001.title
     ja: "BB\u306E\u7372\u5F97"
     en: Total BB Gained
   - key: milestone.40001.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.40002.title
     ja: "CC\u306E\u7372\u5F97"
     en: Total CC Gained
   - key: milestone.40002.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.40003.title
     ja: "DD\u306E\u7372\u5F97"
     en: Total DD Gained
   - key: milestone.40003.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.40004.title
     ja: "EE\u306E\u7372\u5F97"
     en: Total EE Gained
   - key: milestone.40004.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.40005.title
     ja: "FF\u306E\u7372\u5F97"
     en: Total FF Gained
   - key: milestone.40005.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.40006.title
     ja: "GG\u306E\u7372\u5F97"
     en: Total GG Gained
   - key: milestone.40006.bonus
-    ja: "\u3053\u306E\u30EA\u30BD\u30FC\u30B9\u306E\u7372\u5F97"
-    en: This Resource Gain
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
   - key: milestone.6.title
     ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u56DE\u6570"
     en: Total Criticals
@@ -1102,3 +1102,75 @@ MonoBehaviour:
   - key: ui.convert.whole
     ja: "1\u8CAF\u307E\u308B\u3068\u3001\u30D7\u30EC\u30A4\u30E4\u30FC\u304C\u4F7F\u3048\u308B\u30EA\u30BD\u30FC\u30B9\u306B\u306A\u308B\u3002"
     en: When it reaches 1, it becomes a resource you can use.
+  - key: milestone.20010.title
+    ja: "\u30BF\u30EC\u30C3\u30C8\u306E\u30C0\u30E1\u30FC\u30B8"
+    en: Turret Damage
+  - key: milestone.20010.bonus
+    ja: "\u30BF\u30EC\u30C3\u30C8\u306E\u653B\u6483\u529B"
+    en: Turret Attack
+  - key: milestone.20011.title
+    ja: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0\u306E\u30C0\u30E1\u30FC\u30B8"
+    en: Auto Beam Damage
+  - key: milestone.20011.bonus
+    ja: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0\u306E\u653B\u6483\u529B"
+    en: Auto Beam Attack
+  - key: milestone.30003.title
+    ja: "\u30B9\u30C6\u30FC\u30B83\u30AF\u30EA\u30A2"
+    en: Stage 3 Clears
+  - key: milestone.30003.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30004.title
+    ja: "\u30B9\u30C6\u30FC\u30B84\u30AF\u30EA\u30A2"
+    en: Stage 4 Clears
+  - key: milestone.30004.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30005.title
+    ja: "\u30B9\u30C6\u30FC\u30B85\u30AF\u30EA\u30A2"
+    en: Stage 5 Clears
+  - key: milestone.30005.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30006.title
+    ja: "\u30B9\u30C6\u30FC\u30B86\u30AF\u30EA\u30A2"
+    en: Stage 6 Clears
+  - key: milestone.30006.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30007.title
+    ja: "\u30B9\u30C6\u30FC\u30B87\u30AF\u30EA\u30A2"
+    en: Stage 7 Clears
+  - key: milestone.30007.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30008.title
+    ja: "\u30B9\u30C6\u30FC\u30B88\u30AF\u30EA\u30A2"
+    en: Stage 8 Clears
+  - key: milestone.30008.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30009.title
+    ja: "\u30B9\u30C6\u30FC\u30B89\u30AF\u30EA\u30A2"
+    en: Stage 9 Clears
+  - key: milestone.30009.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30010.title
+    ja: "\u30B9\u30C6\u30FC\u30B810\u30AF\u30EA\u30A2"
+    en: Stage 10 Clears
+  - key: milestone.30010.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30011.title
+    ja: "\u30B9\u30C6\u30FC\u30B811\u30AF\u30EA\u30A2"
+    en: Stage 11 Clears
+  - key: milestone.30011.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain
+  - key: milestone.30012.title
+    ja: "\u30B9\u30C6\u30FC\u30B812\u30AF\u30EA\u30A2"
+    en: Stage 12 Clears
+  - key: milestone.30012.bonus
+    ja: "AA\u306E\u5165\u624B"
+    en: AA Gain

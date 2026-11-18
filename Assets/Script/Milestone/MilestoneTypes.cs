@@ -37,9 +37,9 @@ public enum MilestoneBonusStat
     BallHeavySpeed = 4, //ヘビーの速さ。素の 30% に足す
     BallArea = 5, //爆風や沼の半径。bonusKey は BlockBallKind
     PoisonDuration = 6, //沼が残る秒数
-    ResourceGainRate = 7, //すべてのドロップ数
-    ResourceTypeRate = 8, //そのリソースのドロップ数。bonusKey はリソース番号
-    StageDropRate = 9, //そのステージでのドロップ数。bonusKey はステージ index
+    ResourceGainRate = 7, //AAのドロップ数
+    ResourceTypeRate = 8, //AAのドロップ数。bonusKey は AA の 0
+    StageDropRate = 9, //そのステージでのAAのドロップ数。bonusKey はステージ index
     ShotInterval = 10, //発射間隔（秒）。マイナスで短くなる。0.08 秒が下限
     BallSpeed = 11, //全ボールの速さ
     BallCount = 12, //ノーマルの本数。次のラン開始時に反映

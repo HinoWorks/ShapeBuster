@@ -34,7 +34,7 @@ MonoBehaviour:
     blockResourceRate: 2
     bossIndex: 0
     weightSquare: 50
-    weightWide: 10
+    weightWide: 20
     weightTall: 0
     weightSolid: 10
     weightArmor: 10

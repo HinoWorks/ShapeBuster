@@ -141,9 +141,9 @@ public static class SkillTreeBonus
             ratio += Mathf.Max(0f, SumBall(SkillParamStat.BallRatio, index));
         float power = normal * ratio;
         if (kind == BlockBallKind.Turret)
-            power *= 1f + TurretDamageRate;
+            power *= (1f + TurretDamageRate) * (1f + MilestoneBonus.KindDamage(kind));
         else if (kind == BlockBallKind.AutoBeam)
-            power *= 1f + RowBeamDamageRate;
+            power *= (1f + RowBeamDamageRate) * (1f + MilestoneBonus.KindDamage(kind));
         return power;
     }
 

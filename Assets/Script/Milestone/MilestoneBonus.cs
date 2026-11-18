@@ -63,8 +63,9 @@ public static class MilestoneBonus
     public static int ScaleDropCount(int baseCount, ResourceType resourceType, int stageIndex)
     {
         if (baseCount <= 0) return 0;
+        if (resourceType != ResourceType.AA) return baseCount;
 
-        float bonus = Get(MilestoneBonusStat.ResourceTypeRate, (int)resourceType)
+        float bonus = Get(MilestoneBonusStat.ResourceTypeRate, (int)ResourceType.AA)
             + Get(MilestoneBonusStat.ResourceGainRate, 0)
             + (stageIndex >= 0 ? Get(MilestoneBonusStat.StageDropRate, stageIndex) : 0f);
         if (bonus <= 0f) return baseCount;

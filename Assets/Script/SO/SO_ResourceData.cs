@@ -8,6 +8,7 @@ public class ResourceData
     public ResourceType resourceType;
     public Sprite icon;
     public ResourceCont resourceCont;
+    public string memo;
 }
 
 [CreateAssetMenu(menuName = "SO/ResourceData")]
