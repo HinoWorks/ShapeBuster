@@ -4,7 +4,7 @@
 // ゾンビの顔と腐敗。BlockLevelFill と BlockBossFill で共通。
 // 使う側の CBUFFER に次の値を宣言してから include する。
 // _DotScale, _Zombie, _Seed, _EyeColor, _MouthColor, _TeethColor, _RotColor, _RotAmount, _WoundColor,
-// _Regen, _PodColor, _PodDim, _VeinAmount, _RegenGlow, _RegenCharge, _HealPulse, _ArmorSide, _Bloat, _BoilColor, _Split, _StitchColor, _PatchTint, _SplitSide, _Ghost
+// _Regen, _PodColor, _PodDim, _VeinAmount, _RegenGlow, _RegenCharge, _HealPulse, _ArmorSide, _Bloat, _BoilColor, _Split, _StitchColor, _PatchTint, _SplitSide, _Ghost, _PodCrack
 
 struct ZombieMask
 {
@@ -39,7 +39,7 @@ float ShellInnerCols(float totalX)
 }
 
 /// ドット番号 cell、ブロック全体のドット数 total、マス数 cells から顔と腐敗の位置を求める。
-ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
+ZombieMask BuildZombieSeeded(float2 cell, float2 total, float2 cells, float seed)
 {
     ZombieMask m = (ZombieMask)0;
 #ifdef BLOCK_NO_ZOMBIE
@@ -47,15 +47,15 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
 #endif
     if (_Zombie < 0.5) return m;
 
-    float s0 = Hash21(float2(_Seed * 91.7, 3.1));
-    float s1 = Hash21(float2(_Seed * 57.3, 8.9));
-    float s2 = Hash21(float2(_Seed * 23.9, 1.7));
-    float s3 = Hash21(float2(_Seed * 71.1, 5.3));
+    float s0 = Hash21(float2(seed * 91.7, 3.1));
+    float s1 = Hash21(float2(seed * 57.3, 8.9));
+    float s2 = Hash21(float2(seed * 23.9, 1.7));
+    float s3 = Hash21(float2(seed * 71.1, 5.3));
 
     // 腐敗：ノイズのまだらを暗く緑寄りにし、ところどころに傷のドットを置く。
-    float n = ValueNoise(cell * 0.3 + _Seed * 37.0);
+    float n = ValueNoise(cell * 0.3 + seed * 37.0);
     m.rot = step(1.0 - saturate(_RotAmount), n);
-    m.wound = m.rot * step(0.9, Hash21(cell + _Seed * 13.1));
+    m.wound = m.rot * step(0.9, Hash21(cell + seed * 13.1));
 
     // 顔：短い辺のドット数を一辺とする正方形。縦長は上寄せ、それ以外は中央。
     float scale = max(_DotScale, 1.0);
@@ -117,7 +117,7 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
     if (mouthType < 0.5)
     {
         float row1 = Box(p, mx, mouthRow, mw, 1.0);
-        float missing = floor(Hash21(float2(_Seed * 5.7, 2.2)) * mw);
+        float missing = floor(Hash21(float2(seed * 5.7, 2.2)) * mw);
         float k = p.x - mx;
         float isTooth = step(frac(k * 0.5), 0.25) * (1.0 - step(abs(k - missing), 0.25));
         teeth = row1 * isTooth;
@@ -150,6 +150,18 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
         float px0 = floor((size - pw) * 0.5);
         // 上の輪郭に隠れないよう、上端から 1 ドット空ける。
         float py0 = max(0.0, min(eyeRow + 1.0, size - 2.0 - ph));
+#ifdef BLOCK_ZOMBIE_BROW
+        // ボスの種は菱形の結晶。奇数の幅にして先を 1 ドットにそろえ、右下の辺を暗く、左上に光を置く。
+        pw = pw - (1.0 - fmod(pw, 2.0));
+        ph = pw;
+        float hw = (pw - 1.0) * 0.5;
+        float2 q = p - float2(px0 + hw, py0 + hw);
+        float dd = abs(q.x) + abs(q.y);
+        pod = step(dd, hw + 0.25);
+        podLight = step(abs(q.x + hw * 0.4), 0.6) * step(abs(q.y - hw * 0.4), 0.6);
+        podDark = pod * step(hw - 1.25, dd) * step(0.0, q.x - q.y);
+        podRim = step(abs(q.x), hw - 1.0) * step(abs(q.y + hw + 1.0), 0.25);
+#else
         pod = Box(p, px0, py0, pw, ph);
         float corners = Box(p, px0, py0, 1.0, 1.0) + Box(p, px0 + pw - 1.0, py0, 1.0, 1.0)
             + Box(p, px0, py0 + ph - 1.0, 1.0, 1.0) + Box(p, px0 + pw - 1.0, py0 + ph - 1.0, 1.0, 1.0);
@@ -157,12 +169,16 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
         podLight = Box(p, px0 + 1.0, py0 + ph - 2.0, 1.0, 1.0);
         podDark = saturate(Box(p, px0 + 1.0, py0, pw - 1.0, 1.0) + Box(p, px0 + pw - 1.0, py0 + 1.0, 1.0, ph - 2.0));
         podRim = Box(p, px0 + 1.0, py0 - 1.0, pw - 2.0, 1.0);
+#endif
+        // 再生ボスの種のひび。ダメージを受けるほど暗いドットが増える。
+        float crack = step(1.0 - saturate(_PodCrack) * 0.65, Hash21(floor(p) * 1.37 + seed * 3.1));
+        podDark = saturate(podDark + crack);
 
         // 血管：種から伸びる 1 ドット幅の筋。回復が溜まるほど遠くまで伸びる。
         float2 podCenter = float2(px0 + pw * 0.5, py0 + ph * 0.5);
         float dist = length(p + 0.5 - podCenter) / size;
         float reach = lerp(0.3, 0.85, saturate(_RegenCharge));
-        float vn = ValueNoise(cell * 0.5 + _Seed * 11.0);
+        float vn = ValueNoise(cell * 0.5 + seed * 11.0);
         m.vein = step(abs(vn - 0.5), _VeinAmount) * step(dist, reach) * (1.0 - pod);
     }
 
@@ -178,8 +194,8 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
     if (_Bloat > 0.5)
     {
         float parts = saturate(m.eye + m.shadow + m.mouth + m.teeth + m.brow);
-        float boil = step(0.93, Hash21(cell + _Seed * 7.3)) * (1.0 - parts);
-        float above = step(0.93, Hash21(cell + float2(0.0, 1.0) + _Seed * 7.3));
+        float boil = step(0.93, Hash21(cell + seed * 7.3)) * (1.0 - parts);
+        float above = step(0.93, Hash21(cell + float2(0.0, 1.0) + seed * 7.3));
         m.boil = boil;
         m.boilShade = (1.0 - boil) * above * (1.0 - parts);
         float2 q = (cell + 0.5) / max(total, 1.0);
@@ -226,6 +242,12 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
     m.wound *= 1.0 - face;
 
     return m;
+}
+
+/// 個体の種 _Seed で顔を描く。
+ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
+{
+    return BuildZombieSeeded(cell, total, cells, _Seed);
 }
 
 half3 ZombieColor(half3 color, ZombieMask m)

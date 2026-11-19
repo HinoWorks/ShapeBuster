@@ -28,7 +28,24 @@ MonoBehaviour:
   bloat: {fileID: 100003, guid: 818d540efa36443babeea689813a0f09, type: 3}
   split: {fileID: 100003, guid: 53590d1b49b2b4b2bb18f99a87e0f59e, type: 3}
   ghost: {fileID: 100003, guid: d4ead4794cf03473f8efcb946af92b1a, type: 3}
+  glass: {fileID: 100003, guid: 513a8900e92ee476b966f2db861d139b, type: 3}
+  chest: {fileID: 100003, guid: 8935231a470b94fc1a75c60b450e0b0f, type: 3}
   boss: {fileID: 100003, guid: d44e3f3408257d3d2f6a1924d5e6f037, type: 3}
+  bosses:
+  - {fileID: 100003, guid: b91ab5eae1bf141c5965a53348878654, type: 3}
+  - {fileID: 100003, guid: 1ec4658a05e1444068a1130a0a479f00, type: 3}
+  - {fileID: 100003, guid: be2fc381d42ec4026a95fec6268e7273, type: 3}
+  - {fileID: 100003, guid: e3f1e1b6629ad4bd8b66b3d492b311c6, type: 3}
+  - {fileID: 100003, guid: 7021493062f8f42cda89f9d004d24464, type: 3}
+  - {fileID: 100003, guid: 82124235a74d240ce858a014ec0ffd4d, type: 3}
+  - {fileID: 100003, guid: 5a279fffd493d4a2785e884ada4ebf8f, type: 3}
+  - {fileID: 100003, guid: a0f91521720bd4f619ce98cf4d365e90, type: 3}
+  - {fileID: 100003, guid: 7e8dc5abff95b41f7b2ef083b0cd57a4, type: 3}
+  - {fileID: 100003, guid: 04790bab0dd63439e8f4abd1e2a8aadc, type: 3}
+  - {fileID: 100003, guid: 8ac58662d617143599f71640f264e3ba, type: 3}
+  - {fileID: 100003, guid: d48f8b556c1c5433e86e89c9363e1091, type: 3}
+  - {fileID: 100003, guid: 308b9ec971ec54d2da9d3ed0b8dc225d, type: 3}
+  - {fileID: 100003, guid: 8e3c6ccf5789b4b368e38b03e3a8ec14, type: 3}
   baseFill: 0.5
   bossFillScale: 0.7
   maxFill: 0.85
@@ -44,3 +61,17 @@ MonoBehaviour:
   defaultColumns: 10
   wallThickness: 0.3
   wallOverscan: 2
+  wallGimmickInterval: 6
+  wallBandTopGap: 2.5
+  wallBoostBand: {fileID: 3661878321070050872, guid: cb5f3d6e2da454008ac81367a3594ba7, type: 3}
+  wallSlowBand: {fileID: 5806103501465963670, guid: d704b2bc7ac14447aa6d1221fbea6d2f, type: 3}
+  wallBoostMax: 2
+  wallBoostLife: 12
+  wallBoostCells: 2
+  wallBoostRate: 1.6
+  wallBoostTime: 1.6
+  wallSlowMax: 1
+  wallSlowLife: 10
+  wallSlowCells: 2
+  wallSlowRate: 0.55
+  wallSlowTime: 2

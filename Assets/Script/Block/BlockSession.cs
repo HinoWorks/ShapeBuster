@@ -59,6 +59,8 @@ public class BlockSession : MonoBehaviour
 
     readonly List<BlockPiece> pieces = new();
     bool hadBreakable;
+    readonly List<BlockWallBand> wallBands = new();
+    float wallGimmickTimer;
     readonly List<GameObject> arena = new();
 
     Transform formation;
@@ -204,6 +206,7 @@ public class BlockSession : MonoBehaviour
 
         TryClearRefill();
         TickBoss();
+        TickWallGimmicks();
         if (TopGapReady())
             SpawnWave();
     }
@@ -320,6 +323,9 @@ public class BlockSession : MonoBehaviour
             return;
         }
 
+        if (piece.NoDrop)
+            return;
+
         if (piece.OverridesDrop)
         {
             DropResources(point, 1, piece.DropResource);
@@ -367,10 +373,24 @@ public class BlockSession : MonoBehaviour
         count = ScaleBreakCount(count, type);
         if (count <= 0) return;
 
+        // 数が多いほど広く散らす。ひまわりの種の並び（黄金角）で置き、固まらないようにする。
+        float radius = Mathf.Min(0.2f + 0.18f * Mathf.Sqrt(count - 1), 1.6f);
+        float turn = Random.value * Mathf.PI * 2f;
+        float margin = 0.15f;
         for (int i = 0; i < count; i++)
         {
-            var offset = (Vector3)(Random.insideUnitCircle * 0.2f);
-            manager.SpawnLooseResource(point + offset, type, BlockFallSpeed);
+            Vector2 offset;
+            if (count == 1)
+                offset = Random.insideUnitCircle * radius;
+            else
+            {
+                float r = radius * Mathf.Sqrt((i + 0.5f) / count);
+                float angle = turn + i * 2.39996f;
+                offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * r + Random.insideUnitCircle * 0.05f;
+            }
+            var spot = point + (Vector3)offset;
+            spot.x = Mathf.Clamp(spot.x, fieldLeft + margin, fieldRight - margin);
+            manager.SpawnLooseResource(spot, type, BlockFallSpeed);
         }
     }
 
@@ -438,6 +458,8 @@ public class BlockSession : MonoBehaviour
         flashes.Clear();
         poisons.Clear();
         bursts.Clear();
+        wallBands.Clear();
+        wallGimmickTimer = 0f;
         elapsed = 0f;
         bossArmed = false;
         bossDue = false;
@@ -670,6 +692,85 @@ public class BlockSession : MonoBehaviour
         instance.transform.position = new Vector3((fieldLeft + fieldRight) * 0.5f, deadlineY, prefab.transform.localPosition.z);
         instance.transform.localScale = new Vector3(width, ySign * thickness, authored.z == 0f ? 1f : authored.z);
         arena.Add(instance);
+    }
+
+    /// <summary>
+    /// 壁の仕掛け。wallGimmickInterval 秒ごとに、種類ごとに、ステージの開始秒数を過ぎていれば確率で出す。
+    /// </summary>
+    void TickWallGimmicks()
+    {
+        var stage = CurrentStage();
+        if (stage == null || cell <= 0.001f) return;
+        wallGimmickTimer += Time.deltaTime;
+        float interval = Mathf.Max(0.5f, Rule.wallGimmickInterval);
+        if (wallGimmickTimer < interval) return;
+        wallGimmickTimer -= interval;
+
+        if (RollWallBand(WallBandKind.Boost, stage.wallBoostStart, stage.wallBoostChance, Rule.wallBoostMax))
+            SpawnWallBand(WallBandKind.Boost, Rule.wallBoostCells, Rule.wallBoostLife, Rule.wallBoostRate, Rule.wallBoostTime);
+        if (RollWallBand(WallBandKind.Slow, stage.wallSlowStart, stage.wallSlowChance, Rule.wallSlowMax))
+            SpawnWallBand(WallBandKind.Slow, Rule.wallSlowCells, Rule.wallSlowLife, Rule.wallSlowRate, Rule.wallSlowTime);
+    }
+
+    bool RollWallBand(WallBandKind kind, int start, int chance, int max)
+    {
+        if (chance <= 0 || elapsed < start) return false;
+        int count = 0;
+        for (int i = 0; i < wallBands.Count; i++)
+        {
+            if (wallBands[i] != null && wallBands[i].Kind == kind)
+                count++;
+        }
+        return count < max && Random.value * 100f < chance;
+    }
+
+    /// <summary>壁の帯を、左右どちらかの壁の空いた高さに出す。ほかの帯（種類を問わない）とは重ねない。</summary>
+    bool SpawnWallBand(WallBandKind kind, float cells, float life, float rate, float time)
+    {
+        float height = cell * Mathf.Max(0.5f, cells);
+        float low = deadlineY + cell + height * 0.5f;
+        float high = ceilingY - cell * Mathf.Max(0f, Rule.wallBandTopGap) - height * 0.5f;
+        if (high < low) return false;
+
+        for (int attempt = 0; attempt < 8; attempt++)
+        {
+            int inward = Random.value < 0.5f ? 1 : -1;
+            float y = Random.Range(low, high);
+            bool overlaps = false;
+            for (int i = 0; i < wallBands.Count; i++)
+            {
+                var other = wallBands[i];
+                if (other == null || other.Side != -inward) continue;
+                if (Mathf.Abs(other.CenterY - y) < (other.Height + height) * 0.5f + cell * 0.5f)
+                {
+                    overlaps = true;
+                    break;
+                }
+            }
+            if (overlaps) continue;
+
+            var prefab = kind == WallBandKind.Slow ? Rule.wallSlowBand : Rule.wallBoostBand;
+            if (prefab == null)
+            {
+                Debug.LogWarning($"壁の帯（{kind}）のプレハブがありません。 SO_BlockSession を確認してください。");
+                return false;
+            }
+            var band = Instantiate(prefab);
+            var host = band.gameObject;
+            float face = inward > 0 ? fieldLeft : fieldRight;
+            band.Init(this, kind, face, y, height, inward, BallDiameter * 0.6f, life, rate, time);
+            wallBands.Add(band);
+            arena.Add(host);
+            return true;
+        }
+        return false;
+    }
+
+    public void NotifyWallBandGone(BlockWallBand band)
+    {
+        wallBands.Remove(band);
+        if (band != null)
+            arena.Remove(band.gameObject);
     }
 
     void CreateWall(Vector2 center, Vector2 size, bool visible)
@@ -1671,6 +1772,67 @@ public class BlockSession : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ガラスが割れた。ガラスのいたマスに、中のゾンビを出す。
+    /// 種類は、その段で出るゾンビからマスごとに出現重みで選ぶ（ガラスとボスは除く。収まる大きさのものだけ）。
+    /// 選べるものがないときは、プレハブの中身（contents）を出す。HP は、その時点で新しく出るブロックと同じ。
+    /// </summary>
+    public void ReleaseContents(BlockPiece glass)
+    {
+        if (glass == null || !glass.ReleasesContents || formation == null) return;
+
+        int cellsX = glass.CellsX;
+        int cellsY = glass.CellsY;
+        Vector3 center = glass.SlotLocalPosition;
+        float left = center.x - cell * cellsX * 0.5f;
+        float bottom = center.y - cell * cellsY * 0.5f;
+        var used = new bool[cellsX, cellsY];
+        for (int y = 0; y < cellsY; y++)
+        {
+            for (int x = 0; x < cellsX; x++)
+            {
+                if (used[x, y]) continue;
+                int cx = x, cy = y;
+                var prefab = PickPrefab(p => !p.ReleasesContents && !p.IsChest && FitsInside(used, cx, cy, p.CellsX, p.CellsY));
+                if (prefab == null)
+                    prefab = glass.Contents;
+                int w = Mathf.Max(1, prefab.CellsX);
+                int h = Mathf.Max(1, prefab.CellsY);
+                if (!FitsInside(used, x, y, w, h)) { w = 1; h = 1; }
+                Occupy(used, x, y, w, h);
+                Place(prefab, x, y, w, h, left, bottom);
+            }
+        }
+
+        // 破片：四隅に火花を散らし、白い四角を広げる。
+        SoundManager.SE(SEType.ArmorDeflect);
+        Vector3 world = glass.transform.position;
+        float spread = cell * 0.5f;
+        if (EffectManager.Inst != null)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var dir = new Vector3(i % 2 == 0 ? -1f : 1f, i < 2 ? -1f : 1f, 0f);
+                EffectManager.Inst.Rent(EffectType.ShellSpark, world + dir * spread, Quaternion.FromToRotation(Vector3.up, dir));
+            }
+        }
+        ShowFlash(world, SquareSprite, Vector3.one * cell * 1.6f, Vector3.one * cell * 2.4f, new Color(0.8f, 0.95f, 1f, 0.6f), 0.2f);
+    }
+
+    /// <summary>ガラスの中（used の範囲）に、はみ出さず空いたマスだけで収まる。</summary>
+    static bool FitsInside(bool[,] used, int x, int y, int cellsX, int cellsY)
+    {
+        if (x + cellsX > used.GetLength(0) || y + cellsY > used.GetLength(1)) return false;
+        for (int iy = 0; iy < cellsY; iy++)
+        {
+            for (int ix = 0; ix < cellsX; ix++)
+            {
+                if (used[x + ix, y + iy]) return false;
+            }
+        }
+        return true;
+    }
+
     /// <summary>総 HP を、色の段（1 段 stepHp）と、今の段の残り HP に分ける。段の数は色数で止める。</summary>
     static void SplitTotal(int total, int stepHp, out int level, out int current, out int barMax)
     {
@@ -2447,7 +2609,9 @@ public class BlockSession : MonoBehaviour
             Rule.regen,
             Rule.bloat,
             Rule.split,
-            Rule.ghost
+            Rule.ghost,
+            Rule.glass,
+            Rule.chest
         };
     }
 
@@ -2456,10 +2620,18 @@ public class BlockSession : MonoBehaviour
         var prefab = Rule.boss;
         if (prefab != null && prefab.BossIndex == index)
             return prefab;
+        var list = Rule.bosses;
+        if (list == null) return null;
+        for (int i = 0; i < list.Length; i++)
+        {
+            if (list[i] != null && list[i].BossIndex == index)
+                return list[i];
+        }
         return null;
     }
 
-    BlockPiece PickPrefab()
+    /// <summary>その段の出現重みでブロックを選ぶ。allow を渡すと、それを満たすものだけから選ぶ（ないときは null）。</summary>
+    BlockPiece PickPrefab(System.Func<BlockPiece, bool> allow = null)
     {
         LoadBlockPrefabs();
         if (blockPrefabs == null || blockPrefabs.Length == 0) return null;
@@ -2479,18 +2651,28 @@ public class BlockSession : MonoBehaviour
         for (int i = 0; i < blockPrefabs.Length; i++)
         {
             var prefab = blockPrefabs[i];
-            if (prefab != null && prefab.BossIndex < 0)
+            if (prefab != null && prefab.BossIndex < 0 && (allow == null || allow(prefab)))
                 total += SpawnWeight(prefab, normal, stage, staged);
         }
-        if (total <= 0f) return blockPrefabs[0];
+        if (total <= 0f) return allow == null ? blockPrefabs[0] : null;
 
         float roll = Random.value * total;
         for (int i = 0; i < blockPrefabs.Length; i++)
         {
             var prefab = blockPrefabs[i];
-            if (prefab == null || prefab.BossIndex >= 0) continue;
+            if (prefab == null || prefab.BossIndex >= 0 || (allow != null && !allow(prefab))) continue;
             roll -= SpawnWeight(prefab, normal, stage, staged);
             if (roll <= 0f) return prefab;
+        }
+        if (allow != null)
+        {
+            for (int i = blockPrefabs.Length - 1; i >= 0; i--)
+            {
+                var prefab = blockPrefabs[i];
+                if (prefab != null && prefab.BossIndex < 0 && allow(prefab) && SpawnWeight(prefab, normal, stage, staged) > 0f)
+                    return prefab;
+            }
+            return null;
         }
         return blockPrefabs[blockPrefabs.Length - 1];
     }

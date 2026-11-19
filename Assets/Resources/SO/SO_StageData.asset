@@ -29,13 +29,19 @@ MonoBehaviour:
     weightBloat: 10
     weightSplit: 10
     weightGhost: 10
+    weightGlass: 10
+    weightChest: 0
+    wallBoostStart: 15
+    wallBoostChance: 20
+    wallSlowStart: 15
+    wallSlowChance: 30
   - stageIndex: 1
     stageTime: 45
     blockColumns: 8
     blockHpRate: 1.28
     blockSpeedRate: 1
     blockResourceRate: 2
-    bossIndex: 0
+    bossIndex: 7
     weightSquare: 40
     weightWide: 20
     weightTall: 0
@@ -45,13 +51,19 @@ MonoBehaviour:
     weightBloat: 10
     weightSplit: 0
     weightGhost: 0
+    weightGlass: 0
+    weightChest: 3
+    wallBoostStart: 5
+    wallBoostChance: 35
+    wallSlowStart: 5
+    wallSlowChance: 35
   - stageIndex: 2
     stageTime: 50
     blockColumns: 10
     blockHpRate: 2.292
     blockSpeedRate: 1.2
     blockResourceRate: 3
-    bossIndex: 0
+    bossIndex: 5
     weightSquare: 50
     weightWide: 28
     weightTall: 22
@@ -61,13 +73,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
+    weightGlass: 15
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 0
+    wallSlowChance: 0
   - stageIndex: 3
     stageTime: 55
     blockColumns: 10
     blockHpRate: 14.26
     blockSpeedRate: 1.4
     blockResourceRate: 4
-    bossIndex: 0
+    bossIndex: 1
     weightSquare: 48
     weightWide: 18
     weightTall: 14
@@ -77,13 +95,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 0
+    wallSlowChance: 0
   - stageIndex: 4
     stageTime: 55
     blockColumns: 10
     blockHpRate: 50.7
     blockSpeedRate: 1.5
     blockResourceRate: 4.5
-    bossIndex: 0
+    bossIndex: 8
     weightSquare: 42
     weightWide: 16
     weightTall: 12
@@ -93,13 +117,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 5
     stageTime: 60
     blockColumns: 10
     blockHpRate: 135.204
     blockSpeedRate: 1.5
     blockResourceRate: 5
-    bossIndex: 0
+    bossIndex: 9
     weightSquare: 36
     weightWide: 22
     weightTall: 22
@@ -109,13 +139,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 6
     stageTime: 60
     blockColumns: 10
     blockHpRate: 294.548
     blockSpeedRate: 1.5
     blockResourceRate: 5.5
-    bossIndex: 0
+    bossIndex: 2
     weightSquare: 30
     weightWide: 14
     weightTall: 10
@@ -125,13 +161,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 15
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 7
     stageTime: 65
     blockColumns: 10
     blockHpRate: 666.276
     blockSpeedRate: 1.5
     blockResourceRate: 6
-    bossIndex: 0
+    bossIndex: 12
     weightSquare: 34
     weightWide: 14
     weightTall: 10
@@ -141,13 +183,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 10
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 8
     stageTime: 65
     blockColumns: 10
     blockHpRate: 1734.26
     blockSpeedRate: 1.5
     blockResourceRate: 7
-    bossIndex: 0
+    bossIndex: 13
     weightSquare: 32
     weightWide: 14
     weightTall: 10
@@ -157,13 +205,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 10
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 9
     stageTime: 65
     blockColumns: 10
     blockHpRate: 3491.336
     blockSpeedRate: 1.6
     blockResourceRate: 7
-    bossIndex: 0
+    bossIndex: 10
     weightSquare: 36
     weightWide: 18
     weightTall: 14
@@ -173,13 +227,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 10
     weightGhost: 0
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 10
     stageTime: 70
     blockColumns: 10
     blockHpRate: 5637.532
     blockSpeedRate: 1.7
     blockResourceRate: 7
-    bossIndex: 0
+    bossIndex: 6
     weightSquare: 28
     weightWide: 14
     weightTall: 14
@@ -189,13 +249,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 10
     weightGhost: 15
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 11
     stageTime: 70
     blockColumns: 10
     blockHpRate: 8076.556
     blockSpeedRate: 1.8
     blockResourceRate: 7
-    bossIndex: 0
+    bossIndex: 11
     weightSquare: 24
     weightWide: 14
     weightTall: 14
@@ -205,13 +271,19 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 10
     weightGhost: 10
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25
   - stageIndex: 12
     stageTime: 75
     blockColumns: 10
     blockHpRate: 11416.18
     blockSpeedRate: 1.9
     blockResourceRate: 7
-    bossIndex: 0
+    bossIndex: 14
     weightSquare: 18
     weightWide: 14
     weightTall: 18
@@ -221,3 +293,9 @@ MonoBehaviour:
     weightBloat: 0
     weightSplit: 10
     weightGhost: 10
+    weightGlass: 10
+    weightChest: 3
+    wallBoostStart: 10
+    wallBoostChance: 35
+    wallSlowStart: 15
+    wallSlowChance: 25

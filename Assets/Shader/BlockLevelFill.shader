@@ -37,6 +37,16 @@ Shader "ShapeBuster/BlockLevelFill"
         [HideInInspector] _SplitSide ("分裂の子の向き", Float) = 0
         [Header(Ghost)] [ToggleUI] _Ghost ("幽霊の模様を描く", Float) = 0
         [HideInInspector] _GhostFade ("すり抜けの透け", Range(0, 1)) = 0
+        [HideInInspector] _PodCrack ("種のひび", Range(0, 1)) = 0
+        [Header(Glass)] [ToggleUI] _Glass ("ガラスとして描く", Float) = 0
+        _GlassTint ("ガラスの色（a は濃さ）", Color) = (0.62, 0.86, 1, 0.45)
+        _GlassInner ("中のゾンビの肌の色", Color) = (0.45, 0.62, 0.38, 1)
+        [HideInInspector] _GlassCrack ("ガラスのひび", Range(0, 1)) = 0
+        [Header(Chest)] [ToggleUI] _Chest ("宝箱として描く", Float) = 0
+        _ChestWood ("宝箱の木の色", Color) = (0.55, 0.33, 0.18, 1)
+        _ChestMetal ("宝箱の金具の色", Color) = (1, 0.8, 0.3, 1)
+        _ChestLight ("合わせ目から漏れる光の色", Color) = (1, 0.95, 0.6, 1)
+        [HideInInspector] _ChestDamage ("宝箱のダメージ", Range(0, 1)) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex ("External Alpha", 2D) = "white" {}

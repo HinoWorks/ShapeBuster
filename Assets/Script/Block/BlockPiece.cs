@@ -36,6 +36,14 @@ public class BlockPiece : MonoBehaviour
     static readonly int ArmorSideId = Shader.PropertyToID("_ArmorSide");
     static readonly int SplitSideId = Shader.PropertyToID("_SplitSide");
     static readonly int GhostFadeId = Shader.PropertyToID("_GhostFade");
+    static readonly int ShellOpenId = Shader.PropertyToID("_ShellOpen");
+    static readonly int ShellWarnId = Shader.PropertyToID("_ShellWarn");
+    static readonly int ShellHitId = Shader.PropertyToID("_ShellHit");
+    static readonly int PodCrackId = Shader.PropertyToID("_PodCrack");
+    static readonly int GlassCrackId = Shader.PropertyToID("_GlassCrack");
+    static readonly int ChestDamageId = Shader.PropertyToID("_ChestDamage");
+    /// <summary>甲羅ボスの殻が回る前に、点滅して知らせる秒数。</summary>
+    const float ShellWarnTime = 0.7f;
     /// <summary>すり抜けの前後に、見た目だけ先に薄くし始める秒数。</summary>
     const float GhostLead = 0.2f;
     static readonly int DotScaleId = Shader.PropertyToID("_DotScale");
@@ -83,6 +91,22 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] float ghostSolidTime;
     [Tooltip("幽霊がすり抜けている秒数。この間はボールが当たらず、レーザーだけが当たる。")]
     [SerializeField] float ghostPhaseTime = 1.6f;
+    [Tooltip("ガラス。割れると、その段で出るゾンビ（中に収まるもの）を出現重みで選んで、その場に出す。選べないときはこのプレハブを 1 マスに 1 体ずつ出す。空ならガラスではない")]
+    [SerializeField] BlockPiece contents;
+    [Tooltip("オンなら資源を落とさず、マイルストーンの破壊数にも数えない")]
+    [SerializeField] bool noDrop;
+    [Tooltip("宝箱。顔を描かず、揺れずに下りてくる。資源は通常の AA を、その段の 1 マスのゾンビの rewardScale 倍だけ落とす（大きさに関係なく 1 マスとして数える）。ステージの weightChest で出す")]
+    [SerializeField] bool chest;
+    [Tooltip("0 より大きいと甲羅ボス。殻の開いた面（下→右→上→左）が、この秒数ごとに回る。殻の面に当たったボールは弾かれる。爆発・レーザー・毒は殻を通る")]
+    [SerializeField] float shellTurnTime;
+    [Tooltip("0 より大きいと再生ボス。額の種が溜まるまでの秒数。溜まると HP を回復する。HP が減っていないときは溜めない")]
+    [SerializeField] float bossHealTime;
+    [Tooltip("再生ボスの 1 回の回復量。出現したときの総 HP に掛ける倍率")]
+    [SerializeField] float bossHealRate = 0.2f;
+    [Tooltip("種が溜まる間に、この量（出現したときの総 HP に掛ける倍率）のダメージを与えると、種が割れて回復しない")]
+    [SerializeField] float bossHealBreakRate = 0.06f;
+    [Tooltip("種が割れたあと、また溜め始めるまでの秒数")]
+    [SerializeField] float bossHealStun = 2.5f;
     [SerializeField] SpriteRenderer sprite;
     [Tooltip("装甲の板と山形。下から弾かれたとき白く光る。")]
     [SerializeField] SpriteRenderer[] plateMarks;
@@ -247,6 +271,23 @@ public class BlockPiece : MonoBehaviour
     float ghostClock;
     float ghostFade;
     bool phased;
+    /// <summary>ガラス。割れると中のゾンビが出てくる。</summary>
+    public bool ReleasesContents => contents != null;
+    public BlockPiece Contents => contents;
+    /// <summary>資源を落とさない（ガラスなど）。</summary>
+    public bool NoDrop => noDrop;
+    /// <summary>宝箱。1 マスのゾンビの rewardScale 倍の AA を落とす。</summary>
+    public bool IsChest => chest;
+    /// <summary>甲羅ボス。開いた面にしかボールが効かない。</summary>
+    public bool Shelled => shellTurnTime > 0f;
+    /// <summary>再生ボス。種が溜まると大きく回復する。</summary>
+    public bool BossHeals => bossHealTime > 0f;
+    /// <summary>殻の開いた面。0 下、1 右、2 上、3 左。シェーダーの _ShellOpen と同じ。</summary>
+    int shellOpen;
+    float shellClock;
+    float bossHealClock;
+    float bossHealDamage;
+    float bossHealStunLeft;
     public bool OverridesDrop => overrideDrop;
     public ResourceType DropResource => dropResource;
     /// <summary>出現したときの総 HP。</summary>
@@ -323,6 +364,8 @@ public class BlockPiece : MonoBehaviour
         TickPlate();
         TickRegen();
         TickGhost();
+        TickShell();
+        TickBossHeal();
         if (reactTime < 0f) return;
 
         reactTime += Time.deltaTime;
@@ -381,7 +424,7 @@ public class BlockPiece : MonoBehaviour
         session = owner;
         placedX = Mathf.Max(1, spanX);
         placedY = Mathf.Max(1, spanY);
-        rewardCells = placedX * placedY;
+        rewardCells = chest ? 1 : placedX * placedY;
         level = solid ? 1 : Mathf.Max(1, startLevel);
         barMax = solid ? 1 : Mathf.Max(1, bar);
         stepHp = solid ? 1 : Mathf.Max(1, step);
@@ -397,6 +440,11 @@ public class BlockPiece : MonoBehaviour
         ghostClock = Ghosts ? Random.Range(0f, ghostSolidTime) : 0f;
         ghostFade = 0f;
         phased = false;
+        shellOpen = 0;
+        shellClock = 0f;
+        bossHealClock = 0f;
+        bossHealDamage = 0f;
+        bossHealStunLeft = 0f;
         half = worldSize.y * 0.5f;
         restScale = transform.localScale;
         slotLocal = transform.localPosition;
@@ -406,7 +454,8 @@ public class BlockPiece : MonoBehaviour
         hold = 0f;
         stumblePhase = StumbleWalk;
         lastParentY = transform.parent != null ? transform.parent.position.y : transform.position.y;
-        stumbleReady = true;
+        // 宝箱と壊せないブロックは揺れずに下りてくる。
+        stumbleReady = !chest && !solid;
         PlaySpawnPop();
         reactTime = -1f;
         breaking = false;
@@ -499,6 +548,7 @@ public class BlockPiece : MonoBehaviour
             currentHp = barMax;
         }
 
+        NoteBossHealDamage(applied);
         GameEvent.InGame.PublishDamageDealt(applied, ballKind);
         UI_DamageNumberPool.Show(popupPoint, applied, ballKind, critical);
         if (level > 0)
@@ -517,7 +567,8 @@ public class BlockPiece : MonoBehaviour
         if (session != null)
             session.GrantBreakResource(this, transform.position, rewardCells);
 
-        MilestoneRuntime.NotifyBlockBroken(BreakKey);
+        if (!noDrop)
+            MilestoneRuntime.NotifyBlockBroken(BreakKey);
         session.NotifyBroken(this);
         if (BossIndex >= 0 && session != null && session.BeginBossDefeat(this))
             return;
@@ -527,10 +578,14 @@ public class BlockPiece : MonoBehaviour
             session.QueueBurst(this);
         if (Splits && session != null)
             session.SpawnSplit(this);
+        if (ReleasesContents && session != null)
+            session.ReleaseContents(this);
         if (EffectManager.Inst != null)
         {
             EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
-            EffectManager.Inst.Rent(EffectType.BloodStain, transform.position);
+            // ガラスと宝箱は血を残さない。
+            if (!ReleasesContents && !chest)
+                EffectManager.Inst.Rent(EffectType.BloodStain, transform.position);
         }
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Small);
@@ -614,7 +669,7 @@ public class BlockPiece : MonoBehaviour
             CacheOutline();
 
         float width = Mathf.Max(0.0001f, sprite.sharedMaterial.GetFloat(OutlineWidthId));
-        bool liveOutline = (regenDelay > 0f || Ghosts) && IsAlive;
+        bool liveOutline = (regenDelay > 0f || Ghosts || Shelled || BossHeals) && IsAlive;
         if (!liveOutline && propertyBlock != null && width == pushedWidth && spanX == pushedX && spanY == pushedY
             && flash == pushedFlash && fillColor == pushedFill && underColor == pushedUnder && faceSeed == pushedSeed
             && plateWhite == pushedPlate && ArmorSide() == pushedArmor)
@@ -644,8 +699,8 @@ public class BlockPiece : MonoBehaviour
         }
         propertyBlock.SetColor(OutlineColorId, TraitOutline());
         propertyBlock.SetFloat(FlashId, flash);
-        // 壊せないブロックには顔を描かない。
-        propertyBlock.SetFloat(ZombieId, solid ? 0f : 1f);
+        // 壊せないブロックと宝箱には顔を描かない。
+        propertyBlock.SetFloat(ZombieId, solid || chest ? 0f : 1f);
         propertyBlock.SetFloat(SeedId, faceSeed);
         if (armorBottom)
             propertyBlock.SetFloat(ArmorSideId, ArmorSide());
@@ -653,7 +708,19 @@ public class BlockPiece : MonoBehaviour
             propertyBlock.SetFloat(SplitSideId, splitSide);
         if (Ghosts)
             propertyBlock.SetFloat(GhostFadeId, ghostFade);
-        if (regenDelay > 0f)
+        if (Shelled)
+        {
+            propertyBlock.SetFloat(ShellOpenId, shellOpen);
+            propertyBlock.SetFloat(ShellWarnId, ShellWarn());
+            propertyBlock.SetFloat(ShellHitId, plateWhite);
+        }
+        if (BossHeals)
+            propertyBlock.SetFloat(PodCrackId, PodCrack());
+        if (ReleasesContents)
+            propertyBlock.SetFloat(GlassCrackId, 1f - HpRatio);
+        if (chest)
+            propertyBlock.SetFloat(ChestDamageId, 1f - HpRatio);
+        if (regenDelay > 0f || BossHeals)
         {
             propertyBlock.SetFloat(RegenGlowId, RegenGlow());
             propertyBlock.SetFloat(RegenChargeId, RegenCharge());
@@ -772,7 +839,7 @@ public class BlockPiece : MonoBehaviour
     Color TraitOutline()
     {
         Color outline = Color.Lerp(baseOutline, Color.white, flash);
-        if (regenDelay <= 0f) return outline;
+        if (regenDelay <= 0f && !BossHeals) return outline;
 
         float charge = RegenCharge();
         float speed = MissingDurability() ? Mathf.Lerp(2.4f, 9f, charge) : 1.6f;
@@ -784,7 +851,7 @@ public class BlockPiece : MonoBehaviour
     /// <summary>額の種の明るさ。満タンのときはゆっくり、回復を溜めている間は速く強く脈打つ。</summary>
     float RegenGlow()
     {
-        if (regenDelay <= 0f || !IsAlive) return 0f;
+        if ((regenDelay <= 0f && !BossHeals) || !IsAlive) return 0f;
 
         float charge = RegenCharge();
         bool missing = MissingDurability();
@@ -803,6 +870,8 @@ public class BlockPiece : MonoBehaviour
 
     bool RejectsArmor(Vector2 worldPoint)
     {
+        if (Shelled && IsAlive)
+            return ShellFace(worldPoint) != shellOpen;
         if (!armorBottom || !IsAlive || solid) return false;
 
         Vector2 local = transform.InverseTransformPoint(worldPoint);
@@ -841,6 +910,8 @@ public class BlockPiece : MonoBehaviour
         Vector3 outward = armorSides
             ? transform.right * (local.x < 0f ? -1f : 1f)
             : -transform.up;
+        if (Shelled)
+            outward = ((Vector3)worldPoint - transform.position).normalized;
         var rotation = Quaternion.FromToRotation(Vector3.up, outward);
         EffectManager.Inst.Rent(EffectType.ShellSpark, worldPoint, rotation);
     }
@@ -898,6 +969,8 @@ public class BlockPiece : MonoBehaviour
 
     float RegenCharge()
     {
+        if (BossHeals)
+            return MissingDurability() ? Mathf.Clamp01(bossHealClock / bossHealTime) : 0f;
         if (regenDelay <= 0f || !MissingDurability()) return 0f;
         return Mathf.Clamp01(regenTimer / regenDelay);
     }
@@ -1004,6 +1077,126 @@ public class BlockPiece : MonoBehaviour
     {
         return ballKind == (int)BlockBallKind.Laser || ballKind == (int)BlockBallKind.LaserRow
             || ballKind == (int)BlockBallKind.Cross || ballKind == (int)BlockBallKind.AutoBeam;
+    }
+
+    /// <summary>
+    /// 当たった位置がどの面か。0 下、1 右、2 上、3 左。
+    /// ブロックの中心から見て、縦横を同じ長さにならした向きで決める（シェーダーの殻の分け方と同じ）。
+    /// </summary>
+    int ShellFace(Vector2 worldPoint)
+    {
+        // 出現の弾みで拡縮していても向きがぶれないよう、置いたときの大きさで割る。
+        Vector2 local = worldPoint - (Vector2)transform.position;
+        local.x /= Mathf.Max(0.001f, Mathf.Abs(restScale.x));
+        local.y /= Mathf.Max(0.001f, Mathf.Abs(restScale.y));
+        if (Mathf.Abs(local.y) > Mathf.Abs(local.x))
+            return local.y < 0f ? 0 : 2;
+        return local.x > 0f ? 1 : 3;
+    }
+
+    /// <summary>甲羅ボスの殻を回す。回る直前は殻が点滅する。</summary>
+    void TickShell()
+    {
+        if (!Shelled || !IsAlive || breaking) return;
+
+        shellClock += Time.deltaTime;
+        if (shellClock >= shellTurnTime)
+        {
+            shellClock -= shellTurnTime;
+            shellOpen = (shellOpen + 1) % 4;
+            SoundManager.SE(SEType.ArmorDeflect);
+        }
+        InvalidateFill();
+    }
+
+    float ShellWarn()
+    {
+        float left = shellTurnTime - shellClock;
+        return left < ShellWarnTime ? 1f - left / ShellWarnTime : 0f;
+    }
+
+    /// <summary>
+    /// 再生ボスの種。HP が減っていると溜まり、溜まりきると出現時の総 HP × bossHealRate を回復する。
+    /// 溜まる間に一定のダメージを受けると種が割れ、しばらく溜めない。
+    /// </summary>
+    void TickBossHeal()
+    {
+        if (!BossHeals || !IsAlive || breaking) return;
+
+        InvalidateFill();
+        if (bossHealStunLeft > 0f)
+        {
+            bossHealStunLeft -= Time.deltaTime;
+            return;
+        }
+        if (!MissingDurability())
+        {
+            bossHealClock = 0f;
+            bossHealDamage = 0f;
+            return;
+        }
+
+        bossHealClock += Time.deltaTime;
+        if (bossHealClock < bossHealTime) return;
+
+        bossHealClock = 0f;
+        bossHealDamage = 0f;
+        int total = (level - 1) * stepHp + currentHp;
+        SetTotalHp(total + Mathf.RoundToInt(SpawnTotalHp * Mathf.Max(0f, bossHealRate)));
+        RefreshColor();
+        healTime = HealPop;
+        healPulse = 1f;
+        SoundManager.SE(SEType.RegenHeal);
+        if (CameraManager.Inst != null)
+            CameraManager.Inst.Shake(CameraShakeLevel.Small);
+        PushFill();
+    }
+
+    void NoteBossHealDamage(int applied)
+    {
+        if (!BossHeals || bossHealStunLeft > 0f || bossHealClock <= 0f) return;
+
+        bossHealDamage += applied;
+        if (bossHealDamage < SpawnTotalHp * Mathf.Max(0.001f, bossHealBreakRate)) return;
+
+        // 種が割れた。回復の溜めを捨てて、しばらく溜めない。
+        bossHealClock = 0f;
+        bossHealDamage = 0f;
+        bossHealStunLeft = Mathf.Max(0f, bossHealStun);
+        plateFlash = 0.16f;
+        SoundManager.SE(SEType.ArmorDeflect);
+        if (CameraManager.Inst != null)
+            CameraManager.Inst.Shake(CameraShakeLevel.Small);
+        if (EffectManager.Inst != null)
+            EffectManager.Inst.Rent(EffectType.ShellSpark, transform.position + transform.up * Mathf.Abs(transform.lossyScale.y) * 0.2f, Quaternion.identity);
+    }
+
+    /// <summary>種のひび。割れるまでに与えたダメージの割合。割れた直後は 1 から消えていく。</summary>
+    float PodCrack()
+    {
+        if (bossHealStunLeft > 0f)
+            return Mathf.Clamp01(bossHealStunLeft / Mathf.Max(0.01f, bossHealStun));
+        float need = SpawnTotalHp * Mathf.Max(0.001f, bossHealBreakRate);
+        return Mathf.Clamp01(bossHealDamage / need);
+    }
+
+    /// <summary>残りの総 HP を決め直す。出現したときの総 HP を超えない。</summary>
+    void SetTotalHp(int total)
+    {
+        int spawnTotal = SpawnTotalHp;
+        total = Mathf.Clamp(total, 1, spawnTotal);
+        int below = (spawnLevel - 1) * stepHp;
+        if (total > below)
+        {
+            level = spawnLevel;
+            barMax = spawnBar;
+            currentHp = total - below;
+            return;
+        }
+
+        level = Mathf.Max(1, Mathf.CeilToInt(total / (float)stepHp));
+        barMax = Mathf.Max(1, stepHp);
+        currentHp = total - (level - 1) * stepHp;
     }
 
     void BindTraitMarks()

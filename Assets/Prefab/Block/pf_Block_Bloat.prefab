@@ -123,6 +123,14 @@ MonoBehaviour:
   dropResource: 4
   ghostSolidTime: 0
   ghostPhaseTime: 1.6
+  contents: {fileID: 0}
+  noDrop: 0
+  chest: 0
+  shellTurnTime: 0
+  bossHealTime: 0
+  bossHealRate: 0.2
+  bossHealBreakRate: 0.06
+  bossHealStun: 2.5
   sprite: {fileID: 100004}
   plateMarks: []
   regenMark: {fileID: 0}

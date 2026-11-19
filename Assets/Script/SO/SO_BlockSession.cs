@@ -29,7 +29,13 @@ public class SO_BlockSession : ScriptableObject
     public BlockPiece split;
     [Tooltip("幽霊。ときどき半透明になり、その間はボールがすり抜ける。レーザーだけが当たる")]
     public BlockPiece ghost;
+    [Tooltip("ガラス。2×2 マスで、割れると中のゾンビが出る。資源は落とさない")]
+    public BlockPiece glass;
+    [Tooltip("宝箱。HP が高く、壊すと AA を多く落とす")]
+    public BlockPiece chest;
     public BlockPiece boss;
+    [Tooltip("2 体目以降のボス。ステージの bossIndex と、プレハブの bossIndex が一致したものを出す")]
+    public BlockPiece[] bosses;
 
     [Space(10)]
     [Header("配置")]
@@ -72,4 +78,35 @@ public class SO_BlockSession : ScriptableObject
     public float wallThickness = 0.3f;
     [Tooltip("カメラの外まで壁を塗る余白。画面シェイクで隙間が出ない量。")]
     public float wallOverscan = 2f;
+
+    [Space(10)]
+    [Header("壁の仕掛け")]
+    [Tooltip("壁の仕掛けを出すか判定する間隔（秒）。判定ごとに、ステージの確率（wallXxxChance）で出す。")]
+    public float wallGimmickInterval = 6f;
+    [Tooltip("壁の帯の上の端を、天井から何マスあけるか。")]
+    public float wallBandTopGap = 2.5f;
+    [Tooltip("加速帯のプレハブ。見た目はプレハブの子で決める。空なら出さない")]
+    public BlockWallBand wallBoostBand;
+    [Tooltip("減速帯のプレハブ。見た目はプレハブの子で決める。空なら出さない")]
+    public BlockWallBand wallSlowBand;
+    [Tooltip("加速帯が同時に出る数の上限。")]
+    public int wallBoostMax = 2;
+    [Tooltip("加速帯が残る秒数。消える前の 1.5 秒は点滅する。")]
+    public float wallBoostLife = 12f;
+    [Tooltip("加速帯の高さ（マス数）。")]
+    public float wallBoostCells = 2f;
+    [Tooltip("加速帯に触れたボールの速さの倍率。")]
+    public float wallBoostRate = 1.6f;
+    [Tooltip("加速が続く秒数。後半の半分で元の速さへ戻る。")]
+    public float wallBoostTime = 1.6f;
+    [Tooltip("減速帯が同時に出る数の上限。")]
+    public int wallSlowMax = 1;
+    [Tooltip("減速帯が残る秒数。消える前の 1.5 秒は点滅する。")]
+    public float wallSlowLife = 10f;
+    [Tooltip("減速帯の高さ（マス数）。")]
+    public float wallSlowCells = 2f;
+    [Tooltip("減速帯に触れたボールの速さの倍率。")]
+    public float wallSlowRate = 0.55f;
+    [Tooltip("減速が続く秒数。後半の半分で元の速さへ戻る。")]
+    public float wallSlowTime = 2f;
 }

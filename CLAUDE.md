@@ -40,10 +40,14 @@ ShapeBuster は Unity **6000.2.7f2**（URP・2D）のゲーム。インゲーム
 
 **データ（ScriptableObject）。** SO アセットは `SOLoader.X` プロパティ（遅延読み込み）から取得する。中では `Resources.Load("SO/<型名>")` を呼んでいるので、アセットのファイル名は型名と一致させる必要がある。
 
-**マスターデータは Google スプレッドシートから。** `DataBase`（MonoBehaviour。カスタムインスペクターは `Assets/Editor/GSSReaderEditor.cs`）に「スプレッドシート読み込み」ボタンがある。押すと各シート（Stage・SkillBase・SkillTreeUnit・Milestone・Locale・Ball）を gviz エンドポイント経由で CSV として取得し、`CSVSerializer` で SO アセットへ変換してから、アセットを Dirty にして保存する。データクラスのフィールドを変えたら、シートの列見出しも合わせること。Stage シートは読み込み後に `SO_StageData.ApplyBlockCampaign()` を通る。シートのデータが 13 段（`BlockCampaign.StageCount`）に足りないときや、最後の段にブロック種類の出現比率がないときは、`BlockCampaign.CreateStages()` にハードコードされた値で全体が上書きされる。`GssPaste/*.tsv`（未コミット。`.gitignore` にも入っていない）は、これらのシートの手元の TSV コピー。
+**マスターデータは Google スプレッドシートから。** `DataBase`（MonoBehaviour。カスタムインスペクターは `Assets/Editor/GSSReaderEditor.cs`）に「スプレッドシート読み込み」ボタンがある。押すと各シート（Stage・SkillBase・SkillTreeUnit・Milestone・Locale・Ball）を gviz エンドポイント経由で CSV として取得し、`CSVSerializer` で SO アセットへ変換してから、アセットを Dirty にして保存する。データクラスのフィールドを変えたら、シートの列見出しも合わせること。Stage シートは読み込み後に `SO_StageData.ApplyBlockCampaign()` を通る。シートのデータが 13 段（`BlockCampaign.StageCount`）に足りないときや、最後の段にブロック種類の出現比率がないときは、`BlockCampaign.CreateStages()` にハードコードされた値で全体が上書きされる。`GssPaste/` は、これらのシートに貼り付けるための TSV を置く場所（未コミット。`.gitignore` にも入っていない）。どのファイルをどこに貼るかと、今入っている値は `GssPaste/README.md` に書く。
 
 **セーブ。** `SaveLoader`（シングルトン）は Easy Save 3（`ES3`）で保存する。セクションごとに読み込み失敗フラグを持ち、読み込めなかったデータを上書きしないようにしている。言語設定だけは `Loc` が別に保存する（`PlayerPrefs` のキー `key_language`）。
 
 **多言語対応。** `Loc` は `SO_Locale`（列は `key`／`ja`／`en`）からキーで文字列を引き、言語が変わると `Changed` イベントを出す。固定のラベルには `UI_LocalizedText` コンポーネントを使う。TMP の日本語フォントアトラスにない文字は四角で表示されるので、**Tools → 日本語フォントを更新**（`Assets/Editor/JapaneseFontBake.cs`）で焼き込む。
 
 **UI。** 画面は `UI/Title`、`UI/Out`（`UI_OutGameTabBase` を継承したアウトゲームのタブ：スキルツリー、マイルストーン、ステージ選択、変換）、`UI/In`（HUD、リザルト、ダメージ数値）に分かれている。ボタンは独自の `HButton`／`HButtonSound` を使い、ポップアップは `UI_PopUpBase` を継承する。非同期処理は UniTask、Tween は DOTween。
+
+## レベルデザイン
+
+進行のテンポ（全体 3〜4 時間、段ごとの突破までの回数）の目標と、それを確かめる計算の前提は `LevelDesign/README.md` にある。ステージ・スキル・ブロックの数値を変えたら、Unity の **Tools → レベルデザイン → 進行計算用データを書き出す** を実行してから `python3 LevelDesign/pacing_sim.py` で計算し直す。ゲームの仕組み（HP や資源の計算式）を変えたら、README の 2 章と `pacing_sim.py` も合わせて直す。ボスの種類（タイプ × 形）と段への割り当て、未作成の案は `LevelDesign/BossDesign.md` にある。

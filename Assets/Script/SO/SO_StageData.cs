@@ -39,9 +39,21 @@ public class StageData
     public int weightSplit;
     /// <summary>幽霊（ときどきすり抜ける）ブロックの出現重み。</summary>
     public int weightGhost;
+    /// <summary>ガラス（割ると中のゾンビが出る）の出現重み。</summary>
+    public int weightGlass;
+    /// <summary>宝箱（HP が高く、AA を多く落とす）の出現重み。</summary>
+    public int weightChest;
+    /// <summary>壁の加速帯が出始める秒数（ステージ開始から）。</summary>
+    public int wallBoostStart;
+    /// <summary>壁の加速帯が出る確率（%）。判定は SO_BlockSession の wallGimmickInterval 秒ごと。0 なら出ない。</summary>
+    public int wallBoostChance;
+    /// <summary>壁の減速帯が出始める秒数（ステージ開始から）。</summary>
+    public int wallSlowStart;
+    /// <summary>壁の減速帯が出る確率（%）。判定は wallGimmickInterval 秒ごと。0 なら出ない。</summary>
+    public int wallSlowChance;
 
     public bool HasBlockWeights =>
-        weightSquare + weightWide + weightTall + weightSolid + weightArmor + weightRegen + weightBloat + weightSplit + weightGhost > 0;
+        weightSquare + weightWide + weightTall + weightSolid + weightArmor + weightRegen + weightBloat + weightSplit + weightGhost + weightGlass + weightChest > 0;
 
     public int WeightOf(BlockPiece prefab)
     {
@@ -51,6 +63,8 @@ public class StageData
         if (prefab.Bursts) return weightBloat;
         if (prefab.Splits) return weightSplit;
         if (prefab.Ghosts) return weightGhost;
+        if (prefab.ReleasesContents) return weightGlass;
+        if (prefab.IsChest) return weightChest;
         if (prefab.IsSolid) return weightSolid;
         if (prefab.CellsY > prefab.CellsX) return weightTall;
         if (prefab.CellsX > prefab.CellsY) return weightWide;

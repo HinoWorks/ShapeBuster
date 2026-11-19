@@ -41,6 +41,12 @@ public class BlockBall : MonoBehaviour
     TrailRenderer[] trails;
     readonly List<Collider2D> ignored = new();
     float speed;
+    // 壁の帯（加速・減速）で変わった速さ。boostLeft が残っている間だけ効き、終わりに向けて元の速さへ戻る。
+    float boostRate = 1f;
+    float boostTime;
+    float boostLeft;
+    Color spriteColor = Color.white;
+    Color boostTint = Color.white;
     int damage;
     Vector2 launchDirection = Vector2.up;
     Vector2 approach;
@@ -66,6 +72,53 @@ public class BlockBall : MonoBehaviour
     public bool WentAboveLaunch => wentAboveLaunch;
 
     public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
+
+    /// <summary>今の速さ。壁の帯の効果を含む。</summary>
+    float Speed => speed * BoostScale;
+
+    /// <summary>速さの倍率。効果時間の前半はそのまま、後半で 1 へ戻す。</summary>
+    float BoostScale
+    {
+        get
+        {
+            if (boostLeft <= 0f || boostTime <= 0f) return 1f;
+            float t = Mathf.Clamp01(boostLeft / (boostTime * 0.5f));
+            return 1f + (boostRate - 1f) * t;
+        }
+    }
+
+    public bool SpeedChanged => boostLeft > 0f;
+
+    /// <summary>
+    /// 壁の帯に触れた。rate 倍の速さを time 秒（後半は戻りながら）続ける。
+    /// 1 より大きいと加速、小さいと減速。もう一度触れたら、あとから触れた帯の効果で数え直す。
+    /// </summary>
+    public void ChangeSpeed(float rate, float time, Color tint)
+    {
+        if (IsHeld || body == null || !body.simulated) return;
+        boostTint = tint;
+        boostRate = Mathf.Clamp(rate, 0.2f, 4f);
+        boostTime = Mathf.Max(0.05f, time);
+        boostLeft = boostTime;
+        if (body.linearVelocity.sqrMagnitude > 0.0001f)
+            body.linearVelocity = body.linearVelocity.normalized * Speed;
+    }
+
+    void ClearBoost()
+    {
+        boostLeft = 0f;
+        TintBoost();
+    }
+
+    /// <summary>効果が残っている間、ボールを帯の色（boostTint）に寄せる。</summary>
+    void TintBoost()
+    {
+        if (sprite == null) return;
+        float span = boostRate - 1f;
+        float k = Mathf.Abs(span) > 0.001f ? (BoostScale - 1f) / span : 0f;
+        var target = new Color(boostTint.r, boostTint.g, boostTint.b, spriteColor.a);
+        sprite.color = Color.Lerp(spriteColor, target, k * 0.8f);
+    }
 
     public void NoteAboveLaunch()
     {
@@ -101,6 +154,8 @@ public class BlockBall : MonoBehaviour
             Debug.LogWarning("ボールの子に SpriteRenderer がありません。", this);
         else if (sprite.sprite == null)
             sprite.sprite = BlockSession.CircleSprite;
+        if (sprite != null)
+            spriteColor = sprite.color;
 
         hit = GetComponentInChildren<Collider2D>(true);
         if (hit == null)
@@ -166,6 +221,7 @@ public class BlockBall : MonoBehaviour
         ClearIgnored();
         SetVisible(true);
         hitsBefore = 0;
+        ClearBoost();
         launchDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.up;
         approach = launchDirection * speed;
         body.simulated = true;
@@ -177,6 +233,7 @@ public class BlockBall : MonoBehaviour
 
     public void Stop()
     {
+        ClearBoost();
         CutTrail();
         ShowOrbits(false);
         if (body == null) return;
@@ -213,6 +270,11 @@ public class BlockBall : MonoBehaviour
     void FixedUpdate()
     {
         if (body == null || !body.simulated || IsHeld) return;
+        if (boostLeft > 0f)
+        {
+            boostLeft -= Time.fixedDeltaTime;
+            TintBoost();
+        }
         bool pierced = forceVelocity;
         if (forceVelocity)
         {
@@ -282,8 +344,8 @@ public class BlockBall : MonoBehaviour
             ignored.Add(block);
         }
 
-        Vector2 velocity = approach.sqrMagnitude > 0.01f ? approach : launchDirection * speed;
-        forced = velocity.normalized * speed;
+        Vector2 velocity = approach.sqrMagnitude > 0.01f ? approach : launchDirection * Speed;
+        forced = velocity.normalized * Speed;
         forceVelocity = true;
         if (body == null) return;
         body.linearVelocity = forced;
@@ -309,13 +371,13 @@ public class BlockBall : MonoBehaviour
         if (velocity.sqrMagnitude < 0.01f)
             velocity = fallback.sqrMagnitude > 0.0001f ? fallback : Vector2.up;
 
-        float minAxis = speed * 0.05f;
+        float minAxis = Speed * 0.05f;
         if (Mathf.Abs(velocity.x) < minAxis)
             velocity.x = Mathf.Sign(velocity.x == 0f ? fallback.x : velocity.x) * minAxis;
         if (Mathf.Abs(velocity.y) < minAxis)
             velocity.y = Mathf.Sign(velocity.y == 0f ? 1f : velocity.y) * minAxis;
 
-        body.linearVelocity = velocity.normalized * speed;
+        body.linearVelocity = velocity.normalized * Speed;
     }
 
     /// <summary>
@@ -367,8 +429,8 @@ public class BlockBall : MonoBehaviour
         Vector2 velocity = body.linearVelocity;
         int axis = kickVertical ? 1 : 0;
         float kickSign = Mathf.Abs(velocity[axis]) < 0.01f ? 1f : Mathf.Sign(velocity[axis]);
-        velocity[axis] = kickSign * Mathf.Max(Mathf.Abs(velocity[axis]), speed * StuckKick);
-        body.linearVelocity = velocity.normalized * speed;
+        velocity[axis] = kickSign * Mathf.Max(Mathf.Abs(velocity[axis]), Speed * StuckKick);
+        body.linearVelocity = velocity.normalized * Speed;
         flips = 0;
     }
 

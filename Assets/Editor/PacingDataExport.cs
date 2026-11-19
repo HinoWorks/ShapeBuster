@@ -30,11 +30,20 @@ public static class PacingDataExport
         sb.AppendLine("Player: " + JsonUtility.ToJson(SO_Player.Current));
         sb.AppendLine("Ball: " + JsonUtility.ToJson(SOLoader.BallData));
         sb.AppendLine("Stage: " + JsonUtility.ToJson(stage));
-        foreach (var name in new[] { "square", "wide", "tall", "solid", "armor", "regen", "bloat", "split", "ghost", "boss" })
+        foreach (var name in new[] { "square", "wide", "tall", "solid", "armor", "regen", "bloat", "split", "ghost", "glass", "chest", "boss" })
         {
             var piece = typeof(SO_BlockSession).GetField(name)?.GetValue(rule) as BlockPiece;
             if (piece != null)
                 sb.AppendLine(name + ": " + JsonUtility.ToJson(piece));
+        }
+        // 2 体目以降のボスは「boss + bossIndex」の名前で書き出す。
+        if (rule.bosses != null)
+        {
+            foreach (var piece in rule.bosses)
+            {
+                if (piece != null)
+                    sb.AppendLine("boss" + piece.BossIndex + ": " + JsonUtility.ToJson(piece));
+            }
         }
         if (camera != null)
             sb.AppendLine("Camera: " + JsonUtility.ToJson(new CameraInfo { orthoSize = camera.orthographicSize, aspect = camera.aspect }));
