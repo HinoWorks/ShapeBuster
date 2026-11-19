@@ -38,6 +38,7 @@ MonoBehaviour:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Coffee.UIParticle
+    - MCPForUnity.Runtime
     - StompyRobot.SRDebugger
     - StompyRobot.SRF
     - UniRx

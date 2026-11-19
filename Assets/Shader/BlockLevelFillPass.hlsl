@@ -1,25 +1,16 @@
 #ifndef BLOCK_LEVEL_FILL_PASS_INCLUDED
 #define BLOCK_LEVEL_FILL_PASS_INCLUDED
 
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "BlockCommon.hlsl"
 
-struct Attributes
-{
-    float3 positionOS : POSITION;
-    float4 color : COLOR;
-    float2 uv : TEXCOORD0;
-};
-
-struct Varyings
-{
-    float4 positionCS : SV_POSITION;
-    float2 uv : TEXCOORD0;
-    float fillRatio : TEXCOORD1;
-};
-
-TEXTURE2D(_MainTex);
-SAMPLER(sampler_MainTex);
-
+// 通常ブロック。フィールドの背景や壁もこのシェーダーを使う。
+// BlockStoneFill（BLOCK_NO_ZOMBIE）は顔と腐敗を描かない。
+// _Zombie が 1 のときだけ、ドットの格子に合わせて顔と腐敗を描く。
+// 顔の形と腐敗の模様は _Seed で個体ごとに変える。
+// _Regen が 1 のマテリアル（再生ブロック）は、額に青い種と、そこから伸びる血管を描く。
+// 種の明るさは _RegenGlow、血管の長さは _RegenCharge、回復した瞬間の光は _HealPulse。
+// _ArmorSide が 2（左右の殻）のときは、殻に隠れないよう目を内側へ寄せる。
+// 殻そのものは BlockShell で、ブロックの外へはみ出して描く。
 CBUFFER_START(UnityPerMaterial)
     half4 _Color;
     half4 _FillColor;
@@ -31,76 +22,55 @@ CBUFFER_START(UnityPerMaterial)
     float _DotSize;
     float4 _CellSpan;
     float _Flash;
+    float _Zombie;
+    float _Seed;
+    half4 _EyeColor;
+    half4 _MouthColor;
+    half4 _TeethColor;
+    half4 _RotColor;
+    float _RotAmount;
+    half4 _WoundColor;
+    float _Regen;
+    half4 _PodColor;
+    half4 _PodDim;
+    float _VeinAmount;
+    float _RegenGlow;
+    float _RegenCharge;
+    float _HealPulse;
+    float _ArmorSide;
 CBUFFER_END
 
-Varyings UnlitVertex(Attributes input)
-{
-    Varyings output;
-    output.positionCS = TransformObjectToHClip(input.positionOS);
-    output.uv = input.uv;
-    // SpriteRenderer.color.a は、このブロックの現在レベルの残り割合。
-    output.fillRatio = saturate(input.color.a);
-    return output;
-}
+#include "BlockZombie.hlsl"
 
-float SampleAlpha(float2 uv)
+half3 DotShade(half3 color, float2 grid)
 {
-    float2 inside = step(float2(0.0, 0.0), uv) * step(uv, float2(1.0, 1.0));
-    return SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, saturate(uv)).a * inside.x * inside.y;
-}
-
-float Hash21(float2 p)
-{
-    p = frac(p * float2(123.34, 345.45));
-    p += dot(p, p + 34.345);
-    return frac(p.x * p.y);
-}
-
-half3 DotShade(half3 color, float2 uv)
-{
-    float2 cells = max(_CellSpan.xy, float2(1.0, 1.0));
-    float2 grid = uv * cells * max(_DotScale, 1.0);
     float2 f = frac(grid);
     float gap = (1.0 - saturate(_DotSize)) * 0.5;
     float inside = step(gap, f.x) * step(f.x, 1.0 - gap);
     inside *= step(gap, f.y) * step(f.y, 1.0 - gap);
-    float shade = lerp(0.82, 1.0, Hash21(floor(grid)));
+    float shade = lerp(0.82, 1.0, Hash21(floor(grid) + _Seed * _Zombie * 17.0));
     return color * lerp(0.94, shade, inside);
 }
 
 half4 UnlitFragment(Varyings input) : SV_Target
 {
     float2 uv = input.uv;
-    float centerA = SampleAlpha(uv);
-    float2 width = _OutlineWidthXY.xy;
-    if (width.x < 0.0001) width.x = _OutlineWidth;
-    if (width.y < 0.0001) width.y = _OutlineWidth;
-    width = max(width, 0.0001);
-    float2 diagonal = width * 0.70710678;
+    float isOutline = OutlineMask(uv, _OutlineWidth, _OutlineWidthXY.xy);
+    float isFilled = FillMask(uv, input.fillRatio);
 
-    float neighborMin = SampleAlpha(uv + float2(width.x, 0.0));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-width.x, 0.0)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(0.0, width.y)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(0.0, -width.y)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(diagonal.x, diagonal.y)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(diagonal.x, -diagonal.y)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-diagonal.x, diagonal.y)));
-    neighborMin = min(neighborMin, SampleAlpha(uv + float2(-diagonal.x, -diagonal.y)));
-
-    float isOutline = step(0.01, centerA - neighborMin);
-    float isFilled = step(uv.y, input.fillRatio);
+    float2 cells = max(_CellSpan.xy, float2(1.0, 1.0));
+    float scale = max(_DotScale, 1.0);
+    float2 grid = uv * cells * scale;
+    ZombieMask m = BuildZombie(floor(grid), cells * scale, cells);
 
     half4 fill = _FillColor * _Color;
     half4 under = _UnderColor * _Color;
-    half3 body = lerp(DotShade(under.rgb, uv), DotShade(fill.rgb, uv), isFilled);
+    half3 fillRgb = DotShade(ZombieColor(fill.rgb, m), grid);
+    half3 underRgb = DotShade(ZombieColor(under.rgb, m), grid);
+    half3 body = lerp(underRgb, fillRgb, isFilled);
     half bodyA = lerp(under.a, fill.a, isFilled);
 
-    half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, saturate(uv));
-    body *= tex.rgb;
-    half3 rgb = lerp(body, _OutlineColor.rgb, isOutline);
-    rgb = lerp(rgb, half3(1.0, 1.0, 1.0), saturate(_Flash));
-    half alpha = tex.a * lerp(bodyA, _OutlineColor.a, isOutline);
-    return half4(rgb, alpha);
+    return ComposeBlock(uv, body, bodyA, _OutlineColor, isOutline, _Flash);
 }
 
 #endif

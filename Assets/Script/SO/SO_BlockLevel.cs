@@ -9,12 +9,14 @@ public class SO_BlockLevel : ScriptableObject
 {
     static readonly Color[] Fallback =
     {
-        new Color(0.45f, 0.62f, 0.38f, 1f),
-        new Color(0.25f, 0.55f, 0.82f, 1f),
-        new Color(0.95f, 0.78f, 0.28f, 1f),
-        new Color(0.93f, 0.48f, 0.18f, 1f),
-        new Color(0.82f, 0.28f, 0.32f, 1f),
-        new Color(0.62f, 0.36f, 0.78f, 1f),
+        // ゾンビの肌色。青白い灰緑から、腐るほど暗く濁る。
+        new Color(0.64f, 0.72f, 0.60f, 1f),
+        new Color(0.47f, 0.64f, 0.36f, 1f),
+        new Color(0.64f, 0.60f, 0.30f, 1f),
+        new Color(0.33f, 0.54f, 0.56f, 1f),
+        new Color(0.52f, 0.38f, 0.58f, 1f),
+        new Color(0.60f, 0.28f, 0.25f, 1f),
+        new Color(0.22f, 0.40f, 0.28f, 1f),
     };
 
     [Tooltip("要素0がレベル1。後ろの要素ほど上のレベル。")]

@@ -33,19 +33,39 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DotScale: 6.3
+    - _ArmorSide: 0
+    - _DotScale: 9
     - _DotSize: 0.784
     - _EnableExternalAlpha: 0
     - _Flash: 0
-    - _OutlineWidth: 0.1
+    - _HealPulse: 0
+    - _OutlineWidth: 0.05
+    - _PlateFlash: 0
+    - _Regen: 1
+    - _RegenCharge: 0
+    - _RegenGlow: 0
+    - _RotAmount: 0.15
+    - _Seed: 0
+    - _VeinAmount: 0.07
+    - _Zombie: 0
     m_Colors:
     - _CellSpan: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EyeColor: {r: 0.93, g: 1, b: 0.45, a: 1}
     - _FillColor: {r: 0.61960787, g: 0.42725867, b: 0.38039216, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _MouthColor: {r: 0.07999996, g: 0.02, b: 0.03, a: 1}
     - _OutlineColor: {r: 0.079476655, g: 0.42437434, b: 0.8867924, a: 1}
     - _OutlineWidthXY: {r: 0, g: 0, b: 0, a: 0}
+    - _PodColor: {r: 0.54999995, g: 0.88, b: 1, a: 1}
+    - _PodDim: {r: 0.09999997, g: 0.39999998, b: 0.95, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RotColor: {r: 0.54999995, g: 0.65999997, b: 0.39999998, a: 1}
+    - _ShellColor: {r: 0.97999996, g: 0.78, b: 0.11999995, a: 1}
+    - _ShellDark: {r: 0.45, g: 0.27999997, b: 0.04, a: 1}
+    - _ShellLight: {r: 1, g: 0.94, b: 0.62, a: 1}
+    - _TeethColor: {r: 0.86, g: 0.8, b: 0.62, a: 1}
     - _UnderColor: {r: 0, g: 0, b: 0, a: 0}
+    - _WoundColor: {r: 0.41999996, g: 0.04, b: 0.059999965, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

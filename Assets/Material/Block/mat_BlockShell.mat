@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_Block(solid)
-  m_Shader: {fileID: 4800000, guid: a91c4e2b7d8f4a61b0c3d5e7f9a1b2c4, type: 3}
+  m_Name: mat_BlockShell
+  m_Shader: {fileID: 4800000, guid: 1853fc521de1a4d42a21dcbb23a665de, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -33,25 +33,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DotDensity: 0
-    - _DotScale: 5.56
-    - _DotSize: 1
     - _EnableExternalAlpha: 0
     - _Flash: 0
-    - _OutlineWidth: 0.089
-    - _UseVertexColor: 0
+    - _ShellMode: 1
+    - _ShellTh: 5
     m_Colors:
-    - _CellSpan: {r: 1, g: 1, b: 0, a: 0}
-    - _Color: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
-    - _DotColor0: {r: 0.75, g: 0.13, b: 0.11, a: 1}
-    - _DotColor1: {r: 0.18, g: 0.46, b: 0.16, a: 1}
-    - _DotColor2: {r: 0.46, g: 0.28, b: 0.13, a: 1}
-    - _FillColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
-    - _FleshColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+    - _Dots: {r: 10, g: 6, b: 0, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
-    - _OutlineWidthXY: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _UnderColor: {r: 0, g: 0, b: 0, a: 0}
+    - _ShellColor: {r: 0.97999996, g: 0.78, b: 0.11999995, a: 1}
+    - _ShellDark: {r: 0.29999998, g: 0.16999996, b: 0.03, a: 1}
+    - _ShellLight: {r: 1, g: 0.96, b: 0.7, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

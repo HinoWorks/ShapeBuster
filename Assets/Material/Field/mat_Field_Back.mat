@@ -33,19 +33,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BottomGap: 0
     - _DotScale: 16
     - _DotSize: 1
     - _EnableExternalAlpha: 0
+    - _EyeJitter: 0
     - _Flash: 0
     - _OutlineWidth: 0.005
+    - _RotAmount: 0.35
+    - _Seed: 0
+    - _Zombie: 0
+    - _ZombieEyes: 0
     m_Colors:
     - _CellSpan: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _FillColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+    - _EyeColor: {r: 0.93, g: 1, b: 0.45, a: 1}
+    - _FillColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
+    - _MouthColor: {r: 0.07999996, g: 0.02, b: 0.03, a: 1}
+    - _OutlineColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     - _OutlineWidthXY: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RotColor: {r: 0.54999995, g: 0.65999997, b: 0.39999998, a: 1}
+    - _TeethColor: {r: 0.86, g: 0.8, b: 0.62, a: 1}
     - _UnderColor: {r: 0, g: 0, b: 0, a: 0}
+    - _WoundColor: {r: 0.41999996, g: 0.04, b: 0.059999965, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

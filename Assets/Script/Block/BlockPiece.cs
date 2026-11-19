@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// ブロック1個。プレハブのマス数、色、HP倍率、壊れない設定を使う。
-/// 見た目は BlockLevelFill。ボスのプレハブは BlockBossFill を付けたまま使う。
+/// 見た目は BlockLevelFill。ボスのプレハブは BlockBossFill（大きなゾンビの顔）を使う。
 /// 現在レベルの色を下から塗り、空きは一つ下の色。レベル1の空きは透過。
 /// 輪郭の太さはスケールが変わっても同じにする。
 /// 被弾で白く光り、一瞬大きくなる。破壊時も同じ演出を出し、その場に破壊エフェクトを出す。
@@ -13,10 +13,13 @@ public class BlockPiece : MonoBehaviour
 {
     const string LevelShader = "ShapeBuster/BlockLevelFill";
     const string BossShader = "ShapeBuster/BlockBossFill";
+    const string StoneShader = "ShapeBuster/BlockStoneFill";
     const float HitHold = 0.05f;
     const float HitReturn = 0.08f;
     const float HitScale = 1.18f;
     const float FlashFade = 0.09f;
+    /// <summary>殻のドットを本体のドットの何分の一にするか。2 なら半分の大きさ。</summary>
+    const int ShellDetail = 2;
 
     static readonly int FillColorId = Shader.PropertyToID("_FillColor");
     static readonly int UnderColorId = Shader.PropertyToID("_UnderColor");
@@ -25,6 +28,17 @@ public class BlockPiece : MonoBehaviour
     static readonly int OutlineWidthXYId = Shader.PropertyToID("_OutlineWidthXY");
     static readonly int CellSpanId = Shader.PropertyToID("_CellSpan");
     static readonly int FlashId = Shader.PropertyToID("_Flash");
+    static readonly int ZombieId = Shader.PropertyToID("_Zombie");
+    static readonly int SeedId = Shader.PropertyToID("_Seed");
+    static readonly int RegenGlowId = Shader.PropertyToID("_RegenGlow");
+    static readonly int RegenChargeId = Shader.PropertyToID("_RegenCharge");
+    static readonly int HealPulseId = Shader.PropertyToID("_HealPulse");
+    static readonly int ArmorSideId = Shader.PropertyToID("_ArmorSide");
+    static readonly int DotScaleId = Shader.PropertyToID("_DotScale");
+    static readonly int ShellDotsId = Shader.PropertyToID("_Dots");
+    static readonly int ShellThId = Shader.PropertyToID("_ShellTh");
+    static readonly int ShellModeId = Shader.PropertyToID("_ShellMode");
+    static readonly int ShellFlashId = Shader.PropertyToID("_Flash");
 
     static Material sharedFill;
 
@@ -64,6 +78,16 @@ public class BlockPiece : MonoBehaviour
     float pushedFlash = -1f;
     int pushedX = -1;
     int pushedY = -1;
+    float pushedSeed = -1f;
+    float pushedPlate = -1f;
+    float pushedArmor = -1f;
+    /// <summary>殻が弾いたときの白さ。0〜1。</summary>
+    float plateWhite;
+    /// <summary>はみ出して描く殻。下は Shell、左右は ShellLeft と ShellRight。</summary>
+    SpriteRenderer[] shellParts;
+    MaterialPropertyBlock shellBlock;
+    /// <summary>顔の形と腐敗の模様を決める個体の種。出現のたびに変える。</summary>
+    float faceSeed;
     Vector3 restScale = Vector3.one;
     Vector3 slotLocal;
     float stumbleClock;
@@ -162,7 +186,7 @@ public class BlockPiece : MonoBehaviour
     Color[] plateColors;
 
     const float HealPop = 0.28f;
-    static readonly Color RegenHot = new Color(0.72f, 1f, 0.78f, 1f);
+    static readonly Color RegenHot = new Color(0.55f, 0.9f, 1f, 1f);
 
     public int CellsX => Mathf.Max(1, cellsX);
     public int CellsY => Mathf.Max(1, cellsY);
@@ -232,6 +256,7 @@ public class BlockPiece : MonoBehaviour
             barMax = 1;
             stepHp = 1;
         }
+        faceSeed = Mathf.Repeat(GetInstanceID() * 0.6180339f, 1f);
         CacheOutline();
         RefreshColor();
     }
@@ -315,6 +340,7 @@ public class BlockPiece : MonoBehaviour
         restScale = transform.localScale;
         slotLocal = transform.localPosition;
         stumblePeriod = Random.Range(0.95f, 1.55f);
+        faceSeed = Random.value;
         stumbleClock = Random.Range(0f, stumblePeriod);
         hold = 0f;
         stumblePhase = StumbleWalk;
@@ -362,7 +388,7 @@ public class BlockPiece : MonoBehaviour
     {
         if (RejectsArmor(worldPoint))
         {
-            PlayPlateDeflect();
+            PlayPlateDeflect(worldPoint);
             return false;
         }
 
@@ -499,7 +525,7 @@ public class BlockPiece : MonoBehaviour
         var shader = material != null ? material.shader : null;
         if (shader == null) return false;
         var name = shader.name;
-        return name == LevelShader || name == BossShader;
+        return name == LevelShader || name == BossShader || name == StoneShader;
     }
 
     void PushFill()
@@ -517,7 +543,8 @@ public class BlockPiece : MonoBehaviour
         float width = Mathf.Max(0.0001f, sprite.sharedMaterial.GetFloat(OutlineWidthId));
         bool liveOutline = regenDelay > 0f && IsAlive;
         if (!liveOutline && propertyBlock != null && width == pushedWidth && spanX == pushedX && spanY == pushedY
-            && flash == pushedFlash && fillColor == pushedFill && underColor == pushedUnder)
+            && flash == pushedFlash && fillColor == pushedFill && underColor == pushedUnder && faceSeed == pushedSeed
+            && plateWhite == pushedPlate && ArmorSide() == pushedArmor)
             return;
 
         pushedWidth = width;
@@ -526,15 +553,124 @@ public class BlockPiece : MonoBehaviour
         pushedUnder = underColor;
         pushedX = spanX;
         pushedY = spanY;
+        pushedSeed = faceSeed;
+        pushedPlate = plateWhite;
+        pushedArmor = ArmorSide();
         propertyBlock.Clear();
         propertyBlock.SetFloat(OutlineWidthId, width);
         propertyBlock.SetVector(OutlineWidthXYId, new Vector4(width / spanX, width / spanY, 0f, 0f));
         propertyBlock.SetVector(CellSpanId, new Vector4(spanX, spanY, 0f, 0f));
-        propertyBlock.SetColor(FillColorId, fillColor);
-        propertyBlock.SetColor(UnderColorId, underColor);
+        // 壊せないブロックはレベルの色を使わず、マテリアルの色のままにする。
+        if (!solid)
+        {
+            propertyBlock.SetColor(FillColorId, fillColor);
+            propertyBlock.SetColor(UnderColorId, underColor);
+        }
         propertyBlock.SetColor(OutlineColorId, TraitOutline());
         propertyBlock.SetFloat(FlashId, flash);
+        // 壊せないブロックには顔を描かない。
+        propertyBlock.SetFloat(ZombieId, solid ? 0f : 1f);
+        propertyBlock.SetFloat(SeedId, faceSeed);
+        if (armorBottom)
+            propertyBlock.SetFloat(ArmorSideId, ArmorSide());
+        if (regenDelay > 0f)
+        {
+            propertyBlock.SetFloat(RegenGlowId, RegenGlow());
+            propertyBlock.SetFloat(RegenChargeId, RegenCharge());
+            propertyBlock.SetFloat(HealPulseId, healPulse);
+        }
         sprite.SetPropertyBlock(propertyBlock);
+        if (armorBottom)
+            PushShells(spanX, spanY);
+    }
+
+    /// <summary>
+    /// 殻をドットの格子に合わせて置き、形と光をシェーダーに渡す。
+    /// 殻のドットは本体の 1/ShellDetail の大きさ。数えるのは殻のドット。
+    /// 下の殻は左右に 1 ドット、下に 2 ドットはみ出す。左右の殻は外へ 1 ドット、内側へ ShellInnerCols ドット。
+    /// </summary>
+    void PushShells(int spanX, int spanY)
+    {
+        if (shellParts == null)
+            shellParts = FindShells();
+        if (shellParts.Length == 0) return;
+        if (shellBlock == null)
+            shellBlock = new MaterialPropertyBlock();
+
+        float dot = sprite.sharedMaterial.HasProperty(DotScaleId) ? sprite.sharedMaterial.GetFloat(DotScaleId) : 8f;
+        dot *= ShellDetail;
+        int tx = Mathf.Max(1, Mathf.RoundToInt(spanX * dot));
+        int ty = Mathf.Max(1, Mathf.RoundToInt(spanY * dot));
+        float ux = 1f / tx;
+        float uy = 1f / ty;
+        float white = Mathf.Max(plateWhite, flash);
+
+        for (int i = 0; i < shellParts.Length; i++)
+        {
+            var part = shellParts[i];
+            if (part == null) continue;
+
+            float mode;
+            int dotsX;
+            int dotsY;
+            float th = 0f;
+            float left;
+            float bottom;
+            if (part.name == "Shell")
+            {
+                mode = 1f;
+                th = Mathf.Ceil(ty * 0.3f) + 2f;
+                dotsX = tx + 2;
+                dotsY = (int)th + 1;
+                left = -0.5f - ux;
+                bottom = -0.5f - 2f * uy;
+            }
+            else
+            {
+                bool isLeft = part.name == "ShellLeft";
+                mode = isLeft ? 2f : 3f;
+                dotsX = ShellInnerCols(tx) + 1;
+                dotsY = ty;
+                left = isLeft ? -0.5f - ux : 0.5f + ux - dotsX * ux;
+                bottom = -0.5f;
+            }
+
+            float w = dotsX * ux;
+            float h = dotsY * uy;
+            // 弾いた瞬間は、殻を内側へ 1 ドット押し込む。
+            Vector2 recoil = mode < 1.5f ? new Vector2(0f, uy) : new Vector2(mode < 2.5f ? ux : -ux, 0f);
+            recoil *= plateWhite;
+            var t = part.transform;
+            t.localPosition = new Vector3(left + w * 0.5f + recoil.x, bottom + h * 0.5f + recoil.y, 0f);
+            t.localRotation = Quaternion.identity;
+            t.localScale = new Vector3(w, h, 1f);
+
+            shellBlock.Clear();
+            shellBlock.SetVector(ShellDotsId, new Vector4(dotsX, dotsY, 0f, 0f));
+            shellBlock.SetFloat(ShellThId, th);
+            shellBlock.SetFloat(ShellModeId, mode);
+            shellBlock.SetFloat(ShellFlashId, white);
+            part.SetPropertyBlock(shellBlock);
+        }
+    }
+
+    /// <summary>左右の殻がブロックの内側に入り込む列数（殻のドット）。本体のドットに直すと、シェーダーの ShellInnerCols と同じになる。</summary>
+    static int ShellInnerCols(int totalX)
+    {
+        return Mathf.Max(2, Mathf.FloorToInt(totalX * 0.3f));
+    }
+
+    SpriteRenderer[] FindShells()
+    {
+        var found = GetComponentsInChildren<SpriteRenderer>(true);
+        var list = new System.Collections.Generic.List<SpriteRenderer>();
+        for (int i = 0; i < found.Length; i++)
+        {
+            var name = found[i].name;
+            if (name == "Shell" || name == "ShellLeft" || name == "ShellRight")
+                list.Add(found[i]);
+        }
+        return list.ToArray();
     }
 
     void InvalidateFill()
@@ -563,6 +699,26 @@ public class BlockPiece : MonoBehaviour
         float wave = 0.5f + 0.5f * Mathf.Sin(Time.time * speed * Mathf.PI * 2f);
         float amount = MissingDurability() ? Mathf.Lerp(0.25f, 1f, charge) * wave : 0.3f * wave;
         return Color.Lerp(outline, RegenHot, Mathf.Max(amount, healPulse));
+    }
+
+    /// <summary>額の種の明るさ。満タンのときはゆっくり、回復を溜めている間は速く強く脈打つ。</summary>
+    float RegenGlow()
+    {
+        if (regenDelay <= 0f || !IsAlive) return 0f;
+
+        float charge = RegenCharge();
+        bool missing = MissingDurability();
+        float speed = missing ? Mathf.Lerp(2.4f, 9f, charge) : 1.6f;
+        float wave = 0.5f + 0.5f * Mathf.Sin(Time.time * speed * Mathf.PI * 2f);
+        if (!missing) return 0.2f + 0.2f * wave;
+        return Mathf.Lerp(0.35f, 1f, charge) * Mathf.Lerp(0.7f, 1f, wave);
+    }
+
+    /// <summary>シェーダーに渡す殻の向き。装甲なし 0、下 1、左右 2。</summary>
+    float ArmorSide()
+    {
+        if (!armorBottom || solid) return 0f;
+        return armorSides ? 2f : 1f;
     }
 
     bool RejectsArmor(Vector2 worldPoint)
@@ -594,18 +750,30 @@ public class BlockPiece : MonoBehaviour
         plateMarks = active.GetComponentsInChildren<SpriteRenderer>(true);
     }
 
-    void PlayPlateDeflect()
+    void PlayPlateDeflect(Vector2 worldPoint)
     {
         plateFlash = 0.16f;
+        if (EffectManager.Inst == null) return;
+
+        // 殻の外向きに火花を散らす。下の殻は下へ、左右の殻は当たった側へ。
+        Vector2 local = transform.InverseTransformPoint(worldPoint);
+        Vector3 outward = armorSides
+            ? transform.right * (local.x < 0f ? -1f : 1f)
+            : -transform.up;
+        var rotation = Quaternion.FromToRotation(Vector3.up, outward);
+        EffectManager.Inst.Rent(EffectType.ShellSpark, worldPoint, rotation);
     }
 
     void TickPlate()
     {
-        if (plateMarks == null || plateFlash < 0f) return;
+        if (plateFlash < 0f) return;
 
         plateFlash -= Time.deltaTime;
         float white = plateFlash <= 0f ? 0f : Mathf.Clamp01(plateFlash / 0.1f);
-        for (int i = 0; i < plateMarks.Length; i++)
+        plateWhite = white;
+        // 殻の光はシェーダーで出す。板のスプライトが残っていれば、そちらも光らせる。
+        int count = plateMarks != null && plateColors != null ? Mathf.Min(plateMarks.Length, plateColors.Length) : 0;
+        for (int i = 0; i < count; i++)
         {
             if (plateMarks[i] == null) continue;
             plateMarks[i].color = Color.Lerp(plateColors[i], Color.white, white);

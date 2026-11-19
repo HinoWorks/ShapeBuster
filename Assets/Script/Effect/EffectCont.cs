@@ -39,7 +39,12 @@ public class EffectCont : MonoBehaviour
 
     public void Play(Vector3 worldPosition)
     {
-        transform.position = worldPosition;
+        Play(worldPosition, Quaternion.identity);
+    }
+
+    public void Play(Vector3 worldPosition, Quaternion rotation)
+    {
+        transform.SetPositionAndRotation(worldPosition, rotation);
         gameObject.SetActive(true);
 
         if (particles != null)

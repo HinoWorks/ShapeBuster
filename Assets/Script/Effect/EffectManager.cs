@@ -10,6 +10,7 @@ public enum EffectType
     BallCatch,
     BallDeadline,
     BloodStain,
+    ShellSpark,
 }
 
 /// <summary>
@@ -72,6 +73,12 @@ public class EffectManager : MonoBehaviour
     /// <summary>指定した種類を、その場で再生して借りる。</summary>
     public EffectCont Rent(EffectType type, Vector3 worldPosition)
     {
+        return Rent(type, worldPosition, Quaternion.identity);
+    }
+
+    /// <summary>向きを付けて再生する。エフェクトの上（+Y）が rotation の向きになる。</summary>
+    public EffectCont Rent(EffectType type, Vector3 worldPosition, Quaternion rotation)
+    {
         if (!pools.TryGetValue(type, out var pool))
         {
             Debug.LogWarning($"EffectManager: {type} のセットがありません。");
@@ -90,7 +97,7 @@ public class EffectManager : MonoBehaviour
 
         pool.active.Add(effect);
         effect.MarkRented();
-        effect.Play(worldPosition);
+        effect.Play(worldPosition, rotation);
         return effect;
     }
 
