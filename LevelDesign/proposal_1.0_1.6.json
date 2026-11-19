@@ -1,0 +1,72 @@
+{
+ "cost_scale": 1.0,
+ "cost_power": 1.6,
+ "k_hit": 2.0,
+ "stages": [
+  {
+   "stageIndex": 0,
+   "stageTime": 45,
+   "blockHpRate": 0.135
+  },
+  {
+   "stageIndex": 1,
+   "stageTime": 45,
+   "blockHpRate": 0.533
+  },
+  {
+   "stageIndex": 2,
+   "stageTime": 50,
+   "blockHpRate": 1.787
+  },
+  {
+   "stageIndex": 3,
+   "stageTime": 55,
+   "blockHpRate": 12.024
+  },
+  {
+   "stageIndex": 4,
+   "stageTime": 55,
+   "blockHpRate": 49.82
+  },
+  {
+   "stageIndex": 5,
+   "stageTime": 60,
+   "blockHpRate": 182.122
+  },
+  {
+   "stageIndex": 6,
+   "stageTime": 60,
+   "blockHpRate": 466.625
+  },
+  {
+   "stageIndex": 7,
+   "stageTime": 65,
+   "blockHpRate": 976.427
+  },
+  {
+   "stageIndex": 8,
+   "stageTime": 65,
+   "blockHpRate": 2086.439
+  },
+  {
+   "stageIndex": 9,
+   "stageTime": 65,
+   "blockHpRate": 5591.214
+  },
+  {
+   "stageIndex": 10,
+   "stageTime": 70,
+   "blockHpRate": 10653.203
+  },
+  {
+   "stageIndex": 11,
+   "stageTime": 70,
+   "blockHpRate": 15201.637
+  },
+  {
+   "stageIndex": 12,
+   "stageTime": 75,
+   "blockHpRate": 26448.335
+  }
+ ]
+}

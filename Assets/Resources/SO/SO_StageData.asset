@@ -14,35 +14,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_StageData
   stageDatas:
   - stageIndex: 0
-    stageTime: 90
+    stageTime: 45
     blockColumns: 8
-    blockHpRate: 0.75
+    blockHpRate: 0.54
     blockSpeedRate: 0.8
     blockResourceRate: 1
     bossIndex: 0
-    weightSquare: 100
+    weightSquare: 50
     weightWide: 0
     weightTall: 0
     weightSolid: 0
-    weightArmor: 0
-    weightRegen: 0
+    weightArmor: 10
+    weightRegen: 10
+    weightBloat: 10
+    weightSplit: 10
+    weightGhost: 10
   - stageIndex: 1
-    stageTime: 90
+    stageTime: 45
     blockColumns: 8
-    blockHpRate: 1.5
+    blockHpRate: 1.28
     blockSpeedRate: 1
     blockResourceRate: 2
     bossIndex: 0
-    weightSquare: 50
+    weightSquare: 40
     weightWide: 20
     weightTall: 0
     weightSolid: 10
     weightArmor: 10
     weightRegen: 10
+    weightBloat: 10
+    weightSplit: 0
+    weightGhost: 0
   - stageIndex: 2
-    stageTime: 90
+    stageTime: 50
     blockColumns: 10
-    blockHpRate: 2.25
+    blockHpRate: 2.292
     blockSpeedRate: 1.2
     blockResourceRate: 3
     bossIndex: 0
@@ -52,10 +58,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 0
     weightRegen: 0
+    weightBloat: 0
+    weightSplit: 0
+    weightGhost: 0
   - stageIndex: 3
-    stageTime: 90
+    stageTime: 55
     blockColumns: 10
-    blockHpRate: 3
+    blockHpRate: 14.26
     blockSpeedRate: 1.4
     blockResourceRate: 4
     bossIndex: 0
@@ -65,10 +74,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 20
     weightRegen: 0
+    weightBloat: 0
+    weightSplit: 0
+    weightGhost: 0
   - stageIndex: 4
-    stageTime: 90
+    stageTime: 55
     blockColumns: 10
-    blockHpRate: 4
+    blockHpRate: 50.7
     blockSpeedRate: 1.5
     blockResourceRate: 4.5
     bossIndex: 0
@@ -78,10 +90,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 10
     weightRegen: 20
+    weightBloat: 0
+    weightSplit: 0
+    weightGhost: 0
   - stageIndex: 5
-    stageTime: 90
+    stageTime: 60
     blockColumns: 10
-    blockHpRate: 5
+    blockHpRate: 135.204
     blockSpeedRate: 1.5
     blockResourceRate: 5
     bossIndex: 0
@@ -91,10 +106,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 10
     weightRegen: 10
+    weightBloat: 0
+    weightSplit: 0
+    weightGhost: 0
   - stageIndex: 6
-    stageTime: 90
+    stageTime: 60
     blockColumns: 10
-    blockHpRate: 6
+    blockHpRate: 294.548
     blockSpeedRate: 1.5
     blockResourceRate: 5.5
     bossIndex: 0
@@ -104,10 +122,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 23
     weightRegen: 23
+    weightBloat: 0
+    weightSplit: 15
+    weightGhost: 0
   - stageIndex: 7
-    stageTime: 90
+    stageTime: 65
     blockColumns: 10
-    blockHpRate: 7
+    blockHpRate: 666.276
     blockSpeedRate: 1.5
     blockResourceRate: 6
     bossIndex: 0
@@ -117,10 +138,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 12
     weightRegen: 30
+    weightBloat: 0
+    weightSplit: 10
+    weightGhost: 0
   - stageIndex: 8
-    stageTime: 90
+    stageTime: 65
     blockColumns: 10
-    blockHpRate: 8
+    blockHpRate: 1734.26
     blockSpeedRate: 1.5
     blockResourceRate: 7
     bossIndex: 0
@@ -130,10 +154,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 30
     weightRegen: 14
+    weightBloat: 0
+    weightSplit: 10
+    weightGhost: 0
   - stageIndex: 9
-    stageTime: 90
+    stageTime: 65
     blockColumns: 10
-    blockHpRate: 9
+    blockHpRate: 3491.336
     blockSpeedRate: 1.6
     blockResourceRate: 7
     bossIndex: 0
@@ -143,10 +170,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 16
     weightRegen: 16
+    weightBloat: 0
+    weightSplit: 10
+    weightGhost: 0
   - stageIndex: 10
-    stageTime: 90
+    stageTime: 70
     blockColumns: 10
-    blockHpRate: 10
+    blockHpRate: 5637.532
     blockSpeedRate: 1.7
     blockResourceRate: 7
     bossIndex: 0
@@ -156,10 +186,13 @@ MonoBehaviour:
     weightSolid: 0
     weightArmor: 22
     weightRegen: 22
+    weightBloat: 0
+    weightSplit: 10
+    weightGhost: 15
   - stageIndex: 11
-    stageTime: 90
+    stageTime: 70
     blockColumns: 10
-    blockHpRate: 10
+    blockHpRate: 8076.556
     blockSpeedRate: 1.8
     blockResourceRate: 7
     bossIndex: 0
@@ -169,10 +202,13 @@ MonoBehaviour:
     weightSolid: 10
     weightArmor: 18
     weightRegen: 20
+    weightBloat: 0
+    weightSplit: 10
+    weightGhost: 10
   - stageIndex: 12
-    stageTime: 90
+    stageTime: 75
     blockColumns: 10
-    blockHpRate: 10
+    blockHpRate: 11416.18
     blockSpeedRate: 1.9
     blockResourceRate: 7
     bossIndex: 0
@@ -182,3 +218,6 @@ MonoBehaviour:
     weightSolid: 16
     weightArmor: 17
     weightRegen: 17
+    weightBloat: 0
+    weightSplit: 10
+    weightGhost: 10

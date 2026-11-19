@@ -38,6 +38,14 @@ CBUFFER_START(UnityPerMaterial)
     float _RegenCharge;
     float _HealPulse;
     float _ArmorSide;
+    float _Bloat;
+    half4 _BoilColor;
+    float _Split;
+    half4 _StitchColor;
+    half4 _PatchTint;
+    float _SplitSide;
+    float _Ghost;
+    float _GhostFade;
 CBUFFER_END
 
 #include "BlockZombie.hlsl"
@@ -70,7 +78,17 @@ half4 UnlitFragment(Varyings input) : SV_Target
     half3 body = lerp(underRgb, fillRgb, isFilled);
     half bodyA = lerp(under.a, fill.a, isFilled);
 
-    return ComposeBlock(uv, body, bodyA, _OutlineColor, isOutline, _Flash);
+    half4 color = ComposeBlock(uv, body, bodyA, _OutlineColor, isOutline, _Flash);
+
+    // 幽霊：裾へ向かって薄くなる。すり抜けている間（_GhostFade）は全体が透け、ドットの段がちらつく。
+    if (_Ghost > 0.5)
+    {
+        color.a *= lerp(0.6, 1.0, saturate(uv.y * 3.0));
+        float flicker = step(0.5, frac(floor(grid.y) * 0.5 + _Time.y * 3.0));
+        color.a *= lerp(1.0, lerp(0.16, 0.32, flicker), saturate(_GhostFade));
+        color.rgb = lerp(color.rgb, color.rgb * 0.5 + half3(0.4, 0.62, 0.75), saturate(_GhostFade) * 0.6);
+    }
+    return color;
 }
 
 #endif

@@ -29,6 +29,14 @@ Shader "ShapeBuster/BlockLevelFill"
         [HideInInspector] _RegenCharge ("回復の溜まり", Range(0, 1)) = 0
         [HideInInspector] _HealPulse ("回復の光", Range(0, 1)) = 0
         [HideInInspector] _ArmorSide ("殻の向き", Float) = 0
+        [Header(Bloat)] [ToggleUI] _Bloat ("膨張の模様を描く", Float) = 0
+        _BoilColor ("膿の粒の色", Color) = (1, 0.7, 0.3, 1)
+        [Header(Split)] [ToggleUI] _Split ("分裂の縫い目を描く", Float) = 0
+        _StitchColor ("縫い糸の色", Color) = (0.85, 0.8, 0.68, 1)
+        _PatchTint ("継ぎはぎの肌に掛ける色", Color) = (0.95, 0.62, 0.95, 1)
+        [HideInInspector] _SplitSide ("分裂の子の向き", Float) = 0
+        [Header(Ghost)] [ToggleUI] _Ghost ("幽霊の模様を描く", Float) = 0
+        [HideInInspector] _GhostFade ("すり抜けの透け", Range(0, 1)) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex ("External Alpha", 2D) = "white" {}

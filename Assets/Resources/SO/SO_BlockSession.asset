@@ -25,6 +25,9 @@ MonoBehaviour:
   solid: {fileID: 100003, guid: a11b0c01e5f24a0a9c3d7e6f1a2b3c04, type: 3}
   armor: {fileID: 200003, guid: e4a17c2b8f6d4c51a9e3b7d05c182f46, type: 3}
   regen: {fileID: 210003, guid: 5b9d3e7a1c4f4a86b2d8e6f04a7c1935, type: 3}
+  bloat: {fileID: 100003, guid: 818d540efa36443babeea689813a0f09, type: 3}
+  split: {fileID: 100003, guid: 53590d1b49b2b4b2bb18f99a87e0f59e, type: 3}
+  ghost: {fileID: 100003, guid: d4ead4794cf03473f8efcb946af92b1a, type: 3}
   boss: {fileID: 100003, guid: d44e3f3408257d3d2f6a1924d5e6f037, type: 3}
   baseFill: 0.5
   bossFillScale: 0.7
@@ -32,8 +35,8 @@ MonoBehaviour:
   fillPerSecond: 0.002
   baseSpeed: 0.1
   speedPerSecond: 0.0025
-  baseHp: 4
-  hpPerSecond: 0.1
+  baseHp: 1
+  hpPerSecond: 0.025
   sizeHpScale: 1
   blockGap: 0.1
   wallSideGap: 0.15

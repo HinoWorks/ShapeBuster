@@ -23,6 +23,12 @@ public class SO_BlockSession : ScriptableObject
     public BlockPiece solid;
     public BlockPiece armor;
     public BlockPiece regen;
+    [Tooltip("膨張。倒すと周りを巻き込んで爆発する")]
+    public BlockPiece bloat;
+    [Tooltip("分裂。倒すと小さいゾンビ 2 体に分かれる。小さいゾンビはこのプレハブの splitInto")]
+    public BlockPiece split;
+    [Tooltip("幽霊。ときどき半透明になり、その間はボールがすり抜ける。レーザーだけが当たる")]
+    public BlockPiece ghost;
     public BlockPiece boss;
 
     [Space(10)]

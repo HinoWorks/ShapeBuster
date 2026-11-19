@@ -1,0 +1,72 @@
+{
+ "cost_scale": 0.5,
+ "cost_power": 2.0,
+ "k_hit": 2.0,
+ "stages": [
+  {
+   "stageIndex": 0,
+   "stageTime": 45,
+   "blockHpRate": 0.135
+  },
+  {
+   "stageIndex": 1,
+   "stageTime": 45,
+   "blockHpRate": 0.32
+  },
+  {
+   "stageIndex": 2,
+   "stageTime": 50,
+   "blockHpRate": 0.612
+  },
+  {
+   "stageIndex": 3,
+   "stageTime": 55,
+   "blockHpRate": 2.99
+  },
+  {
+   "stageIndex": 4,
+   "stageTime": 55,
+   "blockHpRate": 13.271
+  },
+  {
+   "stageIndex": 5,
+   "stageTime": 60,
+   "blockHpRate": 33.006
+  },
+  {
+   "stageIndex": 6,
+   "stageTime": 60,
+   "blockHpRate": 70.605
+  },
+  {
+   "stageIndex": 7,
+   "stageTime": 65,
+   "blockHpRate": 133.089
+  },
+  {
+   "stageIndex": 8,
+   "stageTime": 65,
+   "blockHpRate": 289.423
+  },
+  {
+   "stageIndex": 9,
+   "stageTime": 65,
+   "blockHpRate": 684.186
+  },
+  {
+   "stageIndex": 10,
+   "stageTime": 70,
+   "blockHpRate": 1015.739
+  },
+  {
+   "stageIndex": 11,
+   "stageTime": 70,
+   "blockHpRate": 1646.251
+  },
+  {
+   "stageIndex": 12,
+   "stageTime": 75,
+   "blockHpRate": 2138.178
+  }
+ ]
+}

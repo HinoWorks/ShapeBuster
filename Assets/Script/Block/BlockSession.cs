@@ -320,6 +320,12 @@ public class BlockSession : MonoBehaviour
             return;
         }
 
+        if (piece.OverridesDrop)
+        {
+            DropResources(point, 1, piece.DropResource);
+            return;
+        }
+
         if (piece.Regenerates)
         {
             DropResources(point, 1 + SkillTreeBonus.RegenDropAdd, ResourceType.BB);
@@ -333,7 +339,8 @@ public class BlockSession : MonoBehaviour
         }
 
         float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
-            * (1f + SkillTreeBonus.BlockHarvestRate);
+            * (1f + SkillTreeBonus.BlockHarvestRate)
+            * piece.RewardScale;
         int reward = StageEnemyScale.ScaleResourceCount(cells, rewardRate);
         if (reward > 0)
             DropResources(point, reward);
@@ -430,6 +437,7 @@ public class BlockSession : MonoBehaviour
         handOrder.Clear();
         flashes.Clear();
         poisons.Clear();
+        bursts.Clear();
         elapsed = 0f;
         bossArmed = false;
         bossDue = false;
@@ -1271,6 +1279,7 @@ public class BlockSession : MonoBehaviour
         TickCursorBase();
         TickCursorInfo();
         TickFlashes();
+        TickBursts();
         TickPoisons();
         if (ballHud != null)
             ballHud.Set(CountLaunchable(), balls.Length);
@@ -1630,6 +1639,120 @@ public class BlockSession : MonoBehaviour
     public static Vector2 SkillOrigin(BlockPiece piece)
     {
         return piece != null ? piece.Center : Vector2.zero;
+    }
+
+    /// <summary>
+    /// 分裂。倒されたブロックの位置に、小さいゾンビを横に並べて出す。
+    /// 小さいゾンビの総 HP は親の総 HP × splitHpRate。色の段の刻みは通常と同じ。
+    /// </summary>
+    public void SpawnSplit(BlockPiece parent)
+    {
+        if (parent == null || !parent.Splits || formation == null) return;
+
+        var prefab = parent.SplitInto;
+        int count = parent.SplitCount;
+        float scale = prefab.SizeScale;
+        float span = cell * scale;
+        float size = Mathf.Max(0.02f, span - Rule.blockGap * scale);
+        Vector3 center = formation.InverseTransformPoint(parent.transform.position);
+        float left = center.x - span * count * 0.5f;
+
+        int stepHp = Mathf.Max(1, Mathf.RoundToInt(Rule.baseHp * prefab.HpScale));
+        SplitTotal(parent.SplitHp, stepHp, out int level, out int hp, out int barMax);
+        for (int i = 0; i < count; i++)
+        {
+            var piece = Instantiate(prefab, formation);
+            piece.transform.localPosition = new Vector3(left + span * (i + 0.5f), center.y, 0f);
+            piece.transform.localScale = new Vector3(size, size, 1f);
+            // 左の子は右の縁に、右の子は左の縁に、切られた縫い目が残る。
+            piece.SetSplitSide(count == 1 ? 0f : (i < count * 0.5f ? -1f : 1f));
+            piece.Spawn(this, new Vector2(size, size), level, hp, barMax, stepHp, 1, 1);
+            pieces.Add(piece);
+        }
+    }
+
+    /// <summary>総 HP を、色の段（1 段 stepHp）と、今の段の残り HP に分ける。段の数は色数で止める。</summary>
+    static void SplitTotal(int total, int stepHp, out int level, out int current, out int barMax)
+    {
+        total = Mathf.Max(stepHp, total);
+        level = Mathf.Max(1, Mathf.CeilToInt(total / (float)stepHp));
+        current = total - (level - 1) * stepHp;
+        if (current <= 0)
+            current = stepHp;
+        barMax = stepHp;
+
+        int cap = SO_BlockLevel.MaxCount;
+        if (level > cap)
+        {
+            current += (level - cap) * stepHp;
+            level = cap;
+            barMax = current;
+        }
+    }
+
+    /// <summary>膨張の爆発。倒された位置から少し遅らせて広がり、巻き込んだ膨張がまた爆発して連鎖する。</summary>
+    struct PendingBurst
+    {
+        public Vector2 point;
+        public float radius;
+        public int damage;
+        public float delay;
+    }
+
+    const float BurstDelay = 0.12f;
+    static readonly Color BurstColor = new Color(0.72f, 0.95f, 0.25f, 0.85f);
+    readonly List<PendingBurst> bursts = new List<PendingBurst>();
+
+    public void QueueBurst(BlockPiece source)
+    {
+        if (source == null || !source.Bursts) return;
+        bursts.Add(new PendingBurst
+        {
+            point = source.Center,
+            radius = cell * source.BurstRadius,
+            damage = source.BurstDamage,
+            delay = BurstDelay
+        });
+        // 膨らみきった合図として、先に小さく光らせる。
+        ShowFlash(source.Center, CircleSprite, Vector3.one * 0.1f, Vector3.one * cell * 0.9f, BurstColor, BurstDelay);
+    }
+
+    void TickBursts()
+    {
+        for (int i = bursts.Count - 1; i >= 0; i--)
+        {
+            var burst = bursts[i];
+            burst.delay -= Time.deltaTime;
+            if (burst.delay > 0f)
+            {
+                bursts[i] = burst;
+                continue;
+            }
+            bursts.RemoveAt(i);
+            Burst(burst);
+        }
+    }
+
+    void Burst(PendingBurst burst)
+    {
+        SoundManager.SE(SEType.Explosion);
+        if (CameraManager.Inst != null)
+            CameraManager.Inst.Shake(CameraShakeLevel.Small);
+        for (int i = pieces.Count - 1; i >= 0; i--)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive || !IsOnCamera(piece)) continue;
+            if (!Within(piece, burst.point, burst.radius)) continue;
+            piece.Hit(burst.damage);
+        }
+
+        ShowFlash(
+            burst.point,
+            CircleSprite,
+            Vector3.one * 0.2f,
+            Vector3.one * burst.radius * 2f,
+            BurstColor,
+            0.34f);
     }
 
     public void Explode(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
@@ -2321,7 +2444,10 @@ public class BlockSession : MonoBehaviour
             Rule.tall,
             Rule.solid,
             Rule.armor,
-            Rule.regen
+            Rule.regen,
+            Rule.bloat,
+            Rule.split,
+            Rule.ghost
         };
     }
 

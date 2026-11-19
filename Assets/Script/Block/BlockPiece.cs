@@ -34,6 +34,10 @@ public class BlockPiece : MonoBehaviour
     static readonly int RegenChargeId = Shader.PropertyToID("_RegenCharge");
     static readonly int HealPulseId = Shader.PropertyToID("_HealPulse");
     static readonly int ArmorSideId = Shader.PropertyToID("_ArmorSide");
+    static readonly int SplitSideId = Shader.PropertyToID("_SplitSide");
+    static readonly int GhostFadeId = Shader.PropertyToID("_GhostFade");
+    /// <summary>すり抜けの前後に、見た目だけ先に薄くし始める秒数。</summary>
+    const float GhostLead = 0.2f;
     static readonly int DotScaleId = Shader.PropertyToID("_DotScale");
     static readonly int ShellDotsId = Shader.PropertyToID("_Dots");
     static readonly int ShellThId = Shader.PropertyToID("_ShellTh");
@@ -58,6 +62,27 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] bool armorBottom;
     [Tooltip("ヒットが途切れてから、失った段を1つ戻すまでの秒数。0 なら再生しない。")]
     [SerializeField] float regenDelay;
+    [Tooltip("0 より大きいと膨張。倒すと、この半径（マス）の中のブロックに爆発のダメージを与える。")]
+    [SerializeField] float burstRadius;
+    [Tooltip("爆発のダメージ。出現したときの自分の総 HP に掛ける倍率。")]
+    [SerializeField] float burstDamageRate = 1f;
+    [Tooltip("通常の資源（AA）の数に掛ける倍率。")]
+    [SerializeField] float rewardScale = 1f;
+    [Tooltip("分裂。倒すと、このプレハブを splitCount 体その場に出す。空なら分裂しない。")]
+    [SerializeField] BlockPiece splitInto;
+    [Tooltip("分裂で出す数。横に並べる。")]
+    [SerializeField] int splitCount = 2;
+    [Tooltip("分裂した 1 体の総 HP。出現したときの自分の総 HP に掛ける倍率。")]
+    [SerializeField] float splitHpRate = 0.4f;
+    [Tooltip("1 マスに対する大きさ。分裂で出る小さいゾンビは 0.5。")]
+    [SerializeField] float sizeScale = 1f;
+    [Tooltip("オンなら、AA の代わりに dropResource を 1 個落とす。")]
+    [SerializeField] bool overrideDrop;
+    [SerializeField] ResourceType dropResource = ResourceType.EE;
+    [Tooltip("0 より大きいと幽霊。実体でいる秒数。")]
+    [SerializeField] float ghostSolidTime;
+    [Tooltip("幽霊がすり抜けている秒数。この間はボールが当たらず、レーザーだけが当たる。")]
+    [SerializeField] float ghostPhaseTime = 1.6f;
     [SerializeField] SpriteRenderer sprite;
     [Tooltip("装甲の板と山形。下から弾かれたとき白く光る。")]
     [SerializeField] SpriteRenderer[] plateMarks;
@@ -195,6 +220,37 @@ public class BlockPiece : MonoBehaviour
     public int BossIndex => bossIndex;
     public bool Regenerates => regenDelay > 0f;
     public bool ArmorsBottom => armorBottom;
+    /// <summary>膨張。倒すと周りを巻き込んで爆発する。</summary>
+    public bool Bursts => burstRadius > 0f;
+    public float BurstRadius => Mathf.Max(0f, burstRadius);
+    /// <summary>爆発のダメージ。出現したときの総 HP × burstDamageRate。</summary>
+    public int BurstDamage => Mathf.Max(1, Mathf.RoundToInt(((spawnLevel - 1) * stepHp + spawnHp) * Mathf.Max(0f, burstDamageRate)));
+    public float RewardScale => Mathf.Max(0f, rewardScale);
+    /// <summary>分裂。倒すと小さいゾンビに分かれる。</summary>
+    public bool Splits => splitInto != null && splitCount > 0;
+    public BlockPiece SplitInto => splitInto;
+    public int SplitCount => Mathf.Max(0, splitCount);
+    /// <summary>分裂した 1 体の総 HP。出現したときの総 HP × splitHpRate。</summary>
+    public int SplitHp => Mathf.Max(1, Mathf.RoundToInt(SpawnTotalHp * Mathf.Max(0f, splitHpRate)));
+    public float SizeScale => Mathf.Clamp(sizeScale, 0.1f, 1f);
+
+    /// <summary>分裂で出た子の向き。-1 が左の子、1 が右の子、0 は分裂の子ではない。縫い目を描く側が変わる。</summary>
+    float splitSide;
+
+    /// <summary>分裂で出た子の向きを決める。Spawn より前に呼ぶ。</summary>
+    public void SetSplitSide(float side) => splitSide = side;
+    /// <summary>幽霊。一定の間隔で半透明になり、その間はボールがすり抜ける。</summary>
+    public bool Ghosts => ghostSolidTime > 0f;
+    /// <summary>幽霊がすり抜けている最中。</summary>
+    public bool Phased => phased;
+    float GhostCycle => ghostSolidTime + Mathf.Max(0.1f, ghostPhaseTime);
+    float ghostClock;
+    float ghostFade;
+    bool phased;
+    public bool OverridesDrop => overrideDrop;
+    public ResourceType DropResource => dropResource;
+    /// <summary>出現したときの総 HP。</summary>
+    public int SpawnTotalHp => Mathf.Max(1, (spawnLevel - 1) * stepHp + spawnHp);
     /// <summary>マイルストーンのブロック種別。通常 0、装甲 1、再生 2、ボス 3。</summary>
     public int BreakKey
     {
@@ -266,6 +322,7 @@ public class BlockPiece : MonoBehaviour
         TickStumble();
         TickPlate();
         TickRegen();
+        TickGhost();
         if (reactTime < 0f) return;
 
         reactTime += Time.deltaTime;
@@ -336,6 +393,10 @@ public class BlockPiece : MonoBehaviour
         regenTimer = 0f;
         healTime = 0f;
         healPulse = 0f;
+        // 幽霊は出現ごとに周期をずらし、全員が同時に消えないようにする。
+        ghostClock = Ghosts ? Random.Range(0f, ghostSolidTime) : 0f;
+        ghostFade = 0f;
+        phased = false;
         half = worldSize.y * 0.5f;
         restScale = transform.localScale;
         slotLocal = transform.localPosition;
@@ -371,10 +432,14 @@ public class BlockPiece : MonoBehaviour
                 sprite.sharedMaterial = material;
         }
 
-        var collider = GetComponent<BoxCollider2D>();
+        // 当たり判定はプレハブのものを使う。丸い敵は CircleCollider2D、それ以外は四角。
+        var collider = GetComponent<Collider2D>();
         if (collider == null)
             collider = gameObject.AddComponent<BoxCollider2D>();
-        collider.size = Vector2.one;
+        if (collider is BoxCollider2D box)
+            box.size = Vector2.one;
+        else if (collider is CircleCollider2D circle)
+            circle.radius = 0.5f;
         collider.enabled = true;
         gameObject.layer = BlockSession.BlockLayer;
         CacheOutline();
@@ -405,6 +470,8 @@ public class BlockPiece : MonoBehaviour
     {
         if (!IsAlive || solid) return;
         if (session != null && !session.IsOnCamera(this)) return;
+        // すり抜けている幽霊には、レーザーしか当たらない。
+        if (phased && !HitsGhost(ballKind)) return;
 
         regenTimer = 0f;
         float scale = SkillTreeBonus.StrikeScale(this, fullStack);
@@ -456,6 +523,10 @@ public class BlockPiece : MonoBehaviour
             return;
 
         SoundManager.SE(SEType.BlockBreak);
+        if (Bursts && session != null)
+            session.QueueBurst(this);
+        if (Splits && session != null)
+            session.SpawnSplit(this);
         if (EffectManager.Inst != null)
         {
             EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
@@ -543,7 +614,7 @@ public class BlockPiece : MonoBehaviour
             CacheOutline();
 
         float width = Mathf.Max(0.0001f, sprite.sharedMaterial.GetFloat(OutlineWidthId));
-        bool liveOutline = regenDelay > 0f && IsAlive;
+        bool liveOutline = (regenDelay > 0f || Ghosts) && IsAlive;
         if (!liveOutline && propertyBlock != null && width == pushedWidth && spanX == pushedX && spanY == pushedY
             && flash == pushedFlash && fillColor == pushedFill && underColor == pushedUnder && faceSeed == pushedSeed
             && plateWhite == pushedPlate && ArmorSide() == pushedArmor)
@@ -560,8 +631,11 @@ public class BlockPiece : MonoBehaviour
         pushedArmor = ArmorSide();
         propertyBlock.Clear();
         propertyBlock.SetFloat(OutlineWidthId, width);
-        propertyBlock.SetVector(OutlineWidthXYId, new Vector4(width / spanX, width / spanY, 0f, 0f));
-        propertyBlock.SetVector(CellSpanId, new Vector4(spanX, spanY, 0f, 0f));
+        // 小さいゾンビは 1 マスより小さいので、ドットの格子もその大きさに合わせる。
+        float cellsWide = spanX * SizeScale;
+        float cellsHigh = spanY * SizeScale;
+        propertyBlock.SetVector(OutlineWidthXYId, new Vector4(width / cellsWide, width / cellsHigh, 0f, 0f));
+        propertyBlock.SetVector(CellSpanId, new Vector4(cellsWide, cellsHigh, 0f, 0f));
         // 壊せないブロックはレベルの色を使わず、マテリアルの色のままにする。
         if (!solid)
         {
@@ -575,6 +649,10 @@ public class BlockPiece : MonoBehaviour
         propertyBlock.SetFloat(SeedId, faceSeed);
         if (armorBottom)
             propertyBlock.SetFloat(ArmorSideId, ArmorSide());
+        if (splitSide != 0f)
+            propertyBlock.SetFloat(SplitSideId, splitSide);
+        if (Ghosts)
+            propertyBlock.SetFloat(GhostFadeId, ghostFade);
         if (regenDelay > 0f)
         {
             propertyBlock.SetFloat(RegenGlowId, RegenGlow());
@@ -874,6 +952,58 @@ public class BlockPiece : MonoBehaviour
         regenMark.localScale = regenMarkScale * scale;
         if (regenDelay > 0f && IsAlive)
             InvalidateFill();
+    }
+
+    /// <summary>
+    /// 幽霊の周期。実体 → すり抜け → 実体 をくり返す。すり抜けの間は当たり判定を切る。
+    /// 実体に戻るとき、ボールが中にいたら、抜けるまで待つ（ボールが埋まらないように）。
+    /// </summary>
+    void TickGhost()
+    {
+        if (!Ghosts || !IsAlive || breaking) return;
+
+        float dt = Time.deltaTime;
+        float cycle = GhostCycle;
+        ghostClock += dt;
+        if (ghostClock >= cycle)
+        {
+            if (phased && BallInside())
+                ghostClock = cycle;
+            else
+            {
+                ghostClock -= cycle;
+                if (phased)
+                    SetPhased(false);
+            }
+        }
+        else if (!phased && ghostClock >= ghostSolidTime)
+            SetPhased(true);
+
+        bool fading = ghostClock >= ghostSolidTime - GhostLead && ghostClock < cycle - GhostLead;
+        float target = phased && ghostClock >= cycle ? 1f : (fading ? 1f : 0f);
+        ghostFade = Mathf.MoveTowards(ghostFade, target, dt / GhostLead);
+        InvalidateFill();
+    }
+
+    void SetPhased(bool value)
+    {
+        phased = value;
+        var collider = GetComponent<Collider2D>();
+        if (collider != null)
+            collider.enabled = !value;
+    }
+
+    bool BallInside()
+    {
+        if (sprite == null) return false;
+        var bounds = sprite.bounds;
+        return Physics2D.OverlapBox(bounds.center, bounds.size, 0f, 1 << BlockSession.BallLayer) != null;
+    }
+
+    static bool HitsGhost(int ballKind)
+    {
+        return ballKind == (int)BlockBallKind.Laser || ballKind == (int)BlockBallKind.LaserRow
+            || ballKind == (int)BlockBallKind.Cross || ballKind == (int)BlockBallKind.AutoBeam;
     }
 
     void BindTraitMarks()

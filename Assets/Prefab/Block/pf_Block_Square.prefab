@@ -111,6 +111,17 @@ MonoBehaviour:
   bossIndex: -1
   armorBottom: 0
   regenDelay: 0
+  burstRadius: 0
+  burstDamageRate: 1
+  rewardScale: 1
+  splitInto: {fileID: 0}
+  splitCount: 2
+  splitHpRate: 0.4
+  sizeScale: 1
+  overrideDrop: 0
+  dropResource: 4
+  ghostSolidTime: 0
+  ghostPhaseTime: 1.6
   sprite: {fileID: 100004}
   plateMarks: []
   regenMark: {fileID: 0}

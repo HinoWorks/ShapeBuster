@@ -38,6 +38,14 @@ CBUFFER_START(UnityPerMaterial)
     float _RegenCharge;
     float _HealPulse;
     float _ArmorSide;
+    float _Bloat;
+    half4 _BoilColor;
+    float _Split;
+    half4 _StitchColor;
+    half4 _PatchTint;
+    float _SplitSide;
+    float _Ghost;
+    float _GhostFade;
 CBUFFER_END
 
 #define BLOCK_ZOMBIE_BROW

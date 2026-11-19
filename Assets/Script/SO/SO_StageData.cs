@@ -21,7 +21,7 @@ public class StageData
     public float blockResourceRate;
     /// <summary>出すボス。Resources/Boss のプレハブにある bossIndex と一致するものを使う。</summary>
     public int bossIndex;
-    /// <summary>正方形ブロックの出現重み。6種の合計が0なら、各プレハブの重みで出す。</summary>
+    /// <summary>正方形ブロックの出現重み。8種の合計が0なら、各プレハブの重みで出す。</summary>
     public int weightSquare;
     /// <summary>横長ブロックの出現重み。</summary>
     public int weightWide;
@@ -33,15 +33,24 @@ public class StageData
     public int weightArmor;
     /// <summary>再生するブロックの出現重み。</summary>
     public int weightRegen;
+    /// <summary>膨張（倒すと爆発する）ブロックの出現重み。</summary>
+    public int weightBloat;
+    /// <summary>分裂（倒すと小さいゾンビ 2 体に分かれる）ブロックの出現重み。</summary>
+    public int weightSplit;
+    /// <summary>幽霊（ときどきすり抜ける）ブロックの出現重み。</summary>
+    public int weightGhost;
 
     public bool HasBlockWeights =>
-        weightSquare + weightWide + weightTall + weightSolid + weightArmor + weightRegen > 0;
+        weightSquare + weightWide + weightTall + weightSolid + weightArmor + weightRegen + weightBloat + weightSplit + weightGhost > 0;
 
     public int WeightOf(BlockPiece prefab)
     {
         if (prefab == null || prefab.BossIndex >= 0) return 0;
         if (prefab.Regenerates) return weightRegen;
         if (prefab.ArmorsBottom) return weightArmor;
+        if (prefab.Bursts) return weightBloat;
+        if (prefab.Splits) return weightSplit;
+        if (prefab.Ghosts) return weightGhost;
         if (prefab.IsSolid) return weightSolid;
         if (prefab.CellsY > prefab.CellsX) return weightTall;
         if (prefab.CellsX > prefab.CellsY) return weightWide;

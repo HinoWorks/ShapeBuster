@@ -4,7 +4,7 @@
 // ゾンビの顔と腐敗。BlockLevelFill と BlockBossFill で共通。
 // 使う側の CBUFFER に次の値を宣言してから include する。
 // _DotScale, _Zombie, _Seed, _EyeColor, _MouthColor, _TeethColor, _RotColor, _RotAmount, _WoundColor,
-// _Regen, _PodColor, _PodDim, _VeinAmount, _RegenGlow, _RegenCharge, _HealPulse, _ArmorSide
+// _Regen, _PodColor, _PodDim, _VeinAmount, _RegenGlow, _RegenCharge, _HealPulse, _ArmorSide, _Bloat, _BoilColor, _Split, _StitchColor, _PatchTint, _SplitSide, _Ghost
 
 struct ZombieMask
 {
@@ -19,6 +19,12 @@ struct ZombieMask
     float podDark;
     float vein;
     float brow;
+    float boil;
+    float boilShade;
+    float sheen;
+    float seam;
+    float stitch;
+    float halfShade;
 };
 
 float Box(float2 p, float x0, float y0, float w, float h)
@@ -168,6 +174,53 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
     m.brow = brow * inFace * (1.0 - m.eye);
     m.mouth = mouth * inFace;
     m.teeth = teeth * inFace;
+    // 膨張：膿の粒を散らし、左上に丸みの光沢を置く。粒は顔の部品の上には出さない。
+    if (_Bloat > 0.5)
+    {
+        float parts = saturate(m.eye + m.shadow + m.mouth + m.teeth + m.brow);
+        float boil = step(0.93, Hash21(cell + _Seed * 7.3)) * (1.0 - parts);
+        float above = step(0.93, Hash21(cell + float2(0.0, 1.0) + _Seed * 7.3));
+        m.boil = boil;
+        m.boilShade = (1.0 - boil) * above * (1.0 - parts);
+        float2 q = (cell + 0.5) / max(total, 1.0);
+        m.sheen = step(length(q - float2(0.3, 0.74)), 0.1) * (1.0 - parts) * (1.0 - boil);
+        m.rot *= 0.5;
+    }
+
+    // 分裂：別の死体を縫い合わせた継ぎはぎ。
+    // 親（_SplitSide 0）は真ん中を縦に縫い、右半分を別の肌の色にする。
+    // 子（_SplitSide -1 が左、1 が右）は、切られた側の縁に縫い目が残り、右の子は全身が別の肌の色。
+    if (_Split > 0.5)
+    {
+        float inside = step(1.0, cell.y) * step(cell.y, total.y - 2.0);
+        // 縫い糸は 2 ドットおき。縫い目をまたぐ横向きの糸にする。
+        float stitchRow = step(abs(fmod(cell.y + floor(total.y * 0.5), 3.0) - 1.0), 0.25);
+        float dx;
+        if (abs(_SplitSide) < 0.5)
+        {
+            float col = floor(total.x * 0.5);
+            dx = cell.x - col;
+            m.halfShade = step(col + 0.5, cell.x);
+            m.stitch = step(abs(dx), 1.25) * stitchRow * inside;
+        }
+        else
+        {
+            // 子の縫い目は、輪郭のすぐ内側の列。糸は内側へ 1 ドットだけ伸びる。
+            float col = _SplitSide < 0.0 ? total.x - 2.0 : 1.0;
+            dx = cell.x - col;
+            m.halfShade = step(0.0, _SplitSide);
+            float toward = _SplitSide < 0.0 ? -dx : dx;
+            m.stitch = step(abs(dx), 0.25) * stitchRow * inside
+                + step(abs(toward - 1.0), 0.25) * stitchRow * inside;
+        }
+        m.seam = step(abs(dx), 0.25) * inside * (1.0 - m.stitch);
+        m.rot *= 0.5;
+    }
+
+    // 幽霊：腐敗と傷はほとんど出さない。
+    if (_Ghost > 0.5)
+        m.rot *= 0.3;
+
     // 顔の部品の上には傷を出さない。
     float face = saturate(m.eye + m.shadow + m.mouth + m.teeth + m.pod + m.vein + m.brow);
     m.wound *= 1.0 - face;
@@ -177,7 +230,18 @@ ZombieMask BuildZombie(float2 cell, float2 total, float2 cells)
 
 half3 ZombieColor(half3 color, ZombieMask m)
 {
+    // 膨張は肌を黄ばませる。
+    color = lerp(color, color * half3(1.12, 1.08, 0.62), saturate(_Bloat) * 0.6);
+    // 幽霊は肌を青白くする。HP の色の段が読めるよう、元の色も少し残す。
+    half grey = dot(color, half3(0.3, 0.55, 0.15));
+    color = lerp(color, grey * half3(0.8, 1.0, 1.15) + half3(0.18, 0.24, 0.3), saturate(_Ghost) * 0.6);
+    color = lerp(color, color * _PatchTint.rgb, m.halfShade);
     color = lerp(color, color * _RotColor.rgb, m.rot);
+    color = lerp(color, color * 0.25, m.seam);
+    color = lerp(color, _StitchColor.rgb, m.stitch);
+    color = lerp(color, color * 1.25 + 0.06, m.sheen);
+    color = lerp(color, color * 0.6, m.boilShade);
+    color = lerp(color, _BoilColor.rgb, m.boil);
     color = lerp(color, _WoundColor.rgb, m.wound);
     half3 veinColor = lerp(_PodDim.rgb, _PodColor.rgb, saturate(_RegenGlow) * 0.6);
     veinColor = lerp(veinColor, half3(1.0, 1.0, 1.0), saturate(_HealPulse) * 0.5);
@@ -185,7 +249,9 @@ half3 ZombieColor(half3 color, ZombieMask m)
     color = lerp(color, color * 0.55, m.shadow);
     color = lerp(color, _MouthColor.rgb, saturate(m.mouth + m.brow));
     color = lerp(color, _TeethColor.rgb, m.teeth);
-    color = lerp(color, _EyeColor.rgb, m.eye);
+    // 継ぎはぎの側の目は、白く濁った別人の目。
+    half3 eyeColor = lerp(_EyeColor.rgb, half3(0.92, 0.93, 0.88), m.halfShade * saturate(_Split));
+    color = lerp(color, eyeColor, m.eye);
     half3 podColor = lerp(_PodDim.rgb, _PodColor.rgb, saturate(_RegenGlow));
     podColor = lerp(podColor, _PodDim.rgb * 0.6, m.podDark);
     podColor = lerp(podColor, half3(1.0, 1.0, 1.0), m.podLight * 0.7);

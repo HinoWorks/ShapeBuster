@@ -34,6 +34,14 @@ Shader "ShapeBuster/BlockBossFill"
         [HideInInspector] _RegenCharge ("RegenCharge", Float) = 0
         [HideInInspector] _HealPulse ("HealPulse", Float) = 0
         [HideInInspector] _ArmorSide ("ArmorSide", Float) = 0
+        [HideInInspector] _Bloat ("Bloat", Float) = 0
+        [HideInInspector] _BoilColor ("BoilColor", Color) = (1, 0.7, 0.3, 1)
+        [HideInInspector] _Split ("Split", Float) = 0
+        [HideInInspector] _StitchColor ("StitchColor", Color) = (0.85, 0.8, 0.68, 1)
+        [HideInInspector] _PatchTint ("PatchTint", Color) = (1, 1, 1, 1)
+        [HideInInspector] _SplitSide ("SplitSide", Float) = 0
+        [HideInInspector] _Ghost ("Ghost", Float) = 0
+        [HideInInspector] _GhostFade ("GhostFade", Float) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex ("External Alpha", 2D) = "white" {}
