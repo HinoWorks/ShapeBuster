@@ -86,29 +86,31 @@ MonoBehaviour:
   - type: 100
     memo: BallLaunch
     clips:
-    - {fileID: 8300000, guid: 173a935f1675d40aaacbcf4d357a0d38, type: 3}
-    volume: 0.6
+    - {fileID: 8300000, guid: 23f4f2dab605545f29ab5e26c479aa59, type: 3}
+    volume: 0.31
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.04
     maxVoices: 3
   - type: 101
     memo: BlockHit
     clips:
-    - {fileID: 8300000, guid: 88ea454e84fd9486abf01dd7ab24a993, type: 3}
+    - {fileID: 8300000, guid: 0f4c51a0c5c7a4146ae80f3765aabd17, type: 3}
     volume: 0.5
     pitch: {x: 0.9, y: 1.1}
     minInterval: 0.03
     maxVoices: 4
   - type: 102
     memo: BlockHitCritical
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 0fa4e13332fd944ff861253175e4e9a0, type: 3}
     volume: 0.7
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.05
     maxVoices: 2
   - type: 103
     memo: BlockBreak
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: bed5023f28af948b28a484c5b49ae373, type: 3}
     volume: 0.8
     pitch: {x: 0.9, y: 1.1}
     minInterval: 0.04
