@@ -144,12 +144,6 @@ public class DataBase : MonoBehaviour
         }
     }
 
-    private async UniTask DataLoad_SoundData()
-    {
-        var loadData = await DataLoad("Sound");
-        var convData = CSVSerializer.Deserialize<SO_SoundElement>(loadData);
-        mSO_SoundData.SoundData_SE = convData;
-    }
 
 
 

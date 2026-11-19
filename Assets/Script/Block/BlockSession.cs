@@ -285,6 +285,7 @@ public class BlockSession : MonoBehaviour
         bossBreaking = piece;
         bossStopLeft = BossStopDuration;
         piece.HoldBreak();
+        SoundManager.SE(SEType.BossDefeat);
         StaticManager.ResetGameTime();
         Time.timeScale = 0f;
         if (CameraManager.Inst != null)
@@ -410,6 +411,7 @@ public class BlockSession : MonoBehaviour
             }
         }
         StopTurretShots();
+        SoundManager.SE(SEType.StageFail);
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Medium);
         Debug.Log("<color=yellow> ========= Deadline ========= </color>");
@@ -1482,6 +1484,7 @@ public class BlockSession : MonoBehaviour
             ball.Hold(launchAnchor);
             ball.SetFullStack(volleyFullStack);
             ball.Fly(shotDirection);
+            SoundManager.SE(SEType.BallLaunch);
             MilestoneRuntime.NotifyLaunch();
             volley = shotQueue.Count > 0;
             if (!volley)
@@ -1631,6 +1634,7 @@ public class BlockSession : MonoBehaviour
 
     public void Explode(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
     {
+        SoundManager.SE(SEType.Explosion);
         Vector2 point = SkillOrigin(source);
         float radius = cell * BallArea(BlockBallKind.Bomb, 2.5f);
         for (int i = pieces.Count - 1; i >= 0; i--)
@@ -1652,6 +1656,7 @@ public class BlockSession : MonoBehaviour
 
     public void Beam(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
     {
+        SoundManager.SE(SEType.Laser);
         float x = SkillOrigin(source).x;
         float pad = cell * 0.55f;
         for (int i = pieces.Count - 1; i >= 0; i--)
@@ -1667,6 +1672,7 @@ public class BlockSession : MonoBehaviour
 
     public void BeamRow(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
     {
+        SoundManager.SE(SEType.Laser);
         float y = SkillOrigin(source).y;
         float pad = cell * 0.55f;
         for (int i = pieces.Count - 1; i >= 0; i--)
@@ -1682,6 +1688,7 @@ public class BlockSession : MonoBehaviour
 
     public void BeamCross(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
     {
+        SoundManager.SE(SEType.Laser);
         Vector2 origin = SkillOrigin(source);
         float pad = cell * 0.55f;
         var upRight = new Vector2(0.70710678f, 0.70710678f);
@@ -1706,6 +1713,7 @@ public class BlockSession : MonoBehaviour
     public void Poison(BlockPiece source, int damage, bool fullStack = false)
     {
         if (poisons.Count >= PoisonCap) return;
+        SoundManager.SE(SEType.Poison);
 
         Vector2 point = SkillOrigin(source);
         float radius = cell * BallArea(BlockBallKind.Poison, 1.6f);
@@ -2082,6 +2090,8 @@ public class BlockSession : MonoBehaviour
         Place(prefab, x, 0, cellsX, cellsY, localLeft, localBottom);
         bossDue = false;
         bossSpawned = true;
+        SoundManager.SE(SEType.BossSpawn);
+        SoundManager.BGM(BGMType.Boss);
     }
 
     void SpawnOpeningRows()

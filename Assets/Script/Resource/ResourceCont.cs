@@ -138,6 +138,7 @@ public class ResourceCont : MonoBehaviour
             .OnComplete(() =>
             {
                 if (inPool) return;
+                SoundManager.SE(SEType.ResourceCollect);
                 GameEvent.UI.PublishResourceMod_Ingame(ResourceType, 1);
                 Release();
             });

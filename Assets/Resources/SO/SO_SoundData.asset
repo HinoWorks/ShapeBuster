@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a734d3a5b8f1847bab67af716edc988d, type: 3}
+  m_Name: SO_SoundData
+  m_EditorClassIdentifier: Assembly-CSharp::SO_SoundData
+  bgm:
+  - type: 1
+    memo: Title
+    clip: {fileID: 0}
+    volume: 0.7
+  - type: 2
+    memo: OutGame
+    clip: {fileID: 0}
+    volume: 0.7
+  - type: 3
+    memo: InGame
+    clip: {fileID: 0}
+    volume: 0.7
+  - type: 4
+    memo: Boss
+    clip: {fileID: 0}
+    volume: 0.7
+  - type: 5
+    memo: Result
+    clip: {fileID: 0}
+    volume: 0.7
+  se:
+  - type: 1
+    memo: UI_Click
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.04
+    maxVoices: 2
+  - type: 2
+    memo: UI_Hover
+    clips: []
+    volume: 0.5
+    pitch: {x: 1, y: 1}
+    minInterval: 0.04
+    maxVoices: 1
+  - type: 3
+    memo: UI_Cancel
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.04
+    maxVoices: 2
+  - type: 4
+    memo: UI_Purchase
+    clips: []
+    volume: 1
+    pitch: {x: 0.98, y: 1.02}
+    minInterval: 0.03
+    maxVoices: 3
+  - type: 5
+    memo: UI_PurchaseMax
+    clips: []
+    volume: 1
+    pitch: {x: 0.98, y: 1.02}
+    minInterval: 0.03
+    maxVoices: 3
+  - type: 6
+    memo: UI_PopupOpen
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.04
+    maxVoices: 2
+  - type: 7
+    memo: UI_Error
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.04
+    maxVoices: 2
+  - type: 100
+    memo: BallLaunch
+    clips:
+    - {fileID: 8300000, guid: 173a935f1675d40aaacbcf4d357a0d38, type: 3}
+    volume: 0.6
+    pitch: {x: 0.95, y: 1.05}
+    minInterval: 0.04
+    maxVoices: 3
+  - type: 101
+    memo: BlockHit
+    clips:
+    - {fileID: 8300000, guid: 88ea454e84fd9486abf01dd7ab24a993, type: 3}
+    volume: 0.5
+    pitch: {x: 0.9, y: 1.1}
+    minInterval: 0.03
+    maxVoices: 4
+  - type: 102
+    memo: BlockHitCritical
+    clips: []
+    volume: 0.7
+    pitch: {x: 0.95, y: 1.05}
+    minInterval: 0.05
+    maxVoices: 2
+  - type: 103
+    memo: BlockBreak
+    clips: []
+    volume: 0.8
+    pitch: {x: 0.9, y: 1.1}
+    minInterval: 0.04
+    maxVoices: 4
+  - type: 104
+    memo: ArmorDeflect
+    clips: []
+    volume: 0.7
+    pitch: {x: 0.92, y: 1.08}
+    minInterval: 0.05
+    maxVoices: 2
+  - type: 105
+    memo: RegenHeal
+    clips: []
+    volume: 0.6
+    pitch: {x: 0.95, y: 1.05}
+    minInterval: 0.1
+    maxVoices: 2
+  - type: 106
+    memo: Explosion
+    clips: []
+    volume: 0.7
+    pitch: {x: 0.95, y: 1.05}
+    minInterval: 0.06
+    maxVoices: 2
+  - type: 107
+    memo: Laser
+    clips: []
+    volume: 0.7
+    pitch: {x: 0.95, y: 1.05}
+    minInterval: 0.06
+    maxVoices: 2
+  - type: 108
+    memo: Poison
+    clips: []
+    volume: 0.7
+    pitch: {x: 0.95, y: 1.05}
+    minInterval: 0.06
+    maxVoices: 2
+  - type: 109
+    memo: ResourceCollect
+    clips: []
+    volume: 0.5
+    pitch: {x: 0.95, y: 1.15}
+    minInterval: 0.03
+    maxVoices: 3
+  - type: 110
+    memo: BossSpawn
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.5
+    maxVoices: 1
+  - type: 111
+    memo: BossDefeat
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.5
+    maxVoices: 1
+  - type: 112
+    memo: StageClear
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.5
+    maxVoices: 1
+  - type: 113
+    memo: StageFail
+    clips: []
+    volume: 1
+    pitch: {x: 1, y: 1}
+    minInterval: 0.5
+    maxVoices: 1

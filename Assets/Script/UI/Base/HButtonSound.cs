@@ -1,30 +1,29 @@
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>HButton に付けると、押したときとカーソルが乗ったときに効果音を鳴らす。None なら鳴らさない。</summary>
 public class HButtonSound : MonoBehaviour
 {
-    private HButton button;
-    [SerializeField] int index_SE_Click;
-    [SerializeField] int index_SE_Hover;
+    [SerializeField] SEType clickSE = SEType.UI_Click;
+    [SerializeField] SEType hoverSE = SEType.None;
+
+    HButton button;
+
     void Awake()
     {
-        button = this.GetComponent<HButton>();
-        button.onClick.AddListener(PlaySE_Click);
-        button.onMouseOver += PlaySE_Hover;
+        button = GetComponent<HButton>();
+        if (button == null) return;
+        button.onClick.AddListener(PlayClick);
+        button.onMouseOver += PlayHover;
     }
 
-
-    private void PlaySE_Hover(bool _isHover)
+    void PlayHover(bool isHover)
     {
-        if (_isHover)
-        {
-            SoundManager.Inst.PlaySE_UI(index_SE_Hover);
-        }
-    }
-    private void PlaySE_Click()
-    {
-        if (index_SE_Click < 0) return;
-        SoundManager.Inst.PlaySE_UI(index_SE_Click);
+        if (isHover)
+            SoundManager.SE(hoverSE);
     }
 
+    void PlayClick()
+    {
+        SoundManager.SE(clickSE);
+    }
 }

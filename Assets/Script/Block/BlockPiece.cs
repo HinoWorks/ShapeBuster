@@ -436,6 +436,7 @@ public class BlockPiece : MonoBehaviour
         UI_DamageNumberPool.Show(popupPoint, applied, ballKind, critical);
         if (level > 0)
         {
+            SoundManager.SE(critical ? SEType.BlockHitCritical : SEType.BlockHit);
             RefreshColor();
             PlayReact(false);
             return;
@@ -454,6 +455,7 @@ public class BlockPiece : MonoBehaviour
         if (BossIndex >= 0 && session != null && session.BeginBossDefeat(this))
             return;
 
+        SoundManager.SE(SEType.BlockBreak);
         if (EffectManager.Inst != null)
         {
             EffectManager.Inst.Rent(EffectType.BlockBreak, transform.position);
@@ -753,6 +755,7 @@ public class BlockPiece : MonoBehaviour
     void PlayPlateDeflect(Vector2 worldPoint)
     {
         plateFlash = 0.16f;
+        SoundManager.SE(SEType.ArmorDeflect);
         if (EffectManager.Inst == null) return;
 
         // 殻の外向きに火花を散らす。下の殻は下へ、左右の殻は当たった側へ。
@@ -854,6 +857,7 @@ public class BlockPiece : MonoBehaviour
         RefreshColor();
         healTime = HealPop;
         healPulse = 1f;
+        SoundManager.SE(SEType.RegenHeal);
         InvalidateFill();
         PushFill();
     }

@@ -506,8 +506,7 @@ public class UI_SkillTreeManager : MonoBehaviour
             }
 
             var isLevelMax = newLevel >= Mathf.Max(1, skillTreeUnit.skillTree.maxLevel);
-            if (SoundManager.Inst != null)
-                SoundManager.Inst.PlaySE(isLevelMax ? 127 : 120);
+            SoundManager.SE(isLevelMax ? SEType.UI_PurchaseMax : SEType.UI_Purchase);
 
             await skillTreeUnit.CallBack_Enhance();
             if (ui_skillTreeDetail != null && ui_skillTreeDetail.IsShowing(skillTreeUnit))
