@@ -29,7 +29,7 @@ Varyings UnlitVertex(Attributes input)
     Varyings output;
     output.positionCS = TransformObjectToHClip(input.positionOS);
     output.uv = input.uv;
-    // SpriteRenderer.color.a は、このブロックの現在レベルの残り割合。
+    // SpriteRenderer.color.a は、このブロックの残り HP の割合（出現したときの総 HP に対して）。
     output.fillRatio = saturate(input.color.a);
     return output;
 }

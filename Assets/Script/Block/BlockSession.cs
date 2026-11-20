@@ -349,7 +349,7 @@ public class BlockSession : MonoBehaviour
             * piece.RewardScale;
         int reward = StageEnemyScale.ScaleResourceCount(cells, rewardRate);
         if (reward > 0)
-            DropResources(point, reward);
+            DropResources(point, reward, ResourceType.AA, piece.IsChest);
     }
 
     int ScaleBreakCount(int count, ResourceType type)
@@ -364,8 +364,11 @@ public class BlockSession : MonoBehaviour
         return count;
     }
 
-    /// <summary>壊した位置へ資源を落とす。カーソルが触れるまで獲得にならない。</summary>
-    public void DropResources(Vector3 point, int count, ResourceType type = ResourceType.AA)
+    /// <summary>
+    /// 壊した位置へ資源を落とす。カーソルが触れるまで獲得にならない。
+    /// burst なら、壊した位置から周りへ弾け飛ばす（宝箱）。飛び終わるまでは拾えない。
+    /// </summary>
+    public void DropResources(Vector3 point, int count, ResourceType type = ResourceType.AA, bool burst = false)
     {
         var manager = EnemyGenerateManager.Inst;
         if (manager == null) return;
@@ -375,6 +378,9 @@ public class BlockSession : MonoBehaviour
 
         // 数が多いほど広く散らす。ひまわりの種の並び（黄金角）で置き、固まらないようにする。
         float radius = Mathf.Min(0.2f + 0.18f * Mathf.Sqrt(count - 1), 1.6f);
+        // 弾け飛ぶときは、勢いが見えるように少し遠くまで飛ばす。
+        if (burst)
+            radius = Mathf.Max(0.7f, radius * 1.3f);
         float turn = Random.value * Mathf.PI * 2f;
         float margin = 0.15f;
         for (int i = 0; i < count; i++)
@@ -390,7 +396,18 @@ public class BlockSession : MonoBehaviour
             }
             var spot = point + (Vector3)offset;
             spot.x = Mathf.Clamp(spot.x, fieldLeft + margin, fieldRight - margin);
-            manager.SpawnLooseResource(spot, type, BlockFallSpeed);
+            if (!burst)
+            {
+                manager.SpawnLooseResource(spot, type, BlockFallSpeed);
+                continue;
+            }
+
+            spot.y = Mathf.Clamp(spot.y, deadlineY + margin * 2f, ceilingY - margin * 2f);
+            // 遠くへ飛ぶものほど時間をかけ、弧も高くする。少しずつばらして、一斉に止まらないようにする。
+            float reach = offset.magnitude / Mathf.Max(0.01f, radius);
+            float duration = Mathf.Lerp(0.32f, 0.55f, reach) * Random.Range(0.9f, 1.1f);
+            float arc = Mathf.Lerp(0.25f, 0.7f, reach) * Random.Range(0.8f, 1.2f);
+            manager.SpawnBurstResource(point, spot, type, BlockFallSpeed, duration, arc);
         }
     }
 
@@ -1781,8 +1798,10 @@ public class BlockSession : MonoBehaviour
     {
         if (glass == null || !glass.ReleasesContents || formation == null) return;
 
-        int cellsX = glass.CellsX;
-        int cellsY = glass.CellsY;
+        // プレハブの大きさではなく、実際に置かれた大きさで並べる。
+        // 端で入りきらず 1×1 に縮めて置いたガラスから 2×2 分を出すと、壁の外へはみ出す。
+        int cellsX = glass.PlacedCellsX;
+        int cellsY = glass.PlacedCellsY;
         Vector3 center = glass.SlotLocalPosition;
         float left = center.x - cell * cellsX * 0.5f;
         float bottom = center.y - cell * cellsY * 0.5f;

@@ -127,7 +127,11 @@ public class UI_SkillTreeUnit : MonoBehaviour
         onClick_Enhance = clickEnhance;
         onUpdateNodeState = updateNodeState;
         if (button != null)
+        {
             button.onMouseOver += OnPointerEnter;
+            // 強化できたかどうかで音を変える（UI_SkillTreeManager.OnClick_Enhance）ので、押した音は鳴らさない。
+            button.ClickSE = SEType.None;
+        }
         RebindClick();
         if (obj_debug != null)
             obj_debug.SetActive(false);

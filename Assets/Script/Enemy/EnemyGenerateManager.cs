@@ -39,19 +39,30 @@ public class EnemyGenerateManager : MonoBehaviour
         }
     }
 
-    public void SpawnLooseResource(Vector3 origin, ResourceType resourceType, float fallSpeed = 1f)
+    /// <summary>
+    /// origin に出して、target へ弧を描いて弾け飛ばす（宝箱）。飛び終わるまでは拾えない。
+    /// </summary>
+    public void SpawnBurstResource(Vector3 origin, Vector3 target, ResourceType resourceType, float fallSpeed, float duration, float arc)
+    {
+        var resource = SpawnLooseResource(origin, resourceType, fallSpeed);
+        if (resource == null) return;
+        resource.Burst(target, duration, arc);
+    }
+
+    public ResourceCont SpawnLooseResource(Vector3 origin, ResourceType resourceType, float fallSpeed = 1f)
     {
         var resourceData = SOLoader.ResourceData != null
             ? SOLoader.ResourceData.GetResourceData(resourceType)
             : null;
         var prefab = resourceData != null ? resourceData.resourceCont : null;
-        if (prefab == null) return;
+        if (prefab == null) return null;
 
         var resource = RentResource(prefab);
         resource.Activate(origin, resourceType, fallSpeed);
         resource.transform.localScale = Vector3.one * 0.35f;
         resource.transform.DOScale(Vector3.one, 0.16f).SetEase(Ease.OutBack).SetTarget(resource.transform);
         resourceActive.Add(resource);
+        return resource;
     }
 
     public void Clear()

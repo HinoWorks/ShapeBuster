@@ -17,6 +17,8 @@ public class SoundManager : MonoBehaviour
     const int SourceCount = 16;
     const int MaxSimultaneousSE = 12;
     const float BGMFadeDuration = 0.6f;
+    // 曲から曲へつなぐときのクロスフェード（秒）。
+    const float TrackCrossfade = 2f;
 
     const string KeyMaster = "sound_master";
     const string KeyBGM = "sound_bgm";
@@ -39,12 +41,26 @@ public class SoundManager : MonoBehaviour
     float[] seBaseVolume;
     readonly System.Collections.Generic.Dictionary<SEType, float> lastPlayed = new();
 
-    // BGM は 2 つのソースを入れ替えてクロスフェードする。
+    // BGM は場面によらず同じ一覧（SO_SoundData の bgmTracks）からランダムに流し続ける。
+    // 曲の切り替えは 2 つのソースを入れ替えてクロスフェードする。場面が変わったときは音量だけ変える。
     AudioSource[] bgmSources;
+    float[] trackVolume = { 1f, 1f };
     int bgmFront;
+    int currentTrack = -1;
     BGMType currentBGM = BGMType.None;
-    float currentBGMVolume = 1f;
+    float sceneVolume = 1f;
+    // 曇り（ローパス）の今のカットオフ周波数。場面が変わると、音量と同じ時間でそこへ寄せる。
+    AudioLowPassFilter[] bgmFilters;
+    float bgmCutoff = NoMuffleCutoff;
+    const float NoMuffleCutoff = 22000f;
+    const string CutoffTweenId = "SoundManager.BgmCutoff";
     bool paused;
+    bool bgmStopped;
+    // 今の曲をどこまで聞いたか（秒）。
+    float trackHeard;
+
+    /// <summary>今の BGM の場面（音量を決める）。</summary>
+    public BGMType CurrentBGMScene => currentBGM;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void AutoCreate()
@@ -78,7 +94,20 @@ public class SoundManager : MonoBehaviour
         for (int i = 0; i < SourceCount; i++)
             seSources[i] = CreateSource(false);
 
-        bgmSources = new[] { CreateSource(true), CreateSource(true) };
+        // ローパスフィルターは同じ GameObject の音すべてに掛かるので、BGM は子の GameObject に分ける。
+        bgmSources = new AudioSource[2];
+        bgmFilters = new AudioLowPassFilter[2];
+        for (int i = 0; i < 2; i++)
+        {
+            var child = new GameObject("BGM_" + i);
+            child.transform.SetParent(transform, false);
+            bgmSources[i] = child.AddComponent<AudioSource>();
+            bgmSources[i].playOnAwake = false;
+            bgmSources[i].loop = false;
+            bgmSources[i].spatialBlend = 0f;
+            bgmFilters[i] = child.AddComponent<AudioLowPassFilter>();
+        }
+        ApplyCutoff();
         LoadSettings();
 
         // シーンのオブジェクトより先に作られるので、最初の状態通知（Title）から受け取れる。
@@ -104,7 +133,7 @@ public class SoundManager : MonoBehaviour
         return source;
     }
 
-    /// <summary>ゲームの状態に合わせて BGM を切り替える。</summary>
+    /// <summary>ゲームの状態に合わせて BGM の音量を変える（曲はそのまま）。</summary>
     void OnGameState(GameStateType state)
     {
         switch (state)
@@ -131,7 +160,7 @@ public class SoundManager : MonoBehaviour
         if (Inst != null) Inst.PlaySE(type, volumeScale, pitchScale);
     }
 
-    /// <summary>BGM を切り替える。同じ曲なら何もしない。</summary>
+    /// <summary>BGM の場面を変える。曲はそのままで、場面ごとの音量になる。</summary>
     public static void BGM(BGMType type)
     {
         if (Inst != null) Inst.PlayBGM(type);
@@ -209,41 +238,111 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #region -- BGM --
+    /// <summary>
+    /// BGM の場面を変える。曲は変えず、場面ごとの音量（SO_SoundData の bgm）へゆっくり寄せる。
+    /// 曲が流れていなければ、一覧からランダムに 1 曲選んで流し始める。
+    /// </summary>
     public void PlayBGM(BGMType type, float fadeDuration = BGMFadeDuration)
     {
-        if (type == currentBGM) return;
         var data = SOLoader.SoundData;
         var setting = data != null ? data.GetBGM(type) : null;
-        if (setting == null || setting.clip == null)
+        currentBGM = type;
+        sceneVolume = setting != null ? setting.volume : 1f;
+        bgmStopped = false;
+        FadeCutoff(setting != null ? setting.Cutoff : NoMuffleCutoff, fadeDuration);
+
+        var front = bgmSources[bgmFront];
+        if (currentTrack < 0 || front.clip == null)
         {
-            // 曲が未設定なら、今の曲を止めて無音にする。
-            StopBGM(fadeDuration);
-            currentBGM = type;
+            StartNextTrack(fadeDuration);
             return;
         }
+        front.DOKill();
+        front.DOFade(BGMTargetVolume(bgmFront), fadeDuration).SetUpdate(true);
+    }
 
-        currentBGM = type;
-        currentBGMVolume = setting.volume;
+    void FadeCutoff(float target, float duration)
+    {
+        DOTween.Kill(CutoffTweenId);
+        if (duration <= 0f || Mathf.Approximately(bgmCutoff, target))
+        {
+            bgmCutoff = target;
+            ApplyCutoff();
+            return;
+        }
+        // 周波数は耳には対数で聞こえるので、対数のまま動かす。
+        float from = Mathf.Log(bgmCutoff);
+        float to = Mathf.Log(target);
+        DOTween.To(() => 0f, t =>
+            {
+                bgmCutoff = Mathf.Exp(Mathf.Lerp(from, to, t));
+                ApplyCutoff();
+            }, 1f, duration)
+            .SetUpdate(true)
+            .SetId(CutoffTweenId);
+    }
 
+    void ApplyCutoff()
+    {
+        if (bgmFilters == null) return;
+        // 曇らせないときはフィルターを切って、処理を省く。
+        bool on = bgmCutoff < NoMuffleCutoff - 1f;
+        foreach (var filter in bgmFilters)
+        {
+            if (filter == null) continue;
+            filter.enabled = on;
+            filter.cutoffFrequency = bgmCutoff;
+        }
+    }
+
+    /// <summary>一覧から、今と違う曲をランダムに選んで、今の曲からクロスフェードする。</summary>
+    void StartNextTrack(float fadeDuration)
+    {
+        var data = SOLoader.SoundData;
+        int next = data != null ? data.PickBGMTrack(currentTrack) : -1;
         var outgoing = bgmSources[bgmFront];
-        bgmFront = 1 - bgmFront;
-        var incoming = bgmSources[bgmFront];
-
         outgoing.DOKill();
         if (outgoing.isPlaying)
             outgoing.DOFade(0f, fadeDuration).SetUpdate(true).OnComplete(outgoing.Stop);
+        currentTrack = next;
+        if (next < 0) return; // 曲が未設定なら無音。
 
+        var track = data.bgmTracks[next];
+        bgmFront = 1 - bgmFront;
+        var incoming = bgmSources[bgmFront];
         incoming.DOKill();
-        incoming.clip = setting.clip;
+        incoming.clip = track.clip;
+        trackVolume[bgmFront] = track.volume;
         incoming.volume = 0f;
+        incoming.time = 0f;
+        trackHeard = 0f;
         incoming.Play();
         if (paused) incoming.Pause();
-        incoming.DOFade(BGMTargetVolume(), fadeDuration).SetUpdate(true);
+        incoming.DOFade(BGMTargetVolume(bgmFront), fadeDuration).SetUpdate(true);
+    }
+
+    /// <summary>曲の終わりが近づいたら、次の曲へつなぐ。</summary>
+    void Update()
+    {
+        if (paused || bgmStopped || currentTrack < 0) return;
+        var front = bgmSources[bgmFront];
+        var clip = front.clip;
+        if (clip == null) return;
+        float crossfade = Mathf.Min(TrackCrossfade, clip.length * 0.25f);
+        float end = clip.length - crossfade;
+        // 止まっているだけ（音が出ない環境やエディタの一時停止）では次へ進めない。
+        // 終わりの近くまで聞いたあとに止まったときだけ、曲が終わったとみなす。
+        if (front.isPlaying)
+            trackHeard = Mathf.Max(trackHeard, front.time);
+        bool reachedEnd = front.time >= end || (!front.isPlaying && trackHeard >= end - 0.5f);
+        if (reachedEnd)
+            StartNextTrack(crossfade);
     }
 
     public void StopBGM(float fadeDuration = BGMFadeDuration)
     {
-        currentBGM = BGMType.None;
+        bgmStopped = true;
+        currentTrack = -1;
         foreach (var source in bgmSources)
         {
             source.DOKill();
@@ -253,19 +352,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    float BGMTargetVolume()
+    float BGMTargetVolume(int index)
     {
         if (Muted) return 0f;
-        return currentBGMVolume * VolumeMaster * VolumeBGM;
+        return trackVolume[index] * sceneVolume * VolumeMaster * VolumeBGM;
     }
 
     /// <summary>ポーズ画面などで BGM を一時停止する。</summary>
     public void SetPaused(bool value)
     {
         paused = value;
-        var front = bgmSources[bgmFront];
-        if (value) front.Pause();
-        else front.UnPause();
+        foreach (var source in bgmSources)
+        {
+            if (value) source.Pause();
+            else source.UnPause();
+        }
     }
     #endregion
 
@@ -294,7 +395,7 @@ public class SoundManager : MonoBehaviour
         // フェード中でなければ、今の BGM の音量をすぐ変える。
         var front = bgmSources[bgmFront];
         if (!DOTween.IsTweening(front))
-            front.volume = BGMTargetVolume();
+            front.volume = BGMTargetVolume(bgmFront);
 
         float seScale = Muted ? 0f : VolumeMaster * VolumeSE;
         for (int i = 0; i < seSources.Length; i++)

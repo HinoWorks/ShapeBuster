@@ -468,8 +468,13 @@ public class UI_SkillTreeManager : MonoBehaviour
     {
         if (currentState != state.Idling) return;
         if (skillTreeUnit == null || skillTreeUnit.skillTree == null || skillTreeUnit.skillTreeUnit == null) return;
-        if (skillTreeUnit.unlockState != SkillTreeUnlockState.EnhanceReady) return;
-        if (skillTreeUnit.level >= Mathf.Max(1, skillTreeUnit.skillTree.maxLevel)) return;
+        if (skillTreeUnit.unlockState != SkillTreeUnlockState.EnhanceReady
+            || skillTreeUnit.level >= Mathf.Max(1, skillTreeUnit.skillTree.maxLevel))
+        {
+            // 強化しきったスキルを押したとき。
+            SoundManager.SE(SEType.UI_Error);
+            return;
+        }
 
         var table = SOLoader.SkillTreeData;
         var costRow = table != null
@@ -483,7 +488,11 @@ public class UI_SkillTreeManager : MonoBehaviour
         skipCost |= debugUpgradeWithoutCost;
 #endif
         ConvertMine.Flush();
-        if (!skipCost && !StaticManager.IsResourceEnough(costs)) return;
+        if (!skipCost && !StaticManager.IsResourceEnough(costs))
+        {
+            SoundManager.SE(SEType.UI_Error);
+            return;
+        }
 
         currentState = state.Doing;
         bool spent = false;

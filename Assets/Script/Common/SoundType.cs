@@ -30,9 +30,14 @@ public enum SEType
     BossDefeat = 111,
     StageClear = 112,
     StageFail = 113,
+    /// <summary>ガラスに当たった（割れていないとき）。</summary>
+    GlassHit = 114,
 }
 
-/// <summary>BGM の種類。値はアセットに保存されるので、途中に挟まず末尾に足す。</summary>
+/// <summary>
+/// BGM の場面。曲は場面によらず同じ一覧から流し続け、場面ごとに音量だけを変える。
+/// 値はアセットに保存されるので、途中に挟まず末尾に足す。
+/// </summary>
 public enum BGMType
 {
     None = 0,

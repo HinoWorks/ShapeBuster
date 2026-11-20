@@ -14,6 +14,16 @@ public class ResourceCont : MonoBehaviour
     float linger;
     public bool isCollecting { get; private set; } = false;
 
+    // 弾け飛び（宝箱など）。物理を止めて、時間から位置を決める。終わったら普段の落下へ戻る。
+    Vector3 burstFrom;
+    Vector3 burstTo;
+    float burstArc;
+    float burstDuration;
+    float burstTime;
+    float burstDrift;
+    /// <summary>弾け飛んでいる最中。この間は拾えない。</summary>
+    public bool IsBursting => burstDuration > 0f;
+
     public ResourceType ResourceType { get; private set; }
     public ResourceCont SourcePrefab { get; private set; }
 
@@ -41,6 +51,7 @@ public class ResourceCont : MonoBehaviour
         ResourceType = resourceType;
         fallSpeed = Mathf.Max(0.01f, speed);
         linger = 0f;
+        burstDuration = 0f;
         gameObject.SetActive(true);
         transform.DOKill();
         transform.localScale = Vector3.one;
@@ -53,9 +64,56 @@ public class ResourceCont : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 今の位置から to へ弧を描いて飛ぶ。arc は弧の高さ（ワールド単位）。
+    /// 飛んでいる間もフィールドと一緒に下へ流れるので、着地点も同じだけ下がる。
+    /// </summary>
+    public void Burst(Vector3 to, float duration, float arc)
+    {
+        if (inPool) return;
+        burstFrom = transform.position;
+        burstTo = new Vector3(to.x, to.y, burstFrom.z);
+        burstArc = arc;
+        burstDuration = Mathf.Max(0.01f, duration);
+        burstTime = 0f;
+        burstDrift = 0f;
+        if (body != null)
+        {
+            body.linearVelocity = Vector2.zero;
+            body.simulated = false;
+        }
+    }
+
+    void TickBurst()
+    {
+        burstTime += Time.deltaTime;
+        burstDrift += fallSpeed * Time.deltaTime;
+        float t = Mathf.Clamp01(burstTime / burstDuration);
+        // 横は勢いよく飛び出して減速し、縦は山なりに上がってから着地点へ下りる。
+        float move = 1f - (1f - t) * (1f - t) * (1f - t);
+        var pos = Vector3.LerpUnclamped(burstFrom, burstTo, move);
+        pos.y += burstArc * 4f * t * (1f - t) - burstDrift;
+        transform.position = pos;
+        if (t < 1f) return;
+
+        burstDuration = 0f;
+        if (body != null)
+        {
+            body.simulated = true;
+            body.position = pos;
+            body.linearVelocity = Vector2.down * fallSpeed;
+        }
+    }
+
     void Update()
     {
-        if (inPool || isCollecting || !PointerWorld.IsInsidePlayfield) return;
+        if (inPool || isCollecting) return;
+        if (IsBursting)
+        {
+            TickBurst();
+            return;
+        }
+        if (!PointerWorld.IsInsidePlayfield) return;
 
         var player = SO_Player.Current;
         float range = player.pickupRange * (1f + SkillTreeBonus.BlockMagnetRate + MilestoneBonus.PickupRange);
@@ -66,7 +124,7 @@ public class ResourceCont : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (inPool || isCollecting || body == null) return;
+        if (inPool || isCollecting || IsBursting || body == null) return;
 
         var session = BlockSession.Inst;
         if (session != null)
@@ -107,6 +165,7 @@ public class ResourceCont : MonoBehaviour
         if (inPool || isCollecting) return;
 
         isCollecting = true;
+        burstDuration = 0f;
         if (body != null)
         {
             body.linearVelocity = Vector2.zero;
@@ -158,6 +217,7 @@ public class ResourceCont : MonoBehaviour
 
         inPool = true;
         isCollecting = false;
+        burstDuration = 0f;
         transform.DOKill();
         transform.localScale = Vector3.one;
         if (body != null)

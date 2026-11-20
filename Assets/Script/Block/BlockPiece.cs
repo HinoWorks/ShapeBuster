@@ -64,6 +64,8 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] float weight = 1f;
     [Tooltip("マス数による倍率に、さらに掛けるHP倍率")]
     [SerializeField] float hpScale = 1f;
+    [Tooltip("体の色。HP の量では変わらない。残り HP の割合だけ下から塗られ、減った分は透ける")]
+    [SerializeField] Color bodyColor = new Color(0.64f, 0.72f, 0.60f, 1f);
     [Tooltip("0以上ならボス。ステージSOの bossIndex と一致させる。通常ブロックは -1")]
     [SerializeField] int bossIndex = -1;
     [Tooltip("下の面から来た弾はダメージにならない。爆発、レーザー、毒は通る。")]
@@ -157,6 +159,10 @@ public class BlockPiece : MonoBehaviour
     public Vector3 PlacedScale => restScale;
     /// <summary>生成時のマス位置。つまずきで見た目がずれても、列の空き判定はここを使う。</summary>
     public Vector3 SlotLocalPosition => slotLocal;
+    /// <summary>実際に置かれた横のマス数。入りきらないときは CellsX より小さく置かれることがある。</summary>
+    public int PlacedCellsX => Mathf.Max(1, placedX);
+    /// <summary>実際に置かれた縦のマス数。</summary>
+    public int PlacedCellsY => Mathf.Max(1, placedY);
     public float PlacedLocalTop => slotLocal.y + restScale.y * 0.5f;
 
     /// <summary>
@@ -553,7 +559,11 @@ public class BlockPiece : MonoBehaviour
         UI_DamageNumberPool.Show(popupPoint, applied, ballKind, critical);
         if (level > 0)
         {
-            SoundManager.SE(critical ? SEType.BlockHitCritical : SEType.BlockHit);
+            // ガラスは専用の音。会心でもガラスの音にする。
+            if (ReleasesContents)
+                SoundManager.SE(SEType.GlassHit);
+            else
+                SoundManager.SE(critical ? SEType.BlockHitCritical : SEType.BlockHit);
             RefreshColor();
             PlayReact(false);
             return;
@@ -631,13 +641,13 @@ public class BlockPiece : MonoBehaviour
     {
         if (sprite == null) return;
 
-        float ratio = 1f;
-        if (!solid && barMax > 0)
-            ratio = Mathf.Clamp01((float)currentHp / barMax);
+        // 色は敵ごとに固定。塗る量は、出現したときの総 HP に対する残りの総 HP の割合。
+        float ratio = solid ? 1f : HpRatio;
         sprite.color = new Color(1f, 1f, 1f, ratio);
 
-        var nextFill = SO_BlockLevel.ColorFor(Mathf.Max(1, level));
-        var nextUnder = SO_BlockLevel.ColorFor(level - 1);
+        var nextFill = bodyColor;
+        nextFill.a = 1f;
+        var nextUnder = new Color(0f, 0f, 0f, 0f);
         if (nextFill != fillColor || nextUnder != underColor)
         {
             fillColor = nextFill;

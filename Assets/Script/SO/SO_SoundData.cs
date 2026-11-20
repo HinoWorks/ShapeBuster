@@ -26,14 +26,28 @@ public class SESetting
     }
 }
 
-/// <summary>BGM 1 曲分の設定。</summary>
+/// <summary>BGM の 1 曲。場面によらず、一覧からランダムに選んで流し続ける。</summary>
+[Serializable]
+public class BGMTrack
+{
+    public string memo;
+    public AudioClip clip;
+    [Tooltip("曲ごとの音量。曲どうしの大きさの差をそろえる")]
+    [Range(0f, 1f)] public float volume = 1f;
+}
+
+/// <summary>BGM の場面ごとの音量と曇り。音量は曲の音量に掛ける。</summary>
 [Serializable]
 public class BGMSetting
 {
     public BGMType type;
     public string memo;
-    public AudioClip clip;
     [Range(0f, 1f)] public float volume = 0.7f;
+    [Tooltip("曇り（ローパスフィルター）。0 で曇らない、1 でいちばんこもる。場面が変わると音量と一緒にゆっくり変わる")]
+    [Range(0f, 1f)] public float muffle;
+
+    /// <summary>曇りの量をローパスのカットオフ周波数（Hz）にする。0 は 22000Hz（掛けない）、1 は 400Hz。</summary>
+    public float Cutoff => Mathf.Exp(Mathf.Lerp(Mathf.Log(22000f), Mathf.Log(400f), Mathf.Clamp01(muffle)));
 }
 
 /// <summary>
@@ -43,6 +57,9 @@ public class BGMSetting
 [CreateAssetMenu(menuName = "SO/SoundData")]
 public class SO_SoundData : ScriptableObject
 {
+    [Tooltip("BGM の曲の一覧。場面によらず、ここからランダムに選んで流し続ける")]
+    public BGMTrack[] bgmTracks = Array.Empty<BGMTrack>();
+    [Tooltip("場面ごとの BGM の音量。場面が変わっても曲は変えず、音量だけをこの値へ寄せる")]
     public BGMSetting[] bgm = Array.Empty<BGMSetting>();
     public SESetting[] se = Array.Empty<SESetting>();
 
@@ -59,6 +76,21 @@ public class SO_SoundData : ScriptableObject
         }
         seMap.TryGetValue(type, out var setting);
         return setting;
+    }
+
+    /// <summary>
+    /// 次に流す曲の番号。音素材のある曲からランダムに選ぶ。2 曲以上あれば、今の曲（current）は避ける。
+    /// 曲がなければ -1。
+    /// </summary>
+    public int PickBGMTrack(int current)
+    {
+        if (bgmTracks == null) return -1;
+        var candidates = new List<int>();
+        for (int i = 0; i < bgmTracks.Length; i++)
+            if (bgmTracks[i] != null && bgmTracks[i].clip != null && i != current) candidates.Add(i);
+        if (candidates.Count == 0)
+            return current >= 0 && current < bgmTracks.Length && bgmTracks[current]?.clip != null ? current : -1;
+        return candidates[UnityEngine.Random.Range(0, candidates.Count)];
     }
 
     public BGMSetting GetBGM(BGMType type)
@@ -128,6 +160,9 @@ public class SO_SoundData : ScriptableObject
                 break;
             case SEType.BlockHit:
                 s.volume = 0.5f; s.minInterval = 0.03f; s.maxVoices = 4; s.pitch = new Vector2(0.9f, 1.1f);
+                break;
+            case SEType.GlassHit:
+                s.volume = 0.6f; s.minInterval = 0.04f; s.maxVoices = 3; s.pitch = new Vector2(0.92f, 1.1f);
                 break;
             case SEType.BlockHitCritical:
                 s.volume = 0.7f; s.minInterval = 0.05f; s.maxVoices = 2;

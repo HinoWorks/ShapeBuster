@@ -112,6 +112,7 @@ MonoBehaviour:
   solid: 0
   weight: 14
   hpScale: 1
+  bodyColor: {r: 0.754717, g: 0.6475731, b: 0.4805981, a: 1}
   bossIndex: -1
   armorBottom: 1
   regenDelay: 0

@@ -99,25 +99,40 @@ public class UI_ConvertPanel : MonoBehaviour
                 if (depositLabels != null && index < depositLabels.Length && depositLabels[index] != null
                     && index < ConvertMine.DepositAmounts.Length)
                     depositLabels[index].text = AmountLabel(ConvertMine.DepositAmounts[index]);
+                // 預けられたかどうかで音を変えるので、ボタンの押した音は鳴らさない。
+                button.ClickSE = SEType.None;
                 button.onClick.AddListener(() => OnDeposit(index));
             }
         }
 
         if (upgradeButton != null)
+        {
+            upgradeButton.ClickSE = SEType.None;
             upgradeButton.onClick.AddListener(OnUpgrade);
+        }
     }
 
     void OnDeposit(int index)
     {
         if (index < 0 || index >= ConvertMine.DepositAmounts.Length) return;
         if (ConvertMine.TryDeposit(ConvertMine.DepositAmounts[index]))
+        {
+            SoundManager.SE(SEType.UI_Purchase);
             Refresh();
+        }
+        else
+            SoundManager.SE(SEType.UI_Error);
     }
 
     void OnUpgrade()
     {
         if (ConvertMine.TryUpgradeSpeed())
+        {
+            SoundManager.SE(SEType.UI_Purchase);
             Refresh();
+        }
+        else
+            SoundManager.SE(SEType.UI_Error);
     }
 
     void Refresh()

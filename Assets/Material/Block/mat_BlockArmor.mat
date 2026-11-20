@@ -34,29 +34,46 @@ Material:
     m_Ints: []
     m_Floats:
     - _ArmorSide: 0
+    - _Bloat: 0
+    - _Chest: 0
+    - _ChestDamage: 0
     - _DotScale: 8
     - _DotSize: 0.784
     - _EnableExternalAlpha: 0
     - _Flash: 0
+    - _Ghost: 0
+    - _GhostFade: 0
+    - _Glass: 0
+    - _GlassCrack: 0
     - _HealPulse: 0
     - _OutlineWidth: 0.05
     - _PlateFlash: 0
+    - _PodCrack: 0
     - _Regen: 0
     - _RegenCharge: 0
     - _RegenGlow: 0
     - _RotAmount: 0.25
     - _Seed: 0
+    - _Split: 0
+    - _SplitSide: 0
     - _VeinAmount: 0.07
     - _Zombie: 0
     m_Colors:
+    - _BoilColor: {r: 0.9, g: 0.95, b: 0.34999996, a: 1}
     - _CellSpan: {r: 1, g: 1, b: 0, a: 0}
+    - _ChestLight: {r: 1, g: 0.95, b: 0.6, a: 1}
+    - _ChestMetal: {r: 1, g: 0.8, b: 0.29999998, a: 1}
+    - _ChestWood: {r: 0.54999995, g: 0.32999998, b: 0.17999998, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EyeColor: {r: 1, g: 0.45, b: 0.35, a: 1}
     - _FillColor: {r: 0.45, g: 0.62, b: 0.38, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _GlassInner: {r: 0.45, g: 0.62, b: 0.37999994, a: 1}
+    - _GlassTint: {r: 0.62, g: 0.86, b: 1, a: 0.45}
     - _MouthColor: {r: 0.07999996, g: 0.02, b: 0.03, a: 1}
-    - _OutlineColor: {r: 0.36, g: 0.23, b: 0.05, a: 1}
+    - _OutlineColor: {r: 0.46226418, g: 0.27554235, b: 0.0152634485, a: 1}
     - _OutlineWidthXY: {r: 0, g: 0, b: 0, a: 0}
+    - _PatchTint: {r: 0.95, g: 0.62, b: 0.95, a: 1}
     - _PodColor: {r: 0.54999995, g: 0.88, b: 1, a: 1}
     - _PodDim: {r: 0.09999997, g: 0.39999998, b: 0.95, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
@@ -64,6 +81,7 @@ Material:
     - _ShellColor: {r: 0.97999996, g: 0.78, b: 0.11999995, a: 1}
     - _ShellDark: {r: 0.3, g: 0.17, b: 0.03, a: 1}
     - _ShellLight: {r: 1, g: 0.96, b: 0.7, a: 1}
+    - _StitchColor: {r: 0.85, g: 0.8, b: 0.68, a: 1}
     - _TeethColor: {r: 0.86, g: 0.8, b: 0.62, a: 1}
     - _UnderColor: {r: 0, g: 0, b: 0, a: 0}
     - _WoundColor: {r: 0.41999996, g: 0.04, b: 0.059999965, a: 1}

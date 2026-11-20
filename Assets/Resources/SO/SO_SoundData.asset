@@ -12,31 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a734d3a5b8f1847bab67af716edc988d, type: 3}
   m_Name: SO_SoundData
   m_EditorClassIdentifier: Assembly-CSharp::SO_SoundData
+  bgmTracks:
+  - memo: 
+    clip: {fileID: 8300000, guid: fde5750b85bbc42438c7e60cc3fbd516, type: 3}
+    volume: 0.5
+  - memo: 
+    clip: {fileID: 8300000, guid: c8570b9385c1a47acbd1364b58c287b0, type: 3}
+    volume: 0.5
+  - memo: 
+    clip: {fileID: 8300000, guid: 2db10ad5042834e43a111a1f21479062, type: 3}
+    volume: 0.5
   bgm:
   - type: 1
     memo: Title
-    clip: {fileID: 0}
-    volume: 0.7
+    volume: 0.3
   - type: 2
     memo: OutGame
-    clip: {fileID: 0}
-    volume: 0.7
+    volume: 0.3
   - type: 3
     memo: InGame
-    clip: {fileID: 0}
-    volume: 0.7
+    volume: 0.6
   - type: 4
     memo: Boss
-    clip: {fileID: 0}
-    volume: 0.7
+    volume: 0.6
   - type: 5
     memo: Result
-    clip: {fileID: 0}
-    volume: 0.7
+    volume: 0.6
   se:
   - type: 1
     memo: UI_Click
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 88ea454e84fd9486abf01dd7ab24a993, type: 3}
     volume: 1
     pitch: {x: 1, y: 1}
     minInterval: 0.04
@@ -57,14 +63,17 @@ MonoBehaviour:
     maxVoices: 2
   - type: 4
     memo: UI_Purchase
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 22cd4101eb9a94d3da00f012a5263f2f, type: 3}
     volume: 1
     pitch: {x: 0.98, y: 1.02}
     minInterval: 0.03
     maxVoices: 3
   - type: 5
     memo: UI_PurchaseMax
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 22cd4101eb9a94d3da00f012a5263f2f, type: 3}
+    - {fileID: 8300000, guid: 6a716df23d7ba41e69138520288c5495, type: 3}
     volume: 1
     pitch: {x: 0.98, y: 1.02}
     minInterval: 0.03
@@ -87,14 +96,14 @@ MonoBehaviour:
     memo: BallLaunch
     clips:
     - {fileID: 8300000, guid: 23f4f2dab605545f29ab5e26c479aa59, type: 3}
-    volume: 0.31
+    volume: 0.2
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.04
     maxVoices: 3
   - type: 101
     memo: BlockHit
     clips:
-    - {fileID: 8300000, guid: 0f4c51a0c5c7a4146ae80f3765aabd17, type: 3}
+    - {fileID: 8300000, guid: 1199bdffb311e4a9e88fb5246bf6b900, type: 3}
     volume: 0.5
     pitch: {x: 0.9, y: 1.1}
     minInterval: 0.03
@@ -102,7 +111,7 @@ MonoBehaviour:
   - type: 102
     memo: BlockHitCritical
     clips:
-    - {fileID: 8300000, guid: 0fa4e13332fd944ff861253175e4e9a0, type: 3}
+    - {fileID: 8300000, guid: 1199bdffb311e4a9e88fb5246bf6b900, type: 3}
     volume: 0.7
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.05
@@ -110,35 +119,39 @@ MonoBehaviour:
   - type: 103
     memo: BlockBreak
     clips:
-    - {fileID: 8300000, guid: bed5023f28af948b28a484c5b49ae373, type: 3}
+    - {fileID: 8300000, guid: 1199bdffb311e4a9e88fb5246bf6b900, type: 3}
     volume: 0.8
     pitch: {x: 0.9, y: 1.1}
     minInterval: 0.04
     maxVoices: 4
   - type: 104
     memo: ArmorDeflect
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 0f4c51a0c5c7a4146ae80f3765aabd17, type: 3}
     volume: 0.7
     pitch: {x: 0.92, y: 1.08}
     minInterval: 0.05
     maxVoices: 2
   - type: 105
     memo: RegenHeal
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: a54c841eb95824525bc54cfb41f9947b, type: 3}
     volume: 0.6
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.1
     maxVoices: 2
   - type: 106
     memo: Explosion
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: b65806aa1c9594151b52f3045d6d99ca, type: 3}
     volume: 0.7
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.06
     maxVoices: 2
   - type: 107
     memo: Laser
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 849fb408ee1294abba613a59109bd5e4, type: 3}
     volume: 0.7
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.06
@@ -173,15 +186,25 @@ MonoBehaviour:
     maxVoices: 1
   - type: 112
     memo: StageClear
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: bc1b1b716b1c64a44a539de13ac94d0f, type: 3}
     volume: 1
     pitch: {x: 1, y: 1}
     minInterval: 0.5
     maxVoices: 1
   - type: 113
     memo: StageFail
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 10dce63f691104e93acb8a66fe895c72, type: 3}
     volume: 1
     pitch: {x: 1, y: 1}
     minInterval: 0.5
     maxVoices: 1
+  - type: 114
+    memo: GlassHit
+    clips:
+    - {fileID: 8300000, guid: c4c3a8d7bdb6b4ec3a82753361ca3468, type: 3}
+    volume: 0.6
+    pitch: {x: 0.92, y: 1.1}
+    minInterval: 0.04
+    maxVoices: 3

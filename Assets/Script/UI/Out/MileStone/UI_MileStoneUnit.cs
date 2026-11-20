@@ -27,7 +27,11 @@ public class UI_MileStoneUnit : MonoBehaviour
     {
         Resolve();
         if (button_claim != null)
+        {
+            // 受け取れたかどうかで音を変えるので、ボタンの押した音は鳴らさない。
+            button_claim.ClickSE = SEType.None;
             button_claim.onClick.AddListener(OnClickClaim);
+        }
     }
 
     void OnEnable()
@@ -80,7 +84,12 @@ public class UI_MileStoneUnit : MonoBehaviour
 
     void OnClickClaim()
     {
-        if (!MilestoneRuntime.TryClaim(milestoneId)) return;
+        if (!MilestoneRuntime.TryClaim(milestoneId))
+        {
+            SoundManager.SE(SEType.UI_Error);
+            return;
+        }
+        SoundManager.SE(SEType.UI_Purchase);
         Refresh();
     }
 
