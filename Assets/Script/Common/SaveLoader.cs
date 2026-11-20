@@ -164,6 +164,12 @@ public class SaveLoader : MonoBehaviour
     private const string KEY_MILESTONE_PROGRESS = "key_milestoneProgress";
     private bool milestoneLoadFailed;
     private bool milestoneSaveQueued;
+    private const string KEY_BESTIARY = "key_bestiary"; // ゾンビ図鑑
+    private bool bestiaryLoadFailed;
+    private bool bestiarySaveQueued;
+    private const string KEY_VACCINE = "key_vaccine"; // ゾンビワクチン
+    private bool vaccineLoadFailed;
+    private bool vaccineSaveQueued;
 
 
     #region -- resource data --
@@ -173,7 +179,6 @@ public class SaveLoader : MonoBehaviour
     private const string KEY_RESOURCE_DD = "key_resource_dd";
     private const string KEY_RESOURCE_EE = "key_resource_ee";
     private const string KEY_RESOURCE_FF = "key_resource_ff";
-    private const string KEY_RESOURCE_GG = "key_resource_gg";
     private BigInteger resourceAA;
     private BigInteger resourceBB;
 
@@ -181,7 +186,6 @@ public class SaveLoader : MonoBehaviour
     private BigInteger resourceDD;
     private BigInteger resourceEE;
     private BigInteger resourceFF;
-    private BigInteger resourceGG;
     /// <summary>
     /// メモリ上のリソース所持数を返す。
     /// </summary>
@@ -195,7 +199,6 @@ public class SaveLoader : MonoBehaviour
             case ResourceType.DD: return resourceDD;
             case ResourceType.EE: return resourceEE;
             case ResourceType.FF: return resourceFF;
-            case ResourceType.GG: return resourceGG;
             default: return 0;
         }
     }
@@ -256,6 +259,8 @@ public class SaveLoader : MonoBehaviour
     void OnDestroy()
     {
         MilestoneRuntime.Flush();
+        BestiaryRuntime.Flush();
+        VaccineRuntime.Flush();
         FlushQueue();
         if (Inst == this) Inst = null;
     }
@@ -268,6 +273,8 @@ public class SaveLoader : MonoBehaviour
         if (pause)
         {
             MilestoneRuntime.Flush();
+            BestiaryRuntime.Flush();
+            VaccineRuntime.Flush();
             FlushQueue();
         }
     }
@@ -278,6 +285,8 @@ public class SaveLoader : MonoBehaviour
     void OnApplicationQuit()
     {
         MilestoneRuntime.Flush();
+        BestiaryRuntime.Flush();
+        VaccineRuntime.Flush();
         FlushQueue();
     }
 
@@ -307,13 +316,15 @@ public class SaveLoader : MonoBehaviour
         resourceDD = LoadStoredResource(ResourceType.DD);
         resourceEE = LoadStoredResource(ResourceType.EE);
         resourceFF = LoadStoredResource(ResourceType.FF);
-        resourceGG = LoadStoredResource(ResourceType.GG);
 
         LoadArtifactBlockCount();
         LoadTutorialShown();
         LoadClearedStage();
         LoadMilestoneProgress();
         MilestoneRuntime.Bind();
+        LoadBestiary();
+        BestiaryRuntime.Bind();
+        LoadVaccine();
     }
 
 
@@ -603,7 +614,6 @@ public class SaveLoader : MonoBehaviour
             case ResourceType.DD: return KEY_RESOURCE_DD;
             case ResourceType.EE: return KEY_RESOURCE_EE;
             case ResourceType.FF: return KEY_RESOURCE_FF;
-            case ResourceType.GG: return KEY_RESOURCE_GG;
             default: return null;
         }
     }
@@ -620,7 +630,6 @@ public class SaveLoader : MonoBehaviour
             case ResourceType.DD: return ref resourceDD;
             case ResourceType.EE: return ref resourceEE;
             case ResourceType.FF: return ref resourceFF;
-            case ResourceType.GG: return ref resourceGG;
             default: throw new System.ArgumentOutOfRangeException(nameof(_resourceType));
         }
     }
@@ -1062,6 +1071,118 @@ public class SaveLoader : MonoBehaviour
         MilestoneProgress.MarkSaved(version);
         if (MilestoneProgress.IsDirty)
             Request_SaveMilestoneProgress();
+    }
+    #endregion
+
+
+    #region -- Bestiary --
+    /// <summary>
+    /// ゾンビ図鑑を読む。壊れているときは上書きしない。
+    /// </summary>
+    private void LoadBestiary()
+    {
+        bestiaryLoadFailed = false;
+        try
+        {
+            if (!ES3.KeyExists(KEY_BESTIARY))
+            {
+                BestiaryRuntime.Replace(null);
+                return;
+            }
+
+            var save = ES3.Load<BestiarySave>(KEY_BESTIARY);
+            if (save == null)
+            {
+                bestiaryLoadFailed = true;
+                Debug.LogError("Bestiary save is corrupt.");
+                return;
+            }
+            BestiaryRuntime.Replace(save);
+        }
+        catch (Exception exception)
+        {
+            bestiaryLoadFailed = true;
+            Debug.LogException(exception);
+        }
+    }
+
+    /// <summary>
+    /// 変化があればゾンビ図鑑を保存する。連続した要求は1回にまとめる。
+    /// </summary>
+    public void Request_SaveBestiary()
+    {
+        if (bestiaryLoadFailed || bestiarySaveQueued || !BestiaryRuntime.IsDirty) return;
+
+        bestiarySaveQueued = true;
+        EnqueueMethod(SaveBestiary);
+    }
+
+    private void SaveBestiary()
+    {
+        bestiarySaveQueued = false;
+        if (bestiaryLoadFailed || !BestiaryRuntime.IsDirty) return;
+
+        int version = BestiaryRuntime.EditVersion;
+        ES3.Save(KEY_BESTIARY, BestiaryRuntime.Capture());
+        BestiaryRuntime.MarkSaved(version);
+        if (BestiaryRuntime.IsDirty)
+            Request_SaveBestiary();
+    }
+    #endregion
+
+
+    #region -- Vaccine --
+    /// <summary>
+    /// ゾンビワクチンの進み具合を読む。壊れているときは上書きしない。
+    /// </summary>
+    private void LoadVaccine()
+    {
+        vaccineLoadFailed = false;
+        try
+        {
+            if (!ES3.KeyExists(KEY_VACCINE))
+            {
+                VaccineRuntime.Replace(null);
+                return;
+            }
+
+            var save = ES3.Load<VaccineSave>(KEY_VACCINE);
+            if (save == null)
+            {
+                vaccineLoadFailed = true;
+                Debug.LogError("Vaccine save is corrupt.");
+                return;
+            }
+            VaccineRuntime.Replace(save);
+        }
+        catch (Exception exception)
+        {
+            vaccineLoadFailed = true;
+            Debug.LogException(exception);
+        }
+    }
+
+    /// <summary>
+    /// 変化があればゾンビワクチンを保存する。連続した要求は1回にまとめる。
+    /// </summary>
+    public void Request_SaveVaccine()
+    {
+        if (vaccineLoadFailed || vaccineSaveQueued || !VaccineRuntime.IsDirty) return;
+
+        vaccineSaveQueued = true;
+        EnqueueMethod(SaveVaccine);
+    }
+
+    private void SaveVaccine()
+    {
+        vaccineSaveQueued = false;
+        if (vaccineLoadFailed || !VaccineRuntime.IsDirty) return;
+
+        int version = VaccineRuntime.EditVersion;
+        ES3.Save(KEY_VACCINE, VaccineRuntime.Capture());
+        VaccineRuntime.MarkSaved(version);
+        if (VaccineRuntime.IsDirty)
+            Request_SaveVaccine();
     }
     #endregion
 

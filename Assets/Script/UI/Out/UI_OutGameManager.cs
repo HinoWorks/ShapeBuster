@@ -9,6 +9,8 @@ public enum OutGame_MenuType
     SkillTree,
     MileStone,
     Convert,
+    Bestiary,
+    Vaccine,
 }
 
 public class UI_OutGameManager : MonoBehaviour
@@ -30,6 +32,12 @@ public class UI_OutGameManager : MonoBehaviour
 
     [SerializeField] UI_MileStoneManager ui_mileStoneManager;
     public UI_MileStoneManager UI_MileStoneManager => ui_mileStoneManager;
+
+    [SerializeField] UI_BestiaryManager ui_bestiaryManager;
+    [Tooltip("図鑑タブの「NEW」の印。発見して、まだ開いていない項目があるときに出す")]
+    [SerializeField] GameObject obj_bestiaryNew;
+
+    [SerializeField] UI_VaccineManager ui_vaccineManager;
 
     [SerializeField] UI_StageSelect ui_stageSelect;
     [SerializeField] UI_ConvertPanel convertPanel;
@@ -55,6 +63,11 @@ public class UI_OutGameManager : MonoBehaviour
         ui_skillTreeManager.Init_Once();
         if (ui_mileStoneManager != null)
             ui_mileStoneManager.Init_Once();
+        if (ui_bestiaryManager != null)
+            ui_bestiaryManager.Init_Once();
+        BestiaryRuntime.Changed.Subscribe(_ => RefreshBestiaryNew()).AddTo(this);
+        if (ui_vaccineManager != null)
+            ui_vaccineManager.Init_Once();
         convertPanel?.Setup();
         GameEvent.AchieveEvent.SkillTreeUnlock.Subscribe(_ =>
         {
@@ -88,7 +101,14 @@ public class UI_OutGameManager : MonoBehaviour
             ui_mileStoneManager.RefreshUnits();
 
         RefreshUnlockTabs();
+        RefreshBestiaryNew();
         ActiveTabChange(OutGame_MenuType.SkillTree);
+    }
+
+    void RefreshBestiaryNew()
+    {
+        if (obj_bestiaryNew != null)
+            obj_bestiaryNew.SetActive(BestiaryRuntime.HasUnseen);
     }
 
 
@@ -127,6 +147,7 @@ public class UI_OutGameManager : MonoBehaviour
         convertPanel?.RefreshUnlock();
         RefreshHeaderTab(OutGame_MenuType.MileStone, SkillTreeBonus.MilestoneUnlocked);
         RefreshHeaderTab(OutGame_MenuType.Convert, SkillTreeBonus.ConvertUnlocked);
+        RefreshHeaderTab(OutGame_MenuType.Vaccine, VaccineRuntime.Unlocked);
     }
 
     void RefreshHeaderTab(OutGame_MenuType menuType, bool open)
@@ -144,6 +165,8 @@ public class UI_OutGameManager : MonoBehaviour
             menuType = OutGame_MenuType.SkillTree;
         if (menuType == OutGame_MenuType.Convert && !SkillTreeBonus.ConvertUnlocked)
             menuType = OutGame_MenuType.SkillTree;
+        if (menuType == OutGame_MenuType.Vaccine && !VaccineRuntime.Unlocked)
+            menuType = OutGame_MenuType.SkillTree;
         if (currentState == menuType) return;
         currentState = menuType;
         foreach (var ui_outGameTab in ui_outGameTabs)
@@ -153,6 +176,10 @@ public class UI_OutGameManager : MonoBehaviour
 
         ui_skillTreeManager.Init(menuType == OutGame_MenuType.SkillTree);
         ui_mileStoneManager.Init(menuType == OutGame_MenuType.MileStone);
+        if (ui_bestiaryManager != null)
+            ui_bestiaryManager.Init(menuType == OutGame_MenuType.Bestiary);
+        if (ui_vaccineManager != null)
+            ui_vaccineManager.Init(menuType == OutGame_MenuType.Vaccine);
         if (convertPanel != null)
             convertPanel.Show(menuType == OutGame_MenuType.Convert);
     }

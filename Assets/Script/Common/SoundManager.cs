@@ -258,6 +258,9 @@ public class SoundManager : MonoBehaviour
         sceneVolume = setting != null ? setting.volume : 1f;
         bgmStopped = false;
         sceneCutoff = setting != null ? setting.Cutoff : NoMuffleCutoff;
+        // ワクチンを撒いたあとのタイトルは、こもりを外して少し明るく聞かせる。
+        if (type == BGMType.Title && VaccineRuntime.Cleared)
+            sceneCutoff = NoMuffleCutoff;
         FadeCutoff(TargetCutoff(), fadeDuration);
 
         var front = bgmSources[bgmFront];

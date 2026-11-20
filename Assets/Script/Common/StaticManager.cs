@@ -7,7 +7,8 @@ using DG.Tweening;
 public enum ResourceType
 {
 
-    AA, BB, CC, DD, EE, FF, GG
+    // GG は廃止（幽霊ゾンビは EE を落とす）。番号がずれるので、足すときは末尾に足す。
+    AA, BB, CC, DD, EE, FF
 }
 
 [Serializable]

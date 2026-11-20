@@ -40,13 +40,13 @@ public class EnemyGenerateManager : MonoBehaviour
     }
 
     /// <summary>
-    /// origin に出して、target へ弧を描いて弾け飛ばす（宝箱）。飛び終わるまでは拾えない。
+    /// origin に出して、target へ弧を描いて弾け飛ばす。collectable が false なら、飛び終わるまで拾えない。
     /// </summary>
-    public void SpawnBurstResource(Vector3 origin, Vector3 target, ResourceType resourceType, float fallSpeed, float duration, float arc)
+    public void SpawnBurstResource(Vector3 origin, Vector3 target, ResourceType resourceType, float fallSpeed, float duration, float arc, bool collectable)
     {
         var resource = SpawnLooseResource(origin, resourceType, fallSpeed);
         if (resource == null) return;
-        resource.Burst(target, duration, arc);
+        resource.Burst(target, duration, arc, collectable);
     }
 
     public ResourceCont SpawnLooseResource(Vector3 origin, ResourceType resourceType, float fallSpeed = 1f)

@@ -53,8 +53,9 @@ public enum SkillParamStat
 
     // == Convert ==
     ConvertUnlock = 51, // 1以上で Convert タブを出す
-    ConvertRate = 52, // 未使用。変換レートは固定で、速度だけがFで上がる
+    ConvertRate = 52, // 未使用。変換レートは固定で、速度だけが EE で上がる
     MilestoneUnlock = 60, // 1以上で Milestone タブを出す
+    VaccineLabUnlock = 66, // 1以上でワクチンのタブを出す。FF で開く不穏な一本道の先にある
 
     // == Player ==
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%
@@ -97,7 +98,6 @@ public class SkillTreeUnit
     public int cost_DD;
     public int cost_EE;
     public int cost_FF;
-    public int cost_GG;
 
     public int CostOf(ResourceType resourceType)
     {
@@ -109,7 +109,6 @@ public class SkillTreeUnit
             case ResourceType.DD: return cost_DD;
             case ResourceType.EE: return cost_EE;
             case ResourceType.FF: return cost_FF;
-            case ResourceType.GG: return cost_GG;
             default: return 0;
         }
     }
@@ -124,7 +123,6 @@ public class SkillTreeUnit
             new ResourceCount { resourceType = ResourceType.DD, requiredCount = cost_DD },
             new ResourceCount { resourceType = ResourceType.EE, requiredCount = cost_EE },
             new ResourceCount { resourceType = ResourceType.FF, requiredCount = cost_FF },
-            new ResourceCount { resourceType = ResourceType.GG, requiredCount = cost_GG },
         };
     }
 

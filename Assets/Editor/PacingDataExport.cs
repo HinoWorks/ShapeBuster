@@ -55,7 +55,7 @@ public static class PacingDataExport
                 + "\t" + b.paramTarget + "\t" + b.targetIndex + "\t" + b.paramStat + "\t" + b.deltaValue);
         foreach (var u in skill.skillTreeUnits)
             tsv.AppendLine("U\t" + u.skillTreeIndex + "\t" + u.level + "\t" + u.maxLevel + "\t" + u.cost_AA + "\t" + u.cost_BB
-                + "\t" + u.cost_CC + "\t" + u.cost_DD + "\t" + u.cost_EE + "\t" + u.cost_FF + "\t" + u.cost_GG);
+                + "\t" + u.cost_CC + "\t" + u.cost_DD + "\t" + u.cost_EE + "\t" + u.cost_FF);
         File.WriteAllText(Path.Combine(dir, "skills.tsv"), tsv.ToString());
 
         Debug.Log("進行計算用データを書き出しました: " + dir);

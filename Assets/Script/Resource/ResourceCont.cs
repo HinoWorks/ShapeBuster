@@ -21,7 +21,8 @@ public class ResourceCont : MonoBehaviour
     float burstDuration;
     float burstTime;
     float burstDrift;
-    /// <summary>弾け飛んでいる最中。この間は拾えない。</summary>
+    bool burstCollectable;
+    /// <summary>弾け飛んでいる最中。</summary>
     public bool IsBursting => burstDuration > 0f;
 
     public ResourceType ResourceType { get; private set; }
@@ -67,10 +68,12 @@ public class ResourceCont : MonoBehaviour
     /// <summary>
     /// 今の位置から to へ弧を描いて飛ぶ。arc は弧の高さ（ワールド単位）。
     /// 飛んでいる間もフィールドと一緒に下へ流れるので、着地点も同じだけ下がる。
+    /// collectable が false なら、飛び終わるまで拾えない（宝箱）。
     /// </summary>
-    public void Burst(Vector3 to, float duration, float arc)
+    public void Burst(Vector3 to, float duration, float arc, bool collectable)
     {
         if (inPool) return;
+        burstCollectable = collectable;
         burstFrom = transform.position;
         burstTo = new Vector3(to.x, to.y, burstFrom.z);
         burstArc = arc;
@@ -111,7 +114,7 @@ public class ResourceCont : MonoBehaviour
         if (IsBursting)
         {
             TickBurst();
-            return;
+            if (IsBursting && !burstCollectable) return;
         }
         if (!PointerWorld.IsInsidePlayfield) return;
 

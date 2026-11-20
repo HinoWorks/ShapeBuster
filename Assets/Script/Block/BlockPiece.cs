@@ -64,6 +64,8 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] float weight = 1f;
     [Tooltip("マス数による倍率に、さらに掛けるHP倍率")]
     [SerializeField] float hpScale = 1f;
+    [Tooltip("ゾンビ図鑑の id（SO_BestiaryData）。0 なら、ブロックの性質から決める")]
+    [SerializeField] int bestiaryId;
     [Tooltip("体の色。HP の量では変わらない。残り HP の割合だけ下から塗られ、減った分は透ける")]
     [SerializeField] Color bodyColor = new Color(0.64f, 0.72f, 0.60f, 1f);
     [Tooltip("0以上ならボス。ステージSOの bossIndex と一致させる。通常ブロックは -1")]
@@ -252,7 +254,8 @@ public class BlockPiece : MonoBehaviour
     public bool ArmorsBottom => armorBottom;
     /// <summary>膨張。倒すと周りを巻き込んで爆発する。</summary>
     public bool Bursts => burstRadius > 0f;
-    public float BurstRadius => Mathf.Max(0f, burstRadius);
+    /// <summary>爆発の半径（マス）。ゾンビ図鑑の研究で広がる。</summary>
+    public float BurstRadius => Mathf.Max(0f, burstRadius) * (1f + BestiaryBonus.BloatRadius);
     /// <summary>爆発のダメージ。出現したときの総 HP × burstDamageRate。</summary>
     public int BurstDamage => Mathf.Max(1, Mathf.RoundToInt(((spawnLevel - 1) * stepHp + spawnHp) * Mathf.Max(0f, burstDamageRate)));
     public float RewardScale => Mathf.Max(0f, rewardScale);
@@ -261,7 +264,8 @@ public class BlockPiece : MonoBehaviour
     public BlockPiece SplitInto => splitInto;
     public int SplitCount => Mathf.Max(0, splitCount);
     /// <summary>分裂した 1 体の総 HP。出現したときの総 HP × splitHpRate。</summary>
-    public int SplitHp => Mathf.Max(1, Mathf.RoundToInt(SpawnTotalHp * Mathf.Max(0f, splitHpRate)));
+    /// <remarks>ゾンビ図鑑の研究で減る。</remarks>
+    public int SplitHp => Mathf.Max(1, Mathf.RoundToInt(SpawnTotalHp * Mathf.Max(0f, splitHpRate) * (1f - BestiaryBonus.SplitHp)));
     public float SizeScale => Mathf.Clamp(sizeScale, 0.1f, 1f);
 
     /// <summary>分裂で出た子の向き。-1 が左の子、1 が右の子、0 は分裂の子ではない。縫い目を描く側が変わる。</summary>
@@ -273,7 +277,11 @@ public class BlockPiece : MonoBehaviour
     public bool Ghosts => ghostSolidTime > 0f;
     /// <summary>幽霊がすり抜けている最中。</summary>
     public bool Phased => phased;
-    float GhostCycle => ghostSolidTime + Mathf.Max(0.1f, ghostPhaseTime);
+    float GhostCycle => GhostSolidTime + Mathf.Max(0.1f, ghostPhaseTime);
+    /// <summary>実体でいる秒数。ゾンビ図鑑の研究で延びる。</summary>
+    float GhostSolidTime => ghostSolidTime * (1f + BestiaryBonus.GhostSolid);
+    /// <summary>再生が始まるまでの秒数。ゾンビ図鑑の研究で延びる。</summary>
+    float RegenWait => regenDelay * (1f + BestiaryBonus.RegenDelay);
     float ghostClock;
     float ghostFade;
     bool phased;
@@ -298,17 +306,35 @@ public class BlockPiece : MonoBehaviour
     public ResourceType DropResource => dropResource;
     /// <summary>出現したときの総 HP。</summary>
     public int SpawnTotalHp => Mathf.Max(1, (spawnLevel - 1) * stepHp + spawnHp);
-    /// <summary>マイルストーンのブロック種別。通常 0、装甲 1、再生 2、ボス 3。</summary>
-    public int BreakKey
+    /// <summary>
+    /// ゾンビ図鑑の id。プレハブで決めていなければ、ブロックの性質から決める。
+    /// 雑魚：1 ゾンビ、2 装甲、3 再生、4 膨張、5 分裂、6 幽霊、7 ガラス、8 宝箱、9 石。ボス：101 大ゾンビ、102 甲羅、103 再生。
+    /// </summary>
+    public int BestiaryId
     {
         get
         {
-            if (BossIndex >= 0) return 3;
-            if (ArmorsBottom) return 1;
-            if (Regenerates) return 2;
-            return 0;
+            if (bestiaryId > 0) return bestiaryId;
+            if (BossIndex >= 0)
+            {
+                if (Shelled) return 102;
+                if (BossHeals) return 103;
+                return 101;
+            }
+            if (solid) return 9;
+            if (chest) return 8;
+            if (ReleasesContents) return 7;
+            if (Ghosts) return 6;
+            if (Splits) return 5;
+            if (Bursts) return 4;
+            if (Regenerates) return 3;
+            if (ArmorsBottom) return 2;
+            return 1;
         }
     }
+    /// <summary>出てからの秒数（図鑑のボスの記録）。</summary>
+    public float AliveSeconds => Mathf.Max(0f, Time.time - spawnedAt);
+    float spawnedAt;
     public bool IsAlive { get; private set; }
     public bool IsSolid => solid;
     /// <summary>生成されてから、一度もダメージを受けていない。</summary>
@@ -443,7 +469,7 @@ public class BlockPiece : MonoBehaviour
         healTime = 0f;
         healPulse = 0f;
         // 幽霊は出現ごとに周期をずらし、全員が同時に消えないようにする。
-        ghostClock = Ghosts ? Random.Range(0f, ghostSolidTime) : 0f;
+        ghostClock = Ghosts ? Random.Range(0f, GhostSolidTime) : 0f;
         ghostFade = 0f;
         phased = false;
         shellOpen = 0;
@@ -456,6 +482,10 @@ public class BlockPiece : MonoBehaviour
         slotLocal = transform.localPosition;
         stumblePeriod = Random.Range(0.95f, 1.55f);
         faceSeed = Random.value;
+        spawnedAt = Time.time;
+        // 倒せない石は、画面に出たときに図鑑で発見とする。
+        if (solid)
+            BestiaryRuntime.NotifySeen(BestiaryId);
         stumbleClock = Random.Range(0f, stumblePeriod);
         hold = 0f;
         stumblePhase = StumbleWalk;
@@ -506,9 +536,16 @@ public class BlockPiece : MonoBehaviour
     /// <summary>当たった位置。下シールドは下端、左右シールドは左右の端をダメージにしない。ballKind は BlockBallKind。不明なら -1。</summary>
     public bool HitFrom(int damage, Vector2 worldPoint, int ballKind = -1, bool critical = false, bool fullStack = false)
     {
+        // ボールが直接当たった回数を、石の図鑑で数える。
+        if (solid && IsAlive)
+            BestiaryRuntime.NotifyHit(BestiaryId);
         if (RejectsArmor(worldPoint))
         {
             PlayPlateDeflect(worldPoint);
+            // ゾンビ図鑑の研究：殻に当たっても、ダメージの一部が本体に通る。
+            float pierce = BestiaryBonus.ArmorPierce;
+            if (pierce > 0f)
+                ApplyHit(Mathf.Max(1, Mathf.RoundToInt(damage * pierce)), ballKind, critical, worldPoint, fullStack);
             return false;
         }
 
@@ -578,7 +615,8 @@ public class BlockPiece : MonoBehaviour
             session.GrantBreakResource(this, transform.position, rewardCells);
 
         if (!noDrop)
-            MilestoneRuntime.NotifyBlockBroken(BreakKey);
+            MilestoneRuntime.NotifyBlockBroken();
+        BestiaryRuntime.NotifyKill(this);
         session.NotifyBroken(this);
         if (BossIndex >= 0 && session != null && session.BeginBossDefeat(this))
             return;
@@ -971,7 +1009,7 @@ public class BlockPiece : MonoBehaviour
         }
 
         regenTimer += Time.deltaTime;
-        if (regenTimer < regenDelay) return;
+        if (regenTimer < RegenWait) return;
 
         regenTimer = 0f;
         RestoreStep();
@@ -982,7 +1020,7 @@ public class BlockPiece : MonoBehaviour
         if (BossHeals)
             return MissingDurability() ? Mathf.Clamp01(bossHealClock / bossHealTime) : 0f;
         if (regenDelay <= 0f || !MissingDurability()) return 0f;
-        return Mathf.Clamp01(regenTimer / regenDelay);
+        return Mathf.Clamp01(regenTimer / RegenWait);
     }
 
     bool MissingDurability()
@@ -1059,10 +1097,10 @@ public class BlockPiece : MonoBehaviour
                     SetPhased(false);
             }
         }
-        else if (!phased && ghostClock >= ghostSolidTime)
+        else if (!phased && ghostClock >= GhostSolidTime)
             SetPhased(true);
 
-        bool fading = ghostClock >= ghostSolidTime - GhostLead && ghostClock < cycle - GhostLead;
+        bool fading = ghostClock >= GhostSolidTime - GhostLead && ghostClock < cycle - GhostLead;
         float target = phased && ghostClock >= cycle ? 1f : (fading ? 1f : 0f);
         ghostFade = Mathf.MoveTowards(ghostFade, target, dt / GhostLead);
         InvalidateFill();

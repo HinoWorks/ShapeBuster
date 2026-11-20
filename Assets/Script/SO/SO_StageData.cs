@@ -64,7 +64,8 @@ public class StageData
         if (prefab.Splits) return weightSplit;
         if (prefab.Ghosts) return weightGhost;
         if (prefab.ReleasesContents) return weightGlass;
-        if (prefab.IsChest) return weightChest;
+        // ゾンビ図鑑の研究で、宝箱が出やすくなる。
+        if (prefab.IsChest) return Mathf.RoundToInt(weightChest * (1f + BestiaryBonus.ChestWeight));
         if (prefab.IsSolid) return weightSolid;
         if (prefab.CellsY > prefab.CellsX) return weightTall;
         if (prefab.CellsX > prefab.CellsY) return weightWide;

@@ -5,7 +5,7 @@ using System.Numerics;
 /// <summary>マイルストーンが数える累計。BestDamage、BestClearMillis、ClaimedTier は内部記録で、シートの行には書かない。</summary>
 public enum MilestoneTrack
 {
-    BlockBreak = 0, //そのブロックの破壊数。trackKey は通常 0、装甲 1、再生 2、ボス 3
+    BlockBreak = 0, //使わない。種類ごとの撃破数はゾンビ図鑑へ移した。値はアセットに残るので消さない
     TotalDefeat = 1, //壊したブロックの合計
     TotalDamage = 2, //与えたダメージの合計
     BallDamage = 3, //そのボールの与ダメージ。trackKey は BlockBallKind。直撃に爆風、レーザー、衛星、沼を含む
@@ -13,7 +13,7 @@ public enum MilestoneTrack
     ClearCount = 5, //クリア回数
     StageClearCount = 6, //そのステージのクリア回数。trackKey はステージ index
     PlayCount = 7, //プレイ回数。クリアした回も1プレイに含む
-    ResourceGained = 8, //そのリソースの獲得数。trackKey は AA=0 … GG=6
+    ResourceGained = 8, //そのリソースの獲得数。trackKey は AA=0 … FF=5
     CriticalCount = 9, //クリティカルが出た回数
     LaunchCount = 10, //ボールを放った回数
     ReturnCount = 11, //デッドライン下へ戻った回数

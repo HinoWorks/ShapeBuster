@@ -106,10 +106,9 @@ public static class MilestoneRuntime
             Add(MilestoneTrack.BallDamage, info.attackIndex, amount);
     }
 
-    public static void NotifyBlockBroken(int kind)
+    /// <summary>ブロックを倒した。種類ごとの撃破数はゾンビ図鑑（BestiaryRuntime）が数える。</summary>
+    public static void NotifyBlockBroken()
     {
-        if (kind >= 0)
-            Add(MilestoneTrack.BlockBreak, kind, BigInteger.One);
         Add(MilestoneTrack.TotalDefeat, 0, BigInteger.One);
     }
 

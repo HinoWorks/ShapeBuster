@@ -36,6 +36,7 @@ public class DataBase : MonoBehaviour
     [SerializeField] SO_MilestoneData mSO_MilestoneData;
     [SerializeField] SO_Locale mSO_Locale;
     [SerializeField] SO_BallData mSO_BallData;
+    [SerializeField] SO_BestiaryData mSO_BestiaryData;
     public async UniTask LoadData()
     {
         //await DataLoad_CursorUnitData();
@@ -44,6 +45,7 @@ public class DataBase : MonoBehaviour
         await DataLoad_MilestoneData();
         await DataLoad_Locale();
         await DataLoad_BallData();
+        await DataLoad_BestiaryData();
 
 #if UNITY_EDITOR
         Debug.Log($"<color=yellow>End Master Data update!</color>");
@@ -58,6 +60,8 @@ public class DataBase : MonoBehaviour
             EditorUtility.SetDirty(mSO_Locale);
         if (mSO_BallData != null)
             EditorUtility.SetDirty(mSO_BallData);
+        if (mSO_BestiaryData != null)
+            EditorUtility.SetDirty(mSO_BestiaryData);
         Loc.Reload();
 
         // -- save --
@@ -126,6 +130,21 @@ public class DataBase : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogWarning($"Ball の読み込みをスキップしました。{e.Message}");
+        }
+    }
+
+    private async UniTask DataLoad_BestiaryData()
+    {
+        if (mSO_BestiaryData == null) return;
+
+        try
+        {
+            var loadData = await DataLoad("Bestiary");
+            mSO_BestiaryData.ApplyImported(CSVSerializer.Deserialize<BestiaryData>(loadData));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Bestiary の読み込みをスキップしました。{e.Message}");
         }
     }
 

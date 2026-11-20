@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// UI_Convert の参照を ConvertMine につなぐ。
@@ -17,6 +18,10 @@ public class UI_ConvertPanel : MonoBehaviour
     [SerializeField] HButton[] depositButtons;
     [SerializeField] TMP_Text[] depositLabels;
     [SerializeField] HButton upgradeButton;
+    [Tooltip("速度を上げる値段（EE の数）")]
+    [SerializeField] TMP_Text upgradeCostLabel;
+    [Tooltip("速度を上げる値段の資源アイコン。SO_ResourceData の EE の絵を入れる")]
+    [SerializeField] Image upgradeCostIcon;
 
     CanvasGroup group;
     bool wired;
@@ -158,6 +163,14 @@ public class UI_ConvertPanel : MonoBehaviour
 
         if (upgradeButton != null)
             upgradeButton.Set_Interactable(ConvertMine.CanUpgradeSpeed());
+        if (upgradeCostLabel != null)
+            upgradeCostLabel.text = ConvertMine.SpeedLevel >= ConvertMine.MaxLevel ? "MAX" : ConvertMine.UpgradeCost.ToString("N0");
+        if (upgradeCostIcon != null)
+        {
+            var data = SOLoader.ResourceData != null ? SOLoader.ResourceData.GetResourceData(ConvertMine.UpgradeResource) : null;
+            if (data != null && data.icon != null)
+                upgradeCostIcon.sprite = data.icon;
+        }
     }
 
     static int NextSpeed()

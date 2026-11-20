@@ -109,6 +109,7 @@ MonoBehaviour:
   solid: 0
   weight: 10
   hpScale: 1
+  bestiaryId: 6
   bodyColor: {r: 0.56814075, g: 0.6132076, b: 0.54668033, a: 1}
   bossIndex: -1
   armorBottom: 0
@@ -121,7 +122,7 @@ MonoBehaviour:
   splitHpRate: 0.4
   sizeScale: 1
   overrideDrop: 1
-  dropResource: 6
+  dropResource: 4
   ghostSolidTime: 3
   ghostPhaseTime: 2
   contents: {fileID: 0}

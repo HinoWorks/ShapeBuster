@@ -112,6 +112,19 @@ public static class SOLoader
         }
     }
 
+    private static SO_BestiaryData so_bestiaryData;
+    public static SO_BestiaryData BestiaryData
+    {
+        get
+        {
+            if (so_bestiaryData == null)
+            {
+                so_bestiaryData = LoadSO<SO_BestiaryData>(pathBase + nameof(SO_BestiaryData));
+            }
+            return so_bestiaryData;
+        }
+    }
+
     private static SO_SoundData so_soundData;
     public static SO_SoundData SoundData
     {

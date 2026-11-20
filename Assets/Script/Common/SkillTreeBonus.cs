@@ -56,6 +56,8 @@ public static class SkillTreeBonus
     public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
     public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
     public static bool MilestoneUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.MilestoneUnlock) >= 1f;
+    /// <summary>ワクチンのタブを出す（スキルツリーの「ワクチン研究所」）。</summary>
+    public static bool VaccineLabUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.VaccineLabUnlock) >= 1f;
     public static bool OwnsTurret => Sum(SkillParamTarget.Player, SkillParamStat.TurretUnlock) >= 1f;
     public static bool OwnsRowBeam => Sum(SkillParamTarget.Player, SkillParamStat.RowBeamUnlock) >= 1f;
     public static float TurretDamageRate => Mathf.Max(0f, Sum(SkillParamTarget.Player, SkillParamStat.TurretDamage));
@@ -94,6 +96,14 @@ public static class SkillTreeBonus
             scale *= 1f + LastAttackRate;
         if (fullStack)
             scale *= 1f + FullStackRate;
+        // ゾンビ図鑑の研究：普通のゾンビとガラスへのダメージ。
+        if (piece != null)
+        {
+            if (piece.BestiaryId == 1)
+                scale *= 1f + BestiaryBonus.NormalDamage;
+            else if (piece.ReleasesContents)
+                scale *= 1f + BestiaryBonus.GlassDamage;
+        }
         return scale;
     }
 
@@ -131,7 +141,8 @@ public static class SkillTreeBonus
     {
         float normal = (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFlatDamage)))
             * (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallDamageRate)))
-            * (1f + MilestoneBonus.BallDamageRate);
+            * (1f + MilestoneBonus.BallDamageRate)
+            * (1f + BestiaryBonus.AllDamage);
         float ratio = BaseDamageRate(kind);
         if (kind == BlockBallKind.Normal)
             return normal * ratio * (1f + MilestoneBonus.KindDamage(kind));

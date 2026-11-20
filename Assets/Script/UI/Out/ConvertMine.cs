@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// AAを時間をかけてDへ換える。Dはここ以外では増えない。
-/// レートは固定で、Fを1つ払うと速度が1段上がる。変換中は速度を上げられない。
+/// レートは固定で、EE を払うと速度が1段上がる（値段は段ごとに増える）。変換中は速度を上げられない。
 /// </summary>
 public static class ConvertMine
 {
@@ -23,6 +23,11 @@ public static class ConvertMine
         80000, 100000, 124000, 164000, 228000, 320000, 480000, 640000, 820000,
         1280000
     };
+
+    /// <summary>速度を上げる値段。0段→1段が UpgradeCostBase 個で、1段ごとに UpgradeCostGrowth 倍。仮の値。</summary>
+    public const ResourceType UpgradeResource = ResourceType.EE;
+    const int UpgradeCostBase = 3;
+    const double UpgradeCostGrowth = 1.18;
 
     const string KeyDeposited = "shapebuster.convert.deposited";
     const string KeyCredit = "shapebuster.convert.credit";
@@ -82,13 +87,30 @@ public static class ConvertMine
     {
         EnsureLoaded();
         if (speedLevel >= MaxLevel || deposited > 0) return false;
-        return SaveLoader.Inst != null && SaveLoader.Inst.Get_ResourceCount(ResourceType.FF) >= 1;
+        return SaveLoader.Inst != null && SaveLoader.Inst.Get_ResourceCount(UpgradeResource) >= UpgradeCost;
+    }
+
+    /// <summary>今の段から次の段へ上げる値段（EE）。最大の段なら 0。</summary>
+    public static int UpgradeCost
+    {
+        get
+        {
+            EnsureLoaded();
+            return CostOfLevel(speedLevel);
+        }
+    }
+
+    /// <summary>level 段から level+1 段へ上げる値段。</summary>
+    public static int CostOfLevel(int level)
+    {
+        if (level < 0 || level >= MaxLevel) return 0;
+        return Mathf.Max(1, (int)System.Math.Round(UpgradeCostBase * System.Math.Pow(UpgradeCostGrowth, level)));
     }
 
     public static bool TryUpgradeSpeed()
     {
         if (!CanUpgradeSpeed() || SaveLoader.Inst == null) return false;
-        SaveLoader.Inst.Request_SaveResource(ResourceType.FF, -1);
+        SaveLoader.Inst.Request_SaveResource(UpgradeResource, -UpgradeCost);
         speedLevel++;
         Save();
         return true;

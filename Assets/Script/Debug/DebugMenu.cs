@@ -310,10 +310,6 @@ public static class DebugMenu
         public void Fを足す() => Grant(ResourceType.FF);
 
         [Category("リソース")]
-        [SRDebugger.Sort(7)]
-        public void Gを足す() => Grant(ResourceType.GG);
-
-        [Category("リソース")]
         [SRDebugger.Sort(8)]
         public void 全種類を足す()
         {
@@ -323,7 +319,6 @@ public static class DebugMenu
             Grant(ResourceType.DD);
             Grant(ResourceType.EE);
             Grant(ResourceType.FF);
-            Grant(ResourceType.GG);
         }
 
         [Category("リソース")]

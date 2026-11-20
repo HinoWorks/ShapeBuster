@@ -531,12 +531,6 @@ MonoBehaviour:
   - key: milestone.40005.bonus
     ja: "AA\u306E\u5165\u624B"
     en: AA Gain
-  - key: milestone.40006.title
-    ja: "GG\u306E\u7372\u5F97"
-    en: Total GG Gained
-  - key: milestone.40006.bonus
-    ja: "AA\u306E\u5165\u624B"
-    en: AA Gain
   - key: milestone.6.title
     ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u56DE\u6570"
     en: Total Criticals
@@ -1099,9 +1093,6 @@ MonoBehaviour:
   - key: ui.convert.perSec
     ja: "{0} / \u79D2"
     en: '{0} / sec'
-  - key: ui.convert.whole
-    ja: "1\u8CAF\u307E\u308B\u3068\u3001\u30D7\u30EC\u30A4\u30E4\u30FC\u304C\u4F7F\u3048\u308B\u30EA\u30BD\u30FC\u30B9\u306B\u306A\u308B\u3002"
-    en: When it reaches 1, it becomes a resource you can use.
   - key: milestone.20010.title
     ja: "\u30BF\u30EC\u30C3\u30C8\u306E\u30C0\u30E1\u30FC\u30B8"
     en: Turret Damage
@@ -1174,3 +1165,492 @@ MonoBehaviour:
   - key: milestone.30012.bonus
     ja: "AA\u306E\u5165\u624B"
     en: AA Gain
+  - key: bestiary.1.name
+    ja: "\u30BE\u30F3\u30D3"
+    en: Zombie
+  - key: bestiary.2.name
+    ja: "\u88C5\u7532\u30BE\u30F3\u30D3"
+    en: Armored Zombie
+  - key: bestiary.3.name
+    ja: "\u518D\u751F\u30BE\u30F3\u30D3"
+    en: Regen Zombie
+  - key: bestiary.4.name
+    ja: "\u81A8\u5F35\u30BE\u30F3\u30D3"
+    en: Bloated Zombie
+  - key: bestiary.5.name
+    ja: "\u5206\u88C2\u30BE\u30F3\u30D3"
+    en: Splitting Zombie
+  - key: bestiary.6.name
+    ja: "\u5E7D\u970A\u30BE\u30F3\u30D3"
+    en: Ghost Zombie
+  - key: bestiary.7.name
+    ja: "\u30AC\u30E9\u30B9"
+    en: Glass
+  - key: bestiary.8.name
+    ja: "\u5B9D\u7BB1"
+    en: Treasure Chest
+  - key: bestiary.9.name
+    ja: "\u77F3"
+    en: Stone
+  - key: bestiary.101.name
+    ja: "\u5927\u30BE\u30F3\u30D3"
+    en: Big Zombie
+  - key: bestiary.102.name
+    ja: "\u7532\u7F85\u30DC\u30B9"
+    en: Shell Boss
+  - key: bestiary.103.name
+    ja: "\u518D\u751F\u30DC\u30B9"
+    en: Regen Boss
+  - key: bestiary.section.mob
+    ja: "\u30BE\u30F3\u30D3"
+    en: Zombies
+  - key: bestiary.section.boss
+    ja: "\u30DC\u30B9"
+    en: Bosses
+  - key: bestiary.notFound
+    ja: "\u307E\u3060\u4F1A\u3063\u305F\u3053\u3068\u304C\u306A\u3044\u3002"
+    en: Not met yet.
+  - key: bestiary.level
+    ja: "\u7814\u7A76 Lv {0} / {1}"
+    en: Research Lv {0} / {1}
+  - key: bestiary.boss.recordOnly
+    ja: "\u30DC\u30B9\u306E\u8A18\u9332"
+    en: Boss Record
+  - key: bestiary.boss.stage
+    ja: "\u521D\u3081\u3066\u5012\u3057\u305F\u6BB5\uFF1A{0}"
+    en: 'First defeated: Stage {0}'
+  - key: bestiary.boss.time
+    ja: "\u5012\u3059\u307E\u3067\uFF1A{0} \u79D2"
+    en: 'Time to defeat: {0}s'
+  - key: bestiary.count.kill
+    ja: "\u5012\u3057\u305F\u6570\uFF1A{0}"
+    en: 'Defeated: {0}'
+  - key: bestiary.count.hit
+    ja: "\u5F53\u3066\u305F\u56DE\u6570\uFF1A{0}"
+    en: 'Hits: {0}'
+  - key: bestiary.next
+    ja: "\u6B21\u306E\u7814\u7A76\u307E\u3067\uFF1A{0} / {1}"
+    en: 'Next research: {0} / {1}'
+  - key: bestiary.effect.now
+    ja: "\u4ECA\u306E\u52B9\u679C"
+    en: Now
+  - key: bestiary.effect.next
+    ja: "\u6B21\u306E\u52B9\u679C"
+    en: Next
+  - key: bestiary.effect.NormalDamage
+    ja: "\u30BE\u30F3\u30D3\u3078\u306E\u30C0\u30E1\u30FC\u30B8 +{0}%"
+    en: Damage to Zombies +{0}%
+  - key: bestiary.effect.ArmorPierce
+    ja: "\u6BBB\u3092\u901A\u308B\u30C0\u30E1\u30FC\u30B8 {0}%"
+    en: Damage through shells {0}%
+  - key: bestiary.effect.RegenDelay
+    ja: "\u56DE\u5FA9\u307E\u3067\u306E\u6642\u9593 +{0}%"
+    en: Regen delay +{0}%
+  - key: bestiary.effect.BloatRadius
+    ja: "\u7206\u767A\u306E\u7BC4\u56F2 +{0}%"
+    en: Blast radius +{0}%
+  - key: bestiary.effect.SplitHp
+    ja: "\u5206\u304B\u308C\u305F\u5B50\u306E HP -{0}%"
+    en: Split HP -{0}%
+  - key: bestiary.effect.GhostSolid
+    ja: "\u5B9F\u4F53\u3067\u3044\u308B\u6642\u9593 +{0}%"
+    en: Solid time +{0}%
+  - key: bestiary.effect.GlassDamage
+    ja: "\u30AC\u30E9\u30B9\u3078\u306E\u30C0\u30E1\u30FC\u30B8 +{0}%"
+    en: Damage to Glass +{0}%
+  - key: bestiary.effect.ChestWeight
+    ja: "\u5B9D\u7BB1\u306E\u51FA\u3084\u3059\u3055 +{0}%"
+    en: Chest chance +{0}%
+  - key: bestiary.effect.AllDamage
+    ja: "\u5168\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B +{0}%"
+    en: All ball damage +{0}%
+  - key: bestiary.research
+    ja: "\u7814\u7A76\uFF08{0} DD\uFF09"
+    en: Research ({0} DD)
+  - key: bestiary.research.max
+    ja: "\u7814\u7A76\u5B8C\u4E86"
+    en: Complete
+  - key: bestiary.tab
+    ja: "\u30BE\u30F3\u30D3\u56F3\u9451"
+    en: Zombie Log
+  - key: bestiary.1.diary0
+    ja: "\u4ECA\u65E5\u3082\u305F\u304F\u3055\u3093\u4E0B\u308A\u3066\u304D\u305F\u3002\u30DC\u30FC\u30EB\u304C\u3076\u3064\u304B\u308B\u3068\u300C\u3080\u3045\u300D\u3068\u8A00\u3046\u3002\u305F\u3076\u3093\u75DB\u3044\u306E\u3060\u3068\u601D\u3046\u3002"
+    en: Lots of them came down again today. When a ball hits one, it goes "mmh."
+      I think that means it hurts.
+  - key: bestiary.1.diary1
+    ja: "\u3088\u304F\u898B\u308B\u3068\u3001\u307F\u3093\u306A\u5C11\u3057\u305A\u3064\u9854\u304C\u3061\u304C\u3046\u3002\u3061\u3087\u3063\u3068\u89AA\u3057\u307F\u304C\u308F\u3044\u3066\u304D\u305F\u3002"
+    en: Looking closely, every face is a little different. I'm starting to like them.
+  - key: bestiary.1.diary2
+    ja: "\u304A\u3067\u3053\u306E\u771F\u3093\u4E2D\u306B\u5F53\u305F\u308B\u3068\u3001\u3044\u3064\u3082\u3088\u308A\u9577\u304F\u300C\u3080\u3045\u300D\u3068\u8A00\u3046\u3002\u3053\u3053\u304C\u5F31\u3044\u3089\u3057\u3044\u3002"
+    en: A hit right in the middle of the forehead makes the "mmh" last longer. That
+      must be the weak spot.
+  - key: bestiary.1.diary3
+    ja: "\u4E0B\u308A\u3066\u304F\u308B\u9014\u4E2D\u3067\u3001\u3068\u304D\u3069\u304D\u3064\u307E\u305A\u304F\u3002\u305D\u306E\u3059\u304D\u306B\u5F53\u3066\u308B\u3068\u3001\u3088\u304F\u52B9\u304F\u3002"
+    en: They trip now and then on the way down. Hitting them right then works well.
+  - key: bestiary.1.diary4
+    ja: "\u30DC\u30FC\u30EB\u306E\u97F3\u3092\u805E\u304F\u3068\u3001\u80A9\u306B\u529B\u304C\u5165\u308B\u3002\u529B\u3093\u3060\u3068\u3053\u308D\u306B\u5F53\u3066\u308B\u3068\u3001\u601D\u3063\u305F\u3088\u308A\u5D29\u308C\u308B\u3002"
+    en: They tense up when they hear a ball coming. Hit them while they're tense
+      and they crumble more than you'd expect.
+  - key: bestiary.1.diary5
+    ja: "\u3082\u3046\u3001\u3069\u3053\u306B\u5F53\u3066\u308C\u3070\u3044\u3044\u304B\u76EE\u3092\u3064\u3076\u3063\u3066\u3082\u308F\u304B\u308B\u6C17\u304C\u3059\u308B\u3002\u306A\u3093\u3068\u306A\u304F\u3001\u5411\u3053\u3046\u3082\u308F\u304B\u3063\u3066\u3044\u308B\u6C17\u304C\u3059\u308B\u3002"
+    en: I feel like I could find the right spot with my eyes closed. I have a feeling
+      they know it too.
+  - key: bestiary.2.diary0
+    ja: "\u4F53\u306E\u7247\u5074\u306B\u3001\u304B\u305F\u3044\u6BBB\u3092\u80CC\u8CA0\u3063\u3066\u3044\u308B\u3002\u6BBB\u306B\u5F53\u305F\u308B\u3068\u3001\u30DC\u30FC\u30EB\u304C\u304D\u308C\u3044\u306B\u8DF3\u306D\u8FD4\u3055\u308C\u308B\u3002\u6BBB\u306E\u306A\u3044\u9762\u3092\u306D\u3089\u3046\u3068\u3044\u3044\u3002"
+    en: It carries a hard shell on one side. Balls bounce right off the shell. Aim
+      for the side without it.
+  - key: bestiary.2.diary1
+    ja: "\u6BBB\u3068\u4F53\u306E\u3042\u3044\u3060\u306B\u3001\u3046\u3059\u3044\u3059\u304D\u9593\u304C\u3042\u308B\u3002\u3053\u3053\u304B\u3089\u306A\u3089\u3001\u5C11\u3057\u306F\u97FF\u304F\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
+    en: There's a thin gap between the shell and the body. A hit there might get
+      a little through.
+  - key: bestiary.2.diary2
+    ja: "\u6BBB\u306F\u601D\u3063\u305F\u3088\u308A\u91CD\u3044\u3089\u3057\u3044\u3002\u5F53\u305F\u308B\u305F\u3073\u306B\u3001\u4E2D\u306E\u4F53\u304C\u3086\u3055\u3063\u3068\u63FA\u308C\u3066\u3044\u308B\u3002"
+    en: The shell seems heavier than it looks. Every hit makes the body inside wobble.
+  - key: bestiary.2.diary3
+    ja: "\u6BBB\u306E\u6A21\u69D8\u306F\u3001\u5E74\u8F2A\u306E\u3088\u3046\u306B\u306A\u3063\u3066\u3044\u308B\u3002\u53E4\u3044\u3068\u3053\u308D\u307B\u3069\u3001\u3082\u308D\u3044\u3002"
+    en: The pattern on the shell looks like tree rings. The older parts are more
+      brittle.
+  - key: bestiary.2.diary4
+    ja: "\u4F55\u5EA6\u3082\u5F53\u305F\u3063\u305F\u6BBB\u306B\u306F\u3001\u7D30\u304B\u3044\u3072\u3073\u304C\u6B8B\u3063\u3066\u3044\u308B\u3002\u3072\u3073\u306E\u4E0A\u304B\u3089\u53E9\u304F\u3068\u3001\u3088\u304F\u901A\u308B\u3002"
+    en: Shells that have been hit a lot keep tiny cracks. Hitting over the cracks
+      gets through well.
+  - key: bestiary.2.diary5
+    ja: "\u6BBB\u3092\u78E8\u3044\u3066\u3044\u308B\u88C5\u7532\u30BE\u30F3\u30D3\u3092\u898B\u305F\u3002\u5927\u4E8B\u306B\u3057\u3066\u3044\u308B\u3089\u3057\u3044\u3002\u5C11\u3057\u7533\u3057\u8A33\u306A\u3044\u3002"
+    en: I saw one polishing its shell. It must really care about it. I feel a little
+      bad.
+  - key: bestiary.3.diary0
+    ja: "\u307B\u3046\u3063\u3066\u304A\u304F\u3068\u3001\u3044\u3064\u306E\u9593\u306B\u304B\u5143\u6C17\u306B\u306A\u3063\u3066\u3044\u308B\u3002\u3046\u3089\u3084\u307E\u3057\u3044\u3002\u5143\u6C17\u306B\u306A\u308B\u524D\u306B\u3001\u307E\u3068\u3081\u3066\u53E9\u304F\u306E\u304C\u3088\u3055\u305D\u3046\u3002"
+    en: Leave it alone and it's somehow full of energy again. I'm jealous. Better
+      to hit it all at once before it recovers.
+  - key: bestiary.3.diary1
+    ja: "\u5143\u6C17\u306B\u306A\u308B\u524D\u306B\u3001\u304A\u3067\u3053\u306E\u3042\u305F\u308A\u304C\u3080\u305A\u3080\u305A\u52D5\u304F\u3002\u5408\u56F3\u306A\u306E\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
+    en: Just before it recovers, its forehead starts to twitch. Maybe that's the
+      signal.
+  - key: bestiary.3.diary2
+    ja: "\u3080\u305A\u3080\u305A\u3057\u3066\u3044\u308B\u9593\u306F\u3001\u3061\u3087\u3063\u3068\u3060\u3051\u7720\u305D\u3046\u3002\u4ECA\u306E\u3046\u3061\u306B\u53E9\u304F\u3068\u52B9\u304F\u3002"
+    en: While it twitches, it looks a little sleepy. Hitting it now works.
+  - key: bestiary.3.diary3
+    ja: "\u5143\u6C17\u306E\u7D20\u306F\u3001\u3069\u3046\u3084\u3089\u65E5\u306A\u305F\u307C\u3063\u3053\u3089\u3057\u3044\u3002\u5149\u306E\u5C4A\u304B\u306A\u3044\u6642\u9593\u306F\u3001\u6CBB\u308A\u304C\u9045\u3044\u3002"
+    en: Its energy seems to come from sunbathing. When the light doesn't reach it,
+      it heals slowly.
+  - key: bestiary.3.diary4
+    ja: "\u4F55\u5EA6\u3082\u53E9\u304B\u308C\u308B\u3068\u3001\u6CBB\u3059\u306E\u306B\u98FD\u304D\u3066\u304F\u308B\u3088\u3046\u3060\u3002\u3042\u304F\u3073\u306E\u56DE\u6570\u304C\u5897\u3048\u305F\u3002"
+    en: After being hit many times, it seems to get bored of healing. It yawns more
+      often.
+  - key: bestiary.3.diary5
+    ja: "\u6CBB\u308B\u524D\u306B\u3001\u3053\u3061\u3089\u3092\u898B\u3066\u305F\u3081\u606F\u3092\u3064\u304F\u3088\u3046\u306B\u306A\u3063\u305F\u3002\u3082\u3046\u5C11\u3057\u3086\u3063\u304F\u308A\u3067\u3044\u3044\u3088\u3001\u3068\u8A00\u3044\u305F\u3044\u3002"
+    en: Now it looks at me and sighs before it heals. I want to tell it to take its
+      time.
+  - key: bestiary.4.diary0
+    ja: "\u3077\u304F\u3077\u304F\u306B\u3075\u304F\u3089\u3093\u3067\u3044\u308B\u3002\u5012\u3059\u3068\u3071\u3061\u3093\u3068\u5F3E\u3051\u3066\u3001\u307E\u308F\u308A\u306E\u30BE\u30F3\u30D3\u3082\u5DFB\u304D\u3053\u3080\u3002\u8FBC\u307F\u5408\u3063\u305F\u3068\u3053\u308D\u3067\u5012\u3059\u3068\u6C17\u6301\u3061\u3044\u3044\u3002"
+    en: It's puffed up like a balloon. Defeat it and it pops, catching the zombies
+      around it. Popping one in a crowd feels great.
+  - key: bestiary.4.diary1
+    ja: "\u4E2D\u8EAB\u306F\u7A7A\u6C17\u3067\u306F\u306A\u304F\u3001\u306A\u306B\u304B\u306E\u30AC\u30B9\u3089\u3057\u3044\u3002\u3061\u3087\u3063\u3068\u304F\u3055\u3044\u3002"
+    en: It's not air inside, but some kind of gas. It smells a little.
+  - key: bestiary.4.diary2
+    ja: "\u5F3E\u3051\u308B\u76F4\u524D\u306B\u3001\u5C11\u3057\u3060\u3051\u5927\u304D\u304F\u306A\u308B\u3002\u305D\u306E\u4E00\u77AC\u306B\u52E2\u3044\u304C\u305F\u307E\u308B\u3089\u3057\u3044\u3002"
+    en: Right before it pops, it grows just a bit. That moment builds up the force.
+  - key: bestiary.4.diary3
+    ja: "\u307E\u308F\u308A\u306B\u30BE\u30F3\u30D3\u304C\u591A\u3044\u307B\u3069\u3001\u5F35\u308A\u5207\u3063\u3066\u5F3E\u3051\u308B\u3002\u76EE\u7ACB\u3061\u305F\u304C\u308A\u306A\u306E\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
+    en: The more zombies around it, the harder it pops. Maybe it likes attention.
+  - key: bestiary.4.diary4
+    ja: "\u5F3E\u3051\u305F\u3042\u3068\u306E\u30AC\u30B9\u306F\u3001\u601D\u3063\u305F\u3088\u308A\u9060\u304F\u307E\u3067\u5C4A\u304F\u3002\u98A8\u306E\u306A\u3044\u65E5\u306F\u3068\u304F\u306B\u3002"
+    en: The gas reaches farther than I thought after it pops. Especially on windless
+      days.
+  - key: bestiary.4.diary5
+    ja: "\u6700\u8FD1\u306F\u3001\u5F3E\u3051\u308B\u524D\u306B\u3053\u3061\u3089\u306B\u624B\u3092\u3075\u3063\u3066\u304F\u308B\u3002\u3088\u308D\u3057\u304F\u306D\u3001\u3068\u3044\u3046\u3053\u3068\u3089\u3057\u3044\u3002"
+    en: Lately it waves at me before it pops. I think it means "take care."
+  - key: bestiary.5.diary0
+    ja: "\u4F53\u306E\u771F\u3093\u4E2D\u306B\u3001\u306C\u3044\u76EE\u304C\u3042\u308B\u3002\u5012\u3059\u3068\u3001\u306C\u3044\u76EE\u304C\u307B\u3069\u3051\u3066\u5C0F\u3055\u3044\u30BE\u30F3\u30D3\u304C
+      2 \u4F53\u51FA\u3066\u304F\u308B\u3002\u51FA\u3066\u304D\u305F\u5B50\u3082\u5FD8\u308C\u305A\u306B\u3002"
+    en: There's a seam down the middle of its body. Defeat it and the seam comes
+      undone, and two small zombies pop out. Don't forget the little ones.
+  - key: bestiary.5.diary1
+    ja: "\u306C\u3044\u76EE\u306E\u7CF8\u306F\u3001\u305A\u3044\u3076\u3093\u53E4\u3044\u3002\u3068\u3053\u308D\u3069\u3053\u308D\u3001\u307B\u3064\u308C\u3066\u3044\u308B\u3002"
+    en: The thread in the seam is quite old. It's frayed here and there.
+  - key: bestiary.5.diary2
+    ja: "\u5206\u304B\u308C\u305F\u5B50\u306F\u3001\u89AA\u306E\u534A\u5206\u304F\u3089\u3044\u306E\u5143\u6C17\u3057\u304B\u306A\u3044\u3002\u6025\u3044\u3067\u5206\u304B\u308C\u305F\u305B\u3044\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
+    en: The split-off ones only have about half the energy of the parent. Maybe because
+      they split in a hurry.
+  - key: bestiary.5.diary3
+    ja: "\u306C\u3044\u76EE\u306B\u5F53\u305F\u308B\u3068\u3001\u5B50\u306E\u307B\u3046\u307E\u3067\u97FF\u304F\u3089\u3057\u3044\u3002\u51FA\u3066\u304F\u308B\u524D\u304B\u3089\u5C11\u3057\u75B2\u308C\u3066\u3044\u308B\u3002"
+    en: A hit on the seam seems to reach the little ones too. They come out a bit
+      tired already.
+  - key: bestiary.5.diary4
+    ja: "\u5206\u304B\u308C\u305F\u5B50\u3069\u3046\u3057\u306F\u3001\u4EF2\u304C\u3044\u3044\u3002\u3044\u3064\u3082\u304F\u3063\u3064\u3044\u3066\u4E0B\u308A\u3066\u304F\u308B\u3002\u307E\u3068\u3081\u3066\u53E9\u3051\u308B\u3002"
+    en: The split-off pair get along well. They always come down side by side, so
+      you can hit both.
+  - key: bestiary.5.diary5
+    ja: "\u306C\u3044\u76EE\u3092\u81EA\u5206\u3067\u306C\u3044\u76F4\u3057\u3066\u3044\u308B\u3068\u3053\u308D\u3092\u898B\u305F\u3002\u7CF8\u304C\u305F\u308A\u306A\u3044\u3088\u3046\u3060\u3063\u305F\u3002"
+    en: I saw one sewing its own seam back up. It looked like it didn't have enough
+      thread.
+  - key: bestiary.6.diary0
+    ja: "\u3068\u304D\u3069\u304D\u4F53\u304C\u900F\u3051\u3066\u3001\u30DC\u30FC\u30EB\u304C\u3059\u308A\u629C\u3051\u308B\u3002\u5149\u308B\u7DDA\u3060\u3051\u306F\u82E6\u624B\u3089\u3057\u304F\u3001\u900F\u3051\u3066\u3044\u3066\u3082\u5ACC\u305D\u3046\u306A\u9854\u3092\u3059\u308B\u3002\u900F\u3051\u3066\u3044\u306A\u3044\u3068\u304D\u3092\u306D\u3089\u3046\u3002"
+    en: Sometimes its body goes see-through and balls pass right through. It hates
+      glowing lines, though, and makes a face even when see-through. Aim for when
+      it's solid.
+  - key: bestiary.6.diary1
+    ja: "\u900F\u3051\u308B\u524D\u306B\u3001\u3059\u3053\u3057\u3060\u3051\u4F53\u304C\u3086\u3089\u3050\u3002\u898B\u3066\u3044\u308C\u3070\u308F\u304B\u308B\u3002"
+    en: Its body flickers a little before it goes see-through. You can tell if you
+      watch.
+  - key: bestiary.6.diary2
+    ja: "\u900F\u3051\u308B\u306E\u306F\u3001\u3069\u3046\u3084\u3089\u75B2\u308C\u308B\u3089\u3057\u3044\u3002\u53E9\u304B\u308C\u305F\u3042\u3068\u306F\u3001\u3057\u3070\u3089\u304F\u900F\u3051\u306A\u3044\u3002"
+    en: Going see-through seems to be tiring. After being hit, it stays solid for
+      a while.
+  - key: bestiary.6.diary3
+    ja: "\u663C\u9593\u306F\u900F\u3051\u306B\u304F\u3044\u3002\u305F\u3076\u3093\u3001\u660E\u308B\u3044\u3068\u3053\u308D\u3067\u306F\u6065\u305A\u304B\u3057\u3044\u306E\u3060\u3068\u601D\u3046\u3002"
+    en: It's harder for it to go see-through in daytime. I think it's shy in bright
+      places.
+  - key: bestiary.6.diary4
+    ja: "\u8A71\u3057\u304B\u3051\u308B\u3068\u3001\u900F\u3051\u308B\u306E\u3092\u5FD8\u308C\u3066\u805E\u3044\u3066\u3044\u308B\u3002\u3051\u3063\u3053\u3046\u805E\u304D\u4E0A\u624B\u3002"
+    en: When I talk to it, it forgets to go see-through and listens. It's a good
+      listener.
+  - key: bestiary.6.diary5
+    ja: "\u6700\u8FD1\u306F\u3001\u307B\u3068\u3093\u3069\u900F\u3051\u306A\u304F\u306A\u3063\u305F\u3002\u3053\u3053\u304C\u6C17\u306B\u5165\u3063\u305F\u306E\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
+    en: Lately it hardly goes see-through at all. Maybe it likes it here.
+  - key: bestiary.7.diary0
+    ja: "\u30BE\u30F3\u30D3\u3067\u306F\u306A\u3044\u3002\u3067\u3082\u4E2D\u306B\u30BE\u30F3\u30D3\u304C\u5165\u3063\u3066\u3044\u308B\u3002\u5272\u308B\u3068\u51FA\u3066\u304F\u308B\u306E\u3067\u3001\u51FA\u3066\u304D\u305F\u3042\u3068\u3082\u6C17\u3092\u306C\u304B\u306A\u3044\u3053\u3068\u3002"
+    en: Not a zombie. But there are zombies inside. Break it and they come out, so
+      stay alert after that.
+  - key: bestiary.7.diary1
+    ja: "\u30AC\u30E9\u30B9\u306F\u3001\u4E2D\u306E\u30BE\u30F3\u30D3\u306E\u606F\u3067\u304F\u3082\u3063\u3066\u3044\u308B\u3002\u304F\u3082\u3063\u305F\u3068\u3053\u308D\u306F\u3001\u5C11\u3057\u3082\u308D\u3044\u3002"
+    en: The glass is fogged up from the breath of the zombies inside. The foggy spots
+      are a little weaker.
+  - key: bestiary.7.diary2
+    ja: "\u89D2\u306B\u5F53\u3066\u308B\u3068\u3001\u3072\u3073\u304C\u5E83\u304C\u308A\u3084\u3059\u3044\u3002\u56DB\u89D2\u3044\u3082\u306E\u306F\u3001\u3060\u3044\u305F\u3044\u89D2\u304C\u5F31\u3044\u3002"
+    en: Hits on the corners spread the cracks faster. Square things are usually weak
+      at the corners.
+  - key: bestiary.7.diary3
+    ja: "\u4E2D\u306E\u30BE\u30F3\u30D3\u304C\u5185\u5074\u304B\u3089\u30CE\u30C3\u30AF\u3057\u3066\u3044\u308B\u3002\u5916\u3068\u4E2D\u304B\u3089\u53E9\u3051\u3070\u3001\u65E9\u304F\u5272\u308C\u308B\u3002"
+    en: The zombies inside are knocking from within. Hit from outside and inside
+      together and it breaks faster.
+  - key: bestiary.7.diary4
+    ja: "\u30AC\u30E9\u30B9\u306E\u539A\u3055\u306F\u3001\u5834\u6240\u306B\u3088\u3063\u3066\u3061\u304C\u3046\u3002\u3046\u3059\u3044\u3068\u3053\u308D\u3092\u899A\u3048\u3066\u304D\u305F\u3002"
+    en: The thickness of the glass varies by spot. I'm learning where it's thin.
+  - key: bestiary.7.diary5
+    ja: "\u5272\u308C\u305F\u30AC\u30E9\u30B9\u306E\u304B\u3051\u3089\u306F\u3001\u65E5\u306B\u5F53\u3066\u308B\u3068\u304D\u308C\u3044\u306B\u5149\u308B\u3002\u5C11\u3057\u96C6\u3081\u3066\u3044\u308B\u3002"
+    en: The broken shards sparkle nicely in the sun. I've been collecting a few.
+  - key: bestiary.8.diary0
+    ja: "\u30BE\u30F3\u30D3\u3067\u306F\u306A\u3044\u304B\u3082\u3057\u308C\u306A\u3044\u3002\u3067\u3082\u4E00\u7DD2\u306B\u4E0B\u308A\u3066\u304F\u308B\u306E\u3067\u3001\u4E00\u5FDC\u3053\u3053\u306B\u66F8\u3044\u3066\u304A\u304F\u3002\u53E9\u304F\u3068\u3058\u3083\u3089\u3058\u3083\u3089\u51FA\u3066\u304F\u308B\u3002"
+    en: It might not be a zombie. But it comes down with them, so I'm noting it here
+      anyway. Hit it and things come jingling out.
+  - key: bestiary.8.diary1
+    ja: "\u5B9D\u7BB1\u306F\u3001\u306B\u304E\u3084\u304B\u306A\u3068\u3053\u308D\u306B\u51FA\u3066\u304D\u3084\u3059\u3044\u3002\u30BE\u30F3\u30D3\u304C\u591A\u3044\u65E5\u306F\u3088\u304F\u898B\u304B\u3051\u308B\u3002"
+    en: Chests tend to show up where it's lively. I see them more on busy days.
+  - key: bestiary.8.diary2
+    ja: "\u3075\u305F\u306E\u3059\u304D\u9593\u304B\u3089\u3001\u3068\u304D\u3069\u304D\u5149\u304C\u3082\u308C\u3066\u3044\u308B\u3002\u898B\u3064\u3051\u305F\u3089\u3001\u3060\u3044\u305F\u3044\u8FD1\u304F\u306B\u3082\u3046
+      1 \u3064\u3042\u308B\u3002"
+    en: Light sometimes leaks from the gap under the lid. When I find one, there's
+      usually another nearby.
+  - key: bestiary.8.diary3
+    ja: "\u5B9D\u7BB1\u306F\u3001\u97F3\u306B\u5BC4\u3063\u3066\u304F\u308B\u3089\u3057\u3044\u3002\u30DC\u30FC\u30EB\u306E\u97F3\u3092\u305F\u304F\u3055\u3093\u9CF4\u3089\u3059\u3068\u3001\u9854\u3092\u51FA\u3059\u3002"
+    en: Chests seem to be drawn to sound. Make lots of ball noise and they show up.
+  - key: bestiary.8.diary4
+    ja: "\u8AB0\u304C\u4E2D\u8EAB\u3092\u5165\u308C\u3066\u3044\u308B\u306E\u304B\u306F\u3001\u307E\u3060\u308F\u304B\u3089\u306A\u3044\u3002\u305F\u3076\u3093\u3001\u89AA\u5207\u306A\u8AB0\u304B\u3060\u3002"
+    en: I still don't know who fills them. Probably someone kind.
+  - key: bestiary.8.diary5
+    ja: "\u7A7A\u306E\u5B9D\u7BB1\u3092\u7F6E\u3044\u3066\u304A\u3044\u305F\u3089\u3001\u6B21\u306E\u65E5\u306B\u306F\u3044\u3063\u3071\u3044\u306B\u306A\u3063\u3066\u3044\u305F\u3002\u4E0D\u601D\u8B70\u3060\u3002"
+    en: I left an empty chest out, and the next day it was full. Strange.
+  - key: bestiary.9.diary0
+    ja: "\u304B\u305F\u304F\u3066\u3001\u3069\u3046\u3084\u3063\u3066\u3082\u58CA\u308C\u306A\u3044\u3002\u3067\u3082\u3001\u3053\u3053\u307E\u3067\u4E0B\u308A\u3066\u304D\u3066\u3082\u6012\u3089\u308C\u306A\u3044\u3002\u30DC\u30FC\u30EB\u304C\u8DF3\u306D\u8FD4\u308B\u306E\u306B\u4F7F\u3048\u308B\u3002"
+    en: It's hard and won't break no matter what. But nothing happens even if it
+      reaches the bottom. Good for bouncing balls off.
+  - key: bestiary.9.diary1
+    ja: "\u77F3\u306B\u5F53\u305F\u3063\u305F\u30DC\u30FC\u30EB\u306F\u3001\u5C11\u3057\u3060\u3051\u5143\u6C17\u306B\u306A\u3063\u3066\u623B\u3063\u3066\u304F\u308B\u3002\u3044\u3044\u904B\u52D5\u306B\u306A\u308B\u3089\u3057\u3044\u3002"
+    en: Balls that hit the stone come back a little livelier. It must be good exercise.
+  - key: bestiary.9.diary2
+    ja: "\u77F3\u306E\u8868\u9762\u306F\u3001\u30DC\u30FC\u30EB\u304C\u5F53\u305F\u3063\u305F\u3068\u3053\u308D\u3060\u3051\u3064\u308B\u3064\u308B\u306B\u306A\u3063\u3066\u3044\u308B\u3002"
+    en: The stone's surface is smooth only where the balls have hit it.
+  - key: bestiary.9.diary3
+    ja: "\u77F3\u306B\u5F53\u3066\u308B\u97F3\u306B\u306F\u3001\u3044\u3044\u30EA\u30BA\u30E0\u304C\u3042\u308B\u3002\u30DC\u30FC\u30EB\u3082\u697D\u3057\u305D\u3046\u3060\u3002"
+    en: The sound of hitting the stone has a nice rhythm. The balls seem to enjoy
+      it.
+  - key: bestiary.9.diary4
+    ja: "\u4F55\u5EA6\u3082\u5F53\u3066\u3066\u3044\u305F\u3089\u3001\u30DC\u30FC\u30EB\u306E\u6253\u3061\u65B9\u304C\u4E0A\u624B\u306B\u306A\u3063\u3066\u304D\u305F\u3002\u77F3\u306E\u304A\u304B\u3052\u3060\u3002"
+    en: After hitting it so many times, I've gotten better at shooting. Thanks to
+      the stone.
+  - key: bestiary.9.diary5
+    ja: "\u3053\u306E\u77F3\u306F\u3001\u305F\u3076\u3093\u305A\u3063\u3068\u3053\u3053\u306B\u3042\u308B\u3002\u30BE\u30F3\u30D3\u305F\u3061\u3088\u308A\u524D\u304B\u3089\u3002"
+    en: This stone has probably always been here. Since before the zombies.
+  - key: bestiary.101.diary0
+    ja: "\u3068\u3066\u3082\u5927\u304D\u3044\u3002\u7279\u5225\u306A\u3053\u3068\u306F\u3057\u306A\u3044\u3051\u308C\u3069\u3001\u3068\u306B\u304B\u304F\u56FA\u3044\u3002\u3042\u308A\u3063\u305F\u3051\u306E\u30DC\u30FC\u30EB\u3067\u3001\u6839\u6C17\u3088\u304F\u53E9\u304F\u3057\u304B\u306A\u3044\u3002"
+    en: Very big. It doesn't do anything special, but it's just tough. All you can
+      do is keep hitting it with every ball you have.
+  - key: bestiary.102.diary0
+    ja: "\u4F53\u306E\u307E\u308F\u308A\u3092\u6BBB\u3067\u56F2\u3063\u3066\u3044\u3066\u3001\u958B\u3044\u3066\u3044\u308B\u9762\u304C\u3086\u3063\u304F\u308A\u56DE\u308B\u3002\u56DE\u308B\u524D\u306B\u6BBB\u304C\u5149\u308B\u3002\u7206\u767A\u3084\u5149\u308B\u7DDA\u3001\u6BD2\u306A\u3089\u6BBB\u306E\u4E0A\u304B\u3089\u3067\u3082\u5C4A\u304F\u3002"
+    en: Shells surround its body, and the open side slowly rotates. The shell flashes
+      before it turns. Explosions, glowing lines, and poison get through the shell.
+  - key: bestiary.103.diary0
+    ja: "\u304A\u3067\u3053\u306B\u7A2E\u304C\u3064\u3044\u3066\u3044\u3066\u3001\u305F\u3081\u308B\u3068\u5927\u304D\u304F\u5143\u6C17\u306B\u306A\u308B\u3002\u305F\u3081\u3066\u3044\u308B\u9593\u306B\u305F\u304F\u3055\u3093\u53E9\u304F\u3068\u3001\u7A2E\u304C\u5272\u308C\u3066\u3001\u3057\u3070\u3089\u304F\u305F\u3081\u3089\u308C\u306A\u304F\u306A\u308B\u3002"
+    en: It has a seed on its forehead and gets a big boost when it charges. Hit it
+      hard while it's charging and the seed cracks, stopping it for a while.
+  - key: skill.9001.name
+    ja: "\u3055\u3055\u3084\u304D"
+    en: Whisper
+  - key: skill.9001.desc
+    ja: "\u3069\u3053\u304B\u3067\u3001\u3060\u308C\u304B\u304C\u547C\u3093\u3067\u3044\u308B\u3002\u8FD4\u4E8B\u306F\u3057\u306A\u3044\u307B\u3046\u304C\u3044\u3044\u6C17\u304C\u3059\u308B\u3002"
+    en: Someone is calling from somewhere. Better not to answer.
+  - key: skill.9002.name
+    ja: "\u306B\u3058\u3080\u5883\u754C"
+    en: Blurred Edge
+  - key: skill.9002.desc
+    ja: "\u30BE\u30F3\u30D3\u3068\u4EBA\u306E\u3042\u3044\u3060\u306E\u7DDA\u304C\u3001\u3059\u3053\u3057\u307C\u3084\u3051\u3066\u898B\u3048\u308B\u3002"
+    en: The line between zombie and human looks a little blurry.
+  - key: skill.9003.name
+    ja: "\u9006\u3055\u306E\u8108"
+    en: Reverse Pulse
+  - key: skill.9003.desc
+    ja: "\u6B62\u307E\u3063\u305F\u306F\u305A\u306E\u5FC3\u81D3\u304C\u3001\u9006\u5411\u304D\u306B\u6253\u3063\u3066\u3044\u308B\u3002"
+    en: A heart that should have stopped is beating backwards.
+  - key: skill.9004.name
+    ja: "\u7A7A\u3063\u307D\u306E\u6ABB"
+    en: Empty Cage
+  - key: skill.9004.desc
+    ja: "\u6ABB\u306F\u958B\u3044\u3066\u3044\u308B\u3002\u4E2D\u306B\u3044\u305F\u3082\u306E\u306F\u3001\u3082\u3046\u3044\u306A\u3044\u3002"
+    en: The cage is open. Whatever was inside is gone.
+  - key: skill.9005.name
+    ja: "\u540D\u3082\u306A\u3044\u6249"
+    en: Nameless Door
+  - key: skill.9005.desc
+    ja: "\u6249\u306E\u5411\u3053\u3046\u304B\u3089\u3001\u85AC\u54C1\u306E\u306B\u304A\u3044\u304C\u3059\u308B\u3002"
+    en: A smell of chemicals comes from behind the door.
+  - key: skill.9006.name
+    ja: "\u30EF\u30AF\u30C1\u30F3\u7814\u7A76\u6240"
+    en: Vaccine Lab
+  - key: skill.9006.desc
+    ja: "\u30EF\u30AF\u30C1\u30F3\u306E\u30BF\u30D6\u304C\u958B\u304F\u3002\u3053\u3053\u3067\u3001\u3059\u3079\u3066\u3092\u7D42\u308F\u3089\u305B\u308B\u3002"
+    en: Opens the Vaccine tab. This is where it all ends.
+  - key: vaccine.tab
+    ja: "\u30EF\u30AF\u30C1\u30F3"
+    en: Vaccine
+  - key: vaccine.title
+    ja: "\u30BE\u30F3\u30D3\u30EF\u30AF\u30C1\u30F3"
+    en: Zombie Vaccine
+  - key: vaccine.progress
+    ja: "\u5B8C\u6210\u5EA6 {0}%"
+    en: Progress {0}%
+  - key: vaccine.pour
+    ja: "DD \u3092\u6CE8\u3050\u3000DD {0}"
+    en: "Pour DD\u3000DD {0}"
+  - key: vaccine.spread
+    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u6492\u304F"
+    en: Spread the Vaccine
+  - key: vaccine.spread.done
+    ja: "\u30EF\u30AF\u30C1\u30F3\u306F\u6492\u3044\u305F"
+    en: Vaccine Spread
+  - key: vaccine.clearMark
+    ja: "\u5B8C\u6210"
+    en: DONE
+  - key: vaccine.stage0
+    ja: "\u307E\u3060\u4F55\u3082\u59CB\u3081\u3066\u3044\u306A\u3044\u3002DD \u3092\u6CE8\u3044\u3067\u3001\u7814\u7A76\u3092\u9032\u3081\u308B\u3002"
+    en: Nothing has started yet. Pour DD to move the research forward.
+  - key: vaccine.stage1.name
+    ja: "1. \u63A1\u53D6"
+    en: 1. Sampling
+  - key: vaccine.stage1.result
+    ja: "\u6210\u679C\uFF1A\u30BE\u30F3\u30D3\u306E\u7D30\u80DE\u306E\u30B5\u30F3\u30D7\u30EB\u3092
+      3 \u672C\u3068\u3063\u305F\u3002"
+    en: 'Result: Took three samples of zombie cells.'
+  - key: vaccine.stage1.diary
+    ja: "\u601D\u3063\u305F\u3088\u308A\u5143\u6C17\u304C\u3044\u3044\u3002\u8A66\u9A13\u7BA1\u306E\u4E2D\u3067\u3082\u3001\u307E\u3060\u52D5\u3053\u3046\u3068\u3057\u3066\u3044\u308B\u3002"
+    en: Livelier than expected. Even in the test tube, they keep trying to move.
+  - key: vaccine.stage2.name
+    ja: "2. \u5206\u6790"
+    en: 2. Analysis
+  - key: vaccine.stage2.result
+    ja: "\u6210\u679C\uFF1A\u7D30\u80DE\u306E\u4E2D\u306B\u3001\u5149\u306B\u5F31\u3044\u3068\u3053\u308D\u3092\u898B\u3064\u3051\u305F\u3002"
+    en: 'Result: Found a part of the cell that is weak to light.'
+  - key: vaccine.stage2.diary
+    ja: "\u5F31\u70B9\u3089\u3057\u304D\u3082\u306E\u304C\u898B\u3048\u3066\u304D\u305F\u3002\u30DC\u30FC\u30EB\u304C\u3088\u304F\u52B9\u304F\u306E\u3082\u3001\u305F\u3076\u3093\u3053\u306E\u305B\u3044\u3060\u3002"
+    en: Something like a weakness is showing. That is probably why the balls work
+      so well.
+  - key: vaccine.stage3.name
+    ja: "3. \u57F9\u990A"
+    en: 3. Culture
+  - key: vaccine.stage3.result
+    ja: "\u6210\u679C\uFF1A\u5F31\u70B9\u3092\u3064\u304F\u85AC\u306E\u3082\u3068\u304C\u3001\u5C11\u3057\u305A\u3064\u5897\u3048\u306F\u3058\u3081\u305F\u3002"
+    en: 'Result: The base of a medicine that hits the weakness has started to grow.'
+  - key: vaccine.stage3.diary
+    ja: "\u8A66\u9A13\u7BA1\u306E\u4E2D\u3067\u3001\u5C11\u3057\u305A\u3064\u5897\u3048\u3066\u3044\u308B\u3002\u591C\u4E2D\u306B\u898B\u308B\u3068\u3001\u307B\u3093\u306E\u308A\u5149\u3063\u3066\u3044\u308B\u3002"
+    en: It grows a little at a time. At night, it glows faintly.
+  - key: vaccine.stage4.name
+    ja: "4. \u8A66\u4F5C"
+    en: 4. Prototype
+  - key: vaccine.stage4.result
+    ja: "\u6210\u679C\uFF1A\u8A66\u4F5C\u306E\u30EF\u30AF\u30C1\u30F3\u3092 1 \u672C\u3060\u3051\u4F5C\u3063\u305F\u3002"
+    en: 'Result: Made a single prototype vaccine.'
+  - key: vaccine.stage4.diary
+    ja: "\u8A66\u3057\u306B 1 \u4F53\u3078\u6253\u3063\u3066\u307F\u305F\u3002\u565B\u307F\u3064\u304B\u306A\u304F\u306A\u3063\u305F\u3002\u9854\u8272\u306F\u76F8\u5909\u308F\u3089\u305A\u60AA\u3044\u3002"
+    en: Tried it on one of them. It stopped biting. Its complexion is as bad as ever.
+  - key: vaccine.stage5.name
+    ja: "5. \u5B8C\u6210"
+    en: 5. Complete
+  - key: vaccine.stage5.result
+    ja: "\u6210\u679C\uFF1A\u30EF\u30AF\u30C1\u30F3\u304C\u5B8C\u6210\u3057\u305F\u3002\u3042\u3068\u306F\u6492\u304F\u3060\u3051\u3002"
+    en: 'Result: The vaccine is complete. All that is left is to spread it.'
+  - key: vaccine.stage5.diary
+    ja: "\u3053\u308C\u3067\u3001\u307F\u3093\u306A\u5143\u306B\u623B\u305B\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
+    en: With this, maybe everyone can go back to how they were.
+  - key: vaccine.clear.name
+    ja: "\u305D\u306E\u3042\u3068"
+    en: Afterwards
+  - key: vaccine.clear.diary
+    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u6492\u3044\u305F\u3002\u307F\u3093\u306A\u30BE\u30F3\u30D3\u306E\u307E\u307E\u3060\u3051\u3069\u3001\u3082\u3046\u565B\u307E\u306A\u3044\u3002\u30DC\u30FC\u30EB\u904A\u3073\u306E\u76F8\u624B\u304C\u5897\u3048\u305F\u3002"
+    en: I spread the vaccine. Everyone is still a zombie, but nobody bites. I have
+      more friends to play ball with now.
+  - key: vaccine.epilogue1
+    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u6492\u3044\u305F\u3002"
+    en: I spread the vaccine.
+  - key: vaccine.epilogue2
+    ja: "\u6B21\u306E\u671D\u3001\u30BE\u30F3\u30D3\u305F\u3061\u306F\u30BE\u30F3\u30D3\u306E\u307E\u307E\u3060\u3063\u305F\u3002"
+    en: The next morning, the zombies were still zombies.
+  - key: vaccine.epilogue3
+    ja: "\u305F\u3060\u3001\u3060\u308C\u3082\u565B\u307F\u3064\u304B\u306A\u304F\u306A\u3063\u305F\u3002"
+    en: But nobody bites anymore.
+  - key: vaccine.epilogue4
+    ja: "\u304B\u308F\u308A\u306B\u3001\u30DC\u30FC\u30EB\u3092\u6295\u3052\u308B\u3068\u62FE\u3063\u3066\u304F\u308B\u3002"
+    en: Instead, when I throw a ball, they bring it back.
+  - key: vaccine.epilogue5
+    ja: "\u53CB\u9054\u306B\u306A\u3063\u305F\u3001\u3068\u3044\u3046\u3053\u3068\u306B\u3057\u3066\u304A\u304F\u3002"
+    en: Let's just say we became friends.
+  - key: bestiary.afterTitle
+    ja: "\u305D\u306E\u3042\u3068"
+    en: Afterwards
+  - key: bestiary.1.after
+    ja: "\u3042\u3044\u3055\u3064\u3092\u3059\u308B\u3068\u3001\u5C11\u3057\u9045\u308C\u3066\u8FD4\u3057\u3066\u304F\u308C\u308B\u3002"
+    en: When I say hello, they say it back, a little late.
+  - key: bestiary.2.after
+    ja: "\u6BBB\u306F\u305D\u306E\u307E\u307E\u3002\u3053\u3063\u305D\u308A\u4E2D\u3092\u898B\u305B\u3066\u304F\u308C\u305F\u3002\u4F55\u3082\u5165\u3063\u3066\u3044\u306A\u304B\u3063\u305F\u3002"
+    en: The shell stayed. It showed me the inside in secret. There was nothing in
+      it.
+  - key: bestiary.3.after
+    ja: "\u8EE2\u3093\u3067\u3082\u3059\u3050\u6CBB\u308B\u306E\u3067\u3001\u5B50\u3069\u3082\u305F\u3061\u306E\u904A\u3073\u76F8\u624B\u306B\u3061\u3087\u3046\u3069\u3044\u3044\u3002"
+    en: It heals right away when it falls, so it is a perfect playmate for the kids.
+  - key: bestiary.4.after
+    ja: "\u3046\u308C\u3057\u3044\u3068\u3075\u304F\u3089\u3080\u3002\u7834\u88C2\u306F\u3057\u306A\u304F\u306A\u3063\u305F\u3002"
+    en: It puffs up when it is happy. It does not burst anymore.
+  - key: bestiary.5.after
+    ja: "\u5206\u304B\u308C\u305F\u5B50\u305F\u3061\u306F\u3001\u305D\u308C\u305E\u308C\u5225\u306E\u540D\u524D\u3067\u547C\u3070\u308C\u305F\u3044\u3089\u3057\u3044\u3002"
+    en: The little ones that split off each want their own name.
+  - key: bestiary.6.after
+    ja: "\u3068\u304D\u3069\u304D\u900F\u3051\u308B\u306E\u306F\u3001\u7167\u308C\u3066\u3044\u308B\u3068\u304D\u3060\u3068\u308F\u304B\u3063\u305F\u3002"
+    en: Turns out it goes see-through when it is embarrassed.
+  - key: bestiary.7.after
+    ja: "\u4E2D\u3067\u5BDD\u3066\u3044\u305F\u5B50\u304C\u8D77\u304D\u3066\u304D\u3066\u3001\u81EA\u5206\u3067\u51FA\u3066\u304D\u305F\u3002"
+    en: The one sleeping inside woke up and let itself out.
+  - key: bestiary.8.after
+    ja: "\u4E2D\u8EAB\u3092\u304F\u308C\u308B\u3088\u3046\u306B\u306A\u3063\u305F\u3002\u524D\u3088\u308A\u5C11\u3057\u3060\u3051\u591A\u3044\u3002"
+    en: It gives me what is inside now. A little more than before.
+  - key: bestiary.9.after
+    ja: "\u77F3\u306F\u77F3\u306E\u307E\u307E\u3060\u3063\u305F\u3002\u3067\u3082\u3001\u30DC\u30FC\u30EB\u3092\u5F53\u3066\u308B\u3068\u3046\u308C\u3057\u305D\u3046\u306A\u6C17\u304C\u3059\u308B\u3002"
+    en: The stone is still a stone. But it seems happy when the ball hits it.
+  - key: bestiary.101.after
+    ja: "\u5927\u304D\u3044\u306E\u3067\u3001\u96E8\u306E\u65E5\u306F\u5098\u306E\u4EE3\u308F\u308A\u306B\u306A\u3063\u3066\u304F\u308C\u308B\u3002"
+    en: It is big, so on rainy days it stands in for an umbrella.
+  - key: bestiary.102.after
+    ja: "\u7532\u7F85\u306E\u4E0A\u304C\u3001\u3061\u3087\u3046\u3069\u3044\u3044\u663C\u5BDD\u306E\u5834\u6240\u306B\u306A\u3063\u305F\u3002"
+    en: The top of its shell became the perfect nap spot.
+  - key: bestiary.103.after
+    ja: "\u4F55\u5EA6\u3067\u3082\u6CBB\u308B\u306E\u3067\u3001\u307F\u3093\u306A\u306E\u7DF4\u7FD2\u76F8\u624B\u3092\u5F15\u304D\u53D7\u3051\u3066\u304F\u308C\u3066\u3044\u308B\u3002"
+    en: It heals no matter what, so it volunteers as everyone's practice partner.

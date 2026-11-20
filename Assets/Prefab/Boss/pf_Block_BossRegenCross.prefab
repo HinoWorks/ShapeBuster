@@ -109,6 +109,7 @@ MonoBehaviour:
   solid: 0
   weight: 0
   hpScale: 2.13
+  bestiaryId: 103
   bodyColor: {r: 0.64, g: 0.72, b: 0.6, a: 1}
   bossIndex: 12
   armorBottom: 0

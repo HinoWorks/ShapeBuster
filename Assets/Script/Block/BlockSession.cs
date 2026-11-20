@@ -372,9 +372,11 @@ public class BlockSession : MonoBehaviour
 
     /// <summary>
     /// 壊した位置へ資源を落とす。カーソルが触れるまで獲得にならない。
-    /// burst なら、壊した位置から周りへ弾け飛ばす（宝箱）。飛び終わるまでは拾えない。
+    /// 資源は壊した位置から、散らばる先へ弧を描いて弾け飛ぶ。
+    /// - 普通：弧は低く、0.2〜0.35 秒で着地する。飛んでいる間も拾える。
+    /// - chest（宝箱）：広く・高く・ゆっくり飛ばす。飛び終わるまでは拾えない。
     /// </summary>
-    public void DropResources(Vector3 point, int count, ResourceType type = ResourceType.AA, bool burst = false)
+    public void DropResources(Vector3 point, int count, ResourceType type = ResourceType.AA, bool chest = false)
     {
         var manager = EnemyGenerateManager.Inst;
         if (manager == null) return;
@@ -384,8 +386,8 @@ public class BlockSession : MonoBehaviour
 
         // 数が多いほど広く散らす。ひまわりの種の並び（黄金角）で置き、固まらないようにする。
         float radius = Mathf.Min(0.2f + 0.18f * Mathf.Sqrt(count - 1), 1.6f);
-        // 弾け飛ぶときは、勢いが見えるように少し遠くまで飛ばす。
-        if (burst)
+        // 宝箱は、勢いが見えるように少し遠くまで飛ばす。
+        if (chest)
             radius = Mathf.Max(0.7f, radius * 1.3f);
         float turn = Random.value * Mathf.PI * 2f;
         float margin = 0.15f;
@@ -402,18 +404,20 @@ public class BlockSession : MonoBehaviour
             }
             var spot = point + (Vector3)offset;
             spot.x = Mathf.Clamp(spot.x, fieldLeft + margin, fieldRight - margin);
-            if (!burst)
-            {
-                manager.SpawnLooseResource(spot, type, BlockFallSpeed);
-                continue;
-            }
-
             spot.y = Mathf.Clamp(spot.y, deadlineY + margin * 2f, ceilingY - margin * 2f);
+
             // 遠くへ飛ぶものほど時間をかけ、弧も高くする。少しずつばらして、一斉に止まらないようにする。
             float reach = offset.magnitude / Mathf.Max(0.01f, radius);
-            float duration = Mathf.Lerp(0.32f, 0.55f, reach) * Random.Range(0.9f, 1.1f);
+            float duration;
             float arc = Mathf.Lerp(0.25f, 0.7f, reach) * Random.Range(0.8f, 1.2f);
-            manager.SpawnBurstResource(point, spot, type, BlockFallSpeed, duration, arc);
+            if (chest)
+                duration = Mathf.Lerp(0.32f, 0.55f, reach) * Random.Range(0.9f, 1.1f);
+            else
+            {
+                duration = Mathf.Lerp(0.2f, 0.35f, reach) * Random.Range(0.95f, 1.05f);
+                arc *= 0.5f;
+            }
+            manager.SpawnBurstResource(point, spot, type, BlockFallSpeed, duration, arc, !chest);
         }
     }
 
