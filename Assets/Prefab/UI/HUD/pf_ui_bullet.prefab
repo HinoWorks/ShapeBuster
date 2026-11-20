@@ -356,7 +356,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5393596402553381975}
-  - component: {fileID: 2285128234659299872}
   m_Layer: 5
   m_Name: pf_ui_bullet
   m_TagString: Untagged
@@ -387,20 +386,6 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: 25}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 1, y: 0}
---- !u!114 &2285128234659299872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7283325863045457401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3204e9a733645d1b912e258b9392e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UI_HUD_MagazineInfo
-  tmp_magazine: {fileID: 8171587789809944263}
-  tmp_bulletTotal: {fileID: 6603067602666063580}
 --- !u!1 &9042303696215938998
 GameObject:
   m_ObjectHideFlags: 0

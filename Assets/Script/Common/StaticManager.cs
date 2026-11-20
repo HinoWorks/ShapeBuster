@@ -68,6 +68,8 @@ public class StaticManager : MonoBehaviour
 
     public static string Get_BigintegerToString(BigInteger _coin)
     {
+        if (GameOptions.Notation == NumberNotation.Scientific)
+            return Get_BigintegerToScientific(_coin);
         if (_coin / Get_Num(3) < 1)
         {
             return (_coin.ToString());
@@ -102,6 +104,16 @@ public class StaticManager : MonoBehaviour
             float st_coin = (float)(_coin / Get_Num(17)) / 10f;
             return (st_coin.ToString("f1") + "Qa");
         }
+    }
+
+    /// <summary>指数で書く（1000 未満はそのまま。例：12345 → 1.23e4）。</summary>
+    public static string Get_BigintegerToScientific(BigInteger _coin)
+    {
+        if (BigInteger.Abs(_coin) < 1000) return _coin.ToString();
+        string sign = _coin < 0 ? "-" : "";
+        string digits = BigInteger.Abs(_coin).ToString();
+        int exponent = digits.Length - 1;
+        return sign + digits[0] + "." + digits.Substring(1, 2) + "e" + exponent;
     }
 
     public static (float num, string unit, int unitInt) Get_BigintegerToUnit(BigInteger _coin)

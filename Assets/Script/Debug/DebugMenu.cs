@@ -494,5 +494,22 @@ public static class DebugMenu
         {
             ConvertMine.DebugFinishDeposit();
         }
+
+        [Category("ワクチン")]
+        [SRDebugger.Sort(0)]
+        public bool ワクチンを撒いた
+        {
+            get => VaccineRuntime.Cleared;
+            // 撒いたことにするときは、ゲージも満タンにする（撒いたのに空、という状態を作らない）。
+            set => VaccineRuntime.DebugSet(value ? VaccineRuntime.PourCount : VaccineRuntime.Pours, value);
+        }
+
+        [Category("ワクチン")]
+        [SRDebugger.Sort(1)]
+        public void ゲージを満タンにする() => VaccineRuntime.DebugSet(VaccineRuntime.PourCount, VaccineRuntime.Cleared);
+
+        [Category("ワクチン")]
+        [SRDebugger.Sort(2)]
+        public void ワクチンを最初に戻す() => VaccineRuntime.DebugSet(0, false);
     }
 }

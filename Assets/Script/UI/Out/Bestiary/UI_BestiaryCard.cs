@@ -12,6 +12,8 @@ public class UI_BestiaryCard : MonoBehaviour
     [SerializeField] HButton button;
     [SerializeField] Image image_portrait;
     [SerializeField] TextMeshProUGUI tmp_name;
+    [Tooltip("研究 Lv の表示のまとまり（背景と tmp_level）。Lv を出さないとき（未発見・ボス）はまとめて隠す")]
+    [SerializeField] GameObject obj_level;
     [SerializeField] TextMeshProUGUI tmp_level;
     [Tooltip("発見して、まだ詳細を開いていないときに出す")]
     [SerializeField] GameObject obj_new;
@@ -45,6 +47,14 @@ public class UI_BestiaryCard : MonoBehaviour
         }
     }
 
+    /// <summary>Lv の表示を出すか隠す。obj_level が無いプレハブでは tmp_level だけを切り替える。</summary>
+    void SetLevelVisible(bool visible)
+    {
+        var target = obj_level != null ? obj_level : (tmp_level != null ? tmp_level.gameObject : null);
+        if (target != null && target.activeSelf != visible)
+            target.SetActive(visible);
+    }
+
     public void Refresh(bool selected)
     {
         var data = BestiaryRuntime.Data(Id);
@@ -58,13 +68,10 @@ public class UI_BestiaryCard : MonoBehaviour
             Loc.UseFont(tmp_name);
             tmp_name.SetText(found ? UI_BestiaryManager.NameOf(Id) : "???");
         }
-        if (tmp_level != null)
-        {
-            bool showLevel = found && data != null && !data.boss && data.MaxLevel > 0;
-            tmp_level.gameObject.SetActive(showLevel);
-            if (showLevel)
-                tmp_level.SetText(state.level >= data.MaxLevel ? "Lv MAX" : $"Lv {state.level}/{data.MaxLevel}");
-        }
+        bool showLevel = found && data != null && !data.boss && data.MaxLevel > 0;
+        SetLevelVisible(showLevel);
+        if (showLevel && tmp_level != null)
+            tmp_level.SetText(state.level >= data.MaxLevel ? "Lv.MAX" : $"Lv.{state.level}/{data.MaxLevel}");
         if (obj_new != null)
             obj_new.SetActive(found && !state.seen);
         if (obj_ready != null)
@@ -75,4 +82,47 @@ public class UI_BestiaryCard : MonoBehaviour
         if (obj_selected != null)
             obj_selected.SetActive(selected);
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 編集用。data の敵を見つけて Lv まで研究した見た目の文と絵を入れる。data が null なら未発見（???）。
+    /// 印（NEW・研究できる・選択中）は表示を切り替えない。
+    /// </summary>
+    public void EditorPreview(BestiaryData data, int level)
+    {
+        var targets = new UnityEngine.Object[] { image_portrait, tmp_name, tmp_level };
+        foreach (var target in targets)
+            if (target != null) UnityEditor.Undo.RecordObject(target, "図鑑のダミー");
+
+        bool found = data != null;
+        if (image_portrait != null)
+        {
+            image_portrait.sprite = found ? UI_BestiaryManager.Portrait(data.id) : null;
+            image_portrait.preserveAspect = true;
+            image_portrait.color = found ? Color.white : Silhouette;
+        }
+        if (tmp_name != null)
+        {
+            Loc.UseFont(tmp_name);
+            tmp_name.text = found ? UI_BestiaryManager.NameOf(data.id) : "???";
+        }
+        bool showLevel = found && !data.boss && data.MaxLevel > 0;
+        var levelTarget = obj_level != null ? obj_level : (tmp_level != null ? tmp_level.gameObject : null);
+        if (levelTarget != null)
+        {
+            UnityEditor.Undo.RecordObject(levelTarget, "図鑑のダミー");
+            levelTarget.SetActive(showLevel);
+            UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(levelTarget);
+        }
+        if (tmp_level != null && showLevel)
+            tmp_level.text = level >= data.MaxLevel ? "Lv.MAX" : $"Lv.{level}/{data.MaxLevel}";
+
+        foreach (var target in targets)
+        {
+            if (target == null) continue;
+            UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(target);
+            UnityEditor.EditorUtility.SetDirty(target);
+        }
+    }
+#endif
 }

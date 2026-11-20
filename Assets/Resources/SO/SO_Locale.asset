@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_Locale
   m_EditorClassIdentifier: Assembly-CSharp::SO_Locale
   fontJa: {fileID: 11400000, guid: d3399c67e22c2414ebe423d9bdc7d9e6, type: 2}
-  fontEn: {fileID: 11400000, guid: bad75bf4e316a43749f9df1a5595fce3, type: 2}
+  fontEn: {fileID: 11400000, guid: 46b52484d153b45519319348a613a01c, type: 2}
   entries:
   - key: ui.result.clear
     ja: "\u30B9\u30C6\u30FC\u30B8\u30AF\u30EA\u30A2"
@@ -1654,3 +1654,109 @@ MonoBehaviour:
   - key: bestiary.103.after
     ja: "\u4F55\u5EA6\u3067\u3082\u6CBB\u308B\u306E\u3067\u3001\u307F\u3093\u306A\u306E\u7DF4\u7FD2\u76F8\u624B\u3092\u5F15\u304D\u53D7\u3051\u3066\u304F\u308C\u3066\u3044\u308B\u3002"
     en: It heals no matter what, so it volunteers as everyone's practice partner.
+  - key: option.open
+    ja: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+    en: Options
+  - key: option.title
+    ja: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+    en: Options
+  - key: option.close
+    ja: "\u3068\u3058\u308B"
+    en: Close
+  - key: option.section.sound
+    ja: "\u30B5\u30A6\u30F3\u30C9"
+    en: Sound
+  - key: option.section.display
+    ja: "\u8868\u793A"
+    en: Display
+  - key: option.section.effect
+    ja: "\u6F14\u51FA"
+    en: Effects
+  - key: option.section.game
+    ja: "\u30B2\u30FC\u30E0"
+    en: Game
+  - key: option.section.data
+    ja: "\u30C7\u30FC\u30BF"
+    en: Data
+  - key: option.volume.master
+    ja: "\u5168\u4F53\u306E\u97F3\u91CF"
+    en: Master Volume
+  - key: option.volume.bgm
+    ja: "BGM \u306E\u97F3\u91CF"
+    en: BGM Volume
+  - key: option.volume.se
+    ja: "\u52B9\u679C\u97F3\u306E\u97F3\u91CF"
+    en: SE Volume
+  - key: option.mute
+    ja: "\u6D88\u97F3"
+    en: Mute
+  - key: option.language
+    ja: "\u8A00\u8A9E"
+    en: Language
+  - key: option.screen
+    ja: "\u753B\u9762\u30E2\u30FC\u30C9"
+    en: Screen Mode
+  - key: option.screen.full
+    ja: "\u30D5\u30EB\u30B9\u30AF\u30EA\u30FC\u30F3"
+    en: Fullscreen
+  - key: option.screen.window
+    ja: "\u30A6\u30A3\u30F3\u30C9\u30A6"
+    en: Windowed
+  - key: option.frameRate
+    ja: "\u30D5\u30EC\u30FC\u30E0\u30EC\u30FC\u30C8"
+    en: Frame Rate
+  - key: option.frameRate.vsync
+    ja: "\u30E2\u30CB\u30BF\u30FC\u306B\u5408\u308F\u305B\u308B"
+    en: Match Monitor
+  - key: option.notation
+    ja: "\u6570\u5B57\u306E\u8868\u3057\u65B9"
+    en: Number Format
+  - key: option.notation.short
+    ja: "1.2K\uFF08\u5358\u4F4D\uFF09"
+    en: 1.2K (Units)
+  - key: option.notation.scientific
+    ja: "1.20e3\uFF08\u6307\u6570\uFF09"
+    en: 1.20e3 (Scientific)
+  - key: option.shake
+    ja: "\u753B\u9762\u306E\u63FA\u308C"
+    en: Screen Shake
+  - key: option.damageNumber
+    ja: "\u30C0\u30E1\u30FC\u30B8\u306E\u6570\u5B57"
+    en: Damage Numbers
+  - key: option.background
+    ja: "\u88CF\u3067\u3082\u52D5\u304B\u3059"
+    en: Run in Background
+  - key: option.on
+    ja: "\u30AA\u30F3"
+    en: On
+  - key: option.off
+    ja: "\u30AA\u30D5"
+    en: Off
+  - key: option.save
+    ja: "\u4ECA\u3059\u3050\u4FDD\u5B58"
+    en: Save Now
+  - key: option.save.done
+    ja: "\u4FDD\u5B58\u3057\u307E\u3057\u305F"
+    en: Saved
+  - key: option.delete
+    ja: "\u30C7\u30FC\u30BF\u3092\u6D88\u3059"
+    en: Delete Data
+  - key: option.delete.confirm
+    ja: "\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u3092\u5168\u90E8\u6D88\u3057\u307E\u3059\u3002\u3082\u3068\u306B\u306F\u623B\u305B\u307E\u305B\u3093\u3002\\n\uFF08\u97F3\u91CF\u3084\u8A00\u8A9E\u306A\u3069\u306E\u8A2D\u5B9A\u306F\u6B8B\u308A\u307E\u3059\uFF09\\n\u6D88\u3057\u305F\u3042\u3068\u3001\u30B2\u30FC\u30E0\u3092\u7D42\u4E86\u3057\u307E\u3059\u3002"
+    en: All save data will be deleted. This cannot be undone.\n(Settings such as
+      volume and language are kept.)\nThe game will close afterward.
+  - key: option.delete.yes
+    ja: "\u6D88\u3059"
+    en: Delete
+  - key: option.delete.no
+    ja: "\u3084\u3081\u308B"
+    en: Cancel
+  - key: option.delete.done
+    ja: "\u30C7\u30FC\u30BF\u3092\u6D88\u3057\u307E\u3057\u305F\u3002\u30B2\u30FC\u30E0\u3092\u7D42\u4E86\u3057\u307E\u3059\u3002"
+    en: Data deleted. Closing the game.
+  - key: option.quit
+    ja: "\u30B2\u30FC\u30E0\u3092\u7D42\u4E86"
+    en: Quit Game
+  - key: option.version
+    ja: "\u30D0\u30FC\u30B8\u30E7\u30F3 {0}"
+    en: Version {0}

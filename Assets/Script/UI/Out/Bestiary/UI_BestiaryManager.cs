@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// アウトゲームのゾンビ図鑑タブ。左に雑魚とボスのカードを並べ、右に選んだ項目の詳細を出す。
 /// 中身は SO_BestiaryData の並び順。進み具合は BestiaryRuntime から読む。
 /// 敵の絵は Resources/Bestiary/bestiary_&lt;id&gt;（Tools → ゾンビ図鑑 → 敵の絵を書き出す で作る）。
+/// 一覧の mobGrid・bossGrid にシーンで置いたカードは、編集用の仮置き。実行時にカードを作る前に消す。
+/// 編集用のダミー文章は、インスペクターの右上メニュー「編集用のダミーを入れる」で入れ直せる。
 /// </summary>
 public class UI_BestiaryManager : MonoBehaviour
 {
@@ -122,6 +124,10 @@ public class UI_BestiaryManager : MonoBehaviour
         var entries = table != null ? table.entries : null;
         if (entries == null) return;
 
+        // シーンに仮置きしたカード（編集用）は消してから作る。
+        ClearPlaceholders(mobGrid);
+        ClearPlaceholders(bossGrid);
+
         foreach (var entry in entries)
         {
             if (entry == null || cardPrefab == null) continue;
@@ -132,6 +138,19 @@ public class UI_BestiaryManager : MonoBehaviour
             card.name = "card_" + entry.id;
             card.Setup(entry.id, Select);
             cards.Add(card);
+        }
+    }
+
+    static void ClearPlaceholders(RectTransform grid)
+    {
+        if (grid == null) return;
+        for (int i = grid.childCount - 1; i >= 0; i--)
+        {
+            var child = grid.GetChild(i);
+            if (child.GetComponent<UI_BestiaryCard>() == null) continue;
+            // 同じフレームのうちにレイアウトから外すため、親から外してから消す。
+            child.SetParent(null, false);
+            Destroy(child.gameObject);
         }
     }
 
@@ -194,7 +213,7 @@ public class UI_BestiaryManager : MonoBehaviour
             SetText(tmp_count, CountText(data, state));
             SetText(tmp_effect, EffectText(data, state.level));
         }
-        SetText(tmp_diary, DiaryText(data, state));
+        SetText(tmp_diary, DiaryText(data, state, VaccineRuntime.Cleared));
         RefreshResearch();
     }
 
@@ -280,7 +299,7 @@ public class UI_BestiaryManager : MonoBehaviour
     /// 観察日記。発見したときの日記に、研究 Lv の数だけ行を足していく。
     /// ワクチンを撒いたあとは、最後に「そのあと」の一行（bestiary.&lt;id&gt;.after）を足す。
     /// </summary>
-    static string DiaryText(BestiaryData data, BestiaryEntryState state)
+    static string DiaryText(BestiaryData data, BestiaryEntryState state, bool withAfter)
     {
         var sb = new StringBuilder();
         int lines = data.boss ? 0 : Mathf.Min(state.level, data.MaxLevel);
@@ -291,7 +310,7 @@ public class UI_BestiaryManager : MonoBehaviour
             if (sb.Length > 0) sb.Append("\n\n");
             sb.Append(line);
         }
-        if (VaccineRuntime.Cleared)
+        if (withAfter)
         {
             string after = Loc.Content("bestiary." + data.id + ".after", "");
             if (!string.IsNullOrEmpty(after))
@@ -309,4 +328,86 @@ public class UI_BestiaryManager : MonoBehaviour
         Loc.UseFont(label);
         label.SetText(text);
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 編集用。実際に出る文と同じ作りのダミーを、シーンの文字とカードに入れる（実行すると本物で上書きされる）。
+    /// 詳細は、文が一番長くなる形（最初の雑魚の、最大の一つ手前の Lv。「そのあと」の一行つき）にする。
+    /// </summary>
+    [ContextMenu("編集用のダミーを入れる")]
+    public void FillDummy()
+    {
+        var table = SOLoader.BestiaryData;
+        var entries = table != null ? table.entries : null;
+        if (entries == null) return;
+
+        BestiaryData mob = null;
+        var mobs = new List<BestiaryData>();
+        var bosses = new List<BestiaryData>();
+        foreach (var entry in entries)
+        {
+            if (entry == null) continue;
+            if (entry.boss) bosses.Add(entry);
+            else
+            {
+                mobs.Add(entry);
+                if (mob == null && entry.MaxLevel > 0) mob = entry;
+            }
+        }
+        if (mob == null) return;
+
+        int level = Mathf.Max(1, mob.MaxLevel - 1);
+        long now = mob.Requirement(level);
+        long next = mob.Requirement(level + 1);
+        var state = new BestiaryEntryState { id = mob.id, found = true, seen = true, level = level, count = now + (next - now) / 2 };
+
+        var labels = new Object[] { tmp_mobTitle, tmp_bossTitle, tmp_name, tmp_level, tmp_count, tmp_effect, tmp_diary, tmp_research, image_portrait };
+        foreach (var label in labels)
+            if (label != null) UnityEditor.Undo.RecordObject(label, "図鑑のダミー");
+
+        if (tmp_mobTitle != null) SetText(tmp_mobTitle, Loc.Text("bestiary.section.mob"));
+        if (tmp_bossTitle != null) SetText(tmp_bossTitle, Loc.Text("bestiary.section.boss"));
+        if (image_portrait != null)
+        {
+            image_portrait.sprite = Portrait(mob.id);
+            image_portrait.preserveAspect = true;
+            image_portrait.color = Color.white;
+        }
+        SetText(tmp_name, NameOf(mob.id));
+        SetText(tmp_level, Loc.Format("bestiary.level", state.level, mob.MaxLevel));
+        SetText(tmp_count, CountText(mob, state));
+        SetText(tmp_effect, EffectText(mob, state.level));
+        SetText(tmp_diary, DiaryText(mob, state, true));
+        if (tmp_research != null)
+        {
+            SetText(tmp_research, Loc.Format("bestiary.research", mob.Cost(state.level + 1)));
+            tmp_research.color = ResearchReady;
+        }
+        foreach (var label in labels)
+        {
+            if (label == null) continue;
+            UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(label);
+            UnityEditor.EditorUtility.SetDirty(label);
+        }
+
+        FillDummyCards(mobGrid, mobs);
+        FillDummyCards(bossGrid, bosses);
+    }
+
+    /// <summary>仮置きのカードに、並び順どおりの敵を入れる。敵より多いカードは「???」（未発見）にする。</summary>
+    static void FillDummyCards(RectTransform grid, List<BestiaryData> list)
+    {
+        if (grid == null) return;
+        int index = 0;
+        foreach (Transform child in grid)
+        {
+            var card = child.GetComponent<UI_BestiaryCard>();
+            if (card == null) continue;
+            var data = index < list.Count ? list[index] : null;
+            int level = data != null && !data.boss ? Mathf.Clamp(index, 0, data.MaxLevel) : 0;
+            card.EditorPreview(data, level);
+            index++;
+        }
+    }
+#endif
 }

@@ -179,8 +179,8 @@ public class UI_VaccineManager : MonoBehaviour
 
     void OnClickSpread()
     {
-        if (!VaccineRuntime.IsFull || VaccineRuntime.Cleared) return;
-        VaccineEnding.Play();
+        if (!VaccineEnding.Play())
+            SoundManager.SE(SEType.UI_Error);
     }
 
     static void SetText(TextMeshProUGUI label, string text)

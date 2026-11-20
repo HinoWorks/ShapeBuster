@@ -653,6 +653,27 @@ public class BlockSession : MonoBehaviour
     /// <summary>
     /// 壁プレハブで矩形を塗る。跳ね返る面は内側の縁。solid のときだけ当たり判定を残す。
     /// </summary>
+    static readonly int EdgeXId = Shader.PropertyToID("_EdgeX");
+    static readonly int CuredId = Shader.PropertyToID("_Cured");
+
+    /// <summary>
+    /// 左右の帯（FieldSide シェーダー）に、フィールドに接する側の x を渡す。内側のふちをほんのり光らせるのに使う。
+    /// 帯の本体（一番上の SpriteRenderer）だけに渡し、子の線には触らない。
+    /// </summary>
+    void MarkWallEdge(GameObject wall, float xMin, float xMax)
+    {
+        var fill = wall.GetComponent<SpriteRenderer>();
+        if (fill == null || fill.sharedMaterial == null || !fill.sharedMaterial.HasProperty(EdgeXId)) return;
+        float middle = (fieldLeft + fieldRight) * 0.5f;
+        float edge = Mathf.Abs(xMin - middle) < Mathf.Abs(xMax - middle) ? xMin : xMax;
+        var block = new MaterialPropertyBlock();
+        fill.GetPropertyBlock(block);
+        block.SetFloat(EdgeXId, edge);
+        // ワクチンを撒く前と後で、帯の粒を変える（前は灰が降る、後は光が昇る）。
+        block.SetFloat(CuredId, VaccineRuntime.Cleared ? 1f : 0f);
+        fill.SetPropertyBlock(block);
+    }
+
     void PlaceWallFill(GameObject prefab, float xMin, float xMax, float yMin, float yMax, bool solid)
     {
         float width = xMax - xMin;
@@ -679,6 +700,7 @@ public class BlockSession : MonoBehaviour
         var instance = Instantiate(prefab);
         instance.transform.position = new Vector3(center.x, center.y, prefab.transform.localPosition.z);
         instance.transform.localScale = new Vector3(xSign * width, ySign * height, authored.z == 0f ? 1f : authored.z);
+        MarkWallEdge(instance, xMin, xMax);
 
         var colliders = instance.GetComponentsInChildren<BoxCollider2D>(true);
         if (!solid)

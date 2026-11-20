@@ -63,7 +63,7 @@ public class UI_DamageNumberPool : MonoBehaviour
 
     public static void Show(Vector2 world, int damage, int ballKind, bool critical)
     {
-        if (damage <= 0) return;
+        if (damage <= 0 || !GameOptions.DamageNumbers) return;
         Inst?.Spawn(world, damage, ballKind, critical);
     }
 

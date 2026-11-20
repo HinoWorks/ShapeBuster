@@ -61,6 +61,8 @@ public class CameraManager : MonoBehaviour
 
     public void Shake(CameraShakeLevel level)
     {
+        // オプションで画面の揺れを切っているときは揺らさない。
+        if (!GameOptions.ScreenShake) return;
         var preset = Resolve(level);
         if (preset.amplitude <= 0f || preset.duration <= 0f) return;
 

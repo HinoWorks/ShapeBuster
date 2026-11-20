@@ -282,8 +282,18 @@ public static class ConvertMine
         return BigInteger.Zero;
     }
 
+    /// <summary>変換のセーブ（PlayerPrefs）を消す。データを全部消すときに SaveLoader から呼ぶ。</summary>
+    public static void DeleteSave()
+    {
+        PlayerPrefs.DeleteKey(KeyDeposited);
+        PlayerPrefs.DeleteKey(KeyCredit);
+        PlayerPrefs.DeleteKey(KeyLevel);
+        PlayerPrefs.Save();
+    }
+
     static void Save()
     {
+        if (SaveLoader.SaveBlocked) return;
         PlayerPrefs.SetString(KeyDeposited, deposited.ToString());
         PlayerPrefs.SetString(KeyCredit, credit.ToString());
         PlayerPrefs.SetInt(KeyLevel, speedLevel);

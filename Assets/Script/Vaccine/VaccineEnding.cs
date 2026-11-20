@@ -49,11 +49,24 @@ public static class VaccineEnding
 
     public static bool Playing { get; private set; }
 
-    public static void Play()
+    /// <summary>
+    /// 撒く演出を始める。始められたら true。
+    /// 撒けるのは一度だけ。画面の切り替え中やアウトゲーム以外では始めない（クリアも記録しない）。
+    /// </summary>
+    public static bool Play()
     {
-        // 撒けるのは一度だけ。
-        if (Playing || !VaccineRuntime.IsFull || VaccineRuntime.Cleared) return;
+        if (!CanPlay()) return false;
         PlayAsync().Forget();
+        return true;
+    }
+
+    public static bool CanPlay()
+    {
+        if (Playing || !VaccineRuntime.IsFull || VaccineRuntime.Cleared) return false;
+        var watcher = GameWatcher.Inst;
+        if (watcher == null) return false;
+        if (watcher.IsChangingScreen || watcher.currentGameState != GameStateType.OutGame) return false;
+        return true;
     }
 
     static async UniTaskVoid PlayAsync()

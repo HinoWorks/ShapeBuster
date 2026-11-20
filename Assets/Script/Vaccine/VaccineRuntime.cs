@@ -109,15 +109,13 @@ public static class VaccineRuntime
     }
     #endregion
 
-#if UNITY_EDITOR
-    /// <summary>試すとき用。進み具合を直接決める。</summary>
+    /// <summary>試すとき用（デバッグメニューから使う）。進み具合を直接決めて保存する。</summary>
     public static void DebugSet(int newPours, bool newCleared)
     {
         pours = Mathf.Clamp(newPours, 0, PourCount);
         cleared = newCleared;
         Touch();
     }
-#endif
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void ResetOnPlay()

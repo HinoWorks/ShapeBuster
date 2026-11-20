@@ -1353,7 +1353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AD\u30E3\u30C3\u30C1"
+      value: Ball Catch
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -1365,7 +1365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AD\u30E3\u30C3\u30C1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -1377,7 +1377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.cost_AA
-      value: 40
+      value: 15000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
@@ -1965,7 +1965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Reverse Pulse
+      value: "\u9006\u3055\u306E\u8108"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -2807,7 +2807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Whisper
+      value: "\u3055\u3055\u3084\u304D"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -4298,7 +4298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Blurred Edge
+      value: "\u306B\u3058\u3080\u5883\u754C"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -5648,7 +5648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Nameless Door
+      value: "\u540D\u3082\u306A\u3044\u6249"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -10772,7 +10772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.00000004371139
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -10784,15 +10784,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -700
+      value: 3300
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 400
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10812,11 +10812,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 1100
+      value: 9006
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 1031
+      value: 9005
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -11588,7 +11588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Empty Cage
+      value: "\u7A7A\u3063\u307D\u306E\u6ABB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -11793,7 +11793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Vaccine Lab
+      value: "\u30EF\u30AF\u30C1\u30F3\u7814\u7A76\u6240"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -11841,7 +11841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
@@ -11998,7 +11998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
+      value: Orbit +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12010,7 +12010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12195,7 +12195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30D8\u30D3\u30FC\uFF0B1"
+      value: Heavy +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12207,7 +12207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30D8\u30D3\u30FC\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12392,7 +12392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
+      value: Poison +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12404,7 +12404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12593,7 +12593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AF\u30ED\u30B9\uFF0B1"
+      value: Cross +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12605,7 +12605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AF\u30ED\u30B9\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12794,7 +12794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+      value: Horizontal Laser +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12806,7 +12806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12999,7 +12999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+      value: Vertical Laser +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13011,7 +13011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13200,7 +13200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DC\u30E0\uFF0B1"
+      value: Bomb +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13212,7 +13212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DC\u30E0\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13401,7 +13401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7D30\u7247"
+      value: More Block
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13413,7 +13413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7D30\u7247"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13610,7 +13610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7D30\u7247\uFF0B"
+      value: More Block+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13622,7 +13622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7D30\u7247\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13815,7 +13815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7D30\u7247\uFF0B\uFF0B"
+      value: More Block++
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13827,7 +13827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7D30\u7247\uFF0B\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14012,7 +14012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5468\u56DE\u306E\u5A01\u529B"
+      value: Orbit Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14024,7 +14024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5468\u56DE\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14213,7 +14213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
+      value: Heavy Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14225,7 +14225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14414,7 +14414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6CBC\u306E\u5A01\u529B"
+      value: Pool Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14426,7 +14426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6CBC\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14615,7 +14615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u659C\u3081\u306E\u5A01\u529B"
+      value: Diagonal Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14627,7 +14627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u659C\u3081\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14816,7 +14816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6BB5\u306E\u5A01\u529B"
+      value: Row Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14828,7 +14828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6BB5\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15021,7 +15021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5217\u306E\u5A01\u529B"
+      value: Column Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15033,7 +15033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5217\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15222,7 +15222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7206\u98A8\u306E\u5A01\u529B"
+      value: Blast Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15234,7 +15234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7206\u98A8\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15425,7 +15425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Convert
+      value: Unlock Convert
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15437,7 +15437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: Convert
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15650,7 +15650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
+      value: Unlock Milestone
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15662,7 +15662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15847,7 +15847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u885B\u661F"
+      value: Satellite
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15859,7 +15859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u885B\u661F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16052,7 +16052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
+      value: Heavy Speed
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16064,7 +16064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16257,7 +16257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6CBC\u306E\u767A\u751F"
+      value: Pool Chance
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16269,7 +16269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6CBC\u306E\u767A\u751F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16462,7 +16462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u659C\u3081\u306E\u767A\u751F"
+      value: Diagonal Chance
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16474,7 +16474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u659C\u3081\u306E\u767A\u751F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16671,7 +16671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6BB5\u306E\u767A\u751F"
+      value: Row Chance
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16683,7 +16683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6BB5\u306E\u767A\u751F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16884,7 +16884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5217\u306E\u767A\u751F"
+      value: Column Chance
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16896,7 +16896,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5217\u306E\u767A\u751F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17097,7 +17097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7206\u98A8\u306E\u767A\u751F"
+      value: Blast Chance
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17109,7 +17109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7206\u98A8\u306E\u767A\u751F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17306,7 +17306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6B8B\u7559"
+      value: Linger
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17318,7 +17318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6B8B\u7559"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17511,7 +17511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u58C1\u306E\u53CE\u91CF"
+      value: Wall Yield
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17523,7 +17523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u58C1\u306E\u53CE\u91CF"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17712,7 +17712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+      value: Orbit Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17724,7 +17724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17921,7 +17921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+      value: Heavy Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17933,7 +17933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18122,7 +18122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
+      value: Poison Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18134,7 +18134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18331,7 +18331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+      value: Cross Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18343,7 +18343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18544,7 +18544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+      value: Row Laser Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18556,7 +18556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18753,7 +18753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+      value: Laser Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18765,7 +18765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18962,7 +18962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+      value: Bomb Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18974,7 +18974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19171,7 +19171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5897\u5E45"
+      value: Amplify
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19183,7 +19183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5897\u5E45"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19745,7 +19745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u518D\u751F\u306E\u53CE\u91CF"
+      value: Regen Yield
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19757,7 +19757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u518D\u751F\u306E\u53CE\u91CF"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19958,7 +19958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u58C1\u306E\u51FA\u73FE"
+      value: Wall Spawn
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19970,7 +19970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u58C1\u306E\u51FA\u73FE"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20167,7 +20167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u78C1\u77F3"
+      value: Magnet
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20179,7 +20179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u78C1\u77F3"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20372,7 +20372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u78C1\u77F3\uFF0B"
+      value: Magnet+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20384,7 +20384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u78C1\u77F3\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20581,7 +20581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5897\u5E45\uFF0B"
+      value: Amplify+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20593,7 +20593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5897\u5E45\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20786,7 +20786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7403\u5A01"
+      value: Ball Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20798,7 +20798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7403\u5A01"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20987,7 +20987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7403\u5A01\uFF0B"
+      value: Ball Power+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20999,7 +20999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7403\u5A01\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21440,7 +21440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "EX\u30D1\u30EF\u30FC"
+      value: EX POWER
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -21452,7 +21452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "EX\u30D1\u30EF\u30FC"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21641,7 +21641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5203"
+      value: Blade
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -21653,7 +21653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5203"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21842,7 +21842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "EX\u30D1\u30EF\u30FC"
+      value: EX POWER
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -21854,7 +21854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "EX\u30D1\u30EF\u30FC"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -22035,7 +22035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u9023\u6483"
+      value: Chain Hit
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -22047,7 +22047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u9023\u6483"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -22240,7 +22240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DC\u30B9\u7279\u653B"
+      value: Boss Hunt
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -22252,7 +22252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DC\u30B9\u7279\u653B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -28629,7 +28629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u518D\u751F\u306E\u51FA\u73FE"
+      value: Regen Spawn
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -28641,7 +28641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u518D\u751F\u306E\u51FA\u73FE"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29092,7 +29092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+      value: Critical Chagnce
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29104,7 +29104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29301,7 +29301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF0B"
+      value: Critical Chagnce+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29313,7 +29313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29534,7 +29534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B"
+      value: Critical Damage
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29546,7 +29546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29743,7 +29743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B\uFF0B"
+      value: Critical Damage+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29755,7 +29755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29952,7 +29952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u7403\u901F"
+      value: Ball Speed
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29964,7 +29964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u7403\u901F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30157,7 +30157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u8D85\u7403\u901F"
+      value: More Speed
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30169,7 +30169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u8D85\u7403\u901F"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30362,7 +30362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u8D85\u7403\u901F\uFF0B"
+      value: More Speed+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30374,7 +30374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u8D85\u7403\u901F\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30559,7 +30559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30DC\u30B9\u6BBA\u3057"
+      value: Boss Killer
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30571,7 +30571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30DC\u30B9\u6BBA\u3057"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30756,7 +30756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u9023\u6483\uFF0B"
+      value: Chain Hit+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30768,7 +30768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u9023\u6483\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30805,6 +30805,10 @@ PrefabInstance:
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
       value: 1071
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[2]'
+      value: 1052
       objectReference: {fileID: 0}
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
@@ -30953,7 +30957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5148\u5236"
+      value: First Attack
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30965,7 +30969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5148\u5236"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31154,7 +31158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5148\u5236\u6483\u7834"
+      value: First Kill
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31166,7 +31170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5148\u5236\u6483\u7834"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31355,7 +31359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6B62\u3081"
+      value: Last Attack
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31367,7 +31371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6B62\u3081"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31564,7 +31568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u6B62\u3081\u6483\u7834"
+      value: Last Kill
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31576,7 +31580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u6B62\u3081\u6483\u7834"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31769,7 +31773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5168\u5F3E"
+      value: Full Stack
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31781,7 +31785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5168\u5F3E"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31978,7 +31982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5168\u5F3E\uFF0B"
+      value: Full Stack+
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31990,7 +31994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5168\u5F3E\uFF0B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32179,7 +32183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u5897\u5F3E"
+      value: More Ball
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -32191,7 +32195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u5897\u5F3E"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32620,7 +32624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30BF\u30EC\u30C3\u30C8"
+      value: Turret
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -32632,7 +32636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30BF\u30EC\u30C3\u30C8"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32829,7 +32833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u5A01\u529B"
+      value: Turret Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -32841,7 +32845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33026,7 +33030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u901F\u5EA6"
+      value: Turret Rate
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33038,7 +33042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u901F\u5EA6"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33223,7 +33227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30BF\u30EC\u30C3\u30C8\uFF0B1"
+      value: Turret +1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33235,7 +33239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30BF\u30EC\u30C3\u30C8\uFF0B1"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33420,7 +33424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
+      value: Auto Beam
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33432,7 +33436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33617,7 +33621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30D3\u30FC\u30E0\u306E\u5A01\u529B"
+      value: Beam Power
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33629,7 +33633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30D3\u30FC\u30E0\u306E\u5A01\u529B"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33814,7 +33818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
+      value: Beam Interval
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33826,7 +33830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget

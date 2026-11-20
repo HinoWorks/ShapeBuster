@@ -468,6 +468,8 @@ public class SaveLoader : MonoBehaviour
     /// </summary>
     private void EnqueueMethod(Func<UniTask> saveAction)
     {
+        // データを消したあとは、終了までに何も書かない。
+        if (SaveBlocked) return;
         if (isProcessingQueue)
         {
             RunQueueAction(saveAction);
@@ -1316,6 +1318,47 @@ public class SaveLoader : MonoBehaviour
     #endregion
 
 
+
+    #region -- オプション（保存・消去） --
+    /// <summary>データを消したあと true。終了するまで、どのセーブも書かない。</summary>
+    public static bool SaveBlocked { get; private set; }
+
+    /// <summary>まとめて書いている途中のものも含めて、今すぐ全部書き出す。</summary>
+    public void SaveNow()
+    {
+        if (SaveBlocked) return;
+        ConvertMine.Flush();
+        MilestoneRuntime.Flush();
+        BestiaryRuntime.Flush();
+        VaccineRuntime.Flush();
+        FlushQueue();
+    }
+
+    /// <summary>
+    /// セーブデータを全部消す。消したあとはセーブを止めるので、呼んだ側はそのままゲームを終了すること。
+    /// 音量・言語・オプションの設定は消さない。
+    /// </summary>
+    public void DeleteAllData()
+    {
+        SaveBlocked = true;
+        allQueue.Clear();
+        try
+        {
+            ES3.DeleteFile();
+        }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception);
+        }
+        ConvertMine.DeleteSave();
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetSaveBlocked()
+    {
+        SaveBlocked = false;
+    }
+    #endregion
 
     #region -- User Settings --
     /// <summary>
