@@ -32,6 +32,8 @@ public enum SEType
     StageFail = 113,
     /// <summary>ガラスに当たった（割れていないとき）。</summary>
     GlassHit = 114,
+    /// <summary>画面切り替えの幕が閉じ始めた。</summary>
+    Transition = 115,
 }
 
 /// <summary>

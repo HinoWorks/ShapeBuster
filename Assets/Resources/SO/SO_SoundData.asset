@@ -26,18 +26,23 @@ MonoBehaviour:
   - type: 1
     memo: Title
     volume: 0.3
+    muffle: 0.8
   - type: 2
     memo: OutGame
     volume: 0.3
+    muffle: 0.8
   - type: 3
     memo: InGame
     volume: 0.6
+    muffle: 0
   - type: 4
     memo: Boss
     volume: 0.6
+    muffle: 0
   - type: 5
     memo: Result
     volume: 0.6
+    muffle: 0
   se:
   - type: 1
     memo: UI_Click
@@ -208,3 +213,10 @@ MonoBehaviour:
     pitch: {x: 0.92, y: 1.1}
     minInterval: 0.04
     maxVoices: 3
+  - type: 115
+    memo: Transition
+    clips: []
+    volume: 0.7
+    pitch: {x: 0.97, y: 1.03}
+    minInterval: 0.3
+    maxVoices: 1

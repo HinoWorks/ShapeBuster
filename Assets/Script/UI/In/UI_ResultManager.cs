@@ -93,11 +93,11 @@ public class UI_ResultManager : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ToOutGame()
     {
-        GameWatcher.Inst.SetGameState(GameStateType.ResultEnd_ToOutGame);
+        GameWatcher.Inst.ChangeScreen(GameStateType.ResultEnd_ToOutGame);
     }
     public void OnClick_ToRetry()
     {
-        GameWatcher.Inst.SetGameState(GameStateType.ResultEnd_ToIngameReady);
+        GameWatcher.Inst.ChangeScreen(GameStateType.ResultEnd_ToIngameReady);
     }
     #endregion
 }

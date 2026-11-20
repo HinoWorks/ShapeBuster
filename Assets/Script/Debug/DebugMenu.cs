@@ -428,7 +428,7 @@ public static class DebugMenu
         {
             if (StageTimeManager.Inst == null || GameWatcher.Inst == null) return;
             StageTimeManager.Inst.SetStageIndex(stageNumber);
-            GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
+            GameWatcher.Inst.ChangeScreen(GameStateType.InGame_Ready);
         }
 
         [Category("ステージ")]

@@ -42,6 +42,14 @@ public static class GameEvent
         }
 */
 
+        /// <summary>インゲームの場（最初の列・ボール・タレット）を並べ終えた時。画面切り替えの幕はこれを待って開く。</summary>
+        private static readonly Subject<Unit> started = new();
+        public static IObservable<Unit> Started => started.AsObservable();
+        public static void PublishStarted()
+        {
+            started.OnNext(Unit.Default);
+        }
+
         /// <summary>
         /// ブロックに与えたダメージ。attackIndex は BlockBallKind。0 未満は種別なし。
         /// </summary>

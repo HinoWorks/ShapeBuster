@@ -60,7 +60,8 @@ public class StageTimeManager : MonoBehaviour
 
     void Update()
     {
-        if (isTimeRunning)
+        // 画面切り替えの幕が開ききるまでは、ステージの時間を進めない。
+        if (isTimeRunning && !BlockSession.CurtainHolds)
             stageTime += Time.deltaTime;
     }
 

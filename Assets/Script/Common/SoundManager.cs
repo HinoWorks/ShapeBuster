@@ -52,6 +52,10 @@ public class SoundManager : MonoBehaviour
     // 曇り（ローパス）の今のカットオフ周波数。場面が変わると、音量と同じ時間でそこへ寄せる。
     AudioLowPassFilter[] bgmFilters;
     float bgmCutoff = NoMuffleCutoff;
+    float sceneCutoff = NoMuffleCutoff;
+    // 画面切り替えの幕が閉じている間は、場面の曇りよりさらにこもらせる。
+    bool curtainMuffle;
+    const float CurtainCutoff = 900f;
     const float NoMuffleCutoff = 22000f;
     const string CutoffTweenId = "SoundManager.BgmCutoff";
     bool paused;
@@ -99,13 +103,17 @@ public class SoundManager : MonoBehaviour
         bgmFilters = new AudioLowPassFilter[2];
         for (int i = 0; i < 2; i++)
         {
+            // 有効なまま部品を足すと、曲のない音源で再生が走って警告が出るので、組み立ててから有効にする。
             var child = new GameObject("BGM_" + i);
+            child.SetActive(false);
             child.transform.SetParent(transform, false);
             bgmSources[i] = child.AddComponent<AudioSource>();
             bgmSources[i].playOnAwake = false;
             bgmSources[i].loop = false;
             bgmSources[i].spatialBlend = 0f;
             bgmFilters[i] = child.AddComponent<AudioLowPassFilter>();
+            bgmFilters[i].enabled = false;
+            child.SetActive(true);
         }
         ApplyCutoff();
         LoadSettings();
@@ -249,7 +257,8 @@ public class SoundManager : MonoBehaviour
         currentBGM = type;
         sceneVolume = setting != null ? setting.volume : 1f;
         bgmStopped = false;
-        FadeCutoff(setting != null ? setting.Cutoff : NoMuffleCutoff, fadeDuration);
+        sceneCutoff = setting != null ? setting.Cutoff : NoMuffleCutoff;
+        FadeCutoff(TargetCutoff(), fadeDuration);
 
         var front = bgmSources[bgmFront];
         if (currentTrack < 0 || front.clip == null)
@@ -259,6 +268,18 @@ public class SoundManager : MonoBehaviour
         }
         front.DOKill();
         front.DOFade(BGMTargetVolume(bgmFront), fadeDuration).SetUpdate(true);
+    }
+
+    /// <summary>画面切り替えの幕が閉じている間、BGM をこもらせる。開くと場面の曇りへ戻る。</summary>
+    public void SetCurtainMuffle(bool on, float duration)
+    {
+        curtainMuffle = on;
+        FadeCutoff(TargetCutoff(), duration);
+    }
+
+    float TargetCutoff()
+    {
+        return curtainMuffle ? Mathf.Min(sceneCutoff, CurtainCutoff) : sceneCutoff;
     }
 
     void FadeCutoff(float target, float duration)
@@ -286,11 +307,13 @@ public class SoundManager : MonoBehaviour
     {
         if (bgmFilters == null) return;
         // 曇らせないときはフィルターを切って、処理を省く。
+        // 曲の入っていない音源でフィルターだけを有効にすると Unity が警告を出すので、そのときも切る。
         bool on = bgmCutoff < NoMuffleCutoff - 1f;
-        foreach (var filter in bgmFilters)
+        for (int i = 0; i < bgmFilters.Length; i++)
         {
+            var filter = bgmFilters[i];
             if (filter == null) continue;
-            filter.enabled = on;
+            filter.enabled = on && bgmSources[i] != null && bgmSources[i].clip != null;
             filter.cutoffFrequency = bgmCutoff;
         }
     }
@@ -316,6 +339,7 @@ public class SoundManager : MonoBehaviour
         incoming.volume = 0f;
         incoming.time = 0f;
         trackHeard = 0f;
+        ApplyCutoff();
         incoming.Play();
         if (paused) incoming.Pause();
         incoming.DOFade(BGMTargetVolume(bgmFront), fadeDuration).SetUpdate(true);

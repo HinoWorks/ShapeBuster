@@ -165,7 +165,7 @@ public class UI_OutGameManager : MonoBehaviour
         if (ui_stageSelect != null)
             ui_stageSelect.Open();
         else
-            GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
+            GameWatcher.Inst.ChangeScreen(GameStateType.InGame_Ready);
     }
 
     public void OnClick_ToTitle()

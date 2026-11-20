@@ -202,7 +202,7 @@ public class BlockSession : MonoBehaviour
             FinishBossDefeat();
         }
 
-        if (!running) return;
+        if (!running || CurtainHolds) return;
 
         TryClearRefill();
         TickBoss();
@@ -211,9 +211,15 @@ public class BlockSession : MonoBehaviour
             SpawnWave();
     }
 
+    /// <summary>
+    /// 画面切り替えの幕が画面を覆っている間は、場を止める。
+    /// ブロックの下降・列の生成・照準と発射・タレット・壁の仕掛け・ボスの出現が、幕が開ききってから動き出す。
+    /// </summary>
+    public static bool CurtainHolds => TransitionCurtain.Inst != null && TransitionCurtain.Inst.IsCovering;
+
     void FixedUpdate()
     {
-        if (!running || pendingFail || formationBody == null) return;
+        if (!running || pendingFail || formationBody == null || CurtainHolds) return;
 
         elapsed += Time.fixedDeltaTime;
         formationBody.MovePosition(formationBody.position + Vector2.down * (BlockFallSpeed * Time.fixedDeltaTime));
@@ -440,6 +446,7 @@ public class BlockSession : MonoBehaviour
         SpawnBalls();
         SpawnTurrets();
         SpawnRowBeam();
+        GameEvent.InGame.PublishStarted();
     }
 
     void Fail()
@@ -1381,7 +1388,7 @@ public class BlockSession : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!running || balls == null) return;
+        if (!running || balls == null || CurtainHolds) return;
 
         for (int i = 0; i < balls.Length; i++)
         {

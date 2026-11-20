@@ -161,6 +161,9 @@ public class SO_SoundData : ScriptableObject
             case SEType.BlockHit:
                 s.volume = 0.5f; s.minInterval = 0.03f; s.maxVoices = 4; s.pitch = new Vector2(0.9f, 1.1f);
                 break;
+            case SEType.Transition:
+                s.volume = 0.7f; s.minInterval = 0.3f; s.maxVoices = 1; s.pitch = new Vector2(0.97f, 1.03f);
+                break;
             case SEType.GlassHit:
                 s.volume = 0.6f; s.minInterval = 0.04f; s.maxVoices = 3; s.pitch = new Vector2(0.92f, 1.1f);
                 break;

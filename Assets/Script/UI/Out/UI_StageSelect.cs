@@ -73,7 +73,7 @@ public class UI_StageSelect : MonoBehaviour
 
         StageTimeManager.Inst.SetStageIndex(selectedStageIndex);
         Close();
-        GameWatcher.Inst.SetGameState(GameStateType.InGame_Ready);
+        GameWatcher.Inst.ChangeScreen(GameStateType.InGame_Ready);
         Debug.Log($"<color=yellow> ========= Stage Select: {selectedStageIndex} ========= </color>");
     }
 
