@@ -325,6 +325,7 @@ public class SaveLoader : MonoBehaviour
         LoadBestiary();
         BestiaryRuntime.Bind();
         LoadVaccine();
+        SteamAchievements.Bind();
     }
 
 

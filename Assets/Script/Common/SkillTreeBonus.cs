@@ -274,6 +274,9 @@ public static class SkillTreeBonus
         return total >= 1f;
     }
 
+    /// <summary>どれか 1 つでもスキルを覚えている（Lv 1 以上）。</summary>
+    public static bool AnyLearned => bySkill.Count > 0;
+
     public static void Clear()
     {
         bySkill.Clear();

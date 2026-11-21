@@ -511,5 +511,13 @@ public static class DebugMenu
         [Category("ワクチン")]
         [SRDebugger.Sort(2)]
         public void ワクチンを最初に戻す() => VaccineRuntime.DebugSet(0, false);
+
+        [Category("実績")]
+        [SRDebugger.Sort(0)]
+        public void Steamの実績をログに出す() => Debug.Log(SteamAchievements.Report());
+
+        [Category("実績")]
+        [SRDebugger.Sort(1)]
+        public void Steamの実績をすべて消す() => SteamAchievements.DebugResetAll();
     }
 }
