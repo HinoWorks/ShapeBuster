@@ -1,4 +1,5 @@
 // レーザーボール。スプライトの四角の中に、縦の芯と上へ流れる光を描く。
+// _Cross を 1 にすると、芯が斜め ±45° の 2 本（X 字）になる。
 Shader "ShapeBuster/SpriteLaserBall"
 {
     Properties
@@ -17,6 +18,7 @@ Shader "ShapeBuster/SpriteLaserBall"
         _StreakStrength ("筋の強さ", Range(0, 1.5)) = 0.85
         _SparkRate ("瞬きの速さ", Range(0, 24)) = 12
         _BeamAlpha ("上下の光の濃さ", Range(0, 1)) = 0.55
+        [MaterialToggle] _Cross ("X 字にする", Float) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex ("External Alpha", 2D) = "white" {}

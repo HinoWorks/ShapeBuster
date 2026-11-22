@@ -289,6 +289,7 @@ RectTransform:
   - {fileID: 8499148077423594134}
   - {fileID: 8499148077423594173}
   - {fileID: 8499148077423594174}
+  - {fileID: 6853525025186526931}
   - {fileID: 1488793498174008688}
   - {fileID: 385508589610750396}
   - {fileID: 1074586173124637323}
@@ -428,6 +429,7 @@ MonoBehaviour:
   - {fileID: 6429380433623457089}
   - {fileID: 6429380433623457130}
   - {fileID: 6429380433623457129}
+  - {fileID: 8346905032276320516}
   - {fileID: 4063360229825100455}
   - {fileID: 2995790201166644843}
   - {fileID: 2459817774111647068}
@@ -1340,6 +1342,10 @@ PrefabInstance:
       value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 7b79d4bd91bcb43e98c7fc2077238f2d, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -1353,7 +1359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Ball Catch
+      value: "\u30AD\u30E3\u30C3\u30C1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -1365,7 +1371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AD\u30E3\u30C3\u30C1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -1434,7 +1440,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 7b79d4bd91bcb43e98c7fc2077238f2d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1952,6 +1958,10 @@ PrefabInstance:
       value: 9003
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c865442454ae74a2fa0add7a111f4be7, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -2026,7 +2036,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: c865442454ae74a2fa0add7a111f4be7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2794,6 +2804,10 @@ PrefabInstance:
       value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6ff9e5348feb74efa8d2fa6ebda8cca2, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -2868,7 +2882,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 6ff9e5348feb74efa8d2fa6ebda8cca2, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4285,6 +4299,10 @@ PrefabInstance:
       value: 9002
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 68accd0f24548458f995178a86235503, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -4359,7 +4377,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 68accd0f24548458f995178a86235503, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5635,6 +5653,10 @@ PrefabInstance:
       value: 9005
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4323114d0d0334e78a39e3955e09bf5f, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -5709,7 +5731,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 4323114d0d0334e78a39e3955e09bf5f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5801,7 +5823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2900
+      value: 2700
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5825,11 +5847,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9004
+      value: 9003
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9003
+      value: 9002
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -6438,7 +6460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3100
+      value: 2900
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6462,11 +6484,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9005
+      value: 9004
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9004
+      value: 9003
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -7075,7 +7097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2700
+      value: 2500
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7099,11 +7121,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9003
+      value: 9002
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9002
+      value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -8795,6 +8817,243 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2260a6078a14c468aa6253bcd99238ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_SkillTreeNodeCont
+--- !u!1001 &5215390232344149081
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9107893553739086405}
+    m_Modifications:
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1739625358635856524, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Name
+      value: "skill_5002_\u30BE\u30F3\u30D3\u56F3\u9451"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551375857086857649, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_text
+      value: "5002\n\u30BE\u30F3\u30D3\u56F3\u9451"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551375857086857649, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_fontSize
+      value: 29.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: isRoot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillIndex
+      value: 5002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4197f725dc9924727b4de19ad90d1a85, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.unit
+      value: NA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.maxLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramStat
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.skillName
+      value: "\u30BE\u30F3\u30D3\u56F3\u9451"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.deltaValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.jpSkillName
+      value: "\u30BE\u30F3\u30D3\u56F3\u9451"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.paramTarget
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.targetIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.cost_AA
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.maxLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.baseSkillIndex
+      value: 5002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTreeUnit.skillTreeIndex
+      value: 5002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: neighborSkillIndexes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[0]'
+      value: 5001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[1]'
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[2]'
+      value: 3061
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[3]'
+      value: 3060
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[4]'
+      value: 3061
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[5]'
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[6]'
+      value: 4001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[7]'
+      value: 4002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: 'neighborSkillIndexes.Array.data[8]'
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4197f725dc9924727b4de19ad90d1a85, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+--- !u!224 &6853525025186526931 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 5215390232344149081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8346905032276320516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+  m_PrefabInstance: {fileID: 5215390232344149081}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8769c1e966d14aecbbeb269453439df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_SkillTreeUnit
 --- !u!1001 &5280749786151604806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9869,7 +10128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.00000004371139
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9881,15 +10140,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2500
+      value: -1100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9909,11 +10168,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9002
+      value: 5002
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9001
+      value: 5001
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -10808,7 +11067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
@@ -10824,7 +11083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10875,6 +11134,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -217.79999
       objectReference: {fileID: 0}
+    - target: {fileID: 1049022994866081225, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
+      objectReference: {fileID: 0}
     - target: {fileID: 1489044750602634427, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -10899,6 +11162,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -25
       objectReference: {fileID: 0}
+    - target: {fileID: 2749241363606431670, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
+      objectReference: {fileID: 0}
     - target: {fileID: 3020749633927821775, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -10913,7 +11180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3020749633927821775, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -36.8
+      value: -36.800003
       objectReference: {fileID: 0}
     - target: {fileID: 4324443968272297668, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11035,6 +11302,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -78.6
       objectReference: {fileID: 0}
+    - target: {fileID: 6372563799567741446, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
+      objectReference: {fileID: 0}
     - target: {fileID: 6396994986001686405, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11115,9 +11386,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6560075777390767209, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
+      objectReference: {fileID: 0}
     - target: {fileID: 6658218178880258490, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_SizeDelta.y
       value: 32.799988
+      objectReference: {fileID: 0}
+    - target: {fileID: 7488956723995828217, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
+      objectReference: {fileID: 0}
+    - target: {fileID: 7889085559905549903, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
       objectReference: {fileID: 0}
     - target: {fileID: 7922176385285936231, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11166,6 +11449,10 @@ PrefabInstance:
     - target: {fileID: 8601715929634862909, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8635089224943918357, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 16.849998
       objectReference: {fileID: 0}
     - target: {fileID: 9064295669311362699, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11575,6 +11862,10 @@ PrefabInstance:
       value: 9004
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: bc4f8fae0c1144ae59fcb6dbf8a22068, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -11649,7 +11940,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: bc4f8fae0c1144ae59fcb6dbf8a22068, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11780,6 +12071,10 @@ PrefabInstance:
       value: 9006
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 14ac19f6529d649fc9b6b1bad7c1555a, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -11854,7 +12149,7 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 14ac19f6529d649fc9b6b1bad7c1555a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11985,6 +12280,10 @@ PrefabInstance:
       value: 2063
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 8c9195c4e3d1b444b88dd848c5cbca1a, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -11998,7 +12297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Orbit +1
+      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12010,7 +12309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12051,6 +12350,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 8c9195c4e3d1b444b88dd848c5cbca1a, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12182,6 +12489,10 @@ PrefabInstance:
       value: 2053
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: b222caeb741214c9f9efe91c800d2820, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -12195,7 +12506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Heavy +1
+      value: "\u30D8\u30D3\u30FC\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12207,7 +12518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30D8\u30D3\u30FC\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12248,6 +12559,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: b222caeb741214c9f9efe91c800d2820, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12379,6 +12698,10 @@ PrefabInstance:
       value: 2043
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 8dfd8cb67764d46b7ac1e990c4072ebb, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -12392,7 +12715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Poison +1
+      value: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12404,7 +12727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12449,6 +12772,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 8dfd8cb67764d46b7ac1e990c4072ebb, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12580,6 +12911,10 @@ PrefabInstance:
       value: 2033
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e87ff94ac43b346fd9cc8b198e14e6fe, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -12593,7 +12928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Cross +1
+      value: "\u30AF\u30ED\u30B9\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12605,7 +12940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AF\u30ED\u30B9\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12650,6 +12985,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e87ff94ac43b346fd9cc8b198e14e6fe, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12781,6 +13124,10 @@ PrefabInstance:
       value: 2023
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c2aedad86f8654a59b74fe5c6f866b6f, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -12794,7 +13141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Horizontal Laser +1
+      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -12806,7 +13153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -12855,6 +13202,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: c2aedad86f8654a59b74fe5c6f866b6f, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12986,6 +13341,10 @@ PrefabInstance:
       value: 2013
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 76e3fa085d4b8440896fafe82333494d, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -12999,7 +13358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Vertical Laser +1
+      value: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13011,7 +13370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13056,6 +13415,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 76e3fa085d4b8440896fafe82333494d, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13187,6 +13554,10 @@ PrefabInstance:
       value: 2003
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e49ac7786c2354cfb8f934a948ad0824, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -13200,7 +13571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Bomb +1
+      value: "\u30DC\u30E0\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13212,7 +13583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DC\u30E0\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13257,6 +13628,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e49ac7786c2354cfb8f934a948ad0824, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13388,6 +13767,10 @@ PrefabInstance:
       value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: feaf8c4ce87194fa29e5b3705da7a01e, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -13401,7 +13784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: More Block
+      value: "\u7D30\u7247"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13413,7 +13796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7D30\u7247"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13466,6 +13849,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: feaf8c4ce87194fa29e5b3705da7a01e, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13597,6 +13988,10 @@ PrefabInstance:
       value: 4001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 25e4c4d4413d84f46a5b5725adbf479b, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -13610,7 +14005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: More Block+
+      value: "\u7D30\u7247\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13622,7 +14017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7D30\u7247\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13671,6 +14066,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 25e4c4d4413d84f46a5b5725adbf479b, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13802,6 +14205,10 @@ PrefabInstance:
       value: 4002
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 365ff99d61cfd4440a48616caf027a05, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -13815,7 +14222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: More Block++
+      value: "\u7D30\u7247\uFF0B\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -13827,7 +14234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7D30\u7247\uFF0B\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -13868,6 +14275,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 365ff99d61cfd4440a48616caf027a05, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13999,6 +14414,10 @@ PrefabInstance:
       value: 2062
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 83dd59c06a97f465cab001907e4f03bc, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -14012,7 +14431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Orbit Power
+      value: "\u5468\u56DE\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14024,7 +14443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5468\u56DE\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14069,6 +14488,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 83dd59c06a97f465cab001907e4f03bc, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14200,6 +14627,10 @@ PrefabInstance:
       value: 2052
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 541356f062c304a8ebaf945f7bfaba82, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -14213,7 +14644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Heavy Power
+      value: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14225,7 +14656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14270,6 +14701,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 541356f062c304a8ebaf945f7bfaba82, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14401,6 +14840,10 @@ PrefabInstance:
       value: 2042
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4bb067744d58e40c6aa117ddbb600474, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -14414,7 +14857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Pool Power
+      value: "\u6CBC\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14426,7 +14869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6CBC\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14471,6 +14914,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 4bb067744d58e40c6aa117ddbb600474, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14602,6 +15053,10 @@ PrefabInstance:
       value: 2032
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 32484555a3346474cb9c2979228899d6, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -14615,7 +15070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Diagonal Power
+      value: "\u659C\u3081\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14627,7 +15082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u659C\u3081\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14672,6 +15127,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 32484555a3346474cb9c2979228899d6, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14803,6 +15266,10 @@ PrefabInstance:
       value: 2022
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b7aaab48bdd64ec09f08294d83da381, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -14816,7 +15283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Row Power
+      value: "\u6BB5\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -14828,7 +15295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6BB5\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -14877,6 +15344,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 5b7aaab48bdd64ec09f08294d83da381, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15008,6 +15483,10 @@ PrefabInstance:
       value: 2012
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 457721535f4634c49a8c1f82f4743a2a, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -15021,7 +15500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Column Power
+      value: "\u5217\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15033,7 +15512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5217\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15078,6 +15557,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 457721535f4634c49a8c1f82f4743a2a, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15209,6 +15696,10 @@ PrefabInstance:
       value: 2002
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: d01cce7cdce5f4d479a2330bb9731109, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -15222,7 +15713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Blast Power
+      value: "\u7206\u98A8\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15234,7 +15725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7206\u98A8\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15279,6 +15770,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: d01cce7cdce5f4d479a2330bb9731109, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15412,6 +15911,10 @@ PrefabInstance:
       value: 5001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4e8265706dca14f47b198f6492a056a1, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -15425,7 +15928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Unlock Convert
+      value: Convert
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15437,7 +15940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: Convert
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15465,7 +15968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
@@ -15473,7 +15976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
-      value: 5000
+      value: 5002
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[2]'
@@ -15506,6 +16009,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 4e8265706dca14f47b198f6492a056a1, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15637,6 +16148,10 @@ PrefabInstance:
       value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e34b39eba5d57425b85850a9f85f2152, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -15650,7 +16165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Unlock Milestone
+      value: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15662,7 +16177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15703,6 +16218,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e34b39eba5d57425b85850a9f85f2152, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15834,6 +16357,10 @@ PrefabInstance:
       value: 2061
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a9e15074f4fb4a62ae45548477a435c, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -15847,7 +16374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Satellite
+      value: "\u885B\u661F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -15859,7 +16386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u885B\u661F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -15908,6 +16435,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 5a9e15074f4fb4a62ae45548477a435c, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16039,6 +16574,10 @@ PrefabInstance:
       value: 2051
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6daf47e0546d147b4a513ba483410620, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -16052,7 +16591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Heavy Speed
+      value: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16064,7 +16603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16113,6 +16652,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 6daf47e0546d147b4a513ba483410620, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16244,6 +16791,10 @@ PrefabInstance:
       value: 2041
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c0e3e221785874875a7eb4660373f79f, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -16257,7 +16808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Pool Chance
+      value: "\u6CBC\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16269,7 +16820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6CBC\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16318,6 +16869,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: c0e3e221785874875a7eb4660373f79f, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16449,6 +17008,10 @@ PrefabInstance:
       value: 2031
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c7cc810eee35a4f548217f25d2beee37, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -16462,7 +17025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Diagonal Chance
+      value: "\u659C\u3081\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16474,7 +17037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u659C\u3081\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16527,6 +17090,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: c7cc810eee35a4f548217f25d2beee37, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16658,6 +17229,10 @@ PrefabInstance:
       value: 2021
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 92500ed639a0140549d6fdae73d98897, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -16671,7 +17246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Row Chance
+      value: "\u6BB5\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16683,7 +17258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6BB5\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16740,6 +17315,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 92500ed639a0140549d6fdae73d98897, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16871,6 +17454,10 @@ PrefabInstance:
       value: 2011
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 71f7bb3da704b4be7a00fa5b122b9ca1, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -16884,7 +17471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Column Chance
+      value: "\u5217\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -16896,7 +17483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5217\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -16953,6 +17540,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 71f7bb3da704b4be7a00fa5b122b9ca1, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17084,6 +17679,10 @@ PrefabInstance:
       value: 2001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 9be9f8c9206184fa085d21c6c86d1044, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -17097,7 +17696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Blast Chance
+      value: "\u7206\u98A8\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17109,7 +17708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7206\u98A8\u306E\u767A\u751F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17162,6 +17761,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 9be9f8c9206184fa085d21c6c86d1044, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17293,6 +17900,10 @@ PrefabInstance:
       value: 3020
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 1de43e82612314268930a3ecc17f8e8e, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -17306,7 +17917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Linger
+      value: "\u6B8B\u7559"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17318,7 +17929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6B8B\u7559"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17367,6 +17978,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 1de43e82612314268930a3ecc17f8e8e, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17498,6 +18117,10 @@ PrefabInstance:
       value: 3061
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: d86088c115771405e86ddd26588008fe, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -17511,7 +18134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Wall Yield
+      value: "\u58C1\u306E\u53CE\u91CF"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17523,7 +18146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u58C1\u306E\u53CE\u91CF"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17568,6 +18191,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: d86088c115771405e86ddd26588008fe, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17699,6 +18330,10 @@ PrefabInstance:
       value: 2060
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f09f4980afa704611b69d5ed5f56feca, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -17712,7 +18347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Orbit Ball
+      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17724,7 +18359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17777,6 +18412,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: f09f4980afa704611b69d5ed5f56feca, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17908,6 +18551,10 @@ PrefabInstance:
       value: 2050
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 02a4da771f8024c2aaed054ac41ced60, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -17921,7 +18568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Heavy Ball
+      value: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -17933,7 +18580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -17978,6 +18625,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 02a4da771f8024c2aaed054ac41ced60, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18109,6 +18764,10 @@ PrefabInstance:
       value: 2040
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: d8743c65c8e7f4df9b898066d3c679c3, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -18122,7 +18781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Poison Ball
+      value: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18134,7 +18793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18187,6 +18846,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: d8743c65c8e7f4df9b898066d3c679c3, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18318,6 +18985,10 @@ PrefabInstance:
       value: 2030
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 0d8d2cc1ecd404d8290a4b290fe1ca4e, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -18331,7 +19002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Cross Ball
+      value: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18343,7 +19014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18400,6 +19071,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 0d8d2cc1ecd404d8290a4b290fe1ca4e, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18531,6 +19210,10 @@ PrefabInstance:
       value: 2020
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 42a0decb088584542bc91384ce8baa51, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -18544,7 +19227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Row Laser Ball
+      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18556,7 +19239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18609,6 +19292,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 42a0decb088584542bc91384ce8baa51, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18740,6 +19431,10 @@ PrefabInstance:
       value: 2010
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: ca3dc59c125444a3da7913bbccdc5253, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -18753,7 +19448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Laser Ball
+      value: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18765,7 +19460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -18818,6 +19513,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: ca3dc59c125444a3da7913bbccdc5253, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18949,6 +19652,10 @@ PrefabInstance:
       value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e7c132fb1f8364b4690c6782d6791d03, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -18962,7 +19669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Bomb Ball
+      value: "\u30DC\u30E0\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -18974,7 +19681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DC\u30E0\u30DC\u30FC\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19027,6 +19734,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e7c132fb1f8364b4690c6782d6791d03, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19158,6 +19873,10 @@ PrefabInstance:
       value: 1002
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: d4618cfd2c6c1445784e7e504626175d, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -19171,7 +19890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Amplify
+      value: "\u5897\u5E45"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19183,7 +19902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5897\u5E45"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19224,6 +19943,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: d4618cfd2c6c1445784e7e504626175d, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19355,6 +20082,10 @@ PrefabInstance:
       value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 95b21bb17d28e4de6b80e0dd3951f95c, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -19368,7 +20099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Harvest
+      value: "\u53CE\u7A6B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19380,7 +20111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u53CE\u7A6B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19601,6 +20332,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 95b21bb17d28e4de6b80e0dd3951f95c, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19732,6 +20471,10 @@ PrefabInstance:
       value: 3051
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: bd1800f9dc0c74f9c9ebcda2d6be40f2, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -19745,7 +20488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Regen Yield
+      value: "\u518D\u751F\u306E\u53CE\u91CF"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19757,7 +20500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u518D\u751F\u306E\u53CE\u91CF"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -19814,6 +20557,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: bd1800f9dc0c74f9c9ebcda2d6be40f2, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19945,6 +20696,10 @@ PrefabInstance:
       value: 3060
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f75554300c9f840b89c28d23e811d672, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -19958,7 +20713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Wall Spawn
+      value: "\u58C1\u306E\u51FA\u73FE"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -19970,7 +20725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u58C1\u306E\u51FA\u73FE"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20023,6 +20778,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: f75554300c9f840b89c28d23e811d672, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20154,6 +20917,10 @@ PrefabInstance:
       value: 3010
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e826e25a4d71147ad8203492ea5015e0, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -20167,7 +20934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Magnet
+      value: "\u78C1\u77F3"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20179,7 +20946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u78C1\u77F3"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20228,6 +20995,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e826e25a4d71147ad8203492ea5015e0, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20359,6 +21134,10 @@ PrefabInstance:
       value: 3011
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: adc1822b89926483186a40fb56c40076, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -20372,7 +21151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Magnet+
+      value: "\u78C1\u77F3\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20384,7 +21163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u78C1\u77F3\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20437,6 +21216,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: adc1822b89926483186a40fb56c40076, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20568,6 +21355,10 @@ PrefabInstance:
       value: 1003
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 33adf0363971a45ab92bd80e2e827f5b, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -20581,7 +21372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Amplify+
+      value: "\u5897\u5E45\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20593,7 +21384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5897\u5E45\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20642,6 +21433,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 33adf0363971a45ab92bd80e2e827f5b, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20773,6 +21572,10 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b774ae741f0144b9935c1c35832e795, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -20786,7 +21589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Ball Power
+      value: "\u7403\u5A01"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20798,7 +21601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7403\u5A01"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -20843,6 +21646,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 5b774ae741f0144b9935c1c35832e795, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20974,6 +21785,10 @@ PrefabInstance:
       value: 1001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 316cce8b094c54eb680c4f4af0b518ff, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -20987,7 +21802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Ball Power+
+      value: "\u7403\u5A01\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -20999,7 +21814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7403\u5A01\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21296,6 +22111,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 316cce8b094c54eb680c4f4af0b518ff, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21427,6 +22250,10 @@ PrefabInstance:
       value: 1005
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4b842a34d04154d148e08e6d802656be, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -21440,7 +22267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: EX POWER
+      value: "EX\u30D1\u30EF\u30FC"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -21452,7 +22279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "EX\u30D1\u30EF\u30FC"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21497,6 +22324,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 4b842a34d04154d148e08e6d802656be, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21628,6 +22463,10 @@ PrefabInstance:
       value: 1004
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 7c13eed42ed7843febc2636dd32bc042, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -21641,7 +22480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Blade
+      value: "\u5203"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -21653,7 +22492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5203"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21698,6 +22537,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 7c13eed42ed7843febc2636dd32bc042, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21829,6 +22676,10 @@ PrefabInstance:
       value: 1006
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: fe64ef00d30e54dcaa50694590cb1160, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -21842,7 +22693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: EX POWER
+      value: "EX\u30D1\u30EF\u30FC"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -21854,7 +22705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "EX\u30D1\u30EF\u30FC"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -21891,6 +22742,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: fe64ef00d30e54dcaa50694590cb1160, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22022,6 +22881,10 @@ PrefabInstance:
       value: 1050
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 330e2c4af3238448e83a42ad5ff5f0a1, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -22035,7 +22898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Chain Hit
+      value: "\u9023\u6483"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -22047,7 +22910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u9023\u6483"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -22096,6 +22959,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 330e2c4af3238448e83a42ad5ff5f0a1, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22227,6 +23098,10 @@ PrefabInstance:
       value: 1040
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 61b51efbd71a84010935ef22bd4fa9fb, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -22240,7 +23115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Boss Hunt
+      value: "\u30DC\u30B9\u7279\u653B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -22252,7 +23127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DC\u30B9\u7279\u653B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -22293,6 +23168,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 61b51efbd71a84010935ef22bd4fa9fb, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28616,6 +29499,10 @@ PrefabInstance:
       value: 3050
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6a0e36dfb62eb426384eac644c33a1fa, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -28629,7 +29516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Regen Spawn
+      value: "\u518D\u751F\u306E\u51FA\u73FE"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -28641,7 +29528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u518D\u751F\u306E\u51FA\u73FE"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -28690,6 +29577,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 6a0e36dfb62eb426384eac644c33a1fa, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29079,6 +29974,10 @@ PrefabInstance:
       value: 1010
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: a4d9686289e7449fd9e268b353e612c6, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -29092,7 +29991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Critical Chagnce
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29104,7 +30003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29157,6 +30056,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: a4d9686289e7449fd9e268b353e612c6, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29288,6 +30195,10 @@ PrefabInstance:
       value: 1011
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c6bba9baa22a2416ba1507efd8007468, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -29301,7 +30212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Critical Chagnce+
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29313,7 +30224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29390,6 +30301,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: c6bba9baa22a2416ba1507efd8007468, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29521,6 +30440,10 @@ PrefabInstance:
       value: 1020
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f17000fda5bd34b8badeac87c8cd58b5, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -29534,7 +30457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Critical Damage
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29546,7 +30469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29599,6 +30522,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: f17000fda5bd34b8badeac87c8cd58b5, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29730,6 +30661,10 @@ PrefabInstance:
       value: 1021
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4351a28536d2b46de914df48db70264d, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -29743,7 +30678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Critical Damage+
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29755,7 +30690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -29808,6 +30743,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 4351a28536d2b46de914df48db70264d, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29939,6 +30882,10 @@ PrefabInstance:
       value: 1030
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: de2a93fa0909941b7a076e86b9aa51a7, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -29952,7 +30899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Ball Speed
+      value: "\u7403\u901F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -29964,7 +30911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u7403\u901F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30013,6 +30960,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: de2a93fa0909941b7a076e86b9aa51a7, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30144,6 +31099,10 @@ PrefabInstance:
       value: 1031
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: a4cac0d14d32a4aea94223f0e3ea0cd6, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -30157,7 +31116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: More Speed
+      value: "\u8D85\u7403\u901F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30169,7 +31128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u8D85\u7403\u901F"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30218,6 +31177,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: a4cac0d14d32a4aea94223f0e3ea0cd6, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30349,6 +31316,10 @@ PrefabInstance:
       value: 1032
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 009bdc7755bb948cf89e28e5955d5f97, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -30362,7 +31333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: More Speed+
+      value: "\u8D85\u7403\u901F\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30374,7 +31345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u8D85\u7403\u901F\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30415,6 +31386,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 009bdc7755bb948cf89e28e5955d5f97, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30546,6 +31525,10 @@ PrefabInstance:
       value: 1041
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 257b527f67fdf4e86bd02503afa84e0e, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -30559,7 +31542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Boss Killer
+      value: "\u30DC\u30B9\u6BBA\u3057"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30571,7 +31554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30DC\u30B9\u6BBA\u3057"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30612,6 +31595,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 257b527f67fdf4e86bd02503afa84e0e, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30743,6 +31734,10 @@ PrefabInstance:
       value: 1051
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 3694925d990b648a680ec87485455011, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -30756,7 +31751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Chain Hit+
+      value: "\u9023\u6483\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30768,7 +31763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u9023\u6483\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -30813,6 +31808,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 3694925d990b648a680ec87485455011, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30944,6 +31947,10 @@ PrefabInstance:
       value: 1060
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e8f24853ef4344b22bad0e0e29e8421f, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -30957,7 +31964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: First Attack
+      value: "\u5148\u5236"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -30969,7 +31976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5148\u5236"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31014,6 +32021,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e8f24853ef4344b22bad0e0e29e8421f, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31145,6 +32160,10 @@ PrefabInstance:
       value: 1061
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: c1d119f95032e41efafc0e2a1f2a4342, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -31158,7 +32177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: First Kill
+      value: "\u5148\u5236\u6483\u7834"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31170,7 +32189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5148\u5236\u6483\u7834"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31215,6 +32234,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: c1d119f95032e41efafc0e2a1f2a4342, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31346,6 +32373,10 @@ PrefabInstance:
       value: 1062
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: b24aabe3d57644ca08980587d80d21e8, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -31359,7 +32390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Last Attack
+      value: "\u6B62\u3081"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31371,7 +32402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6B62\u3081"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31424,6 +32455,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: b24aabe3d57644ca08980587d80d21e8, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31555,6 +32594,10 @@ PrefabInstance:
       value: 1063
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: d6686bd23f5424c098198436455b032c, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -31568,7 +32611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Last Kill
+      value: "\u6B62\u3081\u6483\u7834"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31580,7 +32623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u6B62\u3081\u6483\u7834"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31629,6 +32672,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: d6686bd23f5424c098198436455b032c, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31760,6 +32811,10 @@ PrefabInstance:
       value: 1070
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 07c719f129c72406080bdecd0cf400c3, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -31773,7 +32828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Full Stack
+      value: "\u5168\u5F3E"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31785,7 +32840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5168\u5F3E"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -31838,6 +32893,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 07c719f129c72406080bdecd0cf400c3, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31969,6 +33032,10 @@ PrefabInstance:
       value: 1071
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 87156b15bce544a98bc92feb5f4478e5, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -31982,7 +33049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Full Stack+
+      value: "\u5168\u5F3E\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -31994,7 +33061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5168\u5F3E\uFF0B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32039,6 +33106,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 87156b15bce544a98bc92feb5f4478e5, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32170,6 +33245,10 @@ PrefabInstance:
       value: 1100
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ab22a4d2613b43e28936d0ae2b1fc26, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -32183,7 +33262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: More Ball
+      value: "\u5897\u5F3E"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -32195,7 +33274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u5897\u5F3E"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32480,6 +33559,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 8ab22a4d2613b43e28936d0ae2b1fc26, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32611,6 +33698,10 @@ PrefabInstance:
       value: 2100
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: be94b5a14e538435193841223e4bf7d0, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -32624,7 +33715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Turret
+      value: "\u30BF\u30EC\u30C3\u30C8"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -32636,7 +33727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30BF\u30EC\u30C3\u30C8"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32689,6 +33780,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: be94b5a14e538435193841223e4bf7d0, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32820,6 +33919,10 @@ PrefabInstance:
       value: 2101
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f813f6c8ce295485d879b7ddd071222e, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -32833,7 +33936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Turret Power
+      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -32845,7 +33948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -32886,6 +33989,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: f813f6c8ce295485d879b7ddd071222e, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33017,6 +34128,10 @@ PrefabInstance:
       value: 2102
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f42c0a9445dfb45d3a6ef959c93e0f7a, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -33030,7 +34145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Turret Rate
+      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u901F\u5EA6"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33042,7 +34157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30BF\u30EC\u30C3\u30C8\u306E\u901F\u5EA6"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33083,6 +34198,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: f42c0a9445dfb45d3a6ef959c93e0f7a, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33214,6 +34337,10 @@ PrefabInstance:
       value: 2103
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 20b88f0e8b5984737a74d5fead8d7500, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: Count
       objectReference: {fileID: 0}
@@ -33227,7 +34354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Turret +1
+      value: "\u30BF\u30EC\u30C3\u30C8\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33239,7 +34366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30BF\u30EC\u30C3\u30C8\uFF0B1"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33280,6 +34407,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 20b88f0e8b5984737a74d5fead8d7500, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33411,6 +34546,10 @@ PrefabInstance:
       value: 2110
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: dc7e6b7d971954bd9a6e2a7586a6945f, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
       objectReference: {fileID: 0}
@@ -33424,7 +34563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Auto Beam
+      value: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33436,7 +34575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33477,6 +34616,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: dc7e6b7d971954bd9a6e2a7586a6945f, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33608,6 +34755,10 @@ PrefabInstance:
       value: 2111
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: e10dedff7064d46b29b0629801a130d8, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -33621,7 +34772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Beam Power
+      value: "\u30D3\u30FC\u30E0\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33633,7 +34784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30D3\u30FC\u30E0\u306E\u5A01\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33674,6 +34825,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: e10dedff7064d46b29b0629801a130d8, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33805,6 +34964,10 @@ PrefabInstance:
       value: 2112
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: skillTree.icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f5703c9190d1e4268a8fff9138c82a87, type: 3}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: '%'
       objectReference: {fileID: 0}
@@ -33818,7 +34981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
-      value: Beam Interval
+      value: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.level
@@ -33830,7 +34993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
-      value: 
+      value: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramTarget
@@ -33871,6 +35034,14 @@ PrefabInstance:
     - target: {fileID: 6038071334574812214, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: f5703c9190d1e4268a8fff9138c82a87, type: 3}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976141469343062520, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.200001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35999,7 +37170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3300
+      value: 3100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -36023,11 +37194,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9006
+      value: 9005
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9005
+      value: 9004
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name

@@ -14,6 +14,7 @@ public static class DebugMenu
 {
     const int MilestoneSkill = 5000;
     const int ConvertSkill = 5001;
+    const int BestiarySkill = 5002;
 
     static bool registered;
 
@@ -147,6 +148,11 @@ public static class DebugMenu
     public static void UnlockMilestone()
     {
         Unlock(MilestoneSkill);
+    }
+
+    public static void UnlockBestiary()
+    {
+        Unlock(BestiarySkill);
     }
 
     static void Unlock(int skillIndex, int level = 1)
@@ -391,6 +397,10 @@ public static class DebugMenu
         [Category("スキル")]
         [SRDebugger.Sort(1)]
         public void Milestoneを解放() => UnlockMilestone();
+
+        [Category("スキル")]
+        [SRDebugger.Sort(1)]
+        public void 図鑑を解放() => UnlockBestiary();
 
         [Category("スキル")]
         [SRDebugger.Sort(2)]

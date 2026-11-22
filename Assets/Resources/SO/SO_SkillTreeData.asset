@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_SkillTreeData
   skillTreeBases:
   - baseSkillIndex: 1000
-    skillName: Ball Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7403\u5A01"
+    jpSkillName: "\u7403\u5A01"
+    icon: {fileID: 21300000, guid: 5b774ae741f0144b9935c1c35832e795, type: 3}
     maxLevel: 10
     unit: Count
     paramTarget: 4
@@ -24,9 +24,9 @@ MonoBehaviour:
     paramStat: 32
     deltaValue: 1
   - baseSkillIndex: 1001
-    skillName: Ball Power+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7403\u5A01\uFF0B"
+    jpSkillName: "\u7403\u5A01\uFF0B"
+    icon: {fileID: 21300000, guid: 316cce8b094c54eb680c4f4af0b518ff, type: 3}
     maxLevel: 10
     unit: Count
     paramTarget: 4
@@ -34,9 +34,9 @@ MonoBehaviour:
     paramStat: 32
     deltaValue: 3
   - baseSkillIndex: 1002
-    skillName: Amplify
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5897\u5E45"
+    jpSkillName: "\u5897\u5E45"
+    icon: {fileID: 21300000, guid: d4618cfd2c6c1445784e7e504626175d, type: 3}
     maxLevel: 10
     unit: Count
     paramTarget: 4
@@ -44,9 +44,9 @@ MonoBehaviour:
     paramStat: 32
     deltaValue: 6
   - baseSkillIndex: 1003
-    skillName: Amplify+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5897\u5E45\uFF0B"
+    jpSkillName: "\u5897\u5E45\uFF0B"
+    icon: {fileID: 21300000, guid: 33adf0363971a45ab92bd80e2e827f5b, type: 3}
     maxLevel: 3
     unit: Count
     paramTarget: 4
@@ -54,9 +54,9 @@ MonoBehaviour:
     paramStat: 32
     deltaValue: 25
   - baseSkillIndex: 1004
-    skillName: Blade
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5203"
+    jpSkillName: "\u5203"
+    icon: {fileID: 21300000, guid: 7c13eed42ed7843febc2636dd32bc042, type: 3}
     maxLevel: 5
     unit: Count
     paramTarget: 4
@@ -64,9 +64,9 @@ MonoBehaviour:
     paramStat: 32
     deltaValue: 100
   - baseSkillIndex: 1005
-    skillName: EX POWER
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "EX\u30D1\u30EF\u30FC"
+    jpSkillName: "EX\u30D1\u30EF\u30FC"
+    icon: {fileID: 21300000, guid: 4b842a34d04154d148e08e6d802656be, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 4
@@ -74,9 +74,9 @@ MonoBehaviour:
     paramStat: 35
     deltaValue: 0.1
   - baseSkillIndex: 1006
-    skillName: EX POWER
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "EX\u30D1\u30EF\u30FC"
+    jpSkillName: "EX\u30D1\u30EF\u30FC"
+    icon: {fileID: 21300000, guid: fe64ef00d30e54dcaa50694590cb1160, type: 3}
     maxLevel: 1
     unit: '%'
     paramTarget: 4
@@ -84,9 +84,9 @@ MonoBehaviour:
     paramStat: 35
     deltaValue: 0.1
   - baseSkillIndex: 1010
-    skillName: Critical Chagnce
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+    jpSkillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB"
+    icon: {fileID: 21300000, guid: a4d9686289e7449fd9e268b353e612c6, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -94,9 +94,9 @@ MonoBehaviour:
     paramStat: 33
     deltaValue: 0.05
   - baseSkillIndex: 1011
-    skillName: Critical Chagnce+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF0B"
+    jpSkillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\uFF0B"
+    icon: {fileID: 21300000, guid: c6bba9baa22a2416ba1507efd8007468, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 4
@@ -104,9 +104,9 @@ MonoBehaviour:
     paramStat: 33
     deltaValue: 0.1
   - baseSkillIndex: 1020
-    skillName: Critical Damage
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B"
+    jpSkillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B"
+    icon: {fileID: 21300000, guid: f17000fda5bd34b8badeac87c8cd58b5, type: 3}
     maxLevel: 10
     unit: '%'
     paramTarget: 4
@@ -114,9 +114,9 @@ MonoBehaviour:
     paramStat: 34
     deltaValue: 0.25
   - baseSkillIndex: 1021
-    skillName: Critical Damage+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B\uFF0B"
+    jpSkillName: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u5A01\u529B\uFF0B"
+    icon: {fileID: 21300000, guid: 4351a28536d2b46de914df48db70264d, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -124,9 +124,9 @@ MonoBehaviour:
     paramStat: 34
     deltaValue: 0.5
   - baseSkillIndex: 1030
-    skillName: Ball Speed
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7403\u901F"
+    jpSkillName: "\u7403\u901F"
+    icon: {fileID: 21300000, guid: de2a93fa0909941b7a076e86b9aa51a7, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -134,9 +134,9 @@ MonoBehaviour:
     paramStat: 31
     deltaValue: 0.1
   - baseSkillIndex: 1031
-    skillName: More Speed
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u8D85\u7403\u901F"
+    jpSkillName: "\u8D85\u7403\u901F"
+    icon: {fileID: 21300000, guid: a4cac0d14d32a4aea94223f0e3ea0cd6, type: 3}
     maxLevel: 4
     unit: '%'
     paramTarget: 4
@@ -144,9 +144,9 @@ MonoBehaviour:
     paramStat: 31
     deltaValue: 0.2
   - baseSkillIndex: 1032
-    skillName: More Speed+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u8D85\u7403\u901F\uFF0B"
+    jpSkillName: "\u8D85\u7403\u901F\uFF0B"
+    icon: {fileID: 21300000, guid: 009bdc7755bb948cf89e28e5955d5f97, type: 3}
     maxLevel: 4
     unit: '%'
     paramTarget: 4
@@ -154,9 +154,9 @@ MonoBehaviour:
     paramStat: 31
     deltaValue: 0.3
   - baseSkillIndex: 1040
-    skillName: Boss Hunt
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DC\u30B9\u7279\u653B"
+    jpSkillName: "\u30DC\u30B9\u7279\u653B"
+    icon: {fileID: 21300000, guid: 61b51efbd71a84010935ef22bd4fa9fb, type: 3}
     maxLevel: 10
     unit: '%'
     paramTarget: 4
@@ -164,9 +164,9 @@ MonoBehaviour:
     paramStat: 37
     deltaValue: 0.3
   - baseSkillIndex: 1041
-    skillName: Boss Killer
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DC\u30B9\u6BBA\u3057"
+    jpSkillName: "\u30DC\u30B9\u6BBA\u3057"
+    icon: {fileID: 21300000, guid: 257b527f67fdf4e86bd02503afa84e0e, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -174,9 +174,9 @@ MonoBehaviour:
     paramStat: 37
     deltaValue: 0.5
   - baseSkillIndex: 1050
-    skillName: Chain Hit
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u9023\u6483"
+    jpSkillName: "\u9023\u6483"
+    icon: {fileID: 21300000, guid: 330e2c4af3238448e83a42ad5ff5f0a1, type: 3}
     maxLevel: 1
     unit: '%'
     paramTarget: 4
@@ -184,9 +184,9 @@ MonoBehaviour:
     paramStat: 36
     deltaValue: 1
   - baseSkillIndex: 1051
-    skillName: Chain Hit+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u9023\u6483\uFF0B"
+    jpSkillName: "\u9023\u6483\uFF0B"
+    icon: {fileID: 21300000, guid: 3694925d990b648a680ec87485455011, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -194,9 +194,9 @@ MonoBehaviour:
     paramStat: 36
     deltaValue: 1
   - baseSkillIndex: 1060
-    skillName: First Attack
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5148\u5236"
+    jpSkillName: "\u5148\u5236"
+    icon: {fileID: 21300000, guid: e8f24853ef4344b22bad0e0e29e8421f, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -204,9 +204,9 @@ MonoBehaviour:
     paramStat: 61
     deltaValue: 0.2
   - baseSkillIndex: 1061
-    skillName: First Kill
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5148\u5236\u6483\u7834"
+    jpSkillName: "\u5148\u5236\u6483\u7834"
+    icon: {fileID: 21300000, guid: c1d119f95032e41efafc0e2a1f2a4342, type: 3}
     maxLevel: 4
     unit: '%'
     paramTarget: 4
@@ -214,9 +214,9 @@ MonoBehaviour:
     paramStat: 61
     deltaValue: 0.5
   - baseSkillIndex: 1062
-    skillName: Last Attack
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6B62\u3081"
+    jpSkillName: "\u6B62\u3081"
+    icon: {fileID: 21300000, guid: b24aabe3d57644ca08980587d80d21e8, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -224,9 +224,9 @@ MonoBehaviour:
     paramStat: 62
     deltaValue: 0.2
   - baseSkillIndex: 1063
-    skillName: Last Kill
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6B62\u3081\u6483\u7834"
+    jpSkillName: "\u6B62\u3081\u6483\u7834"
+    icon: {fileID: 21300000, guid: d6686bd23f5424c098198436455b032c, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -234,9 +234,9 @@ MonoBehaviour:
     paramStat: 62
     deltaValue: 0.5
   - baseSkillIndex: 1070
-    skillName: Full Stack
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5168\u5F3E"
+    jpSkillName: "\u5168\u5F3E"
+    icon: {fileID: 21300000, guid: 07c719f129c72406080bdecd0cf400c3, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -244,9 +244,9 @@ MonoBehaviour:
     paramStat: 63
     deltaValue: 0.25
   - baseSkillIndex: 1071
-    skillName: Full Stack+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5168\u5F3E\uFF0B"
+    jpSkillName: "\u5168\u5F3E\uFF0B"
+    icon: {fileID: 21300000, guid: 87156b15bce544a98bc92feb5f4478e5, type: 3}
     maxLevel: 4
     unit: '%'
     paramTarget: 4
@@ -254,9 +254,9 @@ MonoBehaviour:
     paramStat: 63
     deltaValue: 0.5
   - baseSkillIndex: 1080
-    skillName: Ball Catch
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AD\u30E3\u30C3\u30C1"
+    jpSkillName: "\u30AD\u30E3\u30C3\u30C1"
+    icon: {fileID: 21300000, guid: 7b79d4bd91bcb43e98c7fc2077238f2d, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -264,9 +264,9 @@ MonoBehaviour:
     paramStat: 65
     deltaValue: 1
   - baseSkillIndex: 1100
-    skillName: More Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5897\u5F3E"
+    jpSkillName: "\u5897\u5F3E"
+    icon: {fileID: 21300000, guid: 8ab22a4d2613b43e28936d0ae2b1fc26, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -274,9 +274,9 @@ MonoBehaviour:
     paramStat: 30
     deltaValue: 1
   - baseSkillIndex: 2000
-    skillName: Bomb Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+    jpSkillName: "\u30DC\u30E0\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: e7c132fb1f8364b4690c6782d6791d03, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -284,9 +284,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2001
-    skillName: Blast Chance
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7206\u98A8\u306E\u767A\u751F"
+    jpSkillName: "\u7206\u98A8\u306E\u767A\u751F"
+    icon: {fileID: 21300000, guid: 9be9f8c9206184fa085d21c6c86d1044, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -294,9 +294,9 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.1
   - baseSkillIndex: 2002
-    skillName: Blast Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7206\u98A8\u306E\u5A01\u529B"
+    jpSkillName: "\u7206\u98A8\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: d01cce7cdce5f4d479a2330bb9731109, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -304,9 +304,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2003
-    skillName: Bomb +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DC\u30E0\uFF0B1"
+    jpSkillName: "\u30DC\u30E0\uFF0B1"
+    icon: {fileID: 21300000, guid: e49ac7786c2354cfb8f934a948ad0824, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -314,9 +314,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2010
-    skillName: Laser Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    jpSkillName: "\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: ca3dc59c125444a3da7913bbccdc5253, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -324,9 +324,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2011
-    skillName: Column Chance
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5217\u306E\u767A\u751F"
+    jpSkillName: "\u5217\u306E\u767A\u751F"
+    icon: {fileID: 21300000, guid: 71f7bb3da704b4be7a00fa5b122b9ca1, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 4
@@ -334,9 +334,9 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.1
   - baseSkillIndex: 2012
-    skillName: Column Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5217\u306E\u5A01\u529B"
+    jpSkillName: "\u5217\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: 457721535f4634c49a8c1f82f4743a2a, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -344,9 +344,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2013
-    skillName: Vertical Laser +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    jpSkillName: "\u7E26\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    icon: {fileID: 21300000, guid: 76e3fa085d4b8440896fafe82333494d, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -354,9 +354,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2020
-    skillName: Row Laser Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    jpSkillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: 42a0decb088584542bc91384ce8baa51, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -364,9 +364,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2021
-    skillName: Row Chance
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6BB5\u306E\u767A\u751F"
+    jpSkillName: "\u6BB5\u306E\u767A\u751F"
+    icon: {fileID: 21300000, guid: 92500ed639a0140549d6fdae73d98897, type: 3}
     maxLevel: 6
     unit: '%'
     paramTarget: 4
@@ -374,9 +374,9 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.1
   - baseSkillIndex: 2022
-    skillName: Row Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6BB5\u306E\u5A01\u529B"
+    jpSkillName: "\u6BB5\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: 5b7aaab48bdd64ec09f08294d83da381, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -384,9 +384,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2023
-    skillName: Horizontal Laser +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    jpSkillName: "\u6A2A\u30EC\u30FC\u30B6\u30FC\uFF0B1"
+    icon: {fileID: 21300000, guid: c2aedad86f8654a59b74fe5c6f866b6f, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -394,9 +394,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2030
-    skillName: Cross Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    jpSkillName: "\u30AF\u30ED\u30B9\u30EC\u30FC\u30B6\u30FC\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: 0d8d2cc1ecd404d8290a4b290fe1ca4e, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -404,9 +404,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2031
-    skillName: Diagonal Chance
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u659C\u3081\u306E\u767A\u751F"
+    jpSkillName: "\u659C\u3081\u306E\u767A\u751F"
+    icon: {fileID: 21300000, guid: c7cc810eee35a4f548217f25d2beee37, type: 3}
     maxLevel: 6
     unit: '%'
     paramTarget: 4
@@ -414,9 +414,9 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.1
   - baseSkillIndex: 2032
-    skillName: Diagonal Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u659C\u3081\u306E\u5A01\u529B"
+    jpSkillName: "\u659C\u3081\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: 32484555a3346474cb9c2979228899d6, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -424,9 +424,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2033
-    skillName: Cross +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AF\u30ED\u30B9\uFF0B1"
+    jpSkillName: "\u30AF\u30ED\u30B9\uFF0B1"
+    icon: {fileID: 21300000, guid: e87ff94ac43b346fd9cc8b198e14e6fe, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -434,9 +434,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2040
-    skillName: Poison Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
+    jpSkillName: "\u30DD\u30A4\u30BA\u30F3\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: d8743c65c8e7f4df9b898066d3c679c3, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -444,9 +444,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2041
-    skillName: Pool Chance
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6CBC\u306E\u767A\u751F"
+    jpSkillName: "\u6CBC\u306E\u767A\u751F"
+    icon: {fileID: 21300000, guid: c0e3e221785874875a7eb4660373f79f, type: 3}
     maxLevel: 6
     unit: '%'
     paramTarget: 4
@@ -454,9 +454,9 @@ MonoBehaviour:
     paramStat: 38
     deltaValue: 0.1
   - baseSkillIndex: 2042
-    skillName: Pool Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6CBC\u306E\u5A01\u529B"
+    jpSkillName: "\u6CBC\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: 4bb067744d58e40c6aa117ddbb600474, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -464,9 +464,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2043
-    skillName: Poison +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
+    jpSkillName: "\u30DD\u30A4\u30BA\u30F3\uFF0B1"
+    icon: {fileID: 21300000, guid: 8dfd8cb67764d46b7ac1e990c4072ebb, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -474,9 +474,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2050
-    skillName: Heavy Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+    jpSkillName: "\u30D8\u30D3\u30FC\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: 02a4da771f8024c2aaed054ac41ced60, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -484,9 +484,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2051
-    skillName: Heavy Speed
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
+    jpSkillName: "\u30D8\u30D3\u30FC\u306E\u901F\u3055"
+    icon: {fileID: 21300000, guid: 6daf47e0546d147b4a513ba483410620, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -494,9 +494,9 @@ MonoBehaviour:
     paramStat: 41
     deltaValue: 0.1
   - baseSkillIndex: 2052
-    skillName: Heavy Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
+    jpSkillName: "\u30D8\u30D3\u30FC\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: 541356f062c304a8ebaf945f7bfaba82, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -504,9 +504,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2053
-    skillName: Heavy +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30D8\u30D3\u30FC\uFF0B1"
+    jpSkillName: "\u30D8\u30D3\u30FC\uFF0B1"
+    icon: {fileID: 21300000, guid: b222caeb741214c9f9efe91c800d2820, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -514,9 +514,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2060
-    skillName: Orbit Ball
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+    jpSkillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\u30DC\u30FC\u30EB"
+    icon: {fileID: 21300000, guid: f09f4980afa704611b69d5ed5f56feca, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 4
@@ -524,9 +524,9 @@ MonoBehaviour:
     paramStat: 28
     deltaValue: 1
   - baseSkillIndex: 2061
-    skillName: Satellite
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u885B\u661F"
+    jpSkillName: "\u885B\u661F"
+    icon: {fileID: 21300000, guid: 5a9e15074f4fb4a62ae45548477a435c, type: 3}
     maxLevel: 3
     unit: Count
     paramTarget: 4
@@ -534,9 +534,9 @@ MonoBehaviour:
     paramStat: 42
     deltaValue: 1
   - baseSkillIndex: 2062
-    skillName: Orbit Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u5468\u56DE\u306E\u5A01\u529B"
+    jpSkillName: "\u5468\u56DE\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: 83dd59c06a97f465cab001907e4f03bc, type: 3}
     maxLevel: 10
     unit: NA
     paramTarget: 4
@@ -544,9 +544,9 @@ MonoBehaviour:
     paramStat: 39
     deltaValue: 0.1
   - baseSkillIndex: 2063
-    skillName: Orbit +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
+    jpSkillName: "\u30AA\u30FC\u30D3\u30C3\u30C8\uFF0B1"
+    icon: {fileID: 21300000, guid: 8c9195c4e3d1b444b88dd848c5cbca1a, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 4
@@ -554,9 +554,9 @@ MonoBehaviour:
     paramStat: 40
     deltaValue: 1
   - baseSkillIndex: 2100
-    skillName: Turret
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30BF\u30EC\u30C3\u30C8"
+    jpSkillName: "\u30BF\u30EC\u30C3\u30C8"
+    icon: {fileID: 21300000, guid: be94b5a14e538435193841223e4bf7d0, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 2
@@ -564,9 +564,9 @@ MonoBehaviour:
     paramStat: 53
     deltaValue: 1
   - baseSkillIndex: 2101
-    skillName: Turret Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30BF\u30EC\u30C3\u30C8\u306E\u5A01\u529B"
+    jpSkillName: "\u30BF\u30EC\u30C3\u30C8\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: f813f6c8ce295485d879b7ddd071222e, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 2
@@ -574,9 +574,9 @@ MonoBehaviour:
     paramStat: 55
     deltaValue: 0.1
   - baseSkillIndex: 2102
-    skillName: Turret Rate
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30BF\u30EC\u30C3\u30C8\u306E\u901F\u5EA6"
+    jpSkillName: "\u30BF\u30EC\u30C3\u30C8\u306E\u901F\u5EA6"
+    icon: {fileID: 21300000, guid: f42c0a9445dfb45d3a6ef959c93e0f7a, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 2
@@ -584,9 +584,9 @@ MonoBehaviour:
     paramStat: 56
     deltaValue: 0.1
   - baseSkillIndex: 2103
-    skillName: Turret +1
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30BF\u30EC\u30C3\u30C8\uFF0B1"
+    jpSkillName: "\u30BF\u30EC\u30C3\u30C8\uFF0B1"
+    icon: {fileID: 21300000, guid: 20b88f0e8b5984737a74d5fead8d7500, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 2
@@ -594,9 +594,9 @@ MonoBehaviour:
     paramStat: 57
     deltaValue: 1
   - baseSkillIndex: 2110
-    skillName: Auto Beam
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
+    jpSkillName: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0"
+    icon: {fileID: 21300000, guid: dc7e6b7d971954bd9a6e2a7586a6945f, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 2
@@ -604,9 +604,9 @@ MonoBehaviour:
     paramStat: 54
     deltaValue: 1
   - baseSkillIndex: 2111
-    skillName: Beam Power
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30D3\u30FC\u30E0\u306E\u5A01\u529B"
+    jpSkillName: "\u30D3\u30FC\u30E0\u306E\u5A01\u529B"
+    icon: {fileID: 21300000, guid: e10dedff7064d46b29b0629801a130d8, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 2
@@ -614,9 +614,9 @@ MonoBehaviour:
     paramStat: 58
     deltaValue: 0.1
   - baseSkillIndex: 2112
-    skillName: Beam Interval
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
+    jpSkillName: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
+    icon: {fileID: 21300000, guid: f5703c9190d1e4268a8fff9138c82a87, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 2
@@ -624,9 +624,9 @@ MonoBehaviour:
     paramStat: 59
     deltaValue: 0.1
   - baseSkillIndex: 3000
-    skillName: Harvest
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u53CE\u7A6B"
+    jpSkillName: "\u53CE\u7A6B"
+    icon: {fileID: 21300000, guid: 95b21bb17d28e4de6b80e0dd3951f95c, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 5
@@ -634,9 +634,9 @@ MonoBehaviour:
     paramStat: 44
     deltaValue: 1
   - baseSkillIndex: 3010
-    skillName: Magnet
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u78C1\u77F3"
+    jpSkillName: "\u78C1\u77F3"
+    icon: {fileID: 21300000, guid: e826e25a4d71147ad8203492ea5015e0, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 5
@@ -644,9 +644,9 @@ MonoBehaviour:
     paramStat: 45
     deltaValue: 0.2
   - baseSkillIndex: 3011
-    skillName: Magnet+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u78C1\u77F3\uFF0B"
+    jpSkillName: "\u78C1\u77F3\uFF0B"
+    icon: {fileID: 21300000, guid: adc1822b89926483186a40fb56c40076, type: 3}
     maxLevel: 3
     unit: '%'
     paramTarget: 5
@@ -654,9 +654,9 @@ MonoBehaviour:
     paramStat: 45
     deltaValue: 0.3
   - baseSkillIndex: 3020
-    skillName: Linger
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u6B8B\u7559"
+    jpSkillName: "\u6B8B\u7559"
+    icon: {fileID: 21300000, guid: 1de43e82612314268930a3ecc17f8e8e, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 5
@@ -664,9 +664,9 @@ MonoBehaviour:
     paramStat: 46
     deltaValue: 1
   - baseSkillIndex: 3050
-    skillName: Regen Spawn
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u518D\u751F\u306E\u51FA\u73FE"
+    jpSkillName: "\u518D\u751F\u306E\u51FA\u73FE"
+    icon: {fileID: 21300000, guid: 6a0e36dfb62eb426384eac644c33a1fa, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 5
@@ -674,9 +674,9 @@ MonoBehaviour:
     paramStat: 47
     deltaValue: 0.01
   - baseSkillIndex: 3051
-    skillName: Regen Yield
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u518D\u751F\u306E\u53CE\u91CF"
+    jpSkillName: "\u518D\u751F\u306E\u53CE\u91CF"
+    icon: {fileID: 21300000, guid: bd1800f9dc0c74f9c9ebcda2d6be40f2, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 5
@@ -684,9 +684,9 @@ MonoBehaviour:
     paramStat: 49
     deltaValue: 1
   - baseSkillIndex: 3060
-    skillName: Wall Spawn
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u58C1\u306E\u51FA\u73FE"
+    jpSkillName: "\u58C1\u306E\u51FA\u73FE"
+    icon: {fileID: 21300000, guid: f75554300c9f840b89c28d23e811d672, type: 3}
     maxLevel: 5
     unit: '%'
     paramTarget: 5
@@ -694,9 +694,9 @@ MonoBehaviour:
     paramStat: 48
     deltaValue: 0.01
   - baseSkillIndex: 3061
-    skillName: Wall Yield
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u58C1\u306E\u53CE\u91CF"
+    jpSkillName: "\u58C1\u306E\u53CE\u91CF"
+    icon: {fileID: 21300000, guid: d86088c115771405e86ddd26588008fe, type: 3}
     maxLevel: 1
     unit: Count
     paramTarget: 5
@@ -704,9 +704,9 @@ MonoBehaviour:
     paramStat: 50
     deltaValue: 1
   - baseSkillIndex: 4000
-    skillName: More Block
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7D30\u7247"
+    jpSkillName: "\u7D30\u7247"
+    icon: {fileID: 21300000, guid: feaf8c4ce87194fa29e5b3705da7a01e, type: 3}
     maxLevel: 2
     unit: NA
     paramTarget: 5
@@ -714,9 +714,9 @@ MonoBehaviour:
     paramStat: 29
     deltaValue: 1
   - baseSkillIndex: 4001
-    skillName: More Block+
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7D30\u7247\uFF0B"
+    jpSkillName: "\u7D30\u7247\uFF0B"
+    icon: {fileID: 21300000, guid: 25e4c4d4413d84f46a5b5725adbf479b, type: 3}
     maxLevel: 2
     unit: NA
     paramTarget: 5
@@ -724,9 +724,9 @@ MonoBehaviour:
     paramStat: 29
     deltaValue: 1
   - baseSkillIndex: 4002
-    skillName: More Block++
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u7D30\u7247\uFF0B\uFF0B"
+    jpSkillName: "\u7D30\u7247\uFF0B\uFF0B"
+    icon: {fileID: 21300000, guid: 365ff99d61cfd4440a48616caf027a05, type: 3}
     maxLevel: 2
     unit: NA
     paramTarget: 5
@@ -734,9 +734,9 @@ MonoBehaviour:
     paramStat: 29
     deltaValue: 1
   - baseSkillIndex: 5000
-    skillName: Unlock Milestone
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
+    jpSkillName: "\u30DE\u30A4\u30EB\u30B9\u30C8\u30FC\u30F3"
+    icon: {fileID: 21300000, guid: e34b39eba5d57425b85850a9f85f2152, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 5
@@ -744,19 +744,29 @@ MonoBehaviour:
     paramStat: 60
     deltaValue: 1
   - baseSkillIndex: 5001
-    skillName: Unlock Convert
-    jpSkillName: 
-    icon: {fileID: 0}
+    skillName: Convert
+    jpSkillName: Convert
+    icon: {fileID: 21300000, guid: 4e8265706dca14f47b198f6492a056a1, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 5
     targetIndex: 0
     paramStat: 51
     deltaValue: 1
+  - baseSkillIndex: 5002
+    skillName: "\u30BE\u30F3\u30D3\u56F3\u9451"
+    jpSkillName: "\u30BE\u30F3\u30D3\u56F3\u9451"
+    icon: {fileID: 21300000, guid: 4197f725dc9924727b4de19ad90d1a85, type: 3}
+    maxLevel: 1
+    unit: NA
+    paramTarget: 5
+    targetIndex: 0
+    paramStat: 67
+    deltaValue: 1
   - baseSkillIndex: 9001
     skillName: "\u3055\u3055\u3084\u304D"
     jpSkillName: "\u3055\u3055\u3084\u304D"
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 6ff9e5348feb74efa8d2fa6ebda8cca2, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 0
@@ -766,7 +776,7 @@ MonoBehaviour:
   - baseSkillIndex: 9002
     skillName: "\u306B\u3058\u3080\u5883\u754C"
     jpSkillName: "\u306B\u3058\u3080\u5883\u754C"
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 68accd0f24548458f995178a86235503, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 0
@@ -776,7 +786,7 @@ MonoBehaviour:
   - baseSkillIndex: 9003
     skillName: "\u9006\u3055\u306E\u8108"
     jpSkillName: "\u9006\u3055\u306E\u8108"
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: c865442454ae74a2fa0add7a111f4be7, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 0
@@ -786,7 +796,7 @@ MonoBehaviour:
   - baseSkillIndex: 9004
     skillName: "\u7A7A\u3063\u307D\u306E\u6ABB"
     jpSkillName: "\u7A7A\u3063\u307D\u306E\u6ABB"
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: bc4f8fae0c1144ae59fcb6dbf8a22068, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 0
@@ -796,7 +806,7 @@ MonoBehaviour:
   - baseSkillIndex: 9005
     skillName: "\u540D\u3082\u306A\u3044\u6249"
     jpSkillName: "\u540D\u3082\u306A\u3044\u6249"
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 4323114d0d0334e78a39e3955e09bf5f, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 0
@@ -806,7 +816,7 @@ MonoBehaviour:
   - baseSkillIndex: 9006
     skillName: "\u30EF\u30AF\u30C1\u30F3\u7814\u7A76\u6240"
     jpSkillName: "\u30EF\u30AF\u30C1\u30F3\u7814\u7A76\u6240"
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 14ac19f6529d649fc9b6b1bad7c1555a, type: 3}
     maxLevel: 1
     unit: NA
     paramTarget: 5
@@ -3482,6 +3492,15 @@ MonoBehaviour:
     level: 1
     maxLevel: 1
     cost_AA: 1587
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+  - skillTreeIndex: 5002
+    level: 1
+    maxLevel: 1
+    cost_AA: 50
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0

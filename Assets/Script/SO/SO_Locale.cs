@@ -29,37 +29,40 @@ public class SO_Locale : ScriptableObject
     public LocaleEntry[] entries;
 
     /// <summary>
-    /// シートの行を足す。同じ key はシート側で上書きする。シートに無い行は残す。
+    /// シートの行でまるごと置き換える（Locale はシートが正本）。シートに無い行は消える。
+    /// 同じ key が何度もあるときは最初の行を使う。key が空の行は飛ばす。空欄の ja・en は空文字にする。
     /// </summary>
-    public void Merge(LocaleEntry[] loaded)
+    public void Replace(LocaleEntry[] loaded)
     {
         if (loaded == null || loaded.Length == 0) return;
 
         var list = new List<LocaleEntry>();
-        if (entries != null)
-            list.AddRange(entries);
-
-        var index = new Dictionary<string, int>();
-        for (int i = 0; i < list.Count; i++)
-        {
-            string key = list[i] != null ? list[i].key : null;
-            if (!string.IsNullOrEmpty(key) && !index.ContainsKey(key))
-                index.Add(key, i);
-        }
-
+        var seen = new HashSet<string>();
         for (int i = 0; i < loaded.Length; i++)
         {
             var row = loaded[i];
-            if (row == null || string.IsNullOrEmpty(row.key)) continue;
-            if (index.TryGetValue(row.key, out int at))
-                list[at] = row;
-            else
-            {
-                index.Add(row.key, list.Count);
-                list.Add(row);
-            }
+            if (row == null || string.IsNullOrEmpty(row.key) || !seen.Add(row.key)) continue;
+            row.ja = row.ja ?? "";
+            row.en = row.en ?? "";
+            list.Add(row);
+        }
+        entries = list.ToArray();
+    }
+
+    /// <summary>今のアセットにあって、loaded に無い key。Replace すると消える行。</summary>
+    public List<string> KeysMissingIn(LocaleEntry[] loaded)
+    {
+        var keep = new HashSet<string>();
+        if (loaded != null)
+        {
+            foreach (var row in loaded)
+                if (row != null && !string.IsNullOrEmpty(row.key)) keep.Add(row.key);
         }
 
-        entries = list.ToArray();
+        var missing = new List<string>();
+        if (entries == null) return missing;
+        foreach (var e in entries)
+            if (e != null && !string.IsNullOrEmpty(e.key) && !keep.Contains(e.key)) missing.Add(e.key);
+        return missing;
     }
 }

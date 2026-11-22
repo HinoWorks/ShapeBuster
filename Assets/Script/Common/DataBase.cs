@@ -155,7 +155,31 @@ public class DataBase : MonoBehaviour
         try
         {
             var loadData = await DataLoad("Locale");
-            mSO_Locale.Merge(CSVSerializer.Deserialize<LocaleEntry>(loadData));
+            var loaded = CSVSerializer.Deserialize<LocaleEntry>(loadData);
+            if (loaded == null || loaded.Length == 0)
+            {
+                Debug.LogWarning("Locale シートが空だったので、読み込みをスキップしました。");
+                return;
+            }
+
+            // Locale はシートが正本。シートに無い行は SO_Locale から消えるので、消える行があれば確かめる
+            var removed = mSO_Locale.KeysMissingIn(loaded);
+            if (removed.Count > 0)
+            {
+#if UNITY_EDITOR
+                var shown = new List<string>();
+                for (int i = 0; i < removed.Count && i < 20; i++) shown.Add(removed[i]);
+                string message = $"シートに無い {removed.Count} 件を SO_Locale から消して、シートの内容で置き換えます。\n\n"
+                    + string.Join("\n", shown) + (removed.Count > shown.Count ? "\n…" : "");
+                if (!EditorUtility.DisplayDialog("Locale の読み込み", message, "消して置き換える", "Locale は読み込まない"))
+                {
+                    Debug.Log("Locale の読み込みを取りやめました。SO_Locale は変えていません。");
+                    return;
+                }
+#endif
+                Debug.Log($"Locale：シートに無い {removed.Count} 件を消しました。{string.Join(", ", removed)}");
+            }
+            mSO_Locale.Replace(loaded);
         }
         catch (Exception e)
         {

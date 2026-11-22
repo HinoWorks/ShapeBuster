@@ -56,6 +56,8 @@ public static class SkillTreeBonus
     public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
     public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
     public static bool MilestoneUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.MilestoneUnlock) >= 1f;
+    /// <summary>ゾンビ図鑑のタブを出す（スキルツリーの「ゾンビ図鑑」）。発見の記録は、開く前から残る。</summary>
+    public static bool BestiaryUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.BestiaryUnlock) >= 1f;
     /// <summary>ワクチンのタブを出す（スキルツリーの「ワクチン研究所」）。</summary>
     public static bool VaccineLabUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.VaccineLabUnlock) >= 1f;
     public static bool OwnsTurret => Sum(SkillParamTarget.Player, SkillParamStat.TurretUnlock) >= 1f;

@@ -56,6 +56,7 @@ public enum SkillParamStat
     ConvertRate = 52, // 未使用。変換レートは固定で、速度だけが EE で上がる
     MilestoneUnlock = 60, // 1以上で Milestone タブを出す
     VaccineLabUnlock = 66, // 1以上でワクチンのタブを出す。FF で開く不穏な一本道の先にある
+    BestiaryUnlock = 67, // 1以上でゾンビ図鑑のタブを出す
 
     // == Player ==
     GlassSpawnRate = 27, // 敵が1体出るときの、ガラスカプセルの出現率。0.05 で 5%

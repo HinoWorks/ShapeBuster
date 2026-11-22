@@ -147,6 +147,7 @@ public class UI_OutGameManager : MonoBehaviour
         convertPanel?.RefreshUnlock();
         RefreshHeaderTab(OutGame_MenuType.MileStone, SkillTreeBonus.MilestoneUnlocked);
         RefreshHeaderTab(OutGame_MenuType.Convert, SkillTreeBonus.ConvertUnlocked);
+        RefreshHeaderTab(OutGame_MenuType.Bestiary, SkillTreeBonus.BestiaryUnlocked);
         RefreshHeaderTab(OutGame_MenuType.Vaccine, VaccineRuntime.Unlocked);
     }
 
@@ -164,6 +165,8 @@ public class UI_OutGameManager : MonoBehaviour
         if (menuType == OutGame_MenuType.MileStone && !SkillTreeBonus.MilestoneUnlocked)
             menuType = OutGame_MenuType.SkillTree;
         if (menuType == OutGame_MenuType.Convert && !SkillTreeBonus.ConvertUnlocked)
+            menuType = OutGame_MenuType.SkillTree;
+        if (menuType == OutGame_MenuType.Bestiary && !SkillTreeBonus.BestiaryUnlocked)
             menuType = OutGame_MenuType.SkillTree;
         if (menuType == OutGame_MenuType.Vaccine && !VaccineRuntime.Unlocked)
             menuType = OutGame_MenuType.SkillTree;

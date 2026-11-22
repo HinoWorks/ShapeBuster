@@ -34,11 +34,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _BeamAlpha: 0.55
-    - _CoreWidth: 0.231
+    - _CoreWidth: 0.12
+    - _Cross: 1
     - _EnableExternalAlpha: 0
     - _FlowScale: 1.57
     - _FlowSpeed: 0
-    - _GlowWidth: 0.306
+    - _GlowWidth: 0.22
     - _PixelSize: 0.1
     - _Radius: 0.72
     - _SparkRate: 12

@@ -38,20 +38,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.r
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.g
-      value: 0.78
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.b
-      value: 0.84
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d8c1e4a7f2b4936a0e3c9d6b1f47a28, type: 2}
     - target: {fileID: 500023, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Radius
       value: 0.24

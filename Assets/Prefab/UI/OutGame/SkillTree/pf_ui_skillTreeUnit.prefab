@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 021148ece4d7344d6b4bb758082d4639, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b774ae741f0144b9935c1c35832e795, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -147,7 +147,6 @@ MonoBehaviour:
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
-    cost_GG: 0
   unlockState: 0
   isRoot: 0
   neighborSkillIndexes: 
@@ -514,7 +513,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.25
+  m_fontSize: 29.8
   m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -657,6 +656,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  clickSE: 1
+  hoverSE: 2
+  disabledClickSE: 7
 --- !u!114 &1058074848177888618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,7 +739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7237725530871753727, guid: 397894302a5d24621ab85377c49e7aaa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8d4f1a26e7b4c0f9a3e5b7d1f284a06, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

@@ -30,39 +30,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.b
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.g
-      value: 0.9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Color.r
-      value: 0.35
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 500014, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8957e88866c7c4300980f75b2a94ba79, type: 2}
     - target: {fileID: 6474774983741445416, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.r
-      value: 0.35
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6474774983741445416, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.g
       value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6474774983741445416, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.b
-      value: 0.4
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 6474774983741445416, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0.35
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6474774983741445416, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
       value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6474774983741445416, guid: c4e8a1b0bb000001a1b0bb000001b0b4, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.b
-      value: 0.4
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

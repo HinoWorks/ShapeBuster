@@ -34,6 +34,7 @@ CBUFFER_START(UnityPerMaterial)
     float _StreakStrength;
     float _SparkRate;
     float _BeamAlpha;
+    float _Cross;
 CBUFFER_END
 
 Varyings UnlitVertex(Attributes input)
@@ -61,13 +62,19 @@ half4 UnlitFragment(Varyings input) : SV_Target
     float dist = length(cell);
     float radius = saturate(_Radius);
     float time = _Time.y;
-    float axial = abs(cell.x);
+    // 縦の芯は x からの距離。X 字のときは、近いほうの斜めの線からの距離を使う
+    float cross = step(0.5, _Cross);
+    float diagA = abs(cell.x - cell.y) * 0.70710678;
+    float diagB = abs(cell.x + cell.y) * 0.70710678;
+    float axial = lerp(abs(cell.x), min(diagA, diagB), cross);
 
     float body = step(dist, radius);
     float coreWidth = max(_CoreWidth, pixel);
     float core = body * step(axial, coreWidth);
     float glow = 1.0 - smoothstep(coreWidth, max(_GlowWidth, coreWidth + pixel), axial);
-    float along = cell.y;
+    // 筋が流れる向き。X 字のときは、近いほうの斜めの線に沿わせる
+    float alongCross = diagA <= diagB ? (cell.x + cell.y) : (cell.y - cell.x);
+    float along = lerp(cell.y, alongCross * 0.70710678, cross);
     float cycle = frac(along * _FlowScale - time * max(_FlowSpeed, 0.0));
     float streak = body * step(cycle, saturate(_StreakWidth));
     float spark = step(0.93, Hash11(floor(p / pixel) + floor(time * max(_SparkRate, 0.0))));
