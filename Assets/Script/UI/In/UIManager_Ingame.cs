@@ -5,7 +5,6 @@ using UniRx;
 public class UIManager_Ingame : MonoBehaviour
 {
     public static UIManager_Ingame Inst { get; private set; }
-    [SerializeField] UI_stageProgressCont stageProgressCont;
     [SerializeField] UI_ResourceCounter[] resourceCounters;
     [SerializeField] Canvas dynamicCanvas;
     public Canvas DynamicHudCanvas => dynamicCanvas;
@@ -37,7 +36,6 @@ public class UIManager_Ingame : MonoBehaviour
 
     private void Start()
     {
-        stageProgressCont.InitOnce();
         foreach (var resourceCounter in resourceCounters)
         {
             resourceCounter.AwakeCall_Ingame();

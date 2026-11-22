@@ -17,7 +17,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: fde5750b85bbc42438c7e60cc3fbd516, type: 3}
     volume: 0.5
   - memo: 
-    clip: {fileID: 8300000, guid: c8570b9385c1a47acbd1364b58c287b0, type: 3}
+    clip: {fileID: 8300000, guid: add2214ede1594d0f8df228f14159305, type: 3}
     volume: 0.5
   - memo: 
     clip: {fileID: 8300000, guid: 2db10ad5042834e43a111a1f21479062, type: 3}
@@ -54,7 +54,8 @@ MonoBehaviour:
     maxVoices: 2
   - type: 2
     memo: UI_Hover
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 2b8c3e3378323401d9355daffea3c011, type: 3}
     volume: 0.5
     pitch: {x: 1, y: 1}
     minInterval: 0.04
@@ -148,7 +149,7 @@ MonoBehaviour:
   - type: 106
     memo: Explosion
     clips:
-    - {fileID: 8300000, guid: b65806aa1c9594151b52f3045d6d99ca, type: 3}
+    - {fileID: 8300000, guid: 44d8c4285f4c943579ec4d30a5e1ef65, type: 3}
     volume: 0.7
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.06
@@ -156,7 +157,7 @@ MonoBehaviour:
   - type: 107
     memo: Laser
     clips:
-    - {fileID: 8300000, guid: 849fb408ee1294abba613a59109bd5e4, type: 3}
+    - {fileID: 8300000, guid: 693d1175f108043169d26bd4b52b3d7b, type: 3}
     volume: 0.7
     pitch: {x: 0.95, y: 1.05}
     minInterval: 0.06

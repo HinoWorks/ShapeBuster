@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -72,7 +71,6 @@ public class BlockSession : MonoBehaviour
     readonly List<BallFlash> flashes = new();
     readonly List<PoisonZone> poisons = new();
     readonly List<Vector2> aimPath = new();
-    UI_BlockBallHud ballHud;
     UI_BlockCursorInfo cursorInfo;
     RectTransform cursorBase;
     Image cursorBaseImage;
@@ -120,6 +118,26 @@ public class BlockSession : MonoBehaviour
     const float TurretFollowGap = 0.18f;
 
     public bool IsRunning => running;
+
+    /// <summary>
+    /// 手元のボールを次に撃つ順に held へ、飛んでいるボールを away へ入れる（HUD の縦の列が使う）。
+    /// 戻ったボールは手元の最後に並ぶ。
+    /// </summary>
+    public void GetHand(List<BlockBall> held, List<BlockBall> away)
+    {
+        held.Clear();
+        away.Clear();
+        if (!running || balls == null) return;
+        for (int i = 0; i < handOrder.Count; i++)
+        {
+            var ball = handOrder[i];
+            if (ball == null) continue;
+            if (ball.IsHeld)
+                held.Add(ball);
+            else
+                away.Add(ball);
+        }
+    }
     public float Elapsed => elapsed;
 
     /// <summary>一番下のブロックがデッドラインにどれだけ近いか。0 が天井側、1 がライン上。</summary>
@@ -514,7 +532,6 @@ public class BlockSession : MonoBehaviour
         turretFollowUps.Clear();
         rowEmitter = null;
         rowBeamTimer = 0f;
-        ballHud = null;
         cursorInfo = null;
         cursorBase = null;
         cursorBaseImage = null;
@@ -618,7 +635,6 @@ public class BlockSession : MonoBehaviour
         PlaceDeadline(fieldRight - fieldLeft);
         PlaceLaunchLimit();
         CreateAimGuide();
-        CreateBallHud();
         CreateCursorBase();
         CreateCursorInfo();
     }
@@ -885,8 +901,6 @@ public class BlockSession : MonoBehaviour
         balls = spawned.ToArray();
         handOrder.Clear();
         handOrder.AddRange(spawned);
-        if (ballHud != null)
-            ballHud.Set(CountLaunchable(), balls.Length);
     }
 
     float BallSpeed(BlockBallKind kind, BallData data)
@@ -1305,21 +1319,6 @@ public class BlockSession : MonoBehaviour
         return SkillTreeBonus.OwnsBall(kind);
     }
 
-    void CreateBallHud()
-    {
-        var canvas = UIManager_Ingame.Inst != null ? UIManager_Ingame.Inst.HudCanvas : null;
-        if (canvas == null) return;
-
-        TMP_FontAsset font = null;
-        var sample = canvas.GetComponentInChildren<TextMeshProUGUI>(true);
-        if (sample != null)
-            font = sample.font;
-
-        ballHud = UI_BlockBallHud.Create(canvas.transform, font);
-        arena.Add(ballHud.gameObject);
-        ballHud.Set(SkillTreeBonus.NormalBallCount, SkillTreeBonus.NormalBallCount);
-    }
-
     void CreateCursorInfo()
     {
         var canvas = UIManager_Ingame.Inst != null ? UIManager_Ingame.Inst.DynamicHudCanvas : null;
@@ -1432,8 +1431,6 @@ public class BlockSession : MonoBehaviour
         TickFlashes();
         TickBursts();
         TickPoisons();
-        if (ballHud != null)
-            ballHud.Set(CountLaunchable(), balls.Length);
         RecycleTurretShots();
         TickTurrets();
         TickTurretFollowUps();

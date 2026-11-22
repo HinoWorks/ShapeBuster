@@ -621,7 +621,8 @@ public class BlockPiece : MonoBehaviour
         if (BossIndex >= 0 && session != null && session.BeginBossDefeat(this))
             return;
 
-        SoundManager.SE(SEType.BlockBreak);
+        // ガラスは壊れたときもガラスの音。
+        SoundManager.SE(ReleasesContents ? SEType.GlassHit : SEType.BlockBreak);
         if (Bursts && session != null)
             session.QueueBurst(this);
         if (Splits && session != null)
