@@ -43,5 +43,10 @@ public class UI_TItleManager : MonoBehaviour
     {
         GameWatcher.Inst.SetGameState(GameStateType.OutGame);
     }
+
+    public void OnClick_Exit()
+    {
+        UI_Options.QuitGame();
+    }
     #endregion
 }

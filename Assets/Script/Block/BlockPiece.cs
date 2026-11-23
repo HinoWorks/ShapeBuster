@@ -285,6 +285,15 @@ public class BlockPiece : MonoBehaviour
     float ghostClock;
     float ghostFade;
     bool phased;
+    /// <summary>デッドラインに着いて失敗の原因になってからの秒数。-1 は着いていない。</summary>
+    float failTime = -1f;
+    static readonly Color FailRed = new Color(1f, 0.18f, 0.16f, 1f);
+    const float FailPulseSpeed = 3f;
+    const float FailPopTime = 0.18f;
+    const float FailPopScale = 1.25f;
+    const float FailBobScale = 0.06f;
+    /// <summary>失敗の原因になったブロック。手前に出して、赤く点滅させる。</summary>
+    public bool FailMarked => failTime >= 0f;
     /// <summary>ガラス。割れると中のゾンビが出てくる。</summary>
     public bool ReleasesContents => contents != null;
     public BlockPiece Contents => contents;
@@ -392,6 +401,11 @@ public class BlockPiece : MonoBehaviour
 
     void Update()
     {
+        if (failTime >= 0f)
+        {
+            TickFail();
+            return;
+        }
         TickStumble();
         TickPlate();
         TickRegen();
@@ -442,6 +456,53 @@ public class BlockPiece : MonoBehaviour
         reactTime = -1f;
         flash = 0f;
         transform.localScale = restScale;
+        InvalidateFill();
+        PushFill();
+    }
+
+    /// <summary>
+    /// デッドラインに着いたブロックに印をつける。場は止まっているので、ほかの動き（再生・幽霊・殻）も止める。
+    /// 手前に出し、ぽんと大きくしてから、赤く点滅しながら小さく揺れる。
+    /// </summary>
+    public void MarkFail(int sortingOrder)
+    {
+        if (failTime >= 0f) return;
+        failTime = 0f;
+        reactTime = -1f;
+        flash = 0f;
+        ghostFade = 0f;
+        // 殻や板などの子も、前後の並びを保ったまま手前に出す。
+        int shift = sortingOrder - (sprite != null ? sprite.sortingOrder : 0);
+        foreach (var r in GetComponentsInChildren<Renderer>(true))
+            r.sortingOrder += shift;
+        TickFail();
+    }
+
+    float FailPulse()
+    {
+        if (failTime < 0f) return 0f;
+        return 0.5f + 0.5f * Mathf.Cos(failTime * FailPulseSpeed * Mathf.PI * 2f);
+    }
+
+    void TickFail()
+    {
+        failTime += Time.unscaledDeltaTime;
+        float scale;
+        if (failTime < FailPopTime)
+        {
+            float t = failTime / FailPopTime;
+            scale = Mathf.Lerp(1f, FailPopScale, Mathf.Sin(t * Mathf.PI * 0.5f));
+        }
+        else
+        {
+            float t = Mathf.Clamp01((failTime - FailPopTime) / FailPopTime);
+            float settle = Mathf.Lerp(FailPopScale, 1f + FailBobScale, t * t);
+            scale = settle + FailBobScale * Mathf.Sin((failTime - FailPopTime) * FailPulseSpeed * Mathf.PI * 2f) * t;
+        }
+        transform.localScale = restScale * scale;
+
+        if (!HasLevelFill() && sprite != null)
+            sprite.color = Color.Lerp(Color.white, FailRed, FailPulse());
         InvalidateFill();
         PushFill();
     }
@@ -718,7 +779,7 @@ public class BlockPiece : MonoBehaviour
             CacheOutline();
 
         float width = Mathf.Max(0.0001f, sprite.sharedMaterial.GetFloat(OutlineWidthId));
-        bool liveOutline = (regenDelay > 0f || Ghosts || Shelled || BossHeals) && IsAlive;
+        bool liveOutline = ((regenDelay > 0f || Ghosts || Shelled || BossHeals) && IsAlive) || failTime >= 0f;
         if (!liveOutline && propertyBlock != null && width == pushedWidth && spanX == pushedX && spanY == pushedY
             && flash == pushedFlash && fillColor == pushedFill && underColor == pushedUnder && faceSeed == pushedSeed
             && plateWhite == pushedPlate && ArmorSide() == pushedArmor)
@@ -741,12 +802,13 @@ public class BlockPiece : MonoBehaviour
         propertyBlock.SetVector(OutlineWidthXYId, new Vector4(width / cellsWide, width / cellsHigh, 0f, 0f));
         propertyBlock.SetVector(CellSpanId, new Vector4(cellsWide, cellsHigh, 0f, 0f));
         // 壊せないブロックはレベルの色を使わず、マテリアルの色のままにする。
+        float failPulse = FailPulse();
         if (!solid)
         {
-            propertyBlock.SetColor(FillColorId, fillColor);
-            propertyBlock.SetColor(UnderColorId, underColor);
+            propertyBlock.SetColor(FillColorId, failTime >= 0f ? Color.Lerp(fillColor, FailRed, 0.25f + 0.5f * failPulse) : fillColor);
+            propertyBlock.SetColor(UnderColorId, failTime >= 0f ? Color.Lerp(underColor, FailRed, 0.25f + 0.5f * failPulse) : underColor);
         }
-        propertyBlock.SetColor(OutlineColorId, TraitOutline());
+        propertyBlock.SetColor(OutlineColorId, failTime >= 0f ? Color.Lerp(FailRed, Color.white, failPulse) : TraitOutline());
         propertyBlock.SetFloat(FlashId, flash);
         // 壊せないブロックと宝箱には顔を描かない。
         propertyBlock.SetFloat(ZombieId, solid || chest ? 0f : 1f);

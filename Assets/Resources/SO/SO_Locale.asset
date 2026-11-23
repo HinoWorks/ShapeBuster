@@ -1771,3 +1771,6 @@ MonoBehaviour:
   - key: ui.guide.release
     ja: "\u96E2\u3059\uFF1A\u30DC\u30FC\u30EB\u767A\u5C04"
     en: 'Release: launch the balls'
+  - key: ui.cursor.notLaunch
+    ja: "\u3053\u3053\u304B\u3089\u306F\u767A\u5C04\u3067\u304D\u306A\u3044"
+    en: Can't launch from here

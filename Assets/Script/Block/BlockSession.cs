@@ -90,6 +90,11 @@ public class BlockSession : MonoBehaviour
     BlockAimGuide aimGuide;
     bool running;
     bool pendingFail;
+    /// <summary>デッドラインに着いてから、結果へ進むまでの残り秒数。場を止めて、着いたブロックを見せる。</summary>
+    float failHoldLeft;
+    readonly List<BlockPiece> failPieces = new();
+    const float FailHoldDuration = 1.5f;
+    const int FailPieceOrder = 20;
     bool aiming;
     bool volley;
     bool volleyFullStack;
@@ -118,6 +123,9 @@ public class BlockSession : MonoBehaviour
     const float TurretFollowGap = 0.18f;
 
     public bool IsRunning => running;
+
+    /// <summary>デッドラインに着いて、結果へ進む前に場を止めている間。ステージの時間も進めない。</summary>
+    public static bool FailHolds => Inst != null && Inst.failHoldLeft > 0f;
 
     /// <summary>
     /// 手元のボールを次に撃つ順に held へ、飛んでいるボールを away へ入れる（HUD の縦の列が使う）。
@@ -201,6 +209,14 @@ public class BlockSession : MonoBehaviour
 
     void Update()
     {
+        if (failHoldLeft > 0f)
+        {
+            failHoldLeft -= Time.unscaledDeltaTime;
+            if (failHoldLeft <= 0f)
+                FinishFail();
+            return;
+        }
+
         if (pendingFail)
         {
             pendingFail = false;
@@ -484,17 +500,43 @@ public class BlockSession : MonoBehaviour
             }
         }
         StopTurretShots();
+        aiming = false;
+        aimingBall = null;
+        if (aimGuide != null)
+            aimGuide.Hide();
         SoundManager.SE(SEType.StageFail);
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Medium);
         Debug.Log("<color=yellow> ========= Deadline ========= </color>");
+
+        // すぐには結果へ進まず、場を止めたまま、デッドラインに着いたブロックを見せる。
+        if (Time.timeScale != 1f)
+            Time.timeScale = 1f;
+        BeginFailMarks();
+        failHoldLeft = FailHoldDuration;
+    }
+
+    void FinishFail()
+    {
+        failHoldLeft = 0f;
         GameWatcher.Inst?.SetGameState(GameStateType.InGame_End);
+    }
+
+    /// <summary>デッドラインに着いたブロックを手前に出して、赤く点滅させる。</summary>
+    void BeginFailMarks()
+    {
+        failPieces.Clear();
+        CollectDeadlinePieces(failPieces);
+        for (int i = 0; i < failPieces.Count; i++)
+            failPieces[i].MarkFail(FailPieceOrder);
     }
 
     void Clear()
     {
         running = false;
         pendingFail = false;
+        failHoldLeft = 0f;
+        failPieces.Clear();
         aiming = false;
         volley = false;
         pinCursorUi = false;
@@ -1468,6 +1510,15 @@ public class BlockSession : MonoBehaviour
         {
             aimGuide?.Hide();
             return;
+        }
+
+        // 発射できない場所（ブロックの上、発射エリアより上）で押したら、カーソルの横で知らせる。
+        if (fire.wasPressedThisFrame && PointerWorld.IsInsidePlayfield && aimingBall == null && !volley
+            && (BlockUnderPointer() != null || AboveLaunchLimit()))
+        {
+            SoundManager.SE(SEType.UI_Error);
+            if (cursorInfo != null)
+                cursorInfo.FlashNotLaunch();
         }
 
         if (fire.wasPressedThisFrame && PointerWorld.IsInsidePlayfield && aimingBall == null && !volley
@@ -2881,6 +2932,18 @@ public class BlockSession : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    /// <summary>デッドラインに着いたブロックをすべて入れる（同時に着いたものも印をつける）。</summary>
+    void CollectDeadlinePieces(List<BlockPiece> result)
+    {
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            var piece = pieces[i];
+            if (piece == null || !piece.IsAlive || piece.IsSolid) continue;
+            if (piece.Bottom <= deadlineY)
+                result.Add(piece);
+        }
     }
 
     static Sprite MakeSprite(bool circle)

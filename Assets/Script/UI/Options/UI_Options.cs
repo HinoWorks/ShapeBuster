@@ -276,7 +276,8 @@ public class UI_Options : MonoBehaviour
         QuitGame();
     }
 
-    void QuitGame()
+    /// <summary>残りを保存してゲームを終了する。タイトルの終了ボタンからも呼ぶ。</summary>
+    public static void QuitGame()
     {
         // 終了する前に残りを書き出す（データを消したあとは何も書かない）。
         if (SaveLoader.Inst != null) SaveLoader.Inst.SaveNow();
