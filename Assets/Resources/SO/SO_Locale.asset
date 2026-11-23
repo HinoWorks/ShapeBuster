@@ -1765,3 +1765,9 @@ MonoBehaviour:
   - key: milestone.11.bonus
     ja: "\u30DC\u30B9\u3078\u306E\u653B\u6483\u529B"
     en: Boss Damage
+  - key: ui.guide.hold
+    ja: "\u9577\u62BC\u3057\uFF1A\u767A\u5C04\u4F4D\u7F6E\u3068\u65B9\u5411\u3092\u6C7A\u3081\u308B"
+    en: 'Hold: set launch point and direction'
+  - key: ui.guide.release
+    ja: "\u96E2\u3059\uFF1A\u30DC\u30FC\u30EB\u767A\u5C04"
+    en: 'Release: launch the balls'
