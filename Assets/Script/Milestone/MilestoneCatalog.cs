@@ -87,6 +87,7 @@ public static class MilestoneCatalog
         {
             id = row.id,
             title = row.title,
+            icon = row.icon,
             bonusLabel = label,
             track = row.track,
             trackKey = row.trackKey,

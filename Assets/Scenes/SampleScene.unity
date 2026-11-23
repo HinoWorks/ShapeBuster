@@ -673,8 +673,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 30000
+  m_SortingLayerID: -99980829
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!224 &257995136
 RectTransform:
@@ -4506,7 +4506,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 77c5e69bf144d46088ae14b334c1d97d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ef931197a9242cab6510ddc9bed9516, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8138,7 +8138,7 @@ PrefabInstance:
     - target: {fileID: 3543707928355155517, guid: 472b6c0bb34f64193bac782c8ee1e5e8, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 386c0f51e77d64e488ffc54e066172b4, type: 3}
+      objectReference: {fileID: 21300000, guid: 6c35c6465588a4bedaa88a6cd964fb29, type: 3}
     - target: {fileID: 3642327155736015999, guid: 472b6c0bb34f64193bac782c8ee1e5e8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

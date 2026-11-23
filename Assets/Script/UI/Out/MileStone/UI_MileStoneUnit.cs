@@ -15,6 +15,7 @@ public class UI_MileStoneUnit : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_now;
     [SerializeField] TextMeshProUGUI tmp_target;
     [SerializeField] Image image_fill;
+    [SerializeField] Image image_icon; //何を数えるかの絵。SO_MilestoneData の icon
     [SerializeField] TextMeshProUGUI tmp_bonusName;
     [SerializeField] TextMeshProUGUI tmp_bonusValue;
     [SerializeField] HButton button_claim;
@@ -104,6 +105,15 @@ public class UI_MileStoneUnit : MonoBehaviour
         tmp_bonusName.SetText(Loc.Content(Loc.MilestoneBonus(state.id), state.bonusLabel));
         tmp_bonusValue.SetText(state.FormatPerTier());
         button_claim.Set_Interactable(state.canClaim);
+        ApplyIcon(state.id);
+    }
+
+    void ApplyIcon(int id)
+    {
+        if (image_icon == null) return;
+        Sprite icon = MilestoneCatalog.TryGet(id, out var def) ? def.icon : null;
+        image_icon.sprite = icon;
+        image_icon.enabled = icon != null;
     }
 
     void ApplyEmpty()
@@ -115,6 +125,7 @@ public class UI_MileStoneUnit : MonoBehaviour
         tmp_bonusName.SetText(string.Empty);
         tmp_bonusValue.SetText(string.Empty);
         button_claim.Set_Interactable(false);
+        ApplyIcon(-1);
     }
 
     void Resolve()

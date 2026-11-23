@@ -89,6 +89,7 @@ public sealed class MilestoneDef
 {
     public int id;
     public string title;
+    public UnityEngine.Sprite icon;
     public string bonusLabel;
     public MilestoneTrack track;
     public int trackKey;

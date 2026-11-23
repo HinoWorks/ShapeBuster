@@ -82,32 +82,32 @@ MonoBehaviour:
     ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u56DE\u6570"
     en: Total Criticals
   - key: milestone.6.bonus
-    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387"
-    en: Critical Rate
+    ja: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u500D\u7387"
+    en: Critical Damage
   - key: milestone.7.title
-    ja: "\u30EA\u30ED\u30FC\u30C9\u56DE\u6570"
-    en: Total Reloads
+    ja: "\u767A\u5C04\u56DE\u6570"
+    en: Launches
   - key: milestone.7.bonus
-    ja: "\u88C5\u5F3E\u6570"
-    en: Magazine Ammo
+    ja: "\u30CE\u30FC\u30DE\u30EB\u306E\u6570"
+    en: Normal Balls
   - key: milestone.8.title
-    ja: "\u88AB\u30C0\u30E1\u30FC\u30B8"
-    en: Total Damage Taken
+    ja: "\u56DE\u53CE\u56DE\u6570"
+    en: Returns
   - key: milestone.8.bonus
-    ja: "\u6700\u5927HP"
-    en: Max HP
+    ja: "\u62FE\u3046\u7BC4\u56F2"
+    en: Pickup Range
   - key: milestone.9.title
     ja: "\u6700\u9AD8\u30C0\u30E1\u30FC\u30B8\u66F4\u65B0"
     en: Best Damage Updates
   - key: milestone.9.bonus
-    ja: "\u653B\u6483\u9593\u9694"
-    en: Attack Interval
+    ja: "\u7403\u901F"
+    en: Ball Speed
   - key: milestone.10.title
     ja: "\u6700\u77ED\u30AF\u30EA\u30A2\u66F4\u65B0"
     en: Best Clear Updates
   - key: milestone.10.bonus
-    ja: "\u30AB\u30FC\u30BD\u30EB\u30B5\u30A4\u30BA"
-    en: Cursor Size
+    ja: "\u5168\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B"
+    en: All Ball Damage
   - key: milestone.10000.title
     ja: "\u901A\u5E38\u30D6\u30ED\u30C3\u30AF\u7834\u58CA"
     en: Normal Block Breaks
