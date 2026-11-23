@@ -83,6 +83,8 @@ public class BlockSession : MonoBehaviour
     bool bossSpawned;
     bool bossMissingLogged;
     float bossTime;
+    /// <summary>エンドレス（クリア済み）のとき、HPを上げはじめる秒数。ステージの stageTime。0 ならエンドレスではない。</summary>
+    float endlessTime;
     int bossIndex;
     BlockPiece bossBreaking;
     float bossStopLeft;
@@ -388,6 +390,9 @@ public class BlockSession : MonoBehaviour
             * (1f + SkillTreeBonus.BlockHarvestRate)
             * piece.RewardScale;
         int reward = StageEnemyScale.ScaleResourceCount(cells, rewardRate);
+        // 「大漁」：確率でAが2倍になる
+        if (reward > 0 && Random.value < SkillTreeBonus.BlockDoubleDropChance)
+            reward *= 2;
         if (reward > 0)
             DropResources(point, reward, ResourceType.AA, piece.IsChest);
     }
@@ -398,6 +403,8 @@ public class BlockSession : MonoBehaviour
 
         int stage = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
         count = MilestoneBonus.ScaleDropCount(count, type, stage);
+        // ステージの倍率は AA だけに掛ける。BB・CC・EE・ボスの FF は、どの段でも同じ数。
+        if (type != ResourceType.AA) return count;
         var row = SOLoader.StageData != null ? SOLoader.StageData.FindStage(stage) : null;
         if (row != null && row.blockResourceRate > 0f)
             count = StageEnemyScale.ScaleResourceCount(count, row.blockResourceRate);
@@ -469,7 +476,25 @@ public class BlockSession : MonoBehaviour
         }
     }
 
-    int CurrentHp => Mathf.Max(1, Mathf.RoundToInt((Rule.baseHp + elapsed * Rule.hpPerSecond) * blockHpRate));
+    int CurrentHp => Mathf.Max(1, Mathf.RoundToInt(Rule.baseHp * blockHpRate * HpTimeRate));
+
+    /// <summary>
+    /// 時間で上がるHPの倍率。hpStepTime 秒で hpStepRate を1回掛ける。
+    /// エンドレスでは、stageTime 秒から endlessHpInterval 秒ごとに endlessHpRate を掛けていく。
+    /// </summary>
+    float HpTimeRate
+    {
+        get
+        {
+            float rate = elapsed >= Rule.hpStepTime ? Rule.hpStepRate : 1f;
+            if (endlessTime > 0f && elapsed >= endlessTime && Rule.endlessHpInterval > 0f)
+            {
+                int steps = Mathf.FloorToInt((elapsed - endlessTime) / Rule.endlessHpInterval) + 1;
+                rate *= Mathf.Pow(Rule.endlessHpRate, steps);
+            }
+            return rate;
+        }
+    }
 
     void Begin()
     {
@@ -554,6 +579,7 @@ public class BlockSession : MonoBehaviour
         bossSpawned = false;
         bossMissingLogged = false;
         bossTime = 0f;
+        endlessTime = 0f;
         bossIndex = -1;
         if (bossStopLeft > 0f || bossBreaking != null)
             Time.timeScale = 1f;
@@ -2415,6 +2441,7 @@ public class BlockSession : MonoBehaviour
         bossSpawned = false;
         bossMissingLogged = false;
         bossTime = 0f;
+        endlessTime = 0f;
         bossIndex = -1;
 
         var time = StageTimeManager.Inst;
@@ -2423,7 +2450,11 @@ public class BlockSession : MonoBehaviour
 
         var stage = table.FindStage(time.StageIndex);
         if (stage == null || stage.stageTime <= 0) return;
-        if (!IsUncleared(stage.stageIndex)) return;
+        if (!IsUncleared(stage.stageIndex))
+        {
+            endlessTime = stage.stageTime;
+            return;
+        }
 
         bossArmed = true;
         bossTime = stage.stageTime;

@@ -52,8 +52,11 @@ MonoBehaviour:
   fillPerSecond: 0.002
   baseSpeed: 0.1
   speedPerSecond: 0.0025
-  baseHp: 1
-  hpPerSecond: 0.025
+  baseHp: 2
+  hpStepTime: 25
+  hpStepRate: 1.5
+  endlessHpInterval: 10
+  endlessHpRate: 1.2
   sizeHpScale: 1
   blockGap: 0.1
   wallSideGap: 0.15

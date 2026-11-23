@@ -17,7 +17,7 @@ public class StageData
     public float blockHpRate = 1f;
     /// <summary>ブロック下降速度への倍率。経過で増える基礎速度に掛ける。0以下は1。</summary>
     public float blockSpeedRate = 1f;
-    /// <summary>壊したブロックが落とす資源数への倍率。0以下は個数そのまま。1を超えた端数は、その確率で1個足す。</summary>
+    /// <summary>壊したブロックが落とす AA の数への倍率（AA だけ。BB・CC・EE・FF には掛けない）。0以下は個数そのまま。1を超えた端数は、その確率で1個足す。</summary>
     public float blockResourceRate;
     /// <summary>出すボス。Resources/Boss のプレハブにある bossIndex と一致するものを使う。</summary>
     public int bossIndex;

@@ -15,7 +15,7 @@ MonoBehaviour:
   milestoneDatas:
   - id: 1
     title: Total Breaks
-    icon: {fileID: 21300000, guid: fb8c51eb275df42cd932b99225f8ff20, type: 3}
+    icon: {fileID: 0}
     bonusLabel: All Ball Damage
     track: 1
     trackKey: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     unit: 0
   - id: 2
     title: Total Damage Dealt
-    icon: {fileID: 21300000, guid: 2b6b6cff05e9c497bae9a862d046e047, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Critical Rate
     track: 2
     trackKey: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     unit: 1
   - id: 3
     title: Total Clear Time
-    icon: {fileID: 21300000, guid: 1f9829b25beaa4d4197ba1f13c4f7bdc, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 4
     trackKey: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     unit: 2
   - id: 4
     title: Total Clears
-    icon: {fileID: 21300000, guid: 387b08bad239d408a8a205c5c6bf4f6d, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Shot Interval
     track: 5
     trackKey: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     unit: 0
   - id: 5
     title: Total Plays
-    icon: {fileID: 21300000, guid: bf2919314c8694bf1aaf8fbc96e249e0, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Ball Speed
     track: 7
     trackKey: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
     unit: 0
   - id: 6
     title: Total Criticals
-    icon: {fileID: 21300000, guid: b1c62936e9a1d44338bafe914d49ed66, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Critical Damage
     track: 9
     trackKey: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
     unit: 0
   - id: 7
     title: Launches
-    icon: {fileID: 21300000, guid: a4b945e81dc16457a8f5c6723029418b, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Normal Balls
     track: 10
     trackKey: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
     unit: 0
   - id: 8
     title: Returns
-    icon: {fileID: 21300000, guid: f5e5a4faccd6846f891c624ee8e3e2e5, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Pickup Range
     track: 11
     trackKey: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
     unit: 0
   - id: 9
     title: Best Damage Updates
-    icon: {fileID: 21300000, guid: 72b8612413f70480985cb50ecfc42307, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Ball Speed
     track: 13
     trackKey: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
     unit: 0
   - id: 10
     title: Best Clear Updates
-    icon: {fileID: 21300000, guid: 9af46720cf71f4e0f860b540ca2cc351, type: 3}
+    icon: {fileID: 0}
     bonusLabel: All Ball Damage
     track: 15
     trackKey: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
     unit: 0
   - id: 11
     title: Boss Clears
-    icon: {fileID: 21300000, guid: 1ea5c51012c8b451c9bfa00040ac2d9b, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Boss Damage
     track: 5
     trackKey: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
     unit: 0
   - id: 20000
     title: Normal Damage
-    icon: {fileID: 21300000, guid: 893794ed52d8a4f67a3eeb1d1f2dc741, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Normal Attack
     track: 3
     trackKey: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
     unit: 1
   - id: 20001
     title: Bomb Damage
-    icon: {fileID: 21300000, guid: 102f415ca37c547e3951da8000814279, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Blast Radius
     track: 3
     trackKey: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
     unit: 1
   - id: 20002
     title: Laser Damage
-    icon: {fileID: 21300000, guid: ccae4f24b587544d99d69be484bca034, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Column Chance
     track: 3
     trackKey: 2
@@ -183,7 +183,7 @@ MonoBehaviour:
     unit: 1
   - id: 20003
     title: Row Laser Damage
-    icon: {fileID: 21300000, guid: 6966f483f2fca4f058d27cbdd8972599, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Row Chance
     track: 3
     trackKey: 3
@@ -195,7 +195,7 @@ MonoBehaviour:
     unit: 1
   - id: 20004
     title: Heavy Damage
-    icon: {fileID: 21300000, guid: 2efbe2e5b9f89475ebb8a832c44e7d35, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Heavy Speed
     track: 3
     trackKey: 4
@@ -207,7 +207,7 @@ MonoBehaviour:
     unit: 1
   - id: 20005
     title: Orbit Damage
-    icon: {fileID: 21300000, guid: 740cf5f8b8f7543dfaa2eb69502a85c5, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Satellites
     track: 3
     trackKey: 5
@@ -219,7 +219,7 @@ MonoBehaviour:
     unit: 1
   - id: 20006
     title: Cross Damage
-    icon: {fileID: 21300000, guid: 5ee59da354d564a848426155424f19e7, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Diagonal Chance
     track: 3
     trackKey: 6
@@ -231,7 +231,7 @@ MonoBehaviour:
     unit: 1
   - id: 20007
     title: Poison Damage
-    icon: {fileID: 21300000, guid: 0010389d6c97b48b88072d32eb7e3749, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Pool Duration
     track: 3
     trackKey: 7
@@ -243,7 +243,7 @@ MonoBehaviour:
     unit: 1
   - id: 20010
     title: Turret Damage
-    icon: {fileID: 21300000, guid: 0ba60fe8c05d941f9a65b2386ea0a5c4, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Turret Attack
     track: 3
     trackKey: 10
@@ -255,7 +255,7 @@ MonoBehaviour:
     unit: 1
   - id: 20011
     title: Auto Beam Damage
-    icon: {fileID: 21300000, guid: bdeefd89d03b742bc9d48494d8d8c743, type: 3}
+    icon: {fileID: 0}
     bonusLabel: Auto Beam Attack
     track: 3
     trackKey: 11
@@ -267,7 +267,7 @@ MonoBehaviour:
     unit: 1
   - id: 30000
     title: Stage 0 Clears
-    icon: {fileID: 21300000, guid: d73113ce7010d45f7a92217629da958e, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
     unit: 0
   - id: 30001
     title: Stage 1 Clears
-    icon: {fileID: 21300000, guid: ed1019c9b50814f0e8e9f763c6f13a3e, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 1
@@ -291,7 +291,7 @@ MonoBehaviour:
     unit: 0
   - id: 30002
     title: Stage 2 Clears
-    icon: {fileID: 21300000, guid: 03a3dc4a8a42d4673aa1ae970525a69e, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 2
@@ -303,7 +303,7 @@ MonoBehaviour:
     unit: 0
   - id: 30003
     title: Stage 3 Clears
-    icon: {fileID: 21300000, guid: 23da09a0f3c8c4fcc867a47f9cb9dc8a, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 3
@@ -315,7 +315,7 @@ MonoBehaviour:
     unit: 0
   - id: 30004
     title: Stage 4 Clears
-    icon: {fileID: 21300000, guid: 5f879deb5081e49bb8382a5536fedd1d, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 4
@@ -327,7 +327,7 @@ MonoBehaviour:
     unit: 0
   - id: 30005
     title: Stage 5 Clears
-    icon: {fileID: 21300000, guid: f482d1e487c3d46cbbf1341b86276d96, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 5
@@ -339,7 +339,7 @@ MonoBehaviour:
     unit: 0
   - id: 30006
     title: Stage 6 Clears
-    icon: {fileID: 21300000, guid: e3abedd129b9c49488a311f77e97a7cb, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 6
@@ -351,7 +351,7 @@ MonoBehaviour:
     unit: 0
   - id: 30007
     title: Stage 7 Clears
-    icon: {fileID: 21300000, guid: 6d2dec822950b465aa770857dec928c7, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 7
@@ -363,7 +363,7 @@ MonoBehaviour:
     unit: 0
   - id: 30008
     title: Stage 8 Clears
-    icon: {fileID: 21300000, guid: c70dfdf666e9048ff81f87bad8c2e5d9, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 8
@@ -375,7 +375,7 @@ MonoBehaviour:
     unit: 0
   - id: 30009
     title: Stage 9 Clears
-    icon: {fileID: 21300000, guid: dda0c71571b794792a7bb271be329fd8, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 9
@@ -387,7 +387,7 @@ MonoBehaviour:
     unit: 0
   - id: 30010
     title: Stage 10 Clears
-    icon: {fileID: 21300000, guid: ba746a78d5ac943d49af475d3751049f, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 10
@@ -399,7 +399,7 @@ MonoBehaviour:
     unit: 0
   - id: 30011
     title: Stage 11 Clears
-    icon: {fileID: 21300000, guid: cebca9965dada4b05a64102b2256a1b6, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 11
@@ -411,7 +411,7 @@ MonoBehaviour:
     unit: 0
   - id: 30012
     title: Stage 12 Clears
-    icon: {fileID: 21300000, guid: bd5724a3cc4aa41e89feccf1a99b095a, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 6
     trackKey: 12
@@ -423,7 +423,7 @@ MonoBehaviour:
     unit: 0
   - id: 40000
     title: Total AA Gained
-    icon: {fileID: 21300000, guid: aea5931d897854ec4895e3913cbd65ab, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 8
     trackKey: 0
@@ -435,7 +435,7 @@ MonoBehaviour:
     unit: 0
   - id: 40001
     title: Total BB Gained
-    icon: {fileID: 21300000, guid: 30ed1796c28da4618923a47677139027, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 8
     trackKey: 1
@@ -447,7 +447,7 @@ MonoBehaviour:
     unit: 0
   - id: 40002
     title: Total CC Gained
-    icon: {fileID: 21300000, guid: 060f0783389224742a83e08f2f3b7056, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 8
     trackKey: 2
@@ -459,7 +459,7 @@ MonoBehaviour:
     unit: 0
   - id: 40003
     title: Total DD Gained
-    icon: {fileID: 21300000, guid: 337a5aa3fd5a34e898b7adbec9c37a17, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 8
     trackKey: 3
@@ -471,7 +471,7 @@ MonoBehaviour:
     unit: 0
   - id: 40004
     title: Total EE Gained
-    icon: {fileID: 21300000, guid: 6210e52c8bb4446c69c78a80e1914332, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 8
     trackKey: 4
@@ -483,7 +483,7 @@ MonoBehaviour:
     unit: 0
   - id: 40005
     title: Total FF Gained
-    icon: {fileID: 21300000, guid: 01a9d781005c843a291cca9a39f4903a, type: 3}
+    icon: {fileID: 0}
     bonusLabel: AA Gain
     track: 8
     trackKey: 5

@@ -48,6 +48,8 @@ public static class SkillTreeBonus
     public static float BallSpeedScale => (1f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallSpeed))) * (1f + MilestoneBonus.BallSpeed);
     public static float FallSpeedScale => Mathf.Max(0.4f, 1f + Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockFallFast)));
     public static float BlockHarvestRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockHarvest));
+    /// <summary>ブロックが落とすAが2倍になる確率（0〜1）。</summary>
+    public static float BlockDoubleDropChance => Mathf.Clamp01(Sum(SkillParamTarget.Block, SkillParamStat.BlockDoubleDrop));
     public static float BlockMagnetRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.BlockMagnet));
     public static bool BlockLinger => Sum(SkillParamTarget.Block, SkillParamStat.BlockLinger) >= 1f;
     public static float RegenSpawnRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.RegenSpawn));

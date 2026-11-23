@@ -1350,11 +1350,11 @@ MonoBehaviour:
     ja: "\u30D6\u30ED\u30C3\u30AF\u304C\u843D\u3068\u3059A\u304C [A] \u5897\u3048\u308B\u3002"
     en: A dropped by blocks increases by [A].
   - key: skill.3001.name
-    ja: "\u78C1\u77F3"
-    en: Magnet
+    ja: "\u5927\u6F01"
+    en: Jackpot
   - key: skill.3001.desc
-    ja: "\u62FE\u5F97\u534A\u5F84\u304C [A] \u5E83\u304C\u308B\u3002"
-    en: Pickup radius increases by [A].
+    ja: "\u30D6\u30ED\u30C3\u30AF\u304C\u843D\u3068\u3059A\u304C\u3001[A] \u306E\u78BA\u7387\u30672\u500D\u306B\u306A\u308B\u3002"
+    en: A dropped by blocks has a [A] chance to double.
   - key: skill.3002.name
     ja: "\u6B8B\u7559"
     en: Linger

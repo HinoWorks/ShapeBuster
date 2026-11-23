@@ -633,6 +633,16 @@ MonoBehaviour:
     targetIndex: 0
     paramStat: 44
     deltaValue: 1
+  - baseSkillIndex: 3001
+    skillName: "\u5927\u6F01"
+    jpSkillName: "\u5927\u6F01"
+    icon: {fileID: 21300000, guid: 497a5e5b2399d4ce5ba268ee3e4ba0bb, type: 3}
+    maxLevel: 5
+    unit: '%'
+    paramTarget: 5
+    targetIndex: 0
+    paramStat: 68
+    deltaValue: 0.03
   - baseSkillIndex: 3010
     skillName: "\u78C1\u77F3"
     jpSkillName: "\u78C1\u77F3"
@@ -827,7 +837,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 1
     maxLevel: 10
-    cost_AA: 63
+    cost_AA: 10
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -836,7 +846,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 2
     maxLevel: 10
-    cost_AA: 131
+    cost_AA: 30
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -845,7 +855,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 3
     maxLevel: 10
-    cost_AA: 220
+    cost_AA: 50
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -854,7 +864,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 4
     maxLevel: 10
-    cost_AA: 456
+    cost_AA: 80
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -863,7 +873,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 5
     maxLevel: 10
-    cost_AA: 946
+    cost_AA: 120
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -872,7 +882,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 6
     maxLevel: 10
-    cost_AA: 1833
+    cost_AA: 140
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -881,7 +891,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 7
     maxLevel: 10
-    cost_AA: 3630
+    cost_AA: 160
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -890,7 +900,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 8
     maxLevel: 10
-    cost_AA: 6833
+    cost_AA: 200
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -899,7 +909,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 9
     maxLevel: 10
-    cost_AA: 13245
+    cost_AA: 250
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -908,7 +918,7 @@ MonoBehaviour:
   - skillTreeIndex: 1000
     level: 10
     maxLevel: 10
-    cost_AA: 26225
+    cost_AA: 300
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -917,7 +927,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 1
     maxLevel: 10
-    cost_AA: 220
+    cost_AA: 200
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -926,7 +936,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 2
     maxLevel: 10
-    cost_AA: 456
+    cost_AA: 300
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -935,7 +945,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 3
     maxLevel: 10
-    cost_AA: 765
+    cost_AA: 450
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -944,7 +954,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 4
     maxLevel: 10
-    cost_AA: 1587
+    cost_AA: 650
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -953,7 +963,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 5
     maxLevel: 10
-    cost_AA: 3293
+    cost_AA: 850
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -962,7 +972,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 6
     maxLevel: 10
-    cost_AA: 6384
+    cost_AA: 1000
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -971,7 +981,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 7
     maxLevel: 10
-    cost_AA: 12048
+    cost_AA: 1200
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -980,7 +990,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 8
     maxLevel: 10
-    cost_AA: 23793
+    cost_AA: 1400
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -989,7 +999,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 9
     maxLevel: 10
-    cost_AA: 46123
+    cost_AA: 1600
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -998,7 +1008,7 @@ MonoBehaviour:
   - skillTreeIndex: 1001
     level: 10
     maxLevel: 10
-    cost_AA: 89885
+    cost_AA: 2000
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1979,7 +1989,7 @@ MonoBehaviour:
   - skillTreeIndex: 1100
     level: 1
     maxLevel: 1
-    cost_AA: 220
+    cost_AA: 150
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
@@ -1990,159 +2000,159 @@ MonoBehaviour:
     maxLevel: 1
     cost_AA: 0
     cost_BB: 0
-    cost_CC: 147
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
-    cost_FF: 0
+    cost_FF: 1
   - skillTreeIndex: 2001
     level: 1
     maxLevel: 5
-    cost_AA: 0
+    cost_AA: 250
     cost_BB: 0
-    cost_CC: 305
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2001
     level: 2
     maxLevel: 5
-    cost_AA: 0
+    cost_AA: 350
     cost_BB: 0
-    cost_CC: 765
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2001
     level: 3
     maxLevel: 5
-    cost_AA: 0
+    cost_AA: 450
     cost_BB: 0
-    cost_CC: 1833
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2001
     level: 4
     maxLevel: 5
-    cost_AA: 0
+    cost_AA: 600
     cost_BB: 0
-    cost_CC: 4726
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2001
     level: 5
     maxLevel: 5
-    cost_AA: 0
+    cost_AA: 800
     cost_BB: 0
-    cost_CC: 11468
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 1
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 200
     cost_BB: 0
-    cost_CC: 403
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 2
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 200
     cost_BB: 0
-    cost_CC: 765
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 3
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 300
     cost_BB: 0
-    cost_CC: 1357
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 4
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 300
     cost_BB: 0
-    cost_CC: 2372
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 5
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 400
     cost_BB: 0
-    cost_CC: 4726
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 6
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 400
     cost_BB: 0
-    cost_CC: 8260
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 7
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 500
     cost_BB: 0
-    cost_CC: 15135
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 8
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 500
     cost_BB: 0
-    cost_CC: 27905
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 9
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 600
     cost_BB: 0
-    cost_CC: 51581
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2002
     level: 10
     maxLevel: 10
-    cost_AA: 0
+    cost_AA: 800
     cost_BB: 0
-    cost_CC: 94226
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2003
     level: 1
     maxLevel: 1
-    cost_AA: 0
+    cost_AA: 1500
     cost_BB: 0
-    cost_CC: 633
+    cost_CC: 0
     cost_DD: 0
     cost_EE: 0
     cost_FF: 0
   - skillTreeIndex: 2010
     level: 1
     maxLevel: 1
-    cost_AA: 0
-    cost_BB: 147
+    cost_AA: 500
+    cost_BB: 10
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
@@ -3248,7 +3258,52 @@ MonoBehaviour:
   - skillTreeIndex: 3000
     level: 1
     maxLevel: 1
-    cost_AA: 220
+    cost_AA: 75
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+  - skillTreeIndex: 3001
+    level: 5
+    maxLevel: 5
+    cost_AA: 250
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+  - skillTreeIndex: 3001
+    level: 5
+    maxLevel: 5
+    cost_AA: 750
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+  - skillTreeIndex: 3001
+    level: 5
+    maxLevel: 5
+    cost_AA: 1600
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+  - skillTreeIndex: 3001
+    level: 5
+    maxLevel: 5
+    cost_AA: 2500
+    cost_BB: 0
+    cost_CC: 0
+    cost_DD: 0
+    cost_EE: 0
+    cost_FF: 0
+  - skillTreeIndex: 3001
+    level: 5
+    maxLevel: 5
+    cost_AA: 3500
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0

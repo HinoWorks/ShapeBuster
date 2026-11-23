@@ -71,13 +71,17 @@ public class UI_ResultManager : MonoBehaviour
         if (tmp_progress != null)
             tmp_progress.text = $"{sec / 60}:{sec % 60:00}";
 
+        // 今回のプレイで手に入れた資源だけを出す。ボスの FF のように、拾わずに直接もらった分も記録に入っている。
         if (resourceCounters == null) return;
         for (int i = 0; i < resourceCounters.Length; i++)
         {
             var counter = resourceCounters[i];
             if (counter == null) continue;
             var count = record != null ? record.GetResourceCount(counter.ResourceType) : BigInteger.Zero;
-            counter.SetCount(count);
+            bool got = count > BigInteger.Zero;
+            counter.gameObject.SetActive(got);
+            if (got)
+                counter.SetCount(count);
         }
     }
 

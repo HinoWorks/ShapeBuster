@@ -44,6 +44,7 @@ public enum SkillParamStat
     BlockShrink = 64, // 未使用。1レベルで一辺6%縮小し、破壊資源は+12%。将来のスキル用
     BlockFallFast = 43, // ブロック下降を速くする割合。0.1 で +10%
     BlockHarvest = 44, // ブロックが落とすAへの倍率
+    BlockDoubleDrop = 68, // ブロックが落とすAが2倍になる確率。0.1 で 10%
     BlockMagnet = 45, // 拾得半径への倍率
     BlockLinger = 46, // 1以上で、資源がデッドラインに残る
     RegenSpawn = 47, // 再生ブロックの生成重み。0.04 で通常群の4%

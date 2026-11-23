@@ -59,8 +59,14 @@ public class SO_BlockSession : ScriptableObject
     [Header("HP")]
     [Tooltip("1マスの開始HP。ステージの blockHpRate をさらに掛ける。")]
     public int baseHp = 2;
-    [Tooltip("1秒ごとに足すHP。")]
-    public float hpPerSecond = 0.1f;
+    [Tooltip("この秒数に達したら、HPに hpStepRate を掛ける（1段階上がる）。ボスはこの後に出るので、上がった状態で出る。")]
+    public float hpStepTime = 25f;
+    [Tooltip("hpStepTime 秒からHPに掛ける倍率。")]
+    public float hpStepRate = 1.5f;
+    [Tooltip("エンドレス（クリア済みのステージ）で、ボスの出現時間（stageTime）から何秒ごとにHPを上げるか。")]
+    public float endlessHpInterval = 10f;
+    [Tooltip("エンドレスで、endlessHpInterval 秒ごとにHPへ掛けていく倍率。stageTime ちょうどで1回目を掛ける。")]
+    public float endlessHpRate = 1.2f;
     [Tooltip("1マス増えるごとに足すHP倍率。各ブロックプレハブの hpScale もさらに掛ける。")]
     public float sizeHpScale = 1f;
 
