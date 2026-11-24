@@ -94,9 +94,15 @@ public class DataBase : MonoBehaviour
         mSO_SkillTreeData.KeepIcons(convData);
         mSO_SkillTreeData.skillTreeBases = convData;
 
-        loadData = await DataLoad("SkillTreeUnit");
-        var convData2 = CSVSerializer.Deserialize<SkillTreeUnit>(loadData);
-        mSO_SkillTreeData.skillTreeUnits = convData2;
+        // 値段は SkillCost シート（1 スキル 1 行、資源 1 つ、Lv1… を右へ）から読む。
+        // シートが無いと gviz は先頭のシートを返すので、見出しで見分け、無ければ古い SkillTreeUnit を読む。
+        var units = SO_SkillTreeData.UnitsFromCostSheet(CSVSerializer.ParseCSV(await DataLoad("SkillCost")));
+        if (units == null)
+        {
+            Debug.LogWarning("SkillCost シートが見つからないので、SkillTreeUnit シートから値段を読みます。");
+            units = CSVSerializer.Deserialize<SkillTreeUnit>(await DataLoad("SkillTreeUnit"));
+        }
+        mSO_SkillTreeData.skillTreeUnits = units;
         mSO_SkillTreeData.ApplyImportedText();
         mSO_SkillTreeData.ApplyLimitsFromUnits();
         mSO_SkillTreeData.DropOrphanUnits();

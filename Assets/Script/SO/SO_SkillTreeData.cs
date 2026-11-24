@@ -115,6 +115,19 @@ public class SkillTreeUnit
         }
     }
 
+    public void SetCost(ResourceType resourceType, int cost)
+    {
+        switch (resourceType)
+        {
+            case ResourceType.AA: cost_AA = cost; break;
+            case ResourceType.BB: cost_BB = cost; break;
+            case ResourceType.CC: cost_CC = cost; break;
+            case ResourceType.DD: cost_DD = cost; break;
+            case ResourceType.EE: cost_EE = cost; break;
+            case ResourceType.FF: cost_FF = cost; break;
+        }
+    }
+
     public ResourceCount[] ToResourceCounts()
     {
         return new[]
@@ -250,6 +263,68 @@ public class SO_SkillTreeData : ScriptableObject
             if (max > 0)
                 basis.maxLevel = max;
         }
+    }
+
+    /// <summary>
+    /// SkillCost シート（1 スキル 1 行。資源を 1 つ選び、段の値段を Lv1, Lv2… と右へ並べる）を、段ごとの SkillTreeUnit に広げる。
+    /// 見出しに skillTreeIndex と resource が無ければ null を返す。
+    /// </summary>
+    public static SkillTreeUnit[] UnitsFromCostSheet(List<string[]> rows)
+    {
+        if (rows == null || rows.Count == 0) return null;
+        var head = rows[0];
+        int idCol = -1, resCol = -1, maxCol = -1;
+        var lvCols = new List<(int level, int col)>();
+        for (int c = 0; c < head.Length; c++)
+        {
+            string h = head[c] != null ? head[c].Trim().Trim('﻿') : "";
+            if (h == "skillTreeIndex") idCol = c;
+            else if (h == "resource") resCol = c;
+            else if (h == "maxLevel") maxCol = c;
+            else if (h.StartsWith("Lv") && int.TryParse(h.Substring(2), out int lv) && lv > 0)
+                lvCols.Add((lv, c));
+        }
+        if (idCol < 0 || resCol < 0) return null;
+        lvCols.Sort((a, b) => a.level.CompareTo(b.level));
+
+        var units = new List<SkillTreeUnit>();
+        for (int r = 1; r < rows.Count; r++)
+        {
+            var row = rows[r];
+            if (!int.TryParse(Cell(row, idCol), out int id)) continue;
+            if (!Enum.TryParse(Cell(row, resCol), true, out ResourceType res))
+            {
+                Debug.LogWarning($"SkillCost: {id} の resource「{Cell(row, resCol)}」が読めない。この行は飛ばす。");
+                continue;
+            }
+
+            // maxLevel が空なら、値段の入っている最後の段を上限にする
+            int max = int.TryParse(Cell(row, maxCol), out int m) ? m : 0;
+            if (max <= 0)
+                foreach (var lc in lvCols)
+                    if (Cell(row, lc.col) != "") max = lc.level;
+
+            foreach (var lc in lvCols)
+            {
+                if (lc.level > max) break;
+                string text = Cell(row, lc.col).Replace(",", "");
+                if (!double.TryParse(text, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double cost))
+                {
+                    Debug.LogWarning($"SkillCost: {id} の Lv{lc.level} に値段が無い。");
+                    continue;
+                }
+                var unit = new SkillTreeUnit { skillTreeIndex = id, level = lc.level, maxLevel = max };
+                unit.SetCost(res, (int)Math.Round(cost));
+                units.Add(unit);
+            }
+        }
+        return units.ToArray();
+    }
+
+    static string Cell(string[] row, int col)
+    {
+        if (col < 0 || row == null || col >= row.Length || row[col] == null) return "";
+        return row[col].Trim();
     }
 
     bool HasBase(int index)
