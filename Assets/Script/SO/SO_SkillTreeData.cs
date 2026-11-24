@@ -77,7 +77,7 @@ public class SkillTreeBase
     public string skillName; //翻訳が無いときの名前。表示は skill.{id}.name
     public string jpSkillName; //シートの [JP]skillName。読み込み後に skillName へ移す
     public Sprite icon; //スキルアイコン。空でもよい
-    public int maxLevel = 1; //上限レベル。SkillTreeUnit の段数で上書きする
+    public int maxLevel = 1; //上限レベル。シートには持たず、読み込みで SkillCost シートの値段の入っている最後の段から入れる
     public string unit = "NA"; //表示単位。SkillBase の unit。% は100倍、Sec は秒、Count は整数。NA は数値を出さない
     public SkillParamTarget paramTarget; //効果の対象。SkillBase の paramTarget
     public int targetIndex; //SkillBase。ボールはボム0、縦レーザー1、ヘビー2、横レーザー3、オービット4、クロス5、ポイズン6
@@ -244,7 +244,7 @@ public class SO_SkillTreeData : ScriptableObject
         skillTreeUnits = kept.ToArray();
     }
 
-    /// <summary>同じスキルの段のうち、最大の level と maxLevel を上限にする。</summary>
+    /// <summary>同じスキルの段のうち、最大の level と maxLevel を上限にする。SkillBase に maxLevel の列が残っていても使わない。</summary>
     public void ApplyLimitsFromUnits()
     {
         if (skillTreeBases == null || skillTreeUnits == null) return;
@@ -260,27 +260,25 @@ public class SO_SkillTreeData : ScriptableObject
                 if (unit.level > max) max = unit.level;
                 if (unit.maxLevel > max) max = unit.maxLevel;
             }
-            if (max > 0)
-                basis.maxLevel = max;
+            basis.maxLevel = Mathf.Max(1, max);
         }
     }
 
     /// <summary>
     /// SkillCost シート（1 スキル 1 行。資源を 1 つ選び、段の値段を Lv1, Lv2… と右へ並べる）を、段ごとの SkillTreeUnit に広げる。
-    /// 見出しに skillTreeIndex と resource が無ければ null を返す。
+    /// 上限レベルは、値段の入っている最後の段（Lv の列は左から詰めて書く）。見出しに skillTreeIndex と resource が無ければ null を返す。
     /// </summary>
     public static SkillTreeUnit[] UnitsFromCostSheet(List<string[]> rows)
     {
         if (rows == null || rows.Count == 0) return null;
         var head = rows[0];
-        int idCol = -1, resCol = -1, maxCol = -1;
+        int idCol = -1, resCol = -1;
         var lvCols = new List<(int level, int col)>();
         for (int c = 0; c < head.Length; c++)
         {
             string h = head[c] != null ? head[c].Trim().Trim('﻿') : "";
             if (h == "skillTreeIndex") idCol = c;
             else if (h == "resource") resCol = c;
-            else if (h == "maxLevel") maxCol = c;
             else if (h.StartsWith("Lv") && int.TryParse(h.Substring(2), out int lv) && lv > 0)
                 lvCols.Add((lv, c));
         }
@@ -298,11 +296,15 @@ public class SO_SkillTreeData : ScriptableObject
                 continue;
             }
 
-            // maxLevel が空なら、値段の入っている最後の段を上限にする
-            int max = int.TryParse(Cell(row, maxCol), out int m) ? m : 0;
-            if (max <= 0)
-                foreach (var lc in lvCols)
-                    if (Cell(row, lc.col) != "") max = lc.level;
+            // 値段の入っている最後の段を上限にする
+            int max = 0;
+            foreach (var lc in lvCols)
+                if (Cell(row, lc.col) != "") max = lc.level;
+            if (max == 0)
+            {
+                Debug.LogWarning($"SkillCost: {id} に値段が 1 つも無い。");
+                continue;
+            }
 
             foreach (var lc in lvCols)
             {
@@ -310,7 +312,7 @@ public class SO_SkillTreeData : ScriptableObject
                 string text = Cell(row, lc.col).Replace(",", "");
                 if (!double.TryParse(text, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double cost))
                 {
-                    Debug.LogWarning($"SkillCost: {id} の Lv{lc.level} に値段が無い。");
+                    Debug.LogWarning($"SkillCost: {id} の Lv{lc.level} に値段が無い（Lv{max} まで値段があるので、この段は買えない）。");
                     continue;
                 }
                 var unit = new SkillTreeUnit { skillTreeIndex = id, level = lc.level, maxLevel = max };

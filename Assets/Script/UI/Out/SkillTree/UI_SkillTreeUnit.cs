@@ -37,6 +37,8 @@ public class UI_SkillTreeUnit : MonoBehaviour
     [SerializeField] GameObject obj_debug;
     [SerializeField] TextMeshProUGUI tmp_debug;
     [SerializeField] DEBUG_UI_ResourceUnit[] ui_debug_requiredResources;
+    [SerializeField] Image image_debugCost; //Lv1 で払う資源のアイコン
+    [SerializeField] TextMeshProUGUI tmp_debugCost; //Lv1 で払う量
 
 
     private UI_SkillTreeManager manager;
@@ -67,6 +69,7 @@ public class UI_SkillTreeUnit : MonoBehaviour
         if (image_icon != null)
             image_icon.sprite = skillTree.icon;
         ShowDebugIndex();
+        ShowDebugCost();
 
         if (ui_debug_requiredResources == null) return;
         var resourceTypes = (ResourceType[])Enum.GetValues(typeof(ResourceType));
@@ -86,6 +89,25 @@ public class UI_SkillTreeUnit : MonoBehaviour
 
         string name = JapaneseSkillName();
         tmp_debug.SetText(string.IsNullOrEmpty(name) ? skillIndex.ToString() : skillIndex + "\n" + name);
+    }
+
+    /// <summary>Lv1 を取るのに要る資源と量を出す。資源はスキルごとに 1 つ（SkillCost シートの resource）。</summary>
+    void ShowDebugCost()
+    {
+        var table = SOLoader.SkillTreeData;
+        var cost = table != null ? table.GetSkillTreeUnitCost(skillIndex, 1) : null;
+        var costs = cost != null ? cost.CopyPositiveCosts() : Array.Empty<ResourceCount>();
+        bool has = costs.Length > 0;
+
+        if (tmp_debugCost != null)
+            tmp_debugCost.SetText(has ? costs[0].requiredCount.ToString("N0") : "-");
+        if (image_debugCost != null)
+        {
+            var data = has && SOLoader.ResourceData != null ? SOLoader.ResourceData.GetResourceData(costs[0].resourceType) : null;
+            if (data != null && data.icon != null)
+                image_debugCost.sprite = data.icon;
+            image_debugCost.enabled = has;
+        }
     }
 
     string JapaneseSkillName()
