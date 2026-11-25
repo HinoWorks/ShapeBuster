@@ -14,6 +14,10 @@ public class SO_BlockSession : ScriptableObject
     public GameObject laserBeam;
     public GameObject laserBeamCross;
     public GameObject poisonPool;
+    [Tooltip("ボムボールの爆発。攻撃範囲の円の中にだけ出る（BlockBombBlast）")]
+    public GameObject bombBlast;
+    [Tooltip("膨張ゾンビの爆発。ボムボールと同じ作りの色違い（BlockBombBlast）")]
+    public GameObject bloatBlast;
 
     [Space(10)]
     [Header("ブロック")]

@@ -92,7 +92,7 @@ public static class BestiaryRuntime
         {
             foreach (var state in states.Values)
                 if (state.found && !state.seen) return true;
-            return false;
+            return JournalRuntime.HasUnseen;
         }
     }
 
@@ -168,6 +168,21 @@ public static class BestiaryRuntime
         if (!states.TryGetValue(id, out var state) || !state.found || state.seen) return;
         state.seen = true;
         Touch(id);
+        Flush();
+    }
+
+    /// <summary>
+    /// 「にっき」の詳細を開いた。読んだページ数を、図鑑のセーブの id JournalRuntime.Id の count に残す。
+    /// SO_BestiaryData に無い id なので、効果の集計や数える処理には入らない。
+    /// </summary>
+    public static void MarkJournalSeen(int pages)
+    {
+        var state = Edit(JournalRuntime.Id);
+        if (state.count >= pages && state.found) return;
+        state.count = Math.Max(state.count, pages);
+        state.found = true;
+        state.seen = true;
+        Touch(JournalRuntime.Id);
         Flush();
     }
     #endregion

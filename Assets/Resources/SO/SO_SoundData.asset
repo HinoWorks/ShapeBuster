@@ -14,13 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SO_SoundData
   bgmTracks:
   - memo: 
-    clip: {fileID: 8300000, guid: fde5750b85bbc42438c7e60cc3fbd516, type: 3}
+    clip: {fileID: 8300000, guid: 79e407a2632464de6b342667420fefd4, type: 3}
     volume: 0.5
   - memo: 
-    clip: {fileID: 8300000, guid: add2214ede1594d0f8df228f14159305, type: 3}
+    clip: {fileID: 8300000, guid: ca7c7d33ec81c4a7ea8b368d72b4c0fa, type: 3}
     volume: 0.5
   - memo: 
-    clip: {fileID: 8300000, guid: 2db10ad5042834e43a111a1f21479062, type: 3}
+    clip: {fileID: 8300000, guid: 4f76e19b755e24010be14ad1177497e4, type: 3}
+    volume: 0.5
+  - memo: 
+    clip: {fileID: 8300000, guid: f4f3dda7529354d3a8036856bf6d9b90, type: 3}
+    volume: 0.5
+  - memo: 
+    clip: {fileID: 8300000, guid: 1284d2f90a7554da6b9eaf7b58752ee5, type: 3}
+    volume: 0.5
+  - memo: 
+    clip: {fileID: 8300000, guid: 3698a409a8b424967827fc8d9b476578, type: 3}
     volume: 0.5
   bgm:
   - type: 1

@@ -31,7 +31,7 @@ MonoBehaviour:
     baseProcRate: 0.1
     baseSize: 1
     baseSpeed: 6
-    areaRadius: 2.5
+    areaRadius: 1.5
     effectDuration: 0
     effectInterval: 0
     effectMax: 0

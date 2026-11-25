@@ -20,6 +20,9 @@ public class UI_BestiaryManager : MonoBehaviour
     [SerializeField] UI_BestiaryCard cardPrefab;
     [SerializeField] TextMeshProUGUI tmp_mobTitle;
     [SerializeField] TextMeshProUGUI tmp_bossTitle;
+    [Tooltip("「にっき」のカードを置く格子。空なら、ボスの見出しと格子を実行時に複製して一覧の一番下に作る")]
+    [SerializeField] RectTransform journalGrid;
+    [SerializeField] TextMeshProUGUI tmp_journalTitle;
     [SerializeField] ScrollRect scroll;
 
     [Header("詳細")]
@@ -48,13 +51,15 @@ public class UI_BestiaryManager : MonoBehaviour
     bool inited;
     float refreshWait;
 
-    public static string NameOf(int id) => Loc.Content("bestiary." + id + ".name", "#" + id);
+    public static string NameOf(int id) => id == JournalRuntime.Id
+        ? Loc.Text("journal.title")
+        : Loc.Content("bestiary." + id + ".name", "#" + id);
 
     public static Sprite Portrait(int id)
     {
         if (!portraits.TryGetValue(id, out var sprite))
         {
-            sprite = Resources.Load<Sprite>(PortraitPath + id);
+            sprite = Resources.Load<Sprite>(id == JournalRuntime.Id ? JournalRuntime.PortraitPath : PortraitPath + id);
             portraits[id] = sprite;
         }
         return sprite;
@@ -139,6 +144,49 @@ public class UI_BestiaryManager : MonoBehaviour
             card.Setup(entry.id, Select);
             cards.Add(card);
         }
+        BuildJournalCard();
+    }
+
+    /// <summary>
+    /// 一覧の一番下に「にっき」の段を作り、カードを 1 枚置く。
+    /// シーンに格子が無ければ、ボスの見出しと格子を複製して作る（シーンを直さずに足すため）。
+    /// </summary>
+    void BuildJournalCard()
+    {
+        if (cardPrefab == null) return;
+        if (journalGrid == null && bossGrid != null && bossGrid.parent != null)
+        {
+            var parent = bossGrid.parent;
+            var header = tmp_bossTitle != null ? HeaderOf(tmp_bossTitle.transform, parent) : null;
+            if (header != null)
+            {
+                var headerCopy = Instantiate(header.gameObject, parent);
+                headerCopy.name = "header_journal";
+                headerCopy.transform.SetAsLastSibling();
+                tmp_journalTitle = headerCopy.GetComponentInChildren<TextMeshProUGUI>(true);
+            }
+            var grid = Instantiate(bossGrid.gameObject, parent);
+            grid.name = "journalGrid";
+            grid.transform.SetAsLastSibling();
+            journalGrid = (RectTransform)grid.transform;
+            ClearPlaceholders(journalGrid);
+        }
+        if (journalGrid == null) return;
+        ClearPlaceholders(journalGrid);
+        var card = Instantiate(cardPrefab, journalGrid);
+        card.gameObject.SetActive(true);
+        card.name = "card_journal";
+        card.Setup(JournalRuntime.Id, Select);
+        cards.Add(card);
+    }
+
+    /// <summary>見出しの文字から、一覧の Content の直下にある見出しのまとまりをたどる。</summary>
+    static Transform HeaderOf(Transform label, Transform content)
+    {
+        var t = label;
+        while (t != null && t.parent != content)
+            t = t.parent;
+        return t;
     }
 
     static void ClearPlaceholders(RectTransform grid)
@@ -157,13 +205,16 @@ public class UI_BestiaryManager : MonoBehaviour
     public void Select(int id)
     {
         selectedId = id;
+        // 新しいページがあるにっきは、いちばん下（新しいページ）を見せる。
+        bool toBottom = id == JournalRuntime.Id && JournalRuntime.HasUnseen && JournalRuntime.SeenTotal > 0;
         // 詳細を開いたら「NEW」の印を消す。
-        BestiaryRuntime.MarkSeen(id);
+        if (id == JournalRuntime.Id) JournalRuntime.MarkSeen();
+        else BestiaryRuntime.MarkSeen(id);
         RefreshAll();
         if (diaryScroll != null)
         {
             Canvas.ForceUpdateCanvases();
-            diaryScroll.verticalNormalizedPosition = 1f;
+            diaryScroll.verticalNormalizedPosition = toBottom ? 0f : 1f;
         }
     }
 
@@ -171,6 +222,7 @@ public class UI_BestiaryManager : MonoBehaviour
     {
         if (tmp_mobTitle != null) { Loc.UseFont(tmp_mobTitle); tmp_mobTitle.SetText(Loc.Text("bestiary.section.mob")); }
         if (tmp_bossTitle != null) { Loc.UseFont(tmp_bossTitle); tmp_bossTitle.SetText(Loc.Text("bestiary.section.boss")); }
+        if (tmp_journalTitle != null) { Loc.UseFont(tmp_journalTitle); tmp_journalTitle.SetText(Loc.Text("journal.section")); }
         foreach (var card in cards)
             card.Refresh(card.Id == selectedId);
         RefreshDetail();
@@ -178,6 +230,15 @@ public class UI_BestiaryManager : MonoBehaviour
 
     void RefreshDetail()
     {
+        // にっきには倒した数と効果が無いので、欄ごと隠して日記の欄を上に詰める。
+        bool journal = selectedId == JournalRuntime.Id;
+        SetVisible(tmp_count, !journal);
+        SetVisible(tmp_effect, !journal);
+        if (journal)
+        {
+            RefreshJournalDetail();
+            return;
+        }
         var data = BestiaryRuntime.Data(selectedId);
         var state = BestiaryRuntime.Get(selectedId);
         bool found = data != null && state.found;
@@ -214,6 +275,24 @@ public class UI_BestiaryManager : MonoBehaviour
             SetText(tmp_effect, EffectText(data, state.level));
         }
         SetText(tmp_diary, DiaryText(data, state, VaccineRuntime.Cleared));
+        RefreshResearch();
+    }
+
+    /// <summary>「にっき」の詳細。読めるページの数と、ページの文を出す。</summary>
+    void RefreshJournalDetail()
+    {
+        bool found = JournalRuntime.Found;
+        if (image_portrait != null)
+        {
+            image_portrait.sprite = Portrait(selectedId);
+            image_portrait.enabled = image_portrait.sprite != null;
+            image_portrait.preserveAspect = true;
+            image_portrait.color = found ? Color.white : new Color(0f, 0f, 0f, 0.85f);
+        }
+        SetText(tmp_name, found ? NameOf(selectedId) : "???");
+        int total = JournalRuntime.PageCount + (JournalRuntime.AfterUnlocked ? 1 : 0);
+        SetText(tmp_level, found ? Loc.Format("journal.pages", JournalRuntime.UnlockedTotal, total) : "");
+        SetText(tmp_diary, JournalRuntime.Text());
         RefreshResearch();
     }
 
@@ -320,6 +399,12 @@ public class UI_BestiaryManager : MonoBehaviour
             }
         }
         return sb.ToString();
+    }
+
+    static void SetVisible(Component target, bool visible)
+    {
+        if (target != null && target.gameObject.activeSelf != visible)
+            target.gameObject.SetActive(visible);
     }
 
     static void SetText(TextMeshProUGUI label, string text)

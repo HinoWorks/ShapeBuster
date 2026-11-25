@@ -80,6 +80,11 @@ public class UI_BestiaryCard : MonoBehaviour
 
     public void Refresh(bool selected)
     {
+        if (Id == JournalRuntime.Id)
+        {
+            RefreshJournal(selected);
+            return;
+        }
         var data = BestiaryRuntime.Data(Id);
         var state = BestiaryRuntime.Get(Id);
         bool found = state.found;
@@ -102,6 +107,26 @@ public class UI_BestiaryCard : MonoBehaviour
             var block = BestiaryRuntime.CheckResearch(Id);
             obj_ready.SetActive(block == BestiaryResearchBlock.None);
         }
+        if (obj_selected != null)
+            obj_selected.SetActive(selected);
+    }
+
+    /// <summary>「にっき」のカード。Lv と「研究できる」の印は出さない。</summary>
+    void RefreshJournal(bool selected)
+    {
+        bool found = JournalRuntime.Found;
+        if (image_portrait != null)
+            image_portrait.color = found ? Color.white : Silhouette;
+        if (tmp_name != null)
+        {
+            Loc.UseFont(tmp_name);
+            tmp_name.SetText(found ? UI_BestiaryManager.NameOf(Id) : "???");
+        }
+        SetLevelVisible(false);
+        if (obj_new != null)
+            obj_new.SetActive(found && JournalRuntime.HasUnseen);
+        if (obj_ready != null)
+            obj_ready.SetActive(false);
         if (obj_selected != null)
             obj_selected.SetActive(selected);
     }

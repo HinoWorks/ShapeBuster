@@ -17,8 +17,15 @@ public class UI_SkillTreeUnit : MonoBehaviour
     [Space(10)]
     [Header("前提")]
     [SerializeField] bool isRoot;
+    [Tooltip("前提のスキルがある方向（isRoot 以外）。その方向に隣り合うスキルを、どちらか取れば開く")]
+    [SerializeField] SkillTreeDirection prerequisiteDirectionA;
+    [Tooltip("前提の方向の 2 つめ。使わないなら None")]
+    [SerializeField] SkillTreeDirection prerequisiteDirectionB;
+    [Tooltip("上の方向から UI_SkillTreeManager が入れる（手では書かない）")]
     [SerializeField] int[] neighborSkillIndexes = Array.Empty<int>();
     public bool IsRoot => isRoot;
+    public SkillTreeDirection PrerequisiteDirectionA => prerequisiteDirectionA;
+    public SkillTreeDirection PrerequisiteDirectionB => prerequisiteDirectionB;
     public int[] NeighborSkillIndexes => neighborSkillIndexes;
 
 

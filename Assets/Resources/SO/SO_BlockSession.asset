@@ -19,6 +19,8 @@ MonoBehaviour:
   laserBeam: {fileID: 740001, guid: c3a91e7b5d4f4a2e8b6c0d1f9a7e5b34, type: 3}
   laserBeamCross: {fileID: 740001, guid: 6fab99392497e4457abfc5daaeea8815, type: 3}
   poisonPool: {fileID: 750001, guid: c4e6a8b03d5f4c7e1a2b3c4d5e6f7081, type: 3}
+  bombBlast: {fileID: 3617064652758886033, guid: 99c996b52c7d04574b9e3ead7d39ddab, type: 3}
+  bloatBlast: {fileID: 7035453914000725097, guid: 5e71a1f6da8874d67a2fad167f4705a0, type: 3}
   square: {fileID: 100003, guid: a11b0c01e5f24a0a9c3d7e6f1a2b3c01, type: 3}
   wide: {fileID: 100003, guid: a11b0c01e5f24a0a9c3d7e6f1a2b3c02, type: 3}
   tall: {fileID: 100003, guid: a11b0c01e5f24a0a9c3d7e6f1a2b3c03, type: 3}
@@ -68,6 +70,8 @@ MonoBehaviour:
   wallBandTopGap: 2.5
   wallBoostBand: {fileID: 3661878321070050872, guid: cb5f3d6e2da454008ac81367a3594ba7, type: 3}
   wallSlowBand: {fileID: 5806103501465963670, guid: d704b2bc7ac14447aa6d1221fbea6d2f, type: 3}
+  wallBoostBaseInterval: 22
+  wallBoostMinInterval: 4
   wallBoostMax: 2
   wallBoostLife: 12
   wallBoostCells: 2

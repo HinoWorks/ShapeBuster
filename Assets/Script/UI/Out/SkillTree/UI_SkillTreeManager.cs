@@ -19,11 +19,18 @@ public enum SkillTreeUnlockState
     EnhanceComplete
 }
 
-[Serializable]
-public struct SkillTreeLinkCut
+/// <summary>スキルツリーの前提の方向（画面の見た目で上下左右と斜め）。</summary>
+public enum SkillTreeDirection
 {
-    public int skillA;
-    public int skillB;
+    None,
+    Up,
+    Down,
+    Left,
+    Right,
+    UpLeft,
+    UpRight,
+    DownLeft,
+    DownRight,
 }
 
 public class UI_SkillTreeManager : MonoBehaviour
@@ -40,7 +47,6 @@ public class UI_SkillTreeManager : MonoBehaviour
     [SerializeField] float nodeLineHeight = 4f;
     [SerializeField] float neighborStep = 160f;
     [SerializeField] float neighborTolerance = 36f;
-    [SerializeField] SkillTreeLinkCut[] linkCuts = Array.Empty<SkillTreeLinkCut>();
 
 
     [Space(10)]
@@ -130,7 +136,6 @@ public class UI_SkillTreeManager : MonoBehaviour
         foreach (var baseIndex in neighbors)
         {
             if (baseIndex < 0) continue;
-            if (IsLinkCut(unit.skillIndex, baseIndex)) continue;
             var baseUnit = Array.Find(skillTreeUnits, x => x != null && x.skillIndex == baseIndex);
             if (baseUnit == null || baseUnit == unit) continue;
 
@@ -178,57 +183,63 @@ public class UI_SkillTreeManager : MonoBehaviour
             positions[i] = board.InverseTransformPoint(rect.position);
         }
 
+        // isRoot 以外は、選んだ方向（最大 2 つ）に隣り合うスキルを前提にする。
+        // スキルツリーは基本的に一方向からしか伸びないので、方向だけで前提が決まる。
+        var found = new List<int>(2);
         for (int i = 0; i < skillTreeUnits.Length; i++)
         {
             var unit = skillTreeUnits[i];
             if (unit == null) continue;
-            if (unit.IsRoot || neighborStep <= 0f)
+            found.Clear();
+            if (!unit.IsRoot && neighborStep > 0f)
             {
-                unit.SetNeighborSkillIndexes(Array.Empty<int>());
-                continue;
-            }
-
-            var found = new List<int>();
-            for (int j = 0; j < skillTreeUnits.Length; j++)
-            {
-                if (i == j) continue;
-                var other = skillTreeUnits[j];
-                if (other == null) continue;
-                if (!IsGridNeighbor(positions[i], positions[j])) continue;
-                if (IsLinkCut(unit.skillIndex, other.skillIndex)) continue;
-                if (!found.Contains(other.skillIndex))
-                    found.Add(other.skillIndex);
+                AddNeighborAt(i, unit.PrerequisiteDirectionA, positions, found);
+                AddNeighborAt(i, unit.PrerequisiteDirectionB, positions, found);
             }
             unit.SetNeighborSkillIndexes(found.ToArray());
         }
     }
 
-    bool IsGridNeighbor(Vector2 a, Vector2 b)
+    /// <summary>units[from] から direction の方向に 1 マス（neighborStep）隣のスキルを found に足す。</summary>
+    void AddNeighborAt(int from, SkillTreeDirection direction, Vector2[] positions, List<int> found)
     {
-        float dx = Mathf.Abs(a.x - b.x);
-        float dy = Mathf.Abs(a.y - b.y);
-        bool alongX = Mathf.Abs(dx - neighborStep) <= neighborTolerance;
-        bool alongY = Mathf.Abs(dy - neighborStep) <= neighborTolerance;
-        bool flatX = dx <= neighborTolerance;
-        bool flatY = dy <= neighborTolerance;
-        bool horizontal = alongX && flatY;
-        bool vertical = alongY && flatX;
-        bool diagonal = alongX && alongY;
-        return horizontal || vertical || diagonal;
+        if (direction == SkillTreeDirection.None) return;
+        var unit = skillTreeUnits[from];
+        Vector2 target = positions[from] + DirectionOffset(direction) * neighborStep;
+        for (int j = 0; j < skillTreeUnits.Length; j++)
+        {
+            if (j == from) continue;
+            var other = skillTreeUnits[j];
+            if (other == null) continue;
+            if (Mathf.Abs(positions[j].x - target.x) > neighborTolerance) continue;
+            if (Mathf.Abs(positions[j].y - target.y) > neighborTolerance) continue;
+            if (!found.Contains(other.skillIndex))
+                found.Add(other.skillIndex);
+            return;
+        }
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+            Debug.LogWarning($"スキル {unit.skillIndex} の前提の方向（{direction}）に、隣り合うスキルがありません。", unit);
+#endif
     }
 
-    bool IsLinkCut(int a, int b)
+    static Vector2 DirectionOffset(SkillTreeDirection direction)
     {
-        if (linkCuts == null) return false;
-        for (int i = 0; i < linkCuts.Length; i++)
+        switch (direction)
         {
-            int x = linkCuts[i].skillA;
-            int y = linkCuts[i].skillB;
-            if ((x == a && y == b) || (x == b && y == a))
-                return true;
+            case SkillTreeDirection.Up: return new Vector2(0f, 1f);
+            case SkillTreeDirection.Down: return new Vector2(0f, -1f);
+            case SkillTreeDirection.Left: return new Vector2(-1f, 0f);
+            case SkillTreeDirection.Right: return new Vector2(1f, 0f);
+            case SkillTreeDirection.UpLeft: return new Vector2(-1f, 1f);
+            case SkillTreeDirection.UpRight: return new Vector2(1f, 1f);
+            case SkillTreeDirection.DownLeft: return new Vector2(-1f, -1f);
+            case SkillTreeDirection.DownRight: return new Vector2(1f, -1f);
+            default: return Vector2.zero;
         }
-        return false;
     }
+
+
 
 
 

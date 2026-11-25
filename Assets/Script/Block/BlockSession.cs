@@ -407,8 +407,8 @@ public class BlockSession : MonoBehaviour
 
         int stage = StageTimeManager.Inst != null ? StageTimeManager.Inst.activeStageIndex : -1;
         count = MilestoneBonus.ScaleDropCount(count, type, stage);
-        // ステージの倍率は AA だけに掛ける。BB・CC・EE・ボスの FF は、どの段でも同じ数。
-        if (type != ResourceType.AA) return count;
+        // ステージの倍率は AA・BB・CC・EE に掛ける。ボスの FF だけは、どの段でも同じ数。
+        if (type == ResourceType.FF) return count;
         var row = SOLoader.StageData != null ? SOLoader.StageData.FindStage(stage) : null;
         if (row != null && row.blockResourceRate > 0f)
             count = StageEnemyScale.ScaleResourceCount(count, row.blockResourceRate);
@@ -2119,13 +2119,8 @@ public class BlockSession : MonoBehaviour
             piece.Hit(burst.damage);
         }
 
-        ShowFlash(
-            burst.point,
-            CircleSprite,
-            Vector3.one * 0.2f,
-            Vector3.one * burst.radius * 2f,
-            BurstColor,
-            0.34f);
+        var props = SOLoader.BlockSession;
+        ShowBlast(props != null ? props.bloatBlast : null, burst.point, burst.radius, BurstColor, 0.34f);
     }
 
     public void Explode(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
@@ -2141,13 +2136,28 @@ public class BlockSession : MonoBehaviour
             piece.Hit(Mathf.Max(1, damage), (int)BlockBallKind.Bomb, critical, fullStack);
         }
 
-        ShowFlash(
-            point,
-            CircleSprite,
-            Vector3.one * 0.2f,
-            Vector3.one * radius * 2f,
-            new Color(1f, 0.45f, 0.12f, 0.8f),
-            0.36f);
+        var props = SOLoader.BlockSession;
+        ShowBlast(props != null ? props.bombBlast : null, point, radius, new Color(1f, 0.45f, 0.12f, 0.8f), 0.36f);
+    }
+
+    /// <summary>
+    /// 爆発の見た目（ボムボール・膨張ゾンビ）。攻撃範囲（半径 radius の円）の中にだけ出る。
+    /// プレハブが無いときは、前の丸い光（fallbackColor）で代わりに出す。
+    /// </summary>
+    void ShowBlast(GameObject prefab, Vector2 point, float radius, Color fallbackColor, float fallbackLife)
+    {
+        if (prefab == null)
+        {
+            ShowFlash(point, CircleSprite, Vector3.one * 0.2f, Vector3.one * radius * 2f, fallbackColor, fallbackLife);
+            return;
+        }
+
+        var instance = Instantiate(prefab);
+        var blast = instance.GetComponent<BlockBombBlast>();
+        if (blast == null)
+            blast = instance.AddComponent<BlockBombBlast>();
+        blast.Play(point, radius);
+        arena.Add(instance);
     }
 
     public void Beam(BlockPiece source, int damage, bool critical = false, bool fullStack = false)
