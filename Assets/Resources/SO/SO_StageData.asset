@@ -15,7 +15,7 @@ MonoBehaviour:
   stageDatas:
   - stageIndex: 0
     stageTime: 45
-    blockColumns: 8
+    blockColumns: 7
     blockHpRate: 1
     blockSpeedRate: 0.8
     blockResourceRate: 1
@@ -30,9 +30,6 @@ MonoBehaviour:
     weightSplit: 0
     weightGhost: 0
     weightGlass: 0
-    weightChest: 0
-    wallBoostStart: 0
-    wallBoostChance: 0
     wallSlowStart: 0
     wallSlowChance: 0
   - stageIndex: 1
@@ -44,258 +41,222 @@ MonoBehaviour:
     bossIndex: 7
     weightSquare: 50
     weightWide: 20
-    weightTall: 0
-    weightSolid: 10
-    weightArmor: 10
-    weightRegen: 10
-    weightBloat: 0
-    weightSplit: 0
-    weightGhost: 0
-    weightGlass: 0
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
-    wallSlowStart: 0
-    wallSlowChance: 0
-  - stageIndex: 2
-    stageTime: 50
-    blockColumns: 10
-    blockHpRate: 4.5
-    blockSpeedRate: 1.2
-    blockResourceRate: 3
-    bossIndex: 5
-    weightSquare: 50
-    weightWide: 28
-    weightTall: 22
-    weightSolid: 0
+    weightTall: 20
+    weightSolid: 3
     weightArmor: 0
     weightRegen: 0
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
+    weightGlass: 0
+    wallSlowStart: 0
+    wallSlowChance: 0
+  - stageIndex: 2
+    stageTime: 50
+    blockColumns: 9
+    blockHpRate: 4.5
+    blockSpeedRate: 1.2
+    blockResourceRate: 3
+    bossIndex: 5
+    weightSquare: 50
+    weightWide: 20
+    weightTall: 15
+    weightSolid: 3
+    weightArmor: 0
+    weightRegen: 5
+    weightBloat: 0
+    weightSplit: 0
+    weightGhost: 0
     weightGlass: 15
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 0
     wallSlowChance: 0
   - stageIndex: 3
     stageTime: 55
     blockColumns: 10
     blockHpRate: 20
-    blockSpeedRate: 1.4
+    blockSpeedRate: 1.2
     blockResourceRate: 4
     bossIndex: 1
-    weightSquare: 48
-    weightWide: 18
-    weightTall: 14
-    weightSolid: 0
-    weightArmor: 20
+    weightSquare: 50
+    weightWide: 20
+    weightTall: 15
+    weightSolid: 3
+    weightArmor: 5
     weightRegen: 0
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
-    weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
+    weightGlass: 15
     wallSlowStart: 0
     wallSlowChance: 0
   - stageIndex: 4
     stageTime: 55
     blockColumns: 10
     blockHpRate: 75
-    blockSpeedRate: 1.5
+    blockSpeedRate: 1.2
     blockResourceRate: 4.5
     bossIndex: 8
-    weightSquare: 42
-    weightWide: 16
-    weightTall: 12
-    weightSolid: 0
-    weightArmor: 10
-    weightRegen: 20
+    weightSquare: 45
+    weightWide: 20
+    weightTall: 15
+    weightSolid: 3
+    weightArmor: 7
+    weightRegen: 8
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
-    weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
+    weightGlass: 15
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 5
     stageTime: 60
-    blockColumns: 10
+    blockColumns: 11
     blockHpRate: 150
-    blockSpeedRate: 1.5
+    blockSpeedRate: 1.25
     blockResourceRate: 5
     bossIndex: 9
     weightSquare: 36
     weightWide: 22
     weightTall: 22
-    weightSolid: 0
-    weightArmor: 10
-    weightRegen: 10
-    weightBloat: 15
+    weightSolid: 3
+    weightArmor: 6
+    weightRegen: 7
+    weightBloat: 7
     weightSplit: 0
     weightGhost: 0
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 6
     stageTime: 60
-    blockColumns: 10
+    blockColumns: 11
     blockHpRate: 400
-    blockSpeedRate: 1.5
+    blockSpeedRate: 1.25
     blockResourceRate: 5.5
     bossIndex: 2
     weightSquare: 30
-    weightWide: 14
-    weightTall: 10
-    weightSolid: 0
-    weightArmor: 23
-    weightRegen: 23
-    weightBloat: 10
-    weightSplit: 15
+    weightWide: 15
+    weightTall: 15
+    weightSolid: 3
+    weightArmor: 7
+    weightRegen: 7
+    weightBloat: 7
+    weightSplit: 0
     weightGhost: 0
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 7
     stageTime: 65
-    blockColumns: 10
+    blockColumns: 12
     blockHpRate: 1000
-    blockSpeedRate: 1.5
+    blockSpeedRate: 1.25
     blockResourceRate: 6
     bossIndex: 12
     weightSquare: 34
     weightWide: 14
     weightTall: 10
-    weightSolid: 0
-    weightArmor: 12
-    weightRegen: 30
-    weightBloat: 10
+    weightSolid: 3
+    weightArmor: 8
+    weightRegen: 8
+    weightBloat: 5
     weightSplit: 10
     weightGhost: 0
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 8
     stageTime: 65
-    blockColumns: 10
+    blockColumns: 12
     blockHpRate: 2500
-    blockSpeedRate: 1.5
+    blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 13
     weightSquare: 32
     weightWide: 14
     weightTall: 10
-    weightSolid: 0
-    weightArmor: 30
-    weightRegen: 14
-    weightBloat: 10
+    weightSolid: 3
+    weightArmor: 8
+    weightRegen: 8
+    weightBloat: 5
     weightSplit: 10
     weightGhost: 0
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 9
     stageTime: 65
-    blockColumns: 10
+    blockColumns: 13
     blockHpRate: 5000
-    blockSpeedRate: 1.6
+    blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 10
     weightSquare: 36
     weightWide: 18
     weightTall: 14
-    weightSolid: 0
-    weightArmor: 16
-    weightRegen: 16
-    weightBloat: 10
-    weightSplit: 10
+    weightSolid: 3
+    weightArmor: 8
+    weightRegen: 8
+    weightBloat: 5
+    weightSplit: 8
     weightGhost: 0
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 10
     stageTime: 70
-    blockColumns: 10
+    blockColumns: 13
     blockHpRate: 7500
-    blockSpeedRate: 1.7
+    blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 6
     weightSquare: 28
     weightWide: 14
     weightTall: 14
-    weightSolid: 0
-    weightArmor: 22
-    weightRegen: 22
-    weightBloat: 10
-    weightSplit: 10
-    weightGhost: 15
+    weightSolid: 3
+    weightArmor: 8
+    weightRegen: 8
+    weightBloat: 5
+    weightSplit: 8
+    weightGhost: 10
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 11
     stageTime: 70
-    blockColumns: 10
+    blockColumns: 14
     blockHpRate: 11000
-    blockSpeedRate: 1.8
+    blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 11
     weightSquare: 24
     weightWide: 14
     weightTall: 14
-    weightSolid: 10
-    weightArmor: 18
-    weightRegen: 20
-    weightBloat: 10
-    weightSplit: 10
-    weightGhost: 10
+    weightSolid: 3
+    weightArmor: 8
+    weightRegen: 8
+    weightBloat: 5
+    weightSplit: 8
+    weightGhost: 8
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25
   - stageIndex: 12
     stageTime: 75
-    blockColumns: 10
+    blockColumns: 14
     blockHpRate: 20000
-    blockSpeedRate: 1.9
+    blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 14
-    weightSquare: 18
-    weightWide: 14
-    weightTall: 18
-    weightSolid: 16
-    weightArmor: 17
-    weightRegen: 17
-    weightBloat: 10
-    weightSplit: 10
-    weightGhost: 10
+    weightSquare: 25
+    weightWide: 12
+    weightTall: 12
+    weightSolid: 3
+    weightArmor: 8
+    weightRegen: 8
+    weightBloat: 5
+    weightSplit: 8
+    weightGhost: 8
     weightGlass: 10
-    weightChest: 3
-    wallBoostStart: 10
-    wallBoostChance: 35
     wallSlowStart: 15
     wallSlowChance: 25

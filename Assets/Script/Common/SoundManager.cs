@@ -17,8 +17,10 @@ public class SoundManager : MonoBehaviour
     const int SourceCount = 16;
     const int MaxSimultaneousSE = 12;
     const float BGMFadeDuration = 0.6f;
-    // 曲から曲へつなぐときのクロスフェード（秒）。
-    const float TrackCrossfade = 2f;
+    // 曲が最後まで鳴り終わってから、次の曲を始めるまでの無音（秒）。
+    const float TrackGap = 3f;
+    // 次の曲の頭のフェードイン（秒）。プツッと鳴らないための短いもの。
+    const float TrackFadeIn = 0.1f;
 
     const string KeyMaster = "sound_master";
     const string KeyBGM = "sound_bgm";
@@ -42,7 +44,9 @@ public class SoundManager : MonoBehaviour
     readonly System.Collections.Generic.Dictionary<SEType, float> lastPlayed = new();
 
     // BGM は場面によらず同じ一覧（SO_SoundData の bgmTracks）からランダムに流し続ける。
-    // 曲の切り替えは 2 つのソースを入れ替えてクロスフェードする。場面が変わったときは音量だけ変える。
+    // 曲は最後まで鳴らし切り、TrackGap 秒の無音をはさんで次の曲を始める。場面が変わったときは音量だけ変える。
+    // 2 つのソースは、曲が鳴っている途中で止めるとき（StopBGM のあとの再開など）に、前の曲をフェードアウトさせるために使う。
+    // 曲の音声は Streaming で読む（Assets/Editor/BgmImportSettings.cs）。読み込み時に全部展開すると、曲を始める瞬間にかくつく。
     AudioSource[] bgmSources;
     float[] trackVolume = { 1f, 1f };
     int bgmFront;
@@ -62,6 +66,8 @@ public class SoundManager : MonoBehaviour
     bool bgmStopped;
     // 今の曲をどこまで聞いたか（秒）。
     float trackHeard;
+    // 曲が終わってから次の曲までの残りの無音（秒）。0 未満なら、曲の終わりを待っている。
+    float gapLeft = -1f;
 
     /// <summary>今の BGM の場面（音量を決める）。</summary>
     public BGMType CurrentBGMScene => currentBGM;
@@ -321,9 +327,10 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    /// <summary>一覧から、今と違う曲をランダムに選んで、今の曲からクロスフェードする。</summary>
+    /// <summary>一覧から、今と違う曲をランダムに選んで流し始める。前の曲がまだ鳴っていれば、フェードアウトさせる。</summary>
     void StartNextTrack(float fadeDuration)
     {
+        gapLeft = -1f;
         var data = SOLoader.SoundData;
         int next = data != null ? data.PickBGMTrack(currentTrack) : -1;
         var outgoing = bgmSources[bgmFront];
@@ -348,28 +355,38 @@ public class SoundManager : MonoBehaviour
         incoming.DOFade(BGMTargetVolume(bgmFront), fadeDuration).SetUpdate(true);
     }
 
-    /// <summary>曲の終わりが近づいたら、次の曲へつなぐ。</summary>
+    /// <summary>曲が最後まで鳴り終わったら、TrackGap 秒の無音のあとに次の曲を始める。</summary>
     void Update()
     {
         if (paused || bgmStopped || currentTrack < 0) return;
+
+        if (gapLeft >= 0f)
+        {
+            gapLeft -= Time.unscaledDeltaTime;
+            if (gapLeft < 0f)
+                StartNextTrack(TrackFadeIn);
+            return;
+        }
+
         var front = bgmSources[bgmFront];
         var clip = front.clip;
         if (clip == null) return;
-        float crossfade = Mathf.Min(TrackCrossfade, clip.length * 0.25f);
-        float end = clip.length - crossfade;
-        // 止まっているだけ（音が出ない環境やエディタの一時停止）では次へ進めない。
-        // 終わりの近くまで聞いたあとに止まったときだけ、曲が終わったとみなす。
         if (front.isPlaying)
+        {
             trackHeard = Mathf.Max(trackHeard, front.time);
-        bool reachedEnd = front.time >= end || (!front.isPlaying && trackHeard >= end - 0.5f);
-        if (reachedEnd)
-            StartNextTrack(crossfade);
+            return;
+        }
+        // 止まっているだけ（音が出ない環境やエディタの一時停止）では次へ進めない。
+        // 終わりの近くまで聞いたあとに止まったときだけ、曲が鳴り終わったとみなす。
+        if (trackHeard >= clip.length - 1f)
+            gapLeft = TrackGap;
     }
 
     public void StopBGM(float fadeDuration = BGMFadeDuration)
     {
         bgmStopped = true;
         currentTrack = -1;
+        gapLeft = -1f;
         foreach (var source in bgmSources)
         {
             source.DOKill();

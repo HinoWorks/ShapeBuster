@@ -144,6 +144,9 @@ public class UI_SkillTreeDetail : MonoBehaviour
         float value = skill.deltaValue * atLevel;
         if (skill.paramStat == SkillParamStat.BlockCompact)
             return SkillTreeBonus.FormatBlockCompact(value);
+        // 加速帯の間隔は、縮める秒数ではなく、実際に出る間隔を出す。まだ取っていなければ「-」。
+        if (skill.paramStat == SkillParamStat.WallBoostInterval)
+            return atLevel <= 0 ? "-" : SkillTreeBonus.WallBoostIntervalFor(value).ToString("F0") + " " + Loc.Text("ui.unit.sec");
         if (!HasDisplayUnit(skill.unit))
             return "";
         return FormatParam(skill.unit, value);
@@ -151,7 +154,8 @@ public class UI_SkillTreeDetail : MonoBehaviour
 
     void SetParamValues(SkillTreeBase skill, int currentLevel, bool maxed)
     {
-        bool showValue = HasDisplayUnit(skill.unit) || skill.paramStat == SkillParamStat.BlockCompact;
+        bool showValue = HasDisplayUnit(skill.unit) || skill.paramStat == SkillParamStat.BlockCompact
+            || skill.paramStat == SkillParamStat.WallBoostInterval;
         if (obj_param != null)
             obj_param.SetActive(showValue);
 

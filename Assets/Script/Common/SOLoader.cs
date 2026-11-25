@@ -140,6 +140,19 @@ public static class SOLoader
 
 
 
+    private static SO_FieldScenery so_fieldScenery;
+    public static SO_FieldScenery FieldScenery
+    {
+        get
+        {
+            if (so_fieldScenery == null)
+            {
+                so_fieldScenery = LoadSO<SO_FieldScenery>(pathBase + nameof(SO_FieldScenery));
+            }
+            return so_fieldScenery;
+        }
+    }
+
     // ========= loc =============
     private static T LoadSO<T>(string path) where T : ScriptableObject
     {

@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c74960dd0c44a208fddf198a622586, type: 3}
+  m_Name: SO_FieldScenery
+  m_EditorClassIdentifier: Assembly-CSharp::SO_FieldScenery
+  activeStyle: 1
+  pixelsPerUnit: 12
+  entries:
+  - memo: "\u4F4F\u5B85\u5730\uFF08\u6A2A\u304B\u3089\uFF09"
+    style: 0
+    fromStage: 0
+    toStage: 2
+    tileVertical: 0
+    edgeGap: 0.35
+    leftBefore: {fileID: 2800000, guid: 2f2abf4441b66401789691bfcfcd548d, type: 3}
+    leftAfter: {fileID: 2800000, guid: 64466df0418a74033bc14a2178cdb167, type: 3}
+    rightBefore: {fileID: 2800000, guid: 87a6f0fe243014738936bbcb079c4d85, type: 3}
+    rightAfter: {fileID: 2800000, guid: 9675f6755024a4614963e2f95e873f84, type: 3}
+  - memo: "\u4F4F\u5B85\u5730\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 0
+    toStage: 2
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: 88f3d165c3a714b16a160589a110a401, type: 3}
+    leftAfter: {fileID: 2800000, guid: 0941443e2ce5f4a899cdc2ff03832172, type: 3}
+    rightBefore: {fileID: 2800000, guid: 31c2b799296a34556b9b2c0076034cc5, type: 3}
+    rightAfter: {fileID: 2800000, guid: 4ce229832feff4089aa0a63b1452b58b, type: 3}
+  - memo: "\u516C\u5712\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 3
+    toStage: 5
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: 38182e98aa4da4b4a877e775de00928b, type: 3}
+    leftAfter: {fileID: 2800000, guid: 979312985b0a64f1e8cca00dc577ab81, type: 3}
+    rightBefore: {fileID: 2800000, guid: fb2dd57037ed444f296a359b2c2bfbe1, type: 3}
+    rightAfter: {fileID: 2800000, guid: 2160c1df11f3c4ece93b331029bd3432, type: 3}
+  - memo: "\u5546\u5E97\u8857\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 6
+    toStage: 7
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: 981e0bfb5cb394a2894f39d0a078f162, type: 3}
+    leftAfter: {fileID: 2800000, guid: 8f8b610da677a4d4daaf8cf21e3a24d4, type: 3}
+    rightBefore: {fileID: 2800000, guid: f16e14f88c8f64ec6a768b5998a749d8, type: 3}
+    rightAfter: {fileID: 2800000, guid: 0361002108945443db63330c66511925, type: 3}
+  - memo: "\u5DDD\u3079\u308A\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 8
+    toStage: 9
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: df52c8dd844944bb5a839cd35631aac7, type: 3}
+    leftAfter: {fileID: 2800000, guid: 56354fe09a9c045d18212e3847668949, type: 3}
+    rightBefore: {fileID: 2800000, guid: fbab624a282744ff79b4984c18bb7c53, type: 3}
+    rightAfter: {fileID: 2800000, guid: 2a9d0182b883a45e3876a3ef625d93ff, type: 3}
+  - memo: "\u795E\u793E\u3068\u5893\u5730\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 10
+    toStage: 11
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: 57abb2a746cf54a2dac3d5f7ecb6d81d, type: 3}
+    leftAfter: {fileID: 2800000, guid: f69a4bb09714b4222923a4a5752b3010, type: 3}
+    rightBefore: {fileID: 2800000, guid: 166b3574688934f0a9657a1991e736ba, type: 3}
+    rightAfter: {fileID: 2800000, guid: 6debfb7fa99b84873872ff326849a208, type: 3}
+  - memo: "\u7814\u7A76\u6240\u306E\u305D\u3070\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 12
+    toStage: 12
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: c84a8caf1d5f24fbda7851f8b98e582e, type: 3}
+    leftAfter: {fileID: 2800000, guid: 38e4ecbf04fb9422c9a0e777d33873bb, type: 3}
+    rightBefore: {fileID: 2800000, guid: 98a0afb3ed65a4aeb97b2a7c50b3208c, type: 3}
+    rightAfter: {fileID: 2800000, guid: 2a900863bd96c467baa9f9db6a59952b, type: 3}

@@ -7,6 +7,8 @@
 // - 奥で、小さな粒が漂う（2 層。遠い層は小さく遅い）。
 //   ワクチンを撒く前（_Cured = 0）は、くすんだ灰のような粒がゆっくり降る。
 //   撒いたあと（_Cured = 1）は、淡い緑の光の粒がゆっくり上へ昇る。
+// - マス目の上に、ステージごとの景色のドット絵（_SceneTex）を重ねる。ふちの光と粒は、景色の手前に重ねる。
+//   置く場所と絵は BlockSession が SO_FieldScenery から決めて、MaterialPropertyBlock で渡す。
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
@@ -40,7 +42,15 @@ CBUFFER_START(UnityPerMaterial)
     float _AshDensity;
     float _AshSpeed;
     float _Cured;
+    float4 _SceneRect;
+    float _SceneOn;
+    float _SceneTile;
+    half _SceneBrightness;
+    half _SceneOpacity;
 CBUFFER_END
+
+TEXTURE2D(_SceneTex);
+SAMPLER(sampler_SceneTex);
 
 Varyings UnlitVertex(Attributes input)
 {
@@ -89,6 +99,23 @@ half4 UnlitFragment(Varyings input) : SV_Target
     float2 grid = (input.positionWS - _GridOrigin.xy) / max(_CellSize, 0.001);
     float shade = lerp(_ShadeMin, 1.0, Hash21(floor(grid)));
     half3 color = tint.rgb * shade;
+
+    // 景色：_SceneRect（左下の x, y と、幅, 高さ。ワールド）の中だけに貼る。空の部分は透明。
+    // 幅が負なら、x は右の端で、絵を左右反転して貼る（右の帯に左の絵を使うとき）。
+    if (_SceneOn > 0.5)
+    {
+        float2 sceneSize = _SceneRect.zw;
+        sceneSize = (abs(sceneSize) < 0.001) ? float2(0.001, 0.001) : sceneSize;
+        float2 sceneUV = (input.positionWS - _SceneRect.xy) / sceneSize;
+        // 縦にくり返す絵（上から見下ろした町）は、帯の上から下まで敷く。
+        if (_SceneTile > 0.5)
+            sceneUV.y = frac(sceneUV.y);
+        if (all(sceneUV >= 0.0) && all(sceneUV <= 1.0))
+        {
+            half4 scene = SAMPLE_TEXTURE2D(_SceneTex, sampler_SceneTex, sceneUV);
+            color = lerp(color, scene.rgb * _SceneBrightness, scene.a * _SceneOpacity);
+        }
+    }
 
     // 内側のふち：フィールドの縁（_EdgeX）から離れるほど弱くなる光。
     float dist = abs(input.positionWS.x - _EdgeX);

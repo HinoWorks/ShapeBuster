@@ -41,19 +41,14 @@ public class StageData
     public int weightGhost;
     /// <summary>ガラス（割ると中のゾンビが出る）の出現重み。</summary>
     public int weightGlass;
-    /// <summary>宝箱（HP が高く、AA を多く落とす）の出現重み。</summary>
-    public int weightChest;
-    /// <summary>壁の加速帯が出始める秒数（ステージ開始から）。</summary>
-    public int wallBoostStart;
-    /// <summary>壁の加速帯が出る確率（%）。判定は SO_BlockSession の wallGimmickInterval 秒ごと。0 なら出ない。</summary>
-    public int wallBoostChance;
+    // 宝箱と壁の加速帯は、ステージではなくスキルツリーで出す（SkillParamStat.ChestSpawn・WallBoostInterval）。
     /// <summary>壁の減速帯が出始める秒数（ステージ開始から）。</summary>
     public int wallSlowStart;
     /// <summary>壁の減速帯が出る確率（%）。判定は wallGimmickInterval 秒ごと。0 なら出ない。</summary>
     public int wallSlowChance;
 
     public bool HasBlockWeights =>
-        weightSquare + weightWide + weightTall + weightSolid + weightArmor + weightRegen + weightBloat + weightSplit + weightGhost + weightGlass + weightChest > 0;
+        weightSquare + weightWide + weightTall + weightSolid + weightArmor + weightRegen + weightBloat + weightSplit + weightGhost + weightGlass > 0;
 
     public int WeightOf(BlockPiece prefab)
     {
@@ -64,8 +59,8 @@ public class StageData
         if (prefab.Splits) return weightSplit;
         if (prefab.Ghosts) return weightGhost;
         if (prefab.ReleasesContents) return weightGlass;
-        // ゾンビ図鑑の研究で、宝箱が出やすくなる。
-        if (prefab.IsChest) return Mathf.RoundToInt(weightChest * (1f + BestiaryBonus.ChestWeight));
+        // 宝箱はステージの重みでは出さない（BlockSession.SpawnWeight がスキルの割合で出す）。
+        if (prefab.IsChest) return 0;
         if (prefab.IsSolid) return weightSolid;
         if (prefab.CellsY > prefab.CellsX) return weightTall;
         if (prefab.CellsX > prefab.CellsY) return weightWide;

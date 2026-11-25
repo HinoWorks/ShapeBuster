@@ -1637,6 +1637,32 @@ MonoBehaviour:
   - key: skill.3061.desc
     ja: "\u58C1\u30D6\u30ED\u30C3\u30AF\u306EC\u304C [A] \u5897\u3048\u308B\u3002"
     en: C dropped by wall blocks increases by [A].
+  - key: skill.3070.name
+    ja: "\u5B9D\u7BB1\u306E\u51FA\u73FE"
+    en: Chest Spawn
+  - key: skill.3070.desc
+    ja: "\u5B9D\u7BB1\u304C\u51FA\u308B\u3088\u3046\u306B\u306A\u308B\u3002\u51FA\u3084\u3059\u3055\u306F\u3001\u3075\u3064\u3046\u306E\u30D6\u30ED\u30C3\u30AF\u306B\u5BFE\u3057\u3066
+      [A]\u3002"
+    en: Chests start to appear, at [A] of the rate of normal blocks.
+  - key: skill.3071.name
+    ja: "\u5B9D\u7BB1\u306E\u4E2D\u8EAB"
+    en: Chest Loot
+  - key: skill.3071.desc
+    ja: "\u5B9D\u7BB1\u304C\u843D\u3068\u3059A\u304C [A] \u5897\u3048\u308B\u3002"
+    en: A dropped by chests increases by [A].
+  - key: skill.3080.name
+    ja: "\u52A0\u901F\u5E2F"
+    en: Boost Strip
+  - key: skill.3080.desc
+    ja: "\u5DE6\u53F3\u306E\u58C1\u306B\u3001\u30DC\u30FC\u30EB\u3092\u901F\u304F\u3059\u308B\u5E2F\u304C\u51FA\u308B\u3088\u3046\u306B\u306A\u308B\u3002[A]\u3054\u3068\u306B\u51FA\u308B\u3002"
+    en: Strips that speed up balls appear on the side walls, every [A].
+  - key: skill.3081.name
+    ja: "\u52A0\u901F\u5E2F\u306E\u52E2\u3044"
+    en: Boost Power
+  - key: skill.3081.desc
+    ja: "\u52A0\u901F\u5E2F\u3067\u4E0A\u304C\u308B\u30DC\u30FC\u30EB\u306E\u901F\u3055\u304C
+      [A] \u5897\u3048\u308B\u3002"
+    en: Boost strips speed balls up by an extra [A].
   - key: skill.4001.name
     ja: "\u7D30\u7247\uFF0B"
     en: More Block+

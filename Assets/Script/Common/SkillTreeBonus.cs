@@ -56,6 +56,26 @@ public static class SkillTreeBonus
     public static float ArmorSpawnRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.ArmorSpawn));
     public static int RegenDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.RegenDrop));
     public static int ArmorDropAdd => Mathf.RoundToInt(Sum(SkillParamTarget.Block, SkillParamStat.ArmorDrop));
+
+    /// <summary>宝箱の生成重み（通常群に対する割合）。0 なら宝箱は出ない。</summary>
+    public static float ChestSpawnRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.ChestSpawn));
+    /// <summary>宝箱が落とす A への加算倍率。0.25 で +25%。</summary>
+    public static float ChestRewardRate => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.ChestReward));
+    /// <summary>壁の加速帯が出る（間隔のスキルを 1 Lv 以上取った）。</summary>
+    public static bool WallBoostUnlocked => Has(SkillParamTarget.Block, SkillParamStat.WallBoostInterval);
+    /// <summary>壁の加速帯が出る間隔（秒）。</summary>
+    public static float WallBoostInterval => WallBoostIntervalFor(Sum(SkillParamTarget.Block, SkillParamStat.WallBoostInterval));
+    /// <summary>加速帯で上がる速さへの加算。SO_BlockSession の wallBoostRate（素の倍率）に足す。</summary>
+    public static float WallBoostPower => Mathf.Max(0f, Sum(SkillParamTarget.Block, SkillParamStat.WallBoostPower));
+
+    /// <summary>間隔のスキルの合計値（負の秒）から、実際の間隔を出す。スキルの説明の表示にも使う。</summary>
+    public static float WallBoostIntervalFor(float skillValue)
+    {
+        var rule = SOLoader.BlockSession;
+        float baseInterval = rule != null ? rule.wallBoostBaseInterval : 22f;
+        float min = rule != null ? rule.wallBoostMinInterval : 4f;
+        return Mathf.Max(min, baseInterval + skillValue);
+    }
     public static bool ConvertUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.ConvertUnlock) >= 1f;
     public static bool MilestoneUnlocked => Sum(SkillParamTarget.Block, SkillParamStat.MilestoneUnlock) >= 1f;
     /// <summary>ゾンビ図鑑のタブを出す（スキルツリーの「ゾンビ図鑑」）。発見の記録は、開く前から残る。</summary>
@@ -307,6 +327,17 @@ public static class SkillTreeBonus
     {
         if (value <= 0f) return 0;
         return Math.Max(0, (int)Math.Round(value, MidpointRounding.AwayFromZero));
+    }
+
+    /// <summary>その効果のスキルを 1 Lv 以上取っている（Lv 0 のスキルは bySkill に入らない）。</summary>
+    static bool Has(SkillParamTarget target, SkillParamStat stat)
+    {
+        if (stat == SkillParamStat.None) return false;
+        foreach (var contribution in bySkill.Values)
+        {
+            if (contribution.target == target && contribution.stat == stat) return true;
+        }
+        return false;
     }
 
     static float Sum(SkillParamTarget target, SkillParamStat stat)

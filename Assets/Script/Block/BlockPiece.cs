@@ -99,7 +99,7 @@ public class BlockPiece : MonoBehaviour
     [SerializeField] BlockPiece contents;
     [Tooltip("オンなら資源を落とさず、マイルストーンの破壊数にも数えない")]
     [SerializeField] bool noDrop;
-    [Tooltip("宝箱。顔を描かず、揺れずに下りてくる。資源は通常の AA を、その段の 1 マスのゾンビの rewardScale 倍だけ落とす（大きさに関係なく 1 マスとして数える）。ステージの weightChest で出す")]
+    [Tooltip("宝箱。顔を描かず、揺れずに下りてくる。資源は通常の AA を、その段の 1 マスのゾンビの rewardScale 倍だけ落とす（大きさに関係なく 1 マスとして数える）。スキル（ChestSpawn）の割合で出し、中身はスキル（ChestReward）で増える")]
     [SerializeField] bool chest;
     [Tooltip("0 より大きいと甲羅ボス。殻の開いた面（下→右→上→左）が、この秒数ごとに回る。殻の面に当たったボールは弾かれる。爆発・レーザー・毒は殻を通る")]
     [SerializeField] float shellTurnTime;

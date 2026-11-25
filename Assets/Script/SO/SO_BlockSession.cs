@@ -87,7 +87,7 @@ public class SO_BlockSession : ScriptableObject
 
     [Space(10)]
     [Header("壁の仕掛け")]
-    [Tooltip("壁の仕掛けを出すか判定する間隔（秒）。判定ごとに、ステージの確率（wallXxxChance）で出す。")]
+    [Tooltip("減速帯を出すか判定する間隔（秒）。判定ごとに、ステージの確率（wallSlowChance）で出す。加速帯はスキルの間隔で出す。")]
     public float wallGimmickInterval = 6f;
     [Tooltip("壁の帯の上の端を、天井から何マスあけるか。")]
     public float wallBandTopGap = 2.5f;
@@ -95,13 +95,17 @@ public class SO_BlockSession : ScriptableObject
     public BlockWallBand wallBoostBand;
     [Tooltip("減速帯のプレハブ。見た目はプレハブの子で決める。空なら出さない")]
     public BlockWallBand wallSlowBand;
+    [Tooltip("加速帯が出る間隔（秒）の素の値。スキル WallBoostInterval（1 Lv あたり負の秒）を足した値が実際の間隔。スキルを取るまでは出ない。")]
+    public float wallBoostBaseInterval = 22f;
+    [Tooltip("加速帯が出る間隔の下限（秒）。")]
+    public float wallBoostMinInterval = 4f;
     [Tooltip("加速帯が同時に出る数の上限。")]
     public int wallBoostMax = 2;
     [Tooltip("加速帯が残る秒数。消える前の 1.5 秒は点滅する。")]
     public float wallBoostLife = 12f;
     [Tooltip("加速帯の高さ（マス数）。")]
     public float wallBoostCells = 2f;
-    [Tooltip("加速帯に触れたボールの速さの倍率。")]
+    [Tooltip("加速帯に触れたボールの速さの倍率（素の値）。スキル WallBoostPower の値を足す。")]
     public float wallBoostRate = 1.6f;
     [Tooltip("加速が続く秒数。後半の半分で元の速さへ戻る。")]
     public float wallBoostTime = 1.6f;

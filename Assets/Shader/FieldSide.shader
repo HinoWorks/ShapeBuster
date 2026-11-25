@@ -16,6 +16,12 @@ Shader "ShapeBuster/FieldSide"
         _DustColor ("撒いたあと：光の粒の色（a は強さ）", Color) = (0.8, 0.95, 0.85, 0.35)
         _DustDensity ("撒いたあと：光の粒の多さ（0〜1）", Range(0, 1)) = 0.3
         _DustSpeed ("撒いたあと：光の粒が上る速さ（ワールド/秒）", Float) = 0.12
+        _SceneBrightness ("景色の明るさ（絵の色に掛ける）", Range(0, 2)) = 1
+        _SceneOpacity ("景色の濃さ（0 で見えない）", Range(0, 1)) = 1
+        [HideInInspector] _SceneTex ("景色の絵（BlockSession が入れる）", 2D) = "black" {}
+        [HideInInspector] _SceneRect ("景色を貼る範囲（左下 x, y、幅、高さ。BlockSession が入れる）", Vector) = (0, 0, 1, 1)
+        [HideInInspector] _SceneTile ("景色を縦にくり返すか（0/1。BlockSession が入れる）", Float) = 0
+        [HideInInspector] _SceneOn ("景色を出すか（0/1。BlockSession が入れる）", Float) = 0
         [HideInInspector] _Cured ("ワクチンを撒いたか（0/1。BlockSession が入れる）", Float) = 0
         [HideInInspector] _EdgeX ("フィールドの縁の x", Float) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)

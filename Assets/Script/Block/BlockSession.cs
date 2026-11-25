@@ -60,6 +60,7 @@ public class BlockSession : MonoBehaviour
     bool hadBreakable;
     readonly List<BlockWallBand> wallBands = new();
     float wallGimmickTimer;
+    float wallBoostTimer;
     readonly List<GameObject> arena = new();
 
     Transform formation;
@@ -389,6 +390,9 @@ public class BlockSession : MonoBehaviour
         float rewardRate = (1f + Mathf.Max(0f, SkillTreeBonus.BlockResourceUpRate))
             * (1f + SkillTreeBonus.BlockHarvestRate)
             * piece.RewardScale;
+        // 宝箱の中身はスキルで増える。
+        if (piece.IsChest)
+            rewardRate *= 1f + SkillTreeBonus.ChestRewardRate;
         int reward = StageEnemyScale.ScaleResourceCount(cells, rewardRate);
         // 「大漁」：確率でAが2倍になる
         if (reward > 0 && Random.value < SkillTreeBonus.BlockDoubleDropChance)
@@ -573,6 +577,7 @@ public class BlockSession : MonoBehaviour
         bursts.Clear();
         wallBands.Clear();
         wallGimmickTimer = 0f;
+        wallBoostTimer = 0f;
         elapsed = 0f;
         bossArmed = false;
         bossDue = false;
@@ -739,6 +744,10 @@ public class BlockSession : MonoBehaviour
     /// </summary>
     static readonly int EdgeXId = Shader.PropertyToID("_EdgeX");
     static readonly int CuredId = Shader.PropertyToID("_Cured");
+    static readonly int SceneTexId = Shader.PropertyToID("_SceneTex");
+    static readonly int SceneRectId = Shader.PropertyToID("_SceneRect");
+    static readonly int SceneOnId = Shader.PropertyToID("_SceneOn");
+    static readonly int SceneTileId = Shader.PropertyToID("_SceneTile");
 
     /// <summary>
     /// 左右の帯（FieldSide シェーダー）に、フィールドに接する側の x を渡す。内側のふちをほんのり光らせるのに使う。
@@ -755,7 +764,45 @@ public class BlockSession : MonoBehaviour
         block.SetFloat(EdgeXId, edge);
         // ワクチンを撒く前と後で、帯の粒を変える（前は灰が降る、後は光が昇る）。
         block.SetFloat(CuredId, VaccineRuntime.Cleared ? 1f : 0f);
+        SetScenery(block, leftSide: edge < middle);
         fill.SetPropertyBlock(block);
+    }
+
+    /// <summary>
+    /// 帯に、その段の景色（SO_FieldScenery）を貼る。フィールド側の端は縁から edgeGap 離す。
+    /// 横から見た町並みは、絵の下の端を画面の下の端にそろえて 1 枚。上から見下ろした町は、縦にくり返して帯の上から下まで敷く。
+    /// 景色がない段や絵が空のときは貼らない。
+    /// </summary>
+    void SetScenery(MaterialPropertyBlock block, bool leftSide)
+    {
+        block.SetFloat(SceneOnId, 0f);
+        var table = SOLoader.FieldScenery;
+        var time = StageTimeManager.Inst;
+        if (table == null || time == null) return;
+        var entry = table.Find(time.StageIndex);
+        if (entry == null) return;
+
+        bool cured = VaccineRuntime.Cleared;
+        var left = cured && entry.leftAfter != null ? entry.leftAfter : entry.leftBefore;
+        var right = cured && entry.rightAfter != null ? entry.rightAfter : entry.rightBefore;
+        // 右の絵がなければ、左の絵を反転して使う。
+        bool mirror = !leftSide && right == null;
+        var tex = leftSide ? left : (right != null ? right : left);
+        if (tex == null) return;
+
+        float ppu = Mathf.Max(1f, table.pixelsPerUnit);
+        float width = tex.width / ppu;
+        float height = tex.height / ppu;
+        float gap = Mathf.Max(0f, entry.edgeGap);
+        float x = leftSide ? fieldLeft - gap - width : fieldRight + gap;
+        var rect = mirror
+            ? new Vector4(x + width, screenBottom, -width, height)
+            : new Vector4(x, screenBottom, width, height);
+
+        block.SetTexture(SceneTexId, tex);
+        block.SetVector(SceneRectId, rect);
+        block.SetFloat(SceneTileId, entry.tileVertical ? 1f : 0f);
+        block.SetFloat(SceneOnId, 1f);
     }
 
     void PlaceWallFill(GameObject prefab, float xMin, float xMax, float yMin, float yMax, bool solid)
@@ -829,19 +876,34 @@ public class BlockSession : MonoBehaviour
     }
 
     /// <summary>
-    /// 壁の仕掛け。wallGimmickInterval 秒ごとに、種類ごとに、ステージの開始秒数を過ぎていれば確率で出す。
+    /// 壁の仕掛け。
+    /// 加速帯はスキル（WallBoostInterval）を取っていれば、スキルで決まる間隔ごとに出す。速さはスキル（WallBoostPower）で上がる。
+    /// 減速帯は wallGimmickInterval 秒ごとに、ステージの開始秒数を過ぎていれば、ステージの確率で出す。
     /// </summary>
     void TickWallGimmicks()
     {
+        if (cell <= 0.001f) return;
+
+        if (SkillTreeBonus.WallBoostUnlocked)
+        {
+            wallBoostTimer += Time.deltaTime;
+            if (wallBoostTimer >= SkillTreeBonus.WallBoostInterval)
+            {
+                // 上限まで出ていて出せなかったときも、次の間隔まで待つ（消えた直後に続けて出さない）。
+                wallBoostTimer = 0f;
+                if (CountWallBands(WallBandKind.Boost) < Rule.wallBoostMax)
+                    SpawnWallBand(WallBandKind.Boost, Rule.wallBoostCells, Rule.wallBoostLife,
+                        Rule.wallBoostRate + SkillTreeBonus.WallBoostPower, Rule.wallBoostTime);
+            }
+        }
+
         var stage = CurrentStage();
-        if (stage == null || cell <= 0.001f) return;
+        if (stage == null) return;
         wallGimmickTimer += Time.deltaTime;
         float interval = Mathf.Max(0.5f, Rule.wallGimmickInterval);
         if (wallGimmickTimer < interval) return;
         wallGimmickTimer -= interval;
 
-        if (RollWallBand(WallBandKind.Boost, stage.wallBoostStart, stage.wallBoostChance, Rule.wallBoostMax))
-            SpawnWallBand(WallBandKind.Boost, Rule.wallBoostCells, Rule.wallBoostLife, Rule.wallBoostRate, Rule.wallBoostTime);
         if (RollWallBand(WallBandKind.Slow, stage.wallSlowStart, stage.wallSlowChance, Rule.wallSlowMax))
             SpawnWallBand(WallBandKind.Slow, Rule.wallSlowCells, Rule.wallSlowLife, Rule.wallSlowRate, Rule.wallSlowTime);
     }
@@ -849,13 +911,18 @@ public class BlockSession : MonoBehaviour
     bool RollWallBand(WallBandKind kind, int start, int chance, int max)
     {
         if (chance <= 0 || elapsed < start) return false;
+        return CountWallBands(kind) < max && Random.value * 100f < chance;
+    }
+
+    int CountWallBands(WallBandKind kind)
+    {
         int count = 0;
         for (int i = 0; i < wallBands.Count; i++)
         {
             if (wallBands[i] != null && wallBands[i].Kind == kind)
                 count++;
         }
-        return count < max && Random.value * 100f < chance;
+        return count;
     }
 
     /// <summary>壁の帯を、左右どちらかの壁の空いた高さに出す。ほかの帯（種類を問わない）とは重ねない。</summary>
@@ -2774,7 +2841,7 @@ public class BlockSession : MonoBehaviour
         for (int i = 0; i < blockPrefabs.Length; i++)
         {
             var prefab = blockPrefabs[i];
-            if (prefab == null || prefab.BossIndex >= 0 || prefab.Regenerates || prefab.ArmorsBottom) continue;
+            if (prefab == null || prefab.BossIndex >= 0 || prefab.Regenerates || prefab.ArmorsBottom || prefab.IsChest) continue;
             normal += staged ? stage.WeightOf(prefab) : prefab.Weight;
         }
 
@@ -2828,6 +2895,9 @@ public class BlockSession : MonoBehaviour
             float weight = staged ? stage.weightArmor : 0f;
             return weight + normal * SkillTreeBonus.ArmorSpawnRate;
         }
+        // 宝箱はスキルで出す。ゾンビ図鑑の研究で、さらに出やすくなる。
+        if (prefab.IsChest)
+            return normal * SkillTreeBonus.ChestSpawnRate * (1f + BestiaryBonus.ChestWeight);
         if (staged)
             return stage.WeightOf(prefab);
         return prefab.Weight;

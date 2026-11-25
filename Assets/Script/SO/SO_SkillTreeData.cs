@@ -51,6 +51,10 @@ public enum SkillParamStat
     ArmorSpawn = 48, // 壁ブロックの生成重み
     RegenDrop = 49, // 再生ブロックの固有ドロップへの加算
     ArmorDrop = 50, // 壁ブロックの固有ドロップへの加算
+    ChestSpawn = 69, // 宝箱の生成重み。0.02 で通常群の2%。0 なら宝箱は出ない
+    ChestReward = 70, // 宝箱が落とすAへの倍率。0.25 で +25%
+    WallBoostInterval = 71, // 1Lv以上で壁の加速帯が出る。出る間隔（秒）＝ SO_BlockSession の wallBoostBaseInterval ＋ この値。短くするので負の値
+    WallBoostPower = 72, // 加速帯で上がる速さへの加算。素の +60% に足す。0.1 で +10%
 
     // == Convert ==
     ConvertUnlock = 51, // 1以上で Convert タブを出す
