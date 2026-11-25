@@ -24,6 +24,8 @@ public class UI_OutGameManager : MonoBehaviour
 
     [SerializeField] UI_OutGameTabBase[] ui_outGameTabs;
     [SerializeField] UI_ResourceCounter[] ui_resourceCounters;
+    [Tooltip("リソースの説明（UI_ResourceTooltip）が出るときのアニメ。スキルの詳細と同じ animCont_UICommon")]
+    [SerializeField] RuntimeAnimatorController resourceTooltipAnim;
 
 
     [Space(10)]
@@ -55,6 +57,7 @@ public class UI_OutGameManager : MonoBehaviour
         {
             ui_outGameTab.Start_OnceInit();
         }
+        UI_ResourceTooltip.OpenAnimation = resourceTooltipAnim;
         foreach (var ui_resourceCounter in ui_resourceCounters)
         {
             ui_resourceCounter.AwakeCall_OutGame();

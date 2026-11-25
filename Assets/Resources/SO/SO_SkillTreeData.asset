@@ -1840,12 +1840,12 @@ MonoBehaviour:
   - skillTreeIndex: 2000
     level: 1
     maxLevel: 1
-    cost_AA: 0
+    cost_AA: 200
     cost_BB: 0
     cost_CC: 0
     cost_DD: 0
     cost_EE: 0
-    cost_FF: 1
+    cost_FF: 0
   - skillTreeIndex: 2001
     level: 1
     maxLevel: 5

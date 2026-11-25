@@ -11957,7 +11957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5911202567293901429, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: hoverYOffset
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6345013458034926662, guid: 9d79c830b1a8c4886b76ed85488e2565, type: 3}
       propertyPath: m_AnchorMax.y

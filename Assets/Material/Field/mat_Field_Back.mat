@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_Field_Back
-  m_Shader: {fileID: 4800000, guid: a91c4e2b7d8f4a61b0c3d5e7f9a1b2c4, type: 3}
+  m_Shader: {fileID: 4800000, guid: 82f4d99ca13d349a090eb28827dc179b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -33,28 +33,60 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ArmorSide: 0
+    - _Bloat: 0
     - _BottomGap: 0
+    - _CellSize: 1
+    - _Chest: 0
+    - _ChestDamage: 0
     - _DotScale: 16
     - _DotSize: 1
     - _EnableExternalAlpha: 0
     - _EyeJitter: 0
+    - _FineDots: 9
+    - _FineOn: 0
+    - _FineShadeMin: 0.88
     - _Flash: 0
+    - _Ghost: 0
+    - _GhostFade: 0
+    - _Glass: 0
+    - _GlassCrack: 0
+    - _HealPulse: 0
     - _OutlineWidth: 0.005
+    - _PodCrack: 0
+    - _Regen: 0
+    - _RegenCharge: 0
+    - _RegenGlow: 0
     - _RotAmount: 0.35
     - _Seed: 0
+    - _ShadeMin: 0.9
+    - _Split: 0
+    - _SplitSide: 0
+    - _VeinAmount: 0.07
     - _Zombie: 0
     - _ZombieEyes: 0
     m_Colors:
+    - _BoilColor: {r: 1, g: 0.7, b: 0.29999998, a: 1}
     - _CellSpan: {r: 1, g: 1, b: 0, a: 0}
+    - _ChestLight: {r: 1, g: 0.95, b: 0.6, a: 1}
+    - _ChestMetal: {r: 1, g: 0.8, b: 0.29999998, a: 1}
+    - _ChestWood: {r: 0.54999995, g: 0.32999998, b: 0.17999998, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EyeColor: {r: 0.93, g: 1, b: 0.45, a: 1}
-    - _FillColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    - _FillColor: {r: 0.43396226, g: 0.43396226, b: 0.43396226, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _GlassInner: {r: 0.45, g: 0.62, b: 0.37999994, a: 1}
+    - _GlassTint: {r: 0.62, g: 0.86, b: 1, a: 0.45}
+    - _GridOrigin: {r: -8, g: -8, b: 0, a: 0}
     - _MouthColor: {r: 0.07999996, g: 0.02, b: 0.03, a: 1}
     - _OutlineColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
     - _OutlineWidthXY: {r: 0, g: 0, b: 0, a: 0}
+    - _PatchTint: {r: 0.95, g: 0.62, b: 0.95, a: 1}
+    - _PodColor: {r: 0.54999995, g: 0.88, b: 1, a: 1}
+    - _PodDim: {r: 0.09999997, g: 0.39999998, b: 0.95, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _RotColor: {r: 0.54999995, g: 0.65999997, b: 0.39999998, a: 1}
+    - _StitchColor: {r: 0.85, g: 0.8, b: 0.68, a: 1}
     - _TeethColor: {r: 0.86, g: 0.8, b: 0.62, a: 1}
     - _UnderColor: {r: 0, g: 0, b: 0, a: 0}
     - _WoundColor: {r: 0.41999996, g: 0.04, b: 0.059999965, a: 1}

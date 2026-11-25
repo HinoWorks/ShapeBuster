@@ -668,6 +668,9 @@ public class BlockSession : MonoBehaviour
         float side = Mathf.Max(0f, Rule.wallSideGap);
         fieldLeft = blockLeft + edge - side;
         fieldRight = blockRight - edge + side;
+        // 床と左右の帯のマスを、ブロックのマスにそろえる（FieldFloor・FieldSide シェーダーが読む）。
+        Shader.SetGlobalFloat(FieldCellSizeId, cell);
+        Shader.SetGlobalVector(FieldGridOriginId, new Vector4(blockLeft, ceilingY, 0f, 0f));
         var root = new GameObject("BlockFormation");
         formation = root.transform;
         root.layer = BlockLayer;
@@ -743,6 +746,8 @@ public class BlockSession : MonoBehaviour
     /// 壁プレハブで矩形を塗る。跳ね返る面は内側の縁。solid のときだけ当たり判定を残す。
     /// </summary>
     static readonly int EdgeXId = Shader.PropertyToID("_EdgeX");
+    static readonly int FieldCellSizeId = Shader.PropertyToID("_FieldCellSize");
+    static readonly int FieldGridOriginId = Shader.PropertyToID("_FieldGridOrigin");
     static readonly int CuredId = Shader.PropertyToID("_Cured");
     static readonly int SceneTexId = Shader.PropertyToID("_SceneTex");
     static readonly int SceneRectId = Shader.PropertyToID("_SceneRect");
@@ -1531,8 +1536,19 @@ public class BlockSession : MonoBehaviour
     {
         if (pinCursorUi) return false;
         if (CountLaunchable() <= 0) return true;
-        return volley || !PointerWorld.IsInsidePlayfield
+        return volley || !PointerInField()
             || BlockUnderPointer() != null || AboveLaunchLimit();
+    }
+
+    /// <summary>
+    /// ポインタがフィールドの中（左右の壁のあいだ）にあるか。
+    /// 画面の中でも、フィールドの横のエリアは発射できない場所として扱う。
+    /// </summary>
+    bool PointerInField()
+    {
+        if (!PointerWorld.IsInsidePlayfield) return false;
+        float x = PointerWorld.Position.x;
+        return x >= fieldLeft && x <= fieldRight;
     }
 
     BlockPiece BlockUnderPointer()
@@ -1605,16 +1621,18 @@ public class BlockSession : MonoBehaviour
             return;
         }
 
-        // 発射できない場所（ブロックの上、発射エリアより上）で押したら、カーソルの横で知らせる。
+        // 発射できない場所（フィールドの横、ブロックの上、発射ラインより上）で押したら、カーソルの横で知らせる。
+        // UI の上や画面の外で押したときは知らせない。
         if (fire.wasPressedThisFrame && PointerWorld.IsInsidePlayfield && aimingBall == null && !volley
-            && (BlockUnderPointer() != null || AboveLaunchLimit()))
+            && (!PointerInField() || BlockUnderPointer() != null || AboveLaunchLimit()))
         {
             SoundManager.SE(SEType.UI_Error);
             if (cursorInfo != null)
                 cursorInfo.FlashNotLaunch();
         }
 
-        if (fire.wasPressedThisFrame && PointerWorld.IsInsidePlayfield && aimingBall == null && !volley
+        // 発射できるのは、フィールドの中で、発射ライン以下の場所だけ。
+        if (fire.wasPressedThisFrame && PointerInField() && aimingBall == null && !volley
             && BlockUnderPointer() == null && !AboveLaunchLimit())
         {
             var ready = FindReadyBall();

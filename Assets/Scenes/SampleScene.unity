@@ -4308,7 +4308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_AnchorMin.x
@@ -4316,11 +4316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 175
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4356,11 +4356,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 87.5
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 2831109108560152797, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4377,6 +4377,10 @@ PrefabInstance:
     - target: {fileID: 8818542919285703589, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
       propertyPath: m_Name
       value: pf_ui_resource (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8818542919285703589, guid: e87968ab7299b4a33aeaf94281043047, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6148,6 +6152,7 @@ MonoBehaviour:
   - {fileID: 2043847443}
   - {fileID: 1641844398}
   - {fileID: 403055165}
+  resourceTooltipAnim: {fileID: 9100000, guid: 6845c2b1d63ae485c8e1d5db5e4aabae, type: 2}
   ui_skillTreeManager: {fileID: 1218789984}
   ui_mileStoneManager: {fileID: 812345670001122334}
   ui_bestiaryManager: {fileID: 411485659}

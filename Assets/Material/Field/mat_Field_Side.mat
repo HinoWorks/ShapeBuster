@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AshDensity: 0.25
+    - _AshDensity: 0.6
     - _AshSpeed: 0.06
     - _CellSize: 1
     - _Cured: 0
@@ -46,10 +46,11 @@ Material:
     - _EdgeX: 0
     - _EnableExternalAlpha: 0
     - _GlowWidth: 0.9
-    - _SceneBrightness: 0.6
+    - _SceneBrightness: 0.4
     - _SceneOn: 0
     - _SceneOpacity: 1
-    - _ShadeMin: 0.78
+    - _SceneTile: 0
+    - _ShadeMin: 0.32
     m_Colors:
     - _AshColor: {r: 0.62, g: 0.58, b: 0.6, a: 0.22}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

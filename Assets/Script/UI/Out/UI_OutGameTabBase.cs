@@ -5,7 +5,9 @@ using System;
 
 public class UI_OutGameTabBase : MonoBehaviour
 {
-    protected bool isReloadFin = false;
+    // 読み込み待ちの印。今は読み込みを待つタブがない（ToOutGame_InitData を使うタブがない）ので、はじめから済みにしておく。
+    // false のままだと、選んだタブの Init が待ちっぱなしになり、選択中の印（select-fix）が出なかった。
+    protected bool isReloadFin = true;
     [SerializeField] protected OutGame_MenuType thisMenuType;
     public OutGame_MenuType MenuType => thisMenuType;
     private HButtonConnect hButtonConnect;
@@ -26,22 +28,26 @@ public class UI_OutGameTabBase : MonoBehaviour
 
 
     /// <summary>
-    /// 自分のタイプの時のみ、アクティブにする。　ロード完了まで待機
+    /// 自分のタイプの時のみ、選択中の印（HButtonConnect の obj_clickSelect＝select-fix）を出す。
+    /// 印はすぐに切り替え、Init_ActiveTab だけロード完了まで待つ。
     /// </summary>
     public async void Init(OutGame_MenuType _outGameMenuType)
     {
         var isActive = _outGameMenuType == thisMenuType;
 
-        if (isActive)
-        {
-            await UniTask.WaitUntil(() => isReloadFin);
-            Init_ActiveTab();
-        }
         if (hButtonConnect == null)
             hButtonConnect = GetComponent<HButtonConnect>();
         if (hButtonConnect != null)
             hButtonConnect.Set_SelectActive(isActive);
-        //        this.gameObject.SetActive(isActive);
+
+        if (!isActive) return;
+        if (!isReloadFin)
+        {
+            var canceled = await UniTask.WaitUntil(() => isReloadFin, cancellationToken: this.GetCancellationTokenOnDestroy())
+                .SuppressCancellationThrow();
+            if (canceled) return;
+        }
+        Init_ActiveTab();
     }
 
     /// <summary>

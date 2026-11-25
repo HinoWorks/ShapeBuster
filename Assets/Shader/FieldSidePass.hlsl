@@ -2,7 +2,7 @@
 #define FIELD_SIDE_PASS_INCLUDED
 
 // フィールドの左右の帯。
-// - 床（mat_Field_Back）と同じ大きさ・同じ位置のセルを、暗い色で敷く。セルはワールド座標で切るので、帯を伸ばしても床とずれない。
+// - 床（mat_Field_Back）と同じ大きさ・同じ位置のセル（プレイ中はブロックのマス）を、暗い色で敷く。セルはワールド座標で切るので、帯を伸ばしても床とずれない。
 // - フィールドに接する内側のふちだけ、ほんのり明るくする。
 // - 奥で、小さな粒が漂う（2 層。遠い層は小さく遅い）。
 //   ワクチンを撒く前（_Cured = 0）は、くすんだ灰のような粒がゆっくり降る。
@@ -52,6 +52,11 @@ CBUFFER_END
 TEXTURE2D(_SceneTex);
 SAMPLER(sampler_SceneTex);
 
+// プレイ中に BlockSession が入れるグローバルの値（床 FieldFloor と同じ）。ブロックのマスの大きさと、ブロックの列の左上。
+// まだ入っていないとき（タイトルなど）は、マテリアルの _CellSize と _GridOrigin を使う。
+float _FieldCellSize;
+float4 _FieldGridOrigin;
+
 Varyings UnlitVertex(Attributes input)
 {
     Varyings output;
@@ -96,7 +101,10 @@ half4 UnlitFragment(Varyings input) : SV_Target
 {
     half4 tint = _Color * input.color;
 
-    float2 grid = (input.positionWS - _GridOrigin.xy) / max(_CellSize, 0.001);
+    bool useGlobal = _FieldCellSize > 0.0001;
+    float cellSize = useGlobal ? _FieldCellSize : max(_CellSize, 0.001);
+    float2 gridOrigin = useGlobal ? _FieldGridOrigin.xy : _GridOrigin.xy;
+    float2 grid = (input.positionWS - gridOrigin) / cellSize;
     float shade = lerp(_ShadeMin, 1.0, Hash21(floor(grid)));
     half3 color = tint.rgb * shade;
 

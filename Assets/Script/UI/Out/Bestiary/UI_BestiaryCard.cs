@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// ゾンビ図鑑の一覧に並べるカード 1 枚。絵・名前・研究 Lv と、「NEW」「研究できる」「選択中」の印を出す。
+/// マウスが乗っているあいだは obj_hover（白い枠）を出す。
 /// 中身は UI_BestiaryManager が Setup と Refresh で入れる。
 /// </summary>
 public class UI_BestiaryCard : MonoBehaviour
@@ -21,12 +22,34 @@ public class UI_BestiaryCard : MonoBehaviour
     [SerializeField] GameObject obj_ready;
     [Tooltip("選んでいるカードに出す枠")]
     [SerializeField] GameObject obj_selected;
+    [Tooltip("マウスが乗っているあいだ出す枠（選択中の黄色の枠と見分けるため白）")]
+    [SerializeField] GameObject obj_hover;
 
     // 未発見のときの絵の色（シルエット）。
     static readonly Color Silhouette = new Color(0f, 0f, 0f, 0.85f);
 
     public int Id { get; private set; }
     Action<int> onSelect;
+
+    void Awake()
+    {
+        if (button == null)
+            button = GetComponent<HButton>();
+        if (button != null)
+            button.onMouseOver += SetHover;
+        SetHover(false);
+    }
+
+    void OnDisable()
+    {
+        SetHover(false);
+    }
+
+    void SetHover(bool on)
+    {
+        if (obj_hover != null && obj_hover.activeSelf != on)
+            obj_hover.SetActive(on);
+    }
 
     public void Setup(int id, Action<int> select)
     {
