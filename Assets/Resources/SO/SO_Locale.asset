@@ -342,6 +342,36 @@ MonoBehaviour:
   - key: bestiary.103.name
     ja: "\u518D\u751F\u30DC\u30B9"
     en: Regen Boss
+  - key: bestiary.108.name
+    ja: "\u516D\u89D2\u306E\u5927\u30BE\u30F3\u30D3"
+    en: Hexagon Big Zombie
+  - key: bestiary.106.name
+    ja: "\u5341\u5B57\u306E\u5927\u30BE\u30F3\u30D3"
+    en: Cross Big Zombie
+  - key: bestiary.109.name
+    ja: "\u516D\u89D2\u306E\u7532\u7F85\u30DC\u30B9"
+    en: Hexagon Shell Boss
+  - key: bestiary.110.name
+    ja: "\u5341\u5B57\u306E\u7532\u7F85\u30DC\u30B9"
+    en: Cross Shell Boss
+  - key: bestiary.113.name
+    ja: "\u5341\u5B57\u306E\u518D\u751F\u30DC\u30B9"
+    en: Cross Regen Boss
+  - key: bestiary.114.name
+    ja: "\u7802\u6642\u8A08\u306E\u518D\u751F\u30DC\u30B9"
+    en: Hourglass Regen Boss
+  - key: bestiary.111.name
+    ja: "\u7802\u6642\u8A08\u306E\u7532\u7F85\u30DC\u30B9"
+    en: Hourglass Shell Boss
+  - key: bestiary.107.name
+    ja: "\u9006\u3055\u53F0\u5F62\u306E\u5927\u30BE\u30F3\u30D3"
+    en: Wide-Top Big Zombie
+  - key: bestiary.112.name
+    ja: "\u9006\u3055\u53F0\u5F62\u306E\u7532\u7F85\u30DC\u30B9"
+    en: Wide-Top Shell Boss
+  - key: bestiary.115.name
+    ja: "\u738B\u51A0\u306E\u518D\u751F\u30DC\u30B9"
+    en: Crown Regen Boss
   - key: bestiary.section.mob
     ja: "\u30BE\u30F3\u30D3"
     en: Zombies
@@ -627,6 +657,54 @@ MonoBehaviour:
     ja: "\u304A\u3067\u3053\u306B\u7A2E\u304C\u3064\u3044\u3066\u3044\u3066\u3001\u305F\u3081\u308B\u3068\u5927\u304D\u304F\u5143\u6C17\u306B\u306A\u308B\u3002\u305F\u3081\u3066\u3044\u308B\u9593\u306B\u305F\u304F\u3055\u3093\u53E9\u304F\u3068\u3001\u7A2E\u304C\u5272\u308C\u3066\u3001\u3057\u3070\u3089\u304F\u305F\u3081\u3089\u308C\u306A\u304F\u306A\u308B\u3002"
     en: It has a seed on its forehead and gets a big boost when it charges. Hit it
       hard while it's charging and the seed cracks, stopping it for a while.
+  - key: bestiary.108.diary0
+    ja: "\u89D2\u304C\u516D\u3064\u3042\u308B\u5927\u30BE\u30F3\u30D3\u3002\u659C\u3081\u306E\u8FBA\u306B\u5F53\u305F\u3063\u305F\u30DC\u30FC\u30EB\u306F\u3001\u601D\u308F\u306C\u5411\u304D\u3078\u98DB\u3093\u3067\u3044\u304F\u3002\u8DF3\u306D\u8FD4\u308B\u5148\u3092\u898B\u3066\u304B\u3089\u6483\u3064\u3068\u3001\u3080\u3060\u304C\u5C11\u306A\u3044\u3002"
+    en: A big zombie with six corners. Balls that glance off its slanted sides fly
+      off in odd directions. Watch where they bounce before you shoot, and fewer
+      go to waste.
+  - key: bestiary.106.diary0
+    ja: "\u5341\u5B57\u306E\u5F62\u3092\u3057\u3066\u3044\u3066\u3001\u56DB\u9685\u304C\u3078\u3053\u3093\u3067\u3044\u308B\u3002\u3078\u3053\u307F\u306B\u5165\u3063\u305F\u30DC\u30FC\u30EB\u306F\u3001\u4F55\u5EA6\u3082\u5F53\u305F\u3063\u3066\u306A\u304B\u306A\u304B\u51FA\u3066\u3053\u306A\u3044\u3002\u9685\u3092\u306D\u3089\u3046\u3068\u3001\u305F\u304F\u3055\u3093\u524A\u308C\u308B\u3002"
+    en: Shaped like a cross, with its four corners dented in. A ball that gets into
+      a dent hits again and again before it escapes. Aim for the corners to chip
+      off a lot.
+  - key: bestiary.109.diary0
+    ja: "\u516D\u89D2\u5F62\u306E\u6BBB\u3092\u304B\u3076\u3063\u3066\u3044\u308B\u3002\u8DF3\u306D\u8FD4\u308A\u304C\u8AAD\u307F\u3084\u3059\u3044\u306E\u3067\u3001\u958B\u3044\u305F\u9762\u304C\u6A2A\u306B\u6765\u3066\u3082\u5F53\u3066\u3084\u3059\u3044\u3002\u6BBB\u304C\u5149\u3063\u305F\u3089\u3001\u6B21\u306B\u958B\u304F\u9762\u3078\u5148\u56DE\u308A\u3059\u308B\u3002"
+    en: It wears a hexagonal shell. Its bounces are easy to read, so the open side
+      is easy to hit even when it faces sideways. When the shell flashes, get ahead
+      of the next side to open.
+  - key: bestiary.110.diary0
+    ja: "\u5341\u5B57\u306E\u6BBB\u3067\u3001\u958B\u3044\u305F\u9762\u304C\u3078\u3053\u307F\u306E\u5965\u306B\u3042\u308B\u3002\u5165\u3063\u3066\u3057\u307E\u3048\u3070\u3001\u30DC\u30FC\u30EB\u304C\u4E2D\u3067\u4F55\u5EA6\u3082\u5F53\u305F\u308B\u3002\u3078\u3053\u307F\u306E\u5165\u308A\u53E3\u3092\u306D\u3089\u3046\u3068\u3088\u3055\u305D\u3046\u3002"
+    en: A cross-shaped shell, with the open side tucked deep in a dent. Once a ball
+      gets in, it hits over and over. Aiming for the mouth of the dent seems to work.
+  - key: bestiary.113.diary0
+    ja: "\u5341\u5B57\u306E\u5F62\u3067\u3001\u304A\u3067\u3053\u306B\u7A2E\u304C\u3042\u308B\u3002\u3078\u3053\u307F\u306B\u30DC\u30FC\u30EB\u304C\u305F\u307E\u3063\u3066\u4F55\u5EA6\u3082\u5F53\u305F\u308B\u306E\u3067\u3001\u7A2E\u3092\u5272\u308A\u3084\u3059\u3044\u3002\u305F\u3081\u306F\u3058\u3081\u305F\u3089\u3001\u9685\u3078\u307E\u3068\u3081\u3066\u6483\u3061\u3053\u3080\u3002"
+    en: Cross-shaped, with a seed on its forehead. Balls collect in the dents and
+      hit again and again, so the seed is easy to crack. When it starts charging,
+      send everything into the corners.
+  - key: bestiary.114.diary0
+    ja: "\u307E\u3093\u4E2D\u304C\u304F\u3073\u308C\u3066\u3044\u3066\u3001\u8DF3\u306D\u8FD4\u308A\u304C\u3070\u3089\u3070\u3089\u306B\u306A\u308B\u3002\u30DC\u30FC\u30EB\u304C\u6563\u308B\u306E\u3067\u3001\u7A2E\u3092\u5272\u308B\u306B\u306F\u6570\u304C\u3044\u308B\u3002\u305F\u3081\u306F\u3058\u3081\u305F\u3068\u304D\u306E\u305F\u3081\u306B\u3001\u30DC\u30FC\u30EB\u3092\u591A\u3081\u306B\u6B8B\u3057\u3066\u304A\u304F\u3068\u3088\u3055\u305D\u3046\u3002"
+    en: Its middle is pinched, so bounces scatter everywhere. With the balls spread
+      out, it takes a lot of hits to crack the seed. Keep plenty of balls in hand
+      for when it starts charging.
+  - key: bestiary.111.diary0
+    ja: "\u304F\u3073\u308C\u305F\u6BBB\u3067\u3001\u5DE6\u53F3\u306E\u958B\u3044\u305F\u9762\u304C\u304F\u3073\u308C\u306E\u5965\u306B\u3042\u308B\u3002\u30DC\u30FC\u30EB\u304C\u5165\u308A\u3053\u3080\u3068\u3001\u51FA\u3066\u304F\u308B\u307E\u3067\u4F55\u5EA6\u3082\u5F53\u305F\u308B\u3002\u58C1\u3092\u4F7F\u3063\u3066\u3001\u6A2A\u304B\u3089\u5165\u308C\u308B\u3002"
+    en: A pinched shell, with the open sides on the left and right deep in its waist.
+      A ball that slips in hits again and again before it comes out. Bank shots off
+      the walls to get in from the side.
+  - key: bestiary.107.diary0
+    ja: "\u4E0A\u304C\u5E83\u304F\u3066\u3001\u4E0B\u304C\u305B\u307E\u3044\u3002\u4E0B\u306E\u659C\u3081\u306E\u8FBA\u3067\u30DC\u30FC\u30EB\u304C\u5916\u3078\u6D41\u308C\u3066\u3001\u4E0A\u306B\u306F\u306A\u304B\u306A\u304B\u56DE\u3089\u306A\u3044\u3002\u6025\u304C\u305A\u3001\u4E0B\u304B\u3089\u5C11\u3057\u305A\u3064\u524A\u308B\u3002"
+    en: Wide on top and narrow at the bottom. Its slanted lower sides push balls
+      outward, so they rarely get around to the top. No rush. Chip away from below,
+      bit by bit.
+  - key: bestiary.112.diary0
+    ja: "\u4E0A\u306E\u5E83\u3044\u6BBB\u3067\u3001\u4E0B\u306E\u958B\u3044\u305F\u9762\u304C\u305B\u307E\u3044\u3002\u4E0A\u306E\u9762\u306B\u306F\u30DC\u30FC\u30EB\u304C\u306A\u304B\u306A\u304B\u56DE\u3089\u306A\u3044\u3002\u4E0B\u306E\u9762\u304C\u958B\u3044\u305F\u3068\u304D\u306B\u3001\u307E\u3068\u3081\u3066\u6483\u3061\u3053\u3080\u3002"
+    en: A shell that is wide on top, with a narrow open side at the bottom. Balls
+      rarely make it around to the top. When the bottom opens, send everything in
+      at once.
+  - key: bestiary.115.diary0
+    ja: "\u982D\u306B\u30C8\u30B2\u304C\u4E26\u3093\u3067\u3044\u3066\u3001\u738B\u51A0\u3092\u304B\u3076\u3063\u3066\u3044\u308B\u3088\u3046\u306B\u898B\u3048\u308B\u3002\u5049\u3044\u306E\u304B\u3082\u3057\u308C\u306A\u3044\u3002\u30C8\u30B2\u306E\u9593\u306B\u306F\u307E\u3063\u305F\u30DC\u30FC\u30EB\u304C\u4F55\u5EA6\u3082\u5F53\u305F\u308B\u306E\u3067\u3001\u7A2E\u304C\u5272\u308C\u3084\u3059\u3044\u3002"
+    en: A row of spikes lines its head, like it's wearing a crown. Maybe it's important.
+      Balls stuck between the spikes hit again and again, which helps crack the seed.
   - key: skill.9001.name
     ja: "\u3055\u3055\u3084\u304D"
     en: Whisper
@@ -791,6 +869,36 @@ MonoBehaviour:
   - key: bestiary.103.after
     ja: "\u4F55\u5EA6\u3067\u3082\u6CBB\u308B\u306E\u3067\u3001\u307F\u3093\u306A\u306E\u7DF4\u7FD2\u76F8\u624B\u3092\u5F15\u304D\u53D7\u3051\u3066\u304F\u308C\u3066\u3044\u308B\u3002"
     en: It heals no matter what, so it volunteers as everyone's practice partner.
+  - key: bestiary.108.after
+    ja: "\u516D\u3064\u306E\u89D2\u306B\u3001\u305D\u308C\u305E\u308C\u9CE5\u304C\u3068\u307E\u308B\u3088\u3046\u306B\u306A\u3063\u305F\u3002"
+    en: A bird now perches on each of its six corners.
+  - key: bestiary.106.after
+    ja: "\u3078\u3053\u3093\u3060\u9685\u306B\u3001\u5B50\u3069\u3082\u305F\u3061\u304C\u30DC\u30FC\u30EB\u3092\u6295\u3052\u5165\u308C\u3066\u904A\u3093\u3067\u3044\u308B\u3002"
+    en: The kids play by tossing balls into its dented corners.
+  - key: bestiary.109.after
+    ja: "\u516D\u89D2\u306E\u6BBB\u3092\u307F\u3093\u306A\u3067\u78E8\u304F\u306E\u304C\u3001\u671D\u306E\u65E5\u8AB2\u306B\u306A\u3063\u305F\u3002"
+    en: Polishing its hexagonal shell together has become everyone's morning routine.
+  - key: bestiary.110.after
+    ja: "\u6BBB\u306E\u3078\u3053\u307F\u306B\u3001\u306A\u305C\u304B\u843D\u3068\u3057\u7269\u304C\u3088\u304F\u96C6\u307E\u3063\u3066\u3044\u308B\u3002"
+    en: For some reason, lost things keep collecting in the dents of its shell.
+  - key: bestiary.113.after
+    ja: "\u9685\u306E\u3078\u3053\u307F\u304C\u3001\u3061\u3087\u3046\u3069\u3044\u3044\u7269\u7F6E\u304D\u306B\u306A\u3063\u3066\u3044\u308B\u3002"
+    en: Its dented corners make handy storage shelves.
+  - key: bestiary.114.after
+    ja: "\u304F\u3073\u308C\u306E\u3068\u3053\u308D\u306B\u3001\u3068\u304D\u3069\u304D\u307F\u3093\u306A\u306E\u5E3D\u5B50\u3092\u304B\u3051\u3066\u3044\u308B\u3002"
+    en: Sometimes everyone hangs their hats on its pinched waist.
+  - key: bestiary.111.after
+    ja: "\u304F\u3073\u308C\u306E\u5965\u306B\u3001\u732B\u304C\u4F4F\u307F\u306F\u3058\u3081\u305F\u3002"
+    en: A cat has moved into the hollow of its waist.
+  - key: bestiary.107.after
+    ja: "\u4E0A\u304C\u5E83\u3044\u306E\u3067\u3001\u307F\u3093\u306A\u306E\u6D17\u6FEF\u7269\u3092\u5E72\u3059\u53F0\u306B\u306A\u3063\u305F\u3002"
+    en: Its wide top has become a place to hang everyone's laundry.
+  - key: bestiary.112.after
+    ja: "\u5E83\u3044\u7532\u7F85\u306E\u4E0A\u3067\u3001\u3068\u304D\u3069\u304D\u5C0F\u3055\u306A\u5E02\u5834\u304C\u3072\u3089\u304B\u308C\u308B\u3002"
+    en: Every so often, a little market opens on top of its wide shell.
+  - key: bestiary.115.after
+    ja: "\u738B\u51A0\u306E\u30C8\u30B2\u306B\u304A\u796D\u308A\u306E\u98FE\u308A\u3092\u3064\u3051\u3066\u3082\u3089\u3063\u3066\u3001\u3046\u308C\u3057\u305D\u3046\u306B\u3057\u3066\u3044\u308B\u3002"
+    en: It wears festival decorations on its crown spikes and looks pleased.
   - key: ui.result.clear
     ja: "\u30B9\u30C6\u30FC\u30B8\u30AF\u30EA\u30A2"
     en: Stage Clear
@@ -1892,8 +2000,8 @@ MonoBehaviour:
       Maruo doesn''t
       answer. But when I throw him, he comes back. Sometimes he doesn''t.'
   - key: journal.4
-    ja: "\u516C\u5712\u306B\u884C\u3063\u305F\u3002\u524D\u306F\u3053\u3053\u3067\u3001\u53CB\u3060\u3061\u3068\u30AD\u30E3\u30C3\u30C1\u30DC\u30FC\u30EB\u3092\u3057\u305F\u3002\n\u898B\u6163\u308C\u305F\u30DE\u30D5\u30E9\u30FC\u3092\u3064\u3051\u305F\u30BE\u30F3\u30D3\u304C\u3044\u305F\u3051\u3069\u3001\u8A71\u3057\u304B\u3051\u3066\u307F\u3088\u3046\u304B\u306A\u3002"
-    en: 'I went to the park. I used to play catch here with my friend.
+    ja: "\u516C\u5712\u307E\u3067\u6765\u305F\u3002\u524D\u306F\u3053\u3053\u3067\u3001\u53CB\u3060\u3061\u3068\u30AD\u30E3\u30C3\u30C1\u30DC\u30FC\u30EB\u3092\u3057\u305F\u3002\n\u898B\u6163\u308C\u305F\u30DE\u30D5\u30E9\u30FC\u3092\u3064\u3051\u305F\u30BE\u30F3\u30D3\u304C\u3044\u305F\u3051\u3069\u3001\u8A71\u3057\u304B\u3051\u3066\u307F\u3088\u3046\u304B\u306A\u3002"
+    en: 'I made it to the park. I used to play catch here with my friend.
 
       There
       was a zombie wearing a scarf I knew. Maybe I''ll try talking to it.'

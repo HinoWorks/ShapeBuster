@@ -505,6 +505,14 @@ public static class DebugMenu
             ConvertMine.DebugFinishDeposit();
         }
 
+        [Category("記録")]
+        [SRDebugger.Sort(0)]
+        public string 総プレイ時間 => PlayTimeRecord.Format(PlayTimeRecord.TotalSeconds);
+
+        [Category("記録")]
+        [SRDebugger.Sort(1)]
+        public string インゲームの時間 => PlayTimeRecord.Format(PlayTimeRecord.IngameSeconds);
+
         [Category("ワクチン")]
         [SRDebugger.Sort(0)]
         public bool ワクチンを撒いた

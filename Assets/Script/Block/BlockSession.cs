@@ -22,7 +22,10 @@ public class BlockSession : MonoBehaviour
     const float TopClearanceCells = 0.5f;
     /// <summary>上端の空きがこれ以上になったら、1列出す。</summary>
     const float SpawnGapCells = 1.5f;
-    const int OpeningRows = 3;
+    /// <summary>始まったときに並べておく段の数。</summary>
+    const int OpeningRows = 4;
+    /// <summary>オープニングのあとの、いちばん最初のプレイだけ少なくする（StoryIntro.TakeFirstRun）。</summary>
+    const int FirstRunOpeningRows = 3;
     const int ClearBonusCount = 10;
 
     public static BlockSession Inst { get; private set; }
@@ -1572,6 +1575,8 @@ public class BlockSession : MonoBehaviour
             if (ball == null || ball.IsHeld || ball == aimingBall) continue;
             if (ball.Bottom <= deadlineY)
                 Park(ball, EffectType.BallDeadline);
+            else if (OutsideField(ball))
+                Park(ball, EffectType.BallDeadline);
         }
 
         TickCatch();
@@ -1586,6 +1591,24 @@ public class BlockSession : MonoBehaviour
         TickTurrets();
         TickTurretFollowUps();
         TickRowBeam();
+    }
+
+    /// <summary>
+    /// ボールが壁の外へ出てしまったか。
+    /// 下りてくるゾンビに押されると、ボールが薄い天井の壁をすり抜けて上へ出ることがある。
+    /// 出たボールは下の線へ戻ってこないので、手元の数が 1 つ減ったままになる。そうなったら手元へ戻す。
+    /// 中心が壁の面を越えるのは、ふつうに跳ねているあいだには起きない。
+    /// </summary>
+    bool OutsideField(BlockBall ball)
+    {
+        Vector2 center = ball.transform.position;
+        bool outside = center.y > ceilingY || center.x < fieldLeft || center.x > fieldRight
+            || float.IsNaN(center.x) || float.IsNaN(center.y);
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        if (outside)
+            Debug.LogWarning($"[BlockSession] ボール（{ball.Kind}）がフィールドの外へ出たので手元へ戻します。位置 {center}、天井 {ceilingY:0.00}、左右 {fieldLeft:0.00}〜{fieldRight:0.00}");
+#endif
+        return outside;
     }
 
     int CountLaunchable()
@@ -1814,6 +1837,27 @@ public class BlockSession : MonoBehaviour
         volley = false;
         pinCursorUi = false;
     }
+
+#if UNITY_EDITOR
+    // ---- テスト用の自動プレイ（Assets/Editor/AutoPlay.cs）から使う。エディタだけで、ビルドには入らない。 ----
+
+    /// <summary>今あるブロック（壊れたものも含む）。</summary>
+    public IReadOnlyList<BlockPiece> AutoPlayPieces => pieces;
+    public float AutoPlayDeadlineY => deadlineY;
+    public float AutoPlayFieldLeft => fieldLeft;
+    public float AutoPlayFieldRight => fieldRight;
+    public float AutoPlayLaunchMaxY => LaunchOriginMaxY();
+    public bool AutoPlayCanFire => running && !CurtainHolds && !volley && aimingBall == null && FindReadyBall() != null;
+
+    /// <summary>手で狙って離したのと同じように、anchor から direction へ手持ちのボールを撃つ。</summary>
+    public bool AutoPlayFire(Vector2 anchor, Vector2 direction)
+    {
+        if (!AutoPlayCanFire || direction.sqrMagnitude < 0.0001f) return false;
+        launchAnchor = ClampLaunch(anchor);
+        BeginVolley(FindReadyBall(), direction);
+        return true;
+    }
+#endif
 
     Vector2 ClampLaunch(Vector2 point)
     {
@@ -2614,9 +2658,10 @@ public class BlockSession : MonoBehaviour
         float parentY = formationBody != null ? formationBody.position.y : formation.position.y;
         float topBottom = screenTop - TopClearanceCells * cell - cell + Rule.blockGap * 0.5f;
         float localLeft = -cell * columns * 0.5f;
-        for (int i = 0; i < OpeningRows; i++)
+        int rows = StoryIntro.TakeFirstRun() ? FirstRunOpeningRows : OpeningRows;
+        for (int i = 0; i < rows; i++)
         {
-            float worldBottom = topBottom - (OpeningRows - 1 - i) * cell;
+            float worldBottom = topBottom - (rows - 1 - i) * cell;
             float localBottom = worldBottom - parentY;
             SpawnRow(localLeft, localBottom);
         }

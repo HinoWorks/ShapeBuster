@@ -27,6 +27,17 @@ public static class StoryIntro
 
     public static bool Playing { get; private set; }
 
+    // オープニングから始めた最初のプレイ。BlockSession が始まりの段を少なくするのに 1 回だけ使う。
+    static bool firstRunPending;
+
+    /// <summary>オープニングから始めた最初のプレイなら true を返し、印を消す。</summary>
+    public static bool TakeFirstRun()
+    {
+        bool pending = firstRunPending;
+        firstRunPending = false;
+        return pending;
+    }
+
     /// <summary>まだ出していない、初めてのプレイ。</summary>
     public static bool ShouldPlay
     {
@@ -51,6 +62,7 @@ public static class StoryIntro
     /// <summary>最初の段を選んで、インゲームへ切り替える。初めてのプレイで、ステージ選択もスキルツリーも挟まないときに使う。</summary>
     public static void StartFirstStage()
     {
+        firstRunPending = true;
         var stageTime = StageTimeManager.Inst;
         if (stageTime != null)
             stageTime.SetStageIndex(FirstStageIndex());
@@ -158,5 +170,6 @@ public static class StoryIntro
     static void ResetOnPlay()
     {
         Playing = false;
+        firstRunPending = false;
     }
 }

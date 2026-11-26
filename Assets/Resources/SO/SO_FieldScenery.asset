@@ -18,7 +18,7 @@ MonoBehaviour:
   - memo: "\u4F4F\u5B85\u5730\uFF08\u6A2A\u304B\u3089\uFF09"
     style: 0
     fromStage: 0
-    toStage: 2
+    toStage: 1
     tileVertical: 0
     edgeGap: 0.35
     leftBefore: {fileID: 2800000, guid: 2f2abf4441b66401789691bfcfcd548d, type: 3}
@@ -28,7 +28,7 @@ MonoBehaviour:
   - memo: "\u4F4F\u5B85\u5730\uFF08\u4E0A\u304B\u3089\uFF09"
     style: 1
     fromStage: 0
-    toStage: 2
+    toStage: 1
     tileVertical: 1
     edgeGap: 0
     leftBefore: {fileID: 2800000, guid: 88f3d165c3a714b16a160589a110a401, type: 3}
@@ -37,14 +37,24 @@ MonoBehaviour:
     rightAfter: {fileID: 2800000, guid: 4ce229832feff4089aa0a63b1452b58b, type: 3}
   - memo: "\u516C\u5712\uFF08\u4E0A\u304B\u3089\uFF09"
     style: 1
-    fromStage: 3
-    toStage: 5
+    fromStage: 2
+    toStage: 3
     tileVertical: 1
     edgeGap: 0
     leftBefore: {fileID: 2800000, guid: 38182e98aa4da4b4a877e775de00928b, type: 3}
     leftAfter: {fileID: 2800000, guid: 979312985b0a64f1e8cca00dc577ab81, type: 3}
     rightBefore: {fileID: 2800000, guid: fb2dd57037ed444f296a359b2c2bfbe1, type: 3}
     rightAfter: {fileID: 2800000, guid: 2160c1df11f3c4ece93b331029bd3432, type: 3}
+  - memo: "\u5C0F\u3055\u306A\u99C5\uFF08\u4E0A\u304B\u3089\uFF09"
+    style: 1
+    fromStage: 4
+    toStage: 5
+    tileVertical: 1
+    edgeGap: 0
+    leftBefore: {fileID: 2800000, guid: 2e6ddf246138e4fc19c52ee54b6bc2e1, type: 3}
+    leftAfter: {fileID: 2800000, guid: 34d5406543438431890fa8c302587169, type: 3}
+    rightBefore: {fileID: 2800000, guid: 647cc95a11f934fab995749cc8d12aa9, type: 3}
+    rightAfter: {fileID: 2800000, guid: aa58f060e210d4e578be5124aa3b3fbb, type: 3}
   - memo: "\u5546\u5E97\u8857\uFF08\u4E0A\u304B\u3089\uFF09"
     style: 1
     fromStage: 6

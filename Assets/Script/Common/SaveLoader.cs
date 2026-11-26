@@ -170,6 +170,9 @@ public class SaveLoader : MonoBehaviour
     private const string KEY_VACCINE = "key_vaccine"; // ゾンビワクチン
     private bool vaccineLoadFailed;
     private bool vaccineSaveQueued;
+    private const string KEY_PLAY_TIME = "key_playTime"; // 総プレイ時間
+    private bool playTimeLoadFailed;
+    private bool playTimeSaveQueued;
 
 
     #region -- resource data --
@@ -261,6 +264,7 @@ public class SaveLoader : MonoBehaviour
         MilestoneRuntime.Flush();
         BestiaryRuntime.Flush();
         VaccineRuntime.Flush();
+        PlayTimeRecord.Flush();
         FlushQueue();
         if (Inst == this) Inst = null;
     }
@@ -287,6 +291,7 @@ public class SaveLoader : MonoBehaviour
         MilestoneRuntime.Flush();
         BestiaryRuntime.Flush();
         VaccineRuntime.Flush();
+        PlayTimeRecord.Flush();
         FlushQueue();
     }
 
@@ -325,6 +330,7 @@ public class SaveLoader : MonoBehaviour
         LoadBestiary();
         BestiaryRuntime.Bind();
         LoadVaccine();
+        LoadPlayTime();
         SteamAchievements.Bind();
     }
 
@@ -1190,6 +1196,65 @@ public class SaveLoader : MonoBehaviour
     #endregion
 
 
+    #region -- PlayTime --
+    /// <summary>
+    /// 総プレイ時間を読む。壊れているときは上書きしない（数えた分は保存しない）。
+    /// </summary>
+    private void LoadPlayTime()
+    {
+        playTimeLoadFailed = false;
+        try
+        {
+            if (!ES3.KeyExists(KEY_PLAY_TIME))
+            {
+                PlayTimeRecord.Replace(null);
+                return;
+            }
+
+            var save = ES3.Load<PlayTimeSave>(KEY_PLAY_TIME);
+            if (save == null)
+            {
+                playTimeLoadFailed = true;
+                Debug.LogError("PlayTime save is corrupt.");
+                return;
+            }
+            PlayTimeRecord.Replace(save);
+        }
+        catch (Exception exception)
+        {
+            playTimeLoadFailed = true;
+            Debug.LogException(exception);
+        }
+    }
+
+    /// <summary>
+    /// 数えた総プレイ時間を保存する。連続した要求は1回にまとめる。
+    /// </summary>
+    public void Request_SavePlayTime()
+    {
+        if (playTimeLoadFailed || playTimeSaveQueued || !PlayTimeRecord.IsDirty) return;
+
+        playTimeSaveQueued = true;
+        EnqueueMethod(SavePlayTime);
+    }
+
+    private void SavePlayTime()
+    {
+        playTimeSaveQueued = false;
+        if (playTimeLoadFailed || !PlayTimeRecord.IsDirty) return;
+
+        ES3.Save(KEY_PLAY_TIME, PlayTimeRecord.Capture());
+        PlayTimeRecord.MarkSaved();
+    }
+
+    /// <summary>エディタから、セーブにある総プレイ時間を読む（遊んでいないときの確認用）。無ければ null。</summary>
+    public static PlayTimeSave PeekPlayTime()
+    {
+        return ES3.KeyExists(KEY_PLAY_TIME) ? ES3.Load<PlayTimeSave>(KEY_PLAY_TIME) : null;
+    }
+    #endregion
+
+
     #region -- GameRecordData --
     /// <summary>
     /// 累計と1プレイ分の記録を読む。未作成は初期値、破損は null。破損結果はセーブしない。
@@ -1332,6 +1397,7 @@ public class SaveLoader : MonoBehaviour
         MilestoneRuntime.Flush();
         BestiaryRuntime.Flush();
         VaccineRuntime.Flush();
+        PlayTimeRecord.Flush();
         FlushQueue();
     }
 

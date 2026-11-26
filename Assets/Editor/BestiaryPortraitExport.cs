@@ -15,7 +15,7 @@ public static class BestiaryPortraitExport
     // 撮影用に、ほかの物から離れた場所に置く。
     static readonly Vector3 StagePoint = new Vector3(5000f, 5000f, 0f);
 
-    // 図鑑の id ごとの代表のプレハブ。
+    // 雑魚の、図鑑の id ごとの代表のプレハブ。
     static readonly Dictionary<int, string> Sources = new()
     {
         { 1, "Assets/Prefab/Block/pf_Block_Square.prefab" },
@@ -27,10 +27,28 @@ public static class BestiaryPortraitExport
         { 7, "Assets/Prefab/Block/pf_Block_Glass.prefab" },
         { 8, "Assets/Prefab/Block/pf_Block_Chest.prefab" },
         { 9, "Assets/Prefab/Block/pf_Block_Solid.prefab" },
-        { 101, "Assets/Prefab/Boss/pf_Block_BossCrown.prefab" },
-        { 102, "Assets/Prefab/Boss/pf_Block_BossShell.prefab" },
-        { 103, "Assets/Prefab/Boss/pf_Block_BossRegen.prefab" },
     };
+
+    // ボスは形ごとに 1 項目（id は 101 ＋ bossIndex）。プレハブの bossIndex から id を決めて、すべてのボスを撮る。
+    // 図鑑（SO_BestiaryData）に無い id は撮らない（段に出ていないボス）。
+    const string BossFolder = "Assets/Prefab/Boss";
+
+    static Dictionary<int, string> CollectSources()
+    {
+        var sources = new Dictionary<int, string>(Sources);
+        var table = SOLoader.BestiaryData;
+        foreach (var guid in AssetDatabase.FindAssets("t:Prefab", new[] { BossFolder }))
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            var piece = prefab != null ? prefab.GetComponent<BlockPiece>() : null;
+            if (piece == null || piece.BossIndex < 0) continue;
+            int id = BlockPiece.BossBestiaryId(piece.BossIndex);
+            if (table != null && table.Find(id) == null) continue;
+            sources[id] = path;
+        }
+        return sources;
+    }
 
     [MenuItem("Tools/ゾンビ図鑑/敵の絵を書き出す")]
     public static void Export()
@@ -38,8 +56,9 @@ public static class BestiaryPortraitExport
         if (!AssetDatabase.IsValidFolder(Folder))
             AssetDatabase.CreateFolder("Assets/Resources", "Bestiary");
 
+        var sources = CollectSources();
         int written = 0;
-        foreach (var pair in Sources)
+        foreach (var pair in sources)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(pair.Value);
             if (prefab == null)
@@ -52,7 +71,7 @@ public static class BestiaryPortraitExport
                 written++;
         }
         AssetDatabase.Refresh();
-        foreach (var pair in Sources)
+        foreach (var pair in sources)
             ImportAsSprite($"{Folder}/bestiary_{pair.Key}.png");
         Debug.Log($"ゾンビ図鑑の絵を {written} 枚書き出しました（{Folder}）");
     }

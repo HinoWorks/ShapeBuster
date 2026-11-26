@@ -317,19 +317,18 @@ public class BlockPiece : MonoBehaviour
     public int SpawnTotalHp => Mathf.Max(1, (spawnLevel - 1) * stepHp + spawnHp);
     /// <summary>
     /// ゾンビ図鑑の id。プレハブで決めていなければ、ブロックの性質から決める。
-    /// 雑魚：1 ゾンビ、2 装甲、3 再生、4 膨張、5 分裂、6 幽霊、7 ガラス、8 宝箱、9 石。ボス：101 大ゾンビ、102 甲羅、103 再生。
+    /// 雑魚：1 ゾンビ、2 装甲、3 再生、4 膨張、5 分裂、6 幽霊、7 ガラス、8 宝箱、9 石。ボス：形ごとに 1 項目で、101 ＋ bossIndex（101 四角の大ゾンビ、102 台形の甲羅、103 菱形の再生…）。
     /// </summary>
+    /// <summary>ボスの図鑑の id。形（＝ボスのプレハブ）ごとに分ける。</summary>
+    public static int BossBestiaryId(int bossIndex) => 101 + bossIndex;
+
     public int BestiaryId
     {
         get
         {
             if (bestiaryId > 0) return bestiaryId;
             if (BossIndex >= 0)
-            {
-                if (Shelled) return 102;
-                if (BossHeals) return 103;
-                return 101;
-            }
+                return BossBestiaryId(BossIndex);
             if (solid) return 9;
             if (chest) return 8;
             if (ReleasesContents) return 7;

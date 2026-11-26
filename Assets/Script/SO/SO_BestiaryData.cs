@@ -42,7 +42,7 @@ public enum BestiaryEffect
 [Serializable]
 public class BestiaryData
 {
-    public int id; //固定 ID。セーブもこの ID。雑魚は 1〜、ボスは 101〜
+    public int id; //固定 ID。セーブもこの ID。雑魚は 1〜、ボスは形ごとに 101 ＋ bossIndex
     public string memo; //内部のメモ（画面には出さない）
     public bool boss; //ボス。研究も効果もなく、記録だけ残す
     public BestiaryCount count; //研究の条件で数えるもの
@@ -151,9 +151,19 @@ public class SO_BestiaryData : ScriptableObject
             Mob(7, "ガラス", 5, BestiaryEffect.GlassDamage, 0.10f),
             Mob(8, "宝箱", 5, BestiaryEffect.ChestWeight, 0.08f),
             Mob(9, "石（当てた回数）", 100, BestiaryEffect.AllDamage, 0.01f, BestiaryCount.Hit),
-            Boss(101, "大ゾンビ"),
-            Boss(102, "甲羅ボス"),
-            Boss(103, "再生ボス"),
+            Boss(101, "大ゾンビ・四角（段 0）"),
+            Boss(108, "大ゾンビ・六角形（段 1）"),
+            Boss(106, "大ゾンビ・十字（段 2）"),
+            Boss(102, "甲羅・台形（段 3）"),
+            Boss(109, "甲羅・六角形（段 4）"),
+            Boss(110, "甲羅・十字（段 5）"),
+            Boss(103, "再生・菱形（段 6）"),
+            Boss(113, "再生・十字（段 7）"),
+            Boss(114, "再生・砂時計（段 8）"),
+            Boss(111, "甲羅・砂時計（段 9）"),
+            Boss(107, "大ゾンビ・逆台形（段 10）"),
+            Boss(112, "甲羅・逆台形（段 11）"),
+            Boss(115, "再生・王冠（段 12）"),
         };
         map = null;
     }
