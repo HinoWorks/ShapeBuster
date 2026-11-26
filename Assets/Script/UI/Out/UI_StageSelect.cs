@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// アウトゲームの Start から開くステージ選択。クリア済みの次のステージまで選べる。
+/// 選べるステージが 1 つしかない（最初の段をまだクリアしていない）ときは開かずに、そのまま始める（<see cref="TryStartOnlyStage"/>）。
 /// </summary>
 public class UI_StageSelect : MonoBehaviour
 {
@@ -35,6 +36,17 @@ public class UI_StageSelect : MonoBehaviour
         Refresh();
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
+    }
+
+    /// <summary>選べるステージが最初の段だけなら、選択を開かずにその段を始める。始めたら true。</summary>
+    public bool TryStartOnlyStage()
+    {
+        CollectStageIndexes();
+        if (!TryGetBounds(out int firstStageIndex, out int maxSelectable)) return false;
+        if (maxSelectable > firstStageIndex) return false;
+        selectedStageIndex = firstStageIndex;
+        OnClick_Start();
+        return true;
     }
 
     public void Close()

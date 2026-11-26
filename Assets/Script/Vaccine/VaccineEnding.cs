@@ -97,7 +97,7 @@ public static class VaccineEnding
             dropLayer.gameObject.SetActive(false);
             await Wait(BlackHold, token);
 
-            await PlayEpilogue(root.transform, token);
+            await PlayLines(root.transform, "vaccine.epilogue", EpilogueLines, token);
 
             if (GameWatcher.Inst != null)
                 GameWatcher.Inst.SetGameState(GameStateType.Title);
@@ -127,8 +127,11 @@ public static class VaccineEnding
         }
     }
 
-    /// <summary>真っ黒な画面に、そのあとの日記を 1 行ずつ出す。押すと残りの行をまとめて出し、もう一度押すと先へ進む。</summary>
-    static async UniTask PlayEpilogue(Transform root, CancellationToken token)
+    /// <summary>
+    /// 真っ黒な画面に、文を 1 行ずつ出す（&lt;keyPrefix&gt;1〜&lt;keyPrefix&gt;&lt;count&gt;）。押すと残りの行をまとめて出し、もう一度押すと先へ進む。
+    /// ワクチンのそのあとの日記と、初めての Start の物語の始まり（StoryIntro）で使う。
+    /// </summary>
+    public static async UniTask PlayLines(Transform root, string keyPrefix, int count, CancellationToken token)
     {
         var box = new GameObject("epilogue", typeof(RectTransform), typeof(VerticalLayoutGroup));
         box.transform.SetParent(root, false);
@@ -146,9 +149,9 @@ public static class VaccineEnding
         layout.childForceExpandHeight = false;
 
         var lines = new System.Collections.Generic.List<TextMeshProUGUI>();
-        for (int i = 1; i <= EpilogueLines; i++)
+        for (int i = 1; i <= count; i++)
         {
-            string text = Loc.Content("vaccine.epilogue" + i, "");
+            string text = Loc.Content(keyPrefix + i, "");
             if (string.IsNullOrEmpty(text)) continue;
             var go = new GameObject("line" + i, typeof(RectTransform), typeof(TextMeshProUGUI));
             go.transform.SetParent(box.transform, false);
@@ -190,7 +193,7 @@ public static class VaccineEnding
     }
 
     /// <summary>決めた秒数だけ待つ。途中でクリックかキーが押されたら、そこで終えて true を返す。</summary>
-    static async UniTask<bool> WaitOrSkip(float seconds, CancellationToken token)
+    public static async UniTask<bool> WaitOrSkip(float seconds, CancellationToken token)
     {
         float end = Time.unscaledTime + seconds;
         // 押したままの入力で飛ばないように、1 フレームおいてから見る。
@@ -211,7 +214,7 @@ public static class VaccineEnding
         return keyboard != null && keyboard.anyKey.wasPressedThisFrame;
     }
 
-    static UniTask Wait(float seconds, CancellationToken token)
+    public static UniTask Wait(float seconds, CancellationToken token)
     {
         return UniTask.Delay(TimeSpan.FromSeconds(seconds), DelayType.UnscaledDeltaTime, cancellationToken: token);
     }
@@ -250,7 +253,7 @@ public static class VaccineEnding
         return root;
     }
 
-    static Image FullScreen(string name, Transform parent)
+    public static Image FullScreen(string name, Transform parent)
     {
         var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
         go.transform.SetParent(parent, false);

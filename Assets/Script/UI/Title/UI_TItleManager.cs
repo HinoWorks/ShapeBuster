@@ -41,6 +41,9 @@ public class UI_TItleManager : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ToOutGame()
     {
+        // 初めてのプレイは、物語の始まりの文を出してから、アウトゲームを通らずに最初の段を始める。
+        if (StoryIntro.Playing) return;
+        if (StoryIntro.ShouldPlay && StoryIntro.Play(StoryIntro.StartFirstStage)) return;
         GameWatcher.Inst.SetGameState(GameStateType.OutGame);
     }
 

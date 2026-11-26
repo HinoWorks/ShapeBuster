@@ -195,8 +195,20 @@ public class UI_OutGameManager : MonoBehaviour
     #region -- OnClick --
     public void OnClick_ToIngame()
     {
+        // 初めて Start を押したときは、物語の始まりの文を出してから進む。
+        if (StoryIntro.Playing) return;
+        if (StoryIntro.ShouldPlay && StoryIntro.Play(OpenIngame)) return;
+        OpenIngame();
+    }
+
+    void OpenIngame()
+    {
+        // 最初の段をクリアするまでは選ぶものがないので、ステージ選択を出さずに始める。
         if (ui_stageSelect != null)
-            ui_stageSelect.Open();
+        {
+            if (!ui_stageSelect.TryStartOnlyStage())
+                ui_stageSelect.Open();
+        }
         else
             GameWatcher.Inst.ChangeScreen(GameStateType.InGame_Ready);
     }

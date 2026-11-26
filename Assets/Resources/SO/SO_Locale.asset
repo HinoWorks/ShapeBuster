@@ -1974,3 +1974,12 @@ MonoBehaviour:
 
       When I touched it,
       my left hand felt a little warmer.'
+  - key: story.intro1
+    ja: "\u753A\u306E\u307F\u3093\u306A\u304C\u3001\u30BE\u30F3\u30D3\u306B\u306A\u3063\u305F\u3002"
+    en: Everyone in town turned into zombies.
+  - key: story.intro2
+    ja: "\u8A71\u3059\u4EBA\u3082\u3001\u904A\u3076\u4EBA\u3082\u3001\u3044\u306A\u304F\u306A\u3063\u305F\u3002"
+    en: No one to talk to. No one to play with.
+  - key: story.intro3
+    ja: "\u3067\u3082\u3001\u30DC\u30FC\u30EB\u306A\u3089\u3042\u308B\u3002"
+    en: But I still have a ball.
