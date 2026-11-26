@@ -739,8 +739,8 @@ MonoBehaviour:
     ja: "\u30EF\u30AF\u30C1\u30F3\u7814\u7A76\u6240"
     en: Vaccine Lab
   - key: skill.9006.desc
-    ja: "\u30EF\u30AF\u30C1\u30F3\u306E\u30BF\u30D6\u304C\u958B\u304F\u3002\u3053\u3053\u3067\u3001\u3059\u3079\u3066\u3092\u7D42\u308F\u3089\u305B\u308B\u3002"
-    en: Opens the Vaccine tab. This is where it all ends.
+    ja: "\u30EF\u30AF\u30C1\u30F3\u306E\u30BF\u30D6\u304C\u958B\u304F\u3002\u304A\u6BCD\u3055\u3093\u306E\u7814\u7A76\u6240\u3067\u3001\u30EF\u30AF\u30C1\u30F3\u3092\u4F5C\u308B\u3002"
+    en: Opens the Vaccine tab. Make the vaccine in Mom's lab.
   - key: vaccine.tab
     ja: "\u30EF\u30AF\u30C1\u30F3"
     en: Vaccine
@@ -751,82 +751,87 @@ MonoBehaviour:
     ja: "\u5B8C\u6210\u5EA6 {0}%"
     en: Progress {0}%
   - key: vaccine.pour
-    ja: "DD \u3092\u6CE8\u3050\u3000DD {0}"
-    en: "Pour DD\u3000DD {0}"
+    ja: "\u62BD\u51FA\u6DB2\u3092\u305D\u305D\u3050\u3000{0}"
+    en: "Pour Extract\u3000{0}"
   - key: vaccine.spread
     ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u6492\u304F"
     en: Spread the Vaccine
   - key: vaccine.stage0
-    ja: "\u307E\u3060\u4F55\u3082\u59CB\u3081\u3066\u3044\u306A\u3044\u3002DD \u3092\u6CE8\u3044\u3067\u3001\u7814\u7A76\u3092\u9032\u3081\u308B\u3002"
-    en: Nothing has started yet. Pour DD to move the research forward.
+    ja: "\u307E\u3060\u306A\u306B\u3082\u3057\u3066\u3044\u306A\u3044\u3002\u62BD\u51FA\u6DB2\u3092\u305D\u305D\u3044\u3067\u3001\u30EF\u30AF\u30C1\u30F3\u3092\u4F5C\u308A\u306F\u3058\u3081\u308B\u3002"
+    en: Nothing done yet. Pour in extract to start making the vaccine.
   - key: vaccine.stage1.name
-    ja: "1. \u63A1\u53D6"
-    en: 1. Sampling
+    ja: "1. \u3042\u3064\u3081\u308B"
+    en: 1. Collecting
   - key: vaccine.stage1.result
-    ja: "\u6210\u679C\uFF1A\u30BE\u30F3\u30D3\u306E\u7D30\u80DE\u306E\u30B5\u30F3\u30D7\u30EB\u3092
-      3 \u672C\u3068\u3063\u305F\u3002"
-    en: 'Result: Took three samples of zombie cells.'
+    ja: "\u3067\u304D\u305F\u3053\u3068\uFF1A\u30BE\u30F3\u30D3\u306E\u7D30\u80DE\u3092\u3001\u8A66\u9A13\u7BA1
+      3 \u672C\u3076\u3093\u3042\u3064\u3081\u305F\u3002"
+    en: 'What I did: Collected three test tubes of zombie cells.'
   - key: vaccine.stage1.diary
-    ja: "\u601D\u3063\u305F\u3088\u308A\u5143\u6C17\u304C\u3044\u3044\u3002\u8A66\u9A13\u7BA1\u306E\u4E2D\u3067\u3082\u3001\u307E\u3060\u52D5\u3053\u3046\u3068\u3057\u3066\u3044\u308B\u3002"
-    en: Livelier than expected. Even in the test tube, they keep trying to move.
+    ja: "\u767D\u3044\u670D\u3092\u304B\u308A\u305F\u3002\u3076\u304B\u3076\u304B\u3060\u3051\u3069\u3001\u7814\u7A76\u6240\u306E\u4EBA\u3063\u307D\u3044\u3002\u7D30\u80DE\u306F\u8A66\u9A13\u7BA1\u306E\u4E2D\u3067\u3082\u307E\u3060\u52D5\u3044\u3066\u3044\u3066\u3001\u3061\u3087\u3063\u3068\u304B\u308F\u3044\u3044\u3002"
+    en: I borrowed a white coat. It's baggy, but I look like a lab person. The cells
+      still wriggle in the test tube. Kind of cute.
   - key: vaccine.stage2.name
-    ja: "2. \u5206\u6790"
-    en: 2. Analysis
+    ja: "2. \u3057\u3089\u3079\u308B"
+    en: 2. Looking Closely
   - key: vaccine.stage2.result
-    ja: "\u6210\u679C\uFF1A\u7D30\u80DE\u306E\u4E2D\u306B\u3001\u5149\u306B\u5F31\u3044\u3068\u3053\u308D\u3092\u898B\u3064\u3051\u305F\u3002"
-    en: 'Result: Found a part of the cell that is weak to light.'
+    ja: "\u308F\u304B\u3063\u305F\u3053\u3068\uFF1A\u7D30\u80DE\u306F\u3001\u5149\u304C\u306B\u304C\u3066\u3002"
+    en: 'What I learned: The cells don''t like light.'
   - key: vaccine.stage2.diary
-    ja: "\u5F31\u70B9\u3089\u3057\u304D\u3082\u306E\u304C\u898B\u3048\u3066\u304D\u305F\u3002\u30DC\u30FC\u30EB\u304C\u3088\u304F\u52B9\u304F\u306E\u3082\u3001\u305F\u3076\u3093\u3053\u306E\u305B\u3044\u3060\u3002"
-    en: Something like a weakness is showing. That is probably why the balls work
-      so well.
+    ja: "\u3051\u3093\u3073\u93E1\u3092\u306E\u305E\u3044\u305F\u3089\u3001\u5149\u3092\u5F53\u3066\u305F\u3068\u3053\u308D\u3060\u3051\u7D30\u80DE\u304C\u3061\u3062\u3053\u307E\u3063\u305F\u3002\u30DC\u30FC\u30EB\u304C\u3088\u304F\u52B9\u304F\u306E\u306F\u3001\u305F\u3076\u3093\u3053\u306E\u305B\u3044\u3002\u30DB\u30EF\u30A4\u30C8\u30DC\u30FC\u30C9\u306B\u3082\u3001\u5149\u306E\u30DE\u30FC\u30AF\u304C\u3042\u3063\u305F\u6C17\u304C\u3059\u308B\u3002"
+    en: Under the microscope, the cells shrank wherever the light hit. That's probably
+      why the ball works so well. I think the whiteboard had a light symbol too.
   - key: vaccine.stage3.name
-    ja: "3. \u57F9\u990A"
-    en: 3. Culture
+    ja: "3. \u3075\u3084\u3059"
+    en: 3. Growing
   - key: vaccine.stage3.result
-    ja: "\u6210\u679C\uFF1A\u5F31\u70B9\u3092\u3064\u304F\u85AC\u306E\u3082\u3068\u304C\u3001\u5C11\u3057\u305A\u3064\u5897\u3048\u306F\u3058\u3081\u305F\u3002"
-    en: 'Result: The base of a medicine that hits the weakness has started to grow.'
+    ja: "\u3067\u304D\u305F\u3053\u3068\uFF1A\u85AC\u306E\u3082\u3068\u304C\u3001\u5C11\u3057\u305A\u3064\u3075\u3048\u306F\u3058\u3081\u305F\u3002"
+    en: 'What I did: The medicine base started growing little by little.'
   - key: vaccine.stage3.diary
-    ja: "\u8A66\u9A13\u7BA1\u306E\u4E2D\u3067\u3001\u5C11\u3057\u305A\u3064\u5897\u3048\u3066\u3044\u308B\u3002\u591C\u4E2D\u306B\u898B\u308B\u3068\u3001\u307B\u3093\u306E\u308A\u5149\u3063\u3066\u3044\u308B\u3002"
-    en: It grows a little at a time. At night, it glows faintly.
+    ja: "\u307E\u305C\u308B\u9806\u756A\u304C\u308F\u304B\u3089\u306A\u304F\u306A\u3063\u305F\u3089\u3001\u3042\u306E\u58F0\u304C\u6559\u3048\u3066\u304F\u308C\u305F\u3002\u591C\u4E2D\u306B\u898B\u308B\u3068\u3001\u8A66\u9A13\u7BA1\u304C\u307B\u3093\u306E\u308A\u5149\u3063\u3066\u3044\u308B\u3002\u5DE6\u624B\u3067\u3055\u308F\u308B\u3068\u3001\u3061\u3087\u3063\u3068\u3042\u305F\u305F\u304B\u3044\u3002"
+    en: When I forgot the mixing order, that voice told me. At night, the test tubes
+      glow faintly. When I touch them with my left hand, they feel a little warm.
   - key: vaccine.stage4.name
-    ja: "4. \u8A66\u4F5C"
-    en: 4. Prototype
+    ja: "4. \u305F\u3081\u3059"
+    en: 4. Trying It
   - key: vaccine.stage4.result
-    ja: "\u6210\u679C\uFF1A\u8A66\u4F5C\u306E\u30EF\u30AF\u30C1\u30F3\u3092 1 \u672C\u3060\u3051\u4F5C\u3063\u305F\u3002"
-    en: 'Result: Made a single prototype vaccine.'
+    ja: "\u3067\u304D\u305F\u3053\u3068\uFF1A\u305F\u3081\u3057\u306E\u30EF\u30AF\u30C1\u30F3\u3092\u30011
+      \u672C\u3060\u3051\u4F5C\u3063\u305F\u3002"
+    en: 'What I did: Made just one test vaccine.'
   - key: vaccine.stage4.diary
-    ja: "\u8A66\u3057\u306B 1 \u4F53\u3078\u6253\u3063\u3066\u307F\u305F\u3002\u565B\u307F\u3064\u304B\u306A\u304F\u306A\u3063\u305F\u3002\u9854\u8272\u306F\u76F8\u5909\u308F\u3089\u305A\u60AA\u3044\u3002"
-    en: Tried it on one of them. It stopped biting. Its complexion is as bad as ever.
+    ja: "\u30DD\u30C1\u306B\u305F\u3081\u3057\u3066\u307F\u305F\u3002\u304B\u307E\u306A\u304F\u306A\u3063\u305F\u3002\u9854\u8272\u306F\u3042\u3044\u304B\u308F\u3089\u305A\u308F\u308B\u3044\u3051\u3069\u3001\u3057\u3063\u307D\u306F\u3044\u3064\u3082\u3088\u308A\u3075\u3063\u3066\u3044\u308B\u3002"
+    en: I tried it on Pochi. He stopped biting. He still looks pale, but his tail
+      wags more than usual.
   - key: vaccine.stage5.name
-    ja: "5. \u5B8C\u6210"
-    en: 5. Complete
+    ja: "5. \u3067\u304D\u3042\u304C\u308A"
+    en: 5. Done
   - key: vaccine.stage5.result
-    ja: "\u6210\u679C\uFF1A\u30EF\u30AF\u30C1\u30F3\u304C\u5B8C\u6210\u3057\u305F\u3002\u3042\u3068\u306F\u6492\u304F\u3060\u3051\u3002"
-    en: 'Result: The vaccine is complete. All that is left is to spread it.'
+    ja: "\u3067\u304D\u305F\u3053\u3068\uFF1A\u30EF\u30AF\u30C1\u30F3\u304C\u3067\u304D\u305F\u3002\u3042\u3068\u306F\u307E\u304F\u3060\u3051\u3002"
+    en: 'What I did: The vaccine is done. All that''s left is to spread it.'
   - key: vaccine.stage5.diary
-    ja: "\u3053\u308C\u3067\u3001\u307F\u3093\u306A\u5143\u306B\u623B\u305B\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002"
-    en: With this, maybe everyone can go back to how they were.
+    ja: "\u3053\u308C\u3067\u3001\u307F\u3093\u306A\u5143\u306B\u3082\u3069\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002\u3082\u3069\u3063\u305F\u3089\u3001\u3060\u308C\u3068\u30AD\u30E3\u30C3\u30C1\u30DC\u30FC\u30EB\u3057\u3088\u3046\u3002"
+    en: Maybe this will turn everyone back. Once they're back, who should I play
+      catch with?
   - key: vaccine.clear.name
     ja: "\u305D\u306E\u3042\u3068"
     en: Afterwards
   - key: vaccine.clear.diary
-    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u6492\u3044\u305F\u3002\u307F\u3093\u306A\u30BE\u30F3\u30D3\u306E\u307E\u307E\u3060\u3051\u3069\u3001\u3082\u3046\u565B\u307E\u306A\u3044\u3002\u30DC\u30FC\u30EB\u904A\u3073\u306E\u76F8\u624B\u304C\u5897\u3048\u305F\u3002"
-    en: I spread the vaccine. Everyone is still a zombie, but nobody bites. I have
-      more friends to play ball with now.
+    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u307E\u3044\u305F\u3002\u307F\u3093\u306A\u30BE\u30F3\u30D3\u306E\u307E\u307E\u3060\u3051\u3069\u3001\u3082\u3046\u304B\u307E\u306A\u3044\u3002\u30AD\u30E3\u30C3\u30C1\u30DC\u30FC\u30EB\u306E\u76F8\u624B\u304C\u3001\u3044\u3063\u3071\u3044\u3075\u3048\u305F\u3002"
+    en: I spread the vaccine. Everyone's still a zombie, but nobody bites. Now I
+      have lots of people to play catch with.
   - key: vaccine.epilogue1
-    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u6492\u3044\u305F\u3002"
+    ja: "\u30EF\u30AF\u30C1\u30F3\u3092\u307E\u3044\u305F\u3002"
     en: I spread the vaccine.
   - key: vaccine.epilogue2
     ja: "\u6B21\u306E\u671D\u3001\u30BE\u30F3\u30D3\u305F\u3061\u306F\u30BE\u30F3\u30D3\u306E\u307E\u307E\u3060\u3063\u305F\u3002"
     en: The next morning, the zombies were still zombies.
   - key: vaccine.epilogue3
-    ja: "\u305F\u3060\u3001\u3060\u308C\u3082\u565B\u307F\u3064\u304B\u306A\u304F\u306A\u3063\u305F\u3002"
+    ja: "\u3067\u3082\u3001\u3060\u308C\u3082\u304B\u307F\u3064\u304B\u306A\u304F\u306A\u3063\u305F\u3002"
     en: But nobody bites anymore.
   - key: vaccine.epilogue4
     ja: "\u304B\u308F\u308A\u306B\u3001\u30DC\u30FC\u30EB\u3092\u6295\u3052\u308B\u3068\u62FE\u3063\u3066\u304F\u308B\u3002"
-    en: Instead, when I throw a ball, they bring it back.
+    en: Instead, when I throw the ball, they bring it back.
   - key: vaccine.epilogue5
-    ja: "\u53CB\u9054\u306B\u306A\u3063\u305F\u3001\u3068\u3044\u3046\u3053\u3068\u306B\u3057\u3066\u304A\u304F\u3002"
+    ja: "\u53CB\u3060\u3061\u306B\u306A\u3063\u305F\u3001\u3068\u3044\u3046\u3053\u3068\u306B\u3057\u3066\u304A\u304F\u3002"
     en: Let's just say we became friends.
   - key: bestiary.afterTitle
     ja: "\u305D\u306E\u3042\u3068"
@@ -1463,8 +1468,9 @@ MonoBehaviour:
     ja: "\u5927\u6F01"
     en: Jackpot
   - key: skill.3001.desc
-    ja: "\u30D6\u30ED\u30C3\u30AF\u304C\u843D\u3068\u3059A\u304C\u3001[A] \u306E\u78BA\u7387\u30672\u500D\u306B\u306A\u308B\u3002"
-    en: A dropped by blocks has a [A] chance to double.
+    ja: "\u30D6\u30ED\u30C3\u30AF\u304C\u843D\u3068\u3059A\u304C\u30012\u500D\u306B\u306A\u308B\u78BA\u7387\u304C
+      [A] \u4E0A\u304C\u308B\u3002"
+    en: The chance that A dropped by blocks doubles goes up by [A].
   - key: skill.3002.name
     ja: "\u6B8B\u7559"
     en: Linger
@@ -1630,14 +1636,14 @@ MonoBehaviour:
     ja: "\u9023\u6483"
     en: Chain Hit
   - key: skill.1050.desc
-    ja: "\u540C\u3058\u30D5\u30E9\u30A4\u30C8\u3067\u5F53\u3066\u308B\u305F\u3073\u3001\u6B21\u306E\u30D2\u30C3\u30C8\u304C10%\u5F37\u304F\u306A\u308B\u3002\u4E0A\u965050%\u3002"
+    ja: "\u540C\u3058\u30D5\u30E9\u30A4\u30C8\u3067\u5F53\u3066\u308B\u305F\u3073\u3001\u6B21\u306E\u30D2\u30C3\u30C8\u304C10%\u305A\u3064\u5F37\u304F\u306A\u308B\u3002\u4E0A\u9650\u306F50%\u3002"
     en: Each hit in the same flight makes the next hit 10% stronger, up to 50%.
   - key: skill.1051.name
     ja: "\u9023\u6483\uFF0B"
     en: Chain Hit+
   - key: skill.1051.desc
-    ja: "\u540C\u3058\u30D5\u30E9\u30A4\u30C8\u3067\u5F53\u3066\u308B\u305F\u3073\u3001\u6B21\u306E\u30D2\u30C3\u30C8\u304C10%\u5F37\u304F\u306A\u308B\u3002\u4E0A\u965050%\u3002"
-    en: Each hit in the same flight makes the next hit 10% stronger, up to 50%.
+    ja: "\u9023\u6483\u306E\u5F37\u3055\u306E\u4E0A\u9650\u304C [A] \u4E0A\u304C\u308B\u3002"
+    en: Raises Chain Hit's limit by [A].
   - key: skill.1060.name
     ja: "\u5148\u5236"
     en: First Attack
@@ -1726,9 +1732,9 @@ MonoBehaviour:
     ja: "\u30D3\u30FC\u30E0\u306E\u9593\u9694"
     en: Beam Interval
   - key: skill.2112.desc
-    ja: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0\u306E\u653B\u6483\u9593\u9694\u304C
-      [A] \u77ED\u304F\u306A\u308B\u3002"
-    en: Auto beam interval shortens by [A].
+    ja: "\u30AA\u30FC\u30C8\u30D3\u30FC\u30E0\u306E\u653B\u6483\u901F\u5EA6\u304C
+      [A] \u4E0A\u304C\u308B\u3002"
+    en: Auto beam attack speed increases by [A].
   - key: skill.3051.name
     ja: "\u518D\u751F\u306E\u53CE\u91CF"
     en: Regen Yield
@@ -1751,9 +1757,10 @@ MonoBehaviour:
     ja: "\u5B9D\u7BB1\u306E\u51FA\u73FE"
     en: Chest Spawn
   - key: skill.3070.desc
-    ja: "\u5B9D\u7BB1\u304C\u51FA\u308B\u3088\u3046\u306B\u306A\u308B\u3002\u51FA\u3084\u3059\u3055\u306F\u3001\u3075\u3064\u3046\u306E\u30D6\u30ED\u30C3\u30AF\u306B\u5BFE\u3057\u3066
-      [A]\u3002"
-    en: Chests start to appear, at [A] of the rate of normal blocks.
+    ja: "\u5B9D\u7BB1\u304C\u51FA\u308B\u3088\u3046\u306B\u306A\u308B\u3002\u51FA\u3084\u3059\u3055\u304C\u3001\u3075\u3064\u3046\u306E\u30D6\u30ED\u30C3\u30AF\u306B\u5BFE\u3057\u3066
+      [A] \u305A\u3064\u4E0A\u304C\u308B\u3002"
+    en: Chests start to appear. Their rate goes up by [A] of the normal block rate
+      each level.
   - key: skill.3071.name
     ja: "\u5B9D\u7BB1\u306E\u4E2D\u8EAB"
     en: Chest Loot
@@ -1764,8 +1771,10 @@ MonoBehaviour:
     ja: "\u52A0\u901F\u5E2F"
     en: Boost Strip
   - key: skill.3080.desc
-    ja: "\u5DE6\u53F3\u306E\u58C1\u306B\u3001\u30DC\u30FC\u30EB\u3092\u901F\u304F\u3059\u308B\u5E2F\u304C\u51FA\u308B\u3088\u3046\u306B\u306A\u308B\u3002[A]\u3054\u3068\u306B\u51FA\u308B\u3002"
-    en: Strips that speed up balls appear on the side walls, every [A].
+    ja: "\u5DE6\u53F3\u306E\u58C1\u306B\u3001\u30DC\u30FC\u30EB\u3092\u901F\u304F\u3059\u308B\u5E2F\u304C\u51FA\u308B\u3088\u3046\u306B\u306A\u308B\u3002\u51FA\u308B\u9593\u9694\u304C
+      [A]\u305A\u3064\u7E2E\u3080\u3002"
+    en: Strips that speed up balls appear on the side walls. The time between them
+      shrinks by [A] each level.
   - key: skill.3081.name
     ja: "\u52A0\u901F\u5E2F\u306E\u52E2\u3044"
     en: Boost Power

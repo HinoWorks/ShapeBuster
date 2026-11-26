@@ -104,6 +104,10 @@ public static class SkillTreeBonus
     public static float HeavySpeedScale => 0.3f + Mathf.Max(0f, SumBall(SkillParamStat.BallHeavySpeed, 2)) + MilestoneBonus.HeavySpeed;
     public static int OrbitCount => 3 + Mathf.RoundToInt(SumBall(SkillParamStat.BallOrbitCount, 4)) + MilestoneBonus.OrbitCount;
     public static bool ChainHits => Sum(SkillParamTarget.Ball, SkillParamStat.BallChain) >= 1f;
+    /// <summary>連撃で、1 ヒットごとに次のヒットが強くなる割合。</summary>
+    public const float ChainStep = 0.1f;
+    /// <summary>連撃の強さの上限。素の 50% に、連撃＋（BallChainCap）を足す。</summary>
+    public static float ChainCap => 0.5f + Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallChainCap));
     public static float FirstAttackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFirstAttack));
     public static float LastAttackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallLastAttack));
     public static float FullStackRate => Mathf.Max(0f, Sum(SkillParamTarget.Ball, SkillParamStat.BallFullStack));
@@ -196,7 +200,7 @@ public static class SkillTreeBonus
     {
         float power = AttackPower(kind);
         if (ChainHits && hitsBefore > 0)
-            power *= 1f + Mathf.Min(0.5f, 0.1f * hitsBefore);
+            power *= 1f + Mathf.Min(ChainCap, ChainStep * hitsBefore);
         bool critical = false;
         if (UnityEngine.Random.value < Mathf.Clamp01(Sum(SkillParamTarget.Ball, SkillParamStat.BallCritRate) + MilestoneBonus.BallCritRate))
         {

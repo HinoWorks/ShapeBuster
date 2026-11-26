@@ -63,7 +63,13 @@ CBUFFER_END
 half3 DotShade(half3 color, float2 grid)
 {
     float2 f = frac(grid);
-    float gap = (1.0 - saturate(_DotSize)) * 0.5;
+    // ブロック（ゾンビ・石・ガラス・宝箱）は、地のドットを目や口などの絵と同じ 1 マスまるごとの大きさにする
+    // （隙間を空けると地のドットだけ小さく見える）。隙間を残すのは、フィールドの背景や壁だけ。
+    float fullCell = saturate(step(0.5, _Zombie) + step(0.5, _Glass) + step(0.5, _Chest));
+#ifdef BLOCK_NO_ZOMBIE
+    fullCell = 1.0;
+#endif
+    float gap = (1.0 - saturate(_DotSize)) * 0.5 * (1.0 - fullCell);
     float inside = step(gap, f.x) * step(f.x, 1.0 - gap);
     inside *= step(gap, f.y) * step(f.y, 1.0 - gap);
     float shade = lerp(0.82, 1.0, Hash21(floor(grid) + _Seed * _Zombie * 17.0));

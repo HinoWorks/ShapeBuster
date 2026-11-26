@@ -535,7 +535,10 @@ public class BlockSession : MonoBehaviour
         aiming = false;
         aimingBall = null;
         if (aimGuide != null)
+        {
             aimGuide.Hide();
+            aimGuide.CancelLaunch();
+        }
         SoundManager.SE(SEType.StageFail);
         if (CameraManager.Inst != null)
             CameraManager.Inst.Shake(CameraShakeLevel.Medium);
@@ -1662,6 +1665,7 @@ public class BlockSession : MonoBehaviour
             if (ready == null) return;
 
             launchAnchor = ClampLaunch((Vector2)PointerWorld.Position);
+            aimGuide?.PinLaunch(launchAnchor);
             pinnedScreen = mouse.position.ReadValue();
             pinCursorUi = true;
             aimingBall = ready;
@@ -1769,16 +1773,22 @@ public class BlockSession : MonoBehaviour
         aimGuide?.Hide();
         var ball = aimingBall;
         aimingBall = null;
-        if (ball == null) return;
+        if (ball == null)
+        {
+            aimGuide?.CancelLaunch();
+            return;
+        }
 
         Vector2 pull = (Vector2)PointerWorld.Position - launchAnchor;
         if (pull.magnitude < Player.minPull)
         {
             ball.SetVisible(false);
             pinCursorUi = false;
+            aimGuide?.CancelLaunch();
             return;
         }
 
+        aimGuide?.FireLaunch();
         BeginVolley(ball, pull);
     }
 
@@ -1981,6 +1991,7 @@ public class BlockSession : MonoBehaviour
             aiming = false;
             aimingBall = null;
             aimGuide?.Hide();
+            aimGuide?.CancelLaunch();
         }
         ball.Hold(new Vector2(launchAnchor.x, deadlineY + 0.55f));
         ball.SetVisible(false);
@@ -2419,6 +2430,7 @@ public class BlockSession : MonoBehaviour
             life = Player.beamLife,
             hold = Player.beamHold,
             shrinkShort = true,
+            beamFade = true,
             color = color,
             from = scale,
             to = scale
@@ -2522,6 +2534,8 @@ public class BlockSession : MonoBehaviour
             var color = flash.color;
             color.a *= 1f - t;
             flash.sprite.color = color;
+            if (flash.beamFade)
+                SetBeamFade(flash.sprite, t);
             if (t < 1f) continue;
 
             Destroy(flash.sprite.gameObject);
@@ -2529,8 +2543,21 @@ public class BlockSession : MonoBehaviour
         }
     }
 
+    static readonly int BeamFadeId = Shader.PropertyToID("_BeamFade");
+    static MaterialPropertyBlock beamFadeBlock;
+
+    static void SetBeamFade(SpriteRenderer sprite, float fade)
+    {
+        beamFadeBlock ??= new MaterialPropertyBlock();
+        sprite.GetPropertyBlock(beamFadeBlock);
+        beamFadeBlock.SetFloat(BeamFadeId, fade);
+        sprite.SetPropertyBlock(beamFadeBlock);
+    }
+
     static Vector3 ShrinkShort(Vector3 from, float t)
     {
+        // はじめはゆっくり細くなる（消える演出はシェーダーの崩れで見せる）。
+        t *= t;
         var scale = from;
         if (Mathf.Abs(from.x) <= Mathf.Abs(from.y))
             scale.x = Mathf.Lerp(from.x, 0f, t);
@@ -2568,6 +2595,8 @@ public class BlockSession : MonoBehaviour
         public float life;
         public float hold;
         public bool shrinkShort;
+        // レーザーのシェーダー（SpriteLaserBeam）に、消え方の進み具合を _BeamFade で渡す。
+        public bool beamFade;
         public Color color;
         public Vector3 from;
         public Vector3 to;

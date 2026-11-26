@@ -19,6 +19,17 @@ public enum SkillTreeUnlockState
     EnhanceComplete
 }
 
+/// <summary>
+/// 前提のスキルのほかに要る、ノードの開放条件。条件を満たすまで、まだ取っていないノードは隠れたまま。
+/// 一度取ったノードは、条件に関わらず見える。
+/// </summary>
+public enum SkillTreeUnlockGate
+{
+    None,
+    /// <summary>にっきの最後のページ（段 12 のクリアで読める journal.13）が出ている。</summary>
+    LastJournalPage,
+}
+
 /// <summary>スキルツリーの前提の方向（画面の見た目で上下左右と斜め）。</summary>
 public enum SkillTreeDirection
 {
@@ -183,7 +194,7 @@ public class UI_SkillTreeManager : MonoBehaviour
             positions[i] = board.InverseTransformPoint(rect.position);
         }
 
-        // isRoot 以外は、選んだ方向（最大 2 つ）に隣り合うスキルを前提にする。
+        // isRoot 以外は、選んだ方向（最大 2 つ）に隣り合う（PrerequisiteSteps マス先の）スキルを前提にする。
         // スキルツリーは基本的に一方向からしか伸びないので、方向だけで前提が決まる。
         var found = new List<int>(2);
         for (int i = 0; i < skillTreeUnits.Length; i++)
@@ -200,12 +211,12 @@ public class UI_SkillTreeManager : MonoBehaviour
         }
     }
 
-    /// <summary>units[from] から direction の方向に 1 マス（neighborStep）隣のスキルを found に足す。</summary>
+    /// <summary>units[from] から direction の方向に PrerequisiteSteps マス（1 マス＝neighborStep）先のスキルを found に足す。</summary>
     void AddNeighborAt(int from, SkillTreeDirection direction, Vector2[] positions, List<int> found)
     {
         if (direction == SkillTreeDirection.None) return;
         var unit = skillTreeUnits[from];
-        Vector2 target = positions[from] + DirectionOffset(direction) * neighborStep;
+        Vector2 target = positions[from] + DirectionOffset(direction) * (neighborStep * unit.PrerequisiteSteps);
         for (int j = 0; j < skillTreeUnits.Length; j++)
         {
             if (j == from) continue;
@@ -466,7 +477,7 @@ public class UI_SkillTreeManager : MonoBehaviour
         if (isEnter)
         {
             ui_skillTreeDetail.SetData(skillTreeUnit);
-            ui_skillTreeDetail.SetPositionWithAutoFlip(skillTreeUnit.transform.position);
+            ui_skillTreeDetail.SetPositionWithAutoFlip(skillTreeUnit.transform as RectTransform);
         }
         else if (ui_skillTreeDetail.IsShowing(skillTreeUnit))
         {

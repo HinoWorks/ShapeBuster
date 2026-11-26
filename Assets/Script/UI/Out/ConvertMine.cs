@@ -185,6 +185,16 @@ public static class ConvertMine
             Flush();
     }
 
+    /// <summary>変換中か、1 D に満たない端数や未保存の D があるか。DD のセーブキーができる前でも所持表示を出すのに使う。</summary>
+    public static bool HasProgress
+    {
+        get
+        {
+            EnsureLoaded();
+            return deposited > 0 || credit > 0 || unsavedWhole > 0;
+        }
+    }
+
     /// <summary>まだディスクに書いていない整数D。購入判定はこれに足す。</summary>
     public static int UnsavedWhole
     {

@@ -95,7 +95,25 @@ MonoBehaviour:
     perLevel: 0.01
     costs: 010000000000000004000000000000000f0000000000000032000000000000009600000000000000
   - id: 101
-    memo: "\u5927\u30BE\u30F3\u30D3"
+    memo: "\u5927\u30BE\u30F3\u30D3\u30FB\u56DB\u89D2\uFF08\u6BB5 0\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 108
+    memo: "\u5927\u30BE\u30F3\u30D3\u30FB\u516D\u89D2\u5F62\uFF08\u6BB5 1\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 106
+    memo: "\u5927\u30BE\u30F3\u30D3\u30FB\u5341\u5B57\uFF08\u6BB5 2\uFF09"
     boss: 1
     count: 0
     baseCount: 0
@@ -104,7 +122,25 @@ MonoBehaviour:
     perLevel: 0
     costs: 
   - id: 102
-    memo: "\u7532\u7F85\u30DC\u30B9"
+    memo: "\u7532\u7F85\u30FB\u53F0\u5F62\uFF08\u6BB5 3\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 109
+    memo: "\u7532\u7F85\u30FB\u516D\u89D2\u5F62\uFF08\u6BB5 4\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 110
+    memo: "\u7532\u7F85\u30FB\u5341\u5B57\uFF08\u6BB5 5\uFF09"
     boss: 1
     count: 0
     baseCount: 0
@@ -113,7 +149,61 @@ MonoBehaviour:
     perLevel: 0
     costs: 
   - id: 103
-    memo: "\u518D\u751F\u30DC\u30B9"
+    memo: "\u518D\u751F\u30FB\u83F1\u5F62\uFF08\u6BB5 6\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 113
+    memo: "\u518D\u751F\u30FB\u5341\u5B57\uFF08\u6BB5 7\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 114
+    memo: "\u518D\u751F\u30FB\u7802\u6642\u8A08\uFF08\u6BB5 8\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 111
+    memo: "\u7532\u7F85\u30FB\u7802\u6642\u8A08\uFF08\u6BB5 9\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 107
+    memo: "\u5927\u30BE\u30F3\u30D3\u30FB\u9006\u53F0\u5F62\uFF08\u6BB5 10\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 112
+    memo: "\u7532\u7F85\u30FB\u9006\u53F0\u5F62\uFF08\u6BB5 11\uFF09"
+    boss: 1
+    count: 0
+    baseCount: 0
+    countRates: 
+    effect: 0
+    perLevel: 0
+    costs: 
+  - id: 115
+    memo: "\u518D\u751F\u30FB\u738B\u51A0\uFF08\u6BB5 12\uFF09"
     boss: 1
     count: 0
     baseCount: 0

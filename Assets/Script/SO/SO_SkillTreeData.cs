@@ -25,7 +25,8 @@ public enum SkillParamStat
     BallDamageRate = 35, // ノーマル攻撃力への倍率
     BallCritRate = 33, // ボールのクリティカル率
     BallCritDamage = 34, // クリティカル倍率への加算。素の2倍に足す
-    BallChain = 36, // 1以上で、同じフライトの連続ヒットが次弾を強くする
+    BallChain = 36, // 1以上で、同じフライトの連続ヒットが次弾を強くする（1 ヒットごとに +10%、上限は BallChainCap）
+    BallChainCap = 73, // 連撃の上限への加算。素の上限 50% に足す。0.1 で +10%
     BallBoss = 37, // ボスへの攻撃力倍率
     BallFirstAttack = 61, // まだダメージを受けていないブロックへの攻撃力倍率。0.2 で +20%
     BallLastAttack = 62, // 残りHPが25%以下のブロックへの攻撃力倍率

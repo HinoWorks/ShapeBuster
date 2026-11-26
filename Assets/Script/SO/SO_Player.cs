@@ -39,7 +39,7 @@ public class SO_Player : ScriptableObject
     [Space(10)]
     [Header("照準")]
     [Tooltip("レーザーを表示している時間（秒）。")]
-    public float beamLife = 0.32f;
+    public float beamLife = 0.42f;
     [Tooltip("レーザーが消え始めるまでの待ち時間（秒）。表示時間に含まれる。")]
     public float beamHold = 0.18f;
     [Tooltip("照準線が壁やブロックで跳ねる最大回数。")]

@@ -126,6 +126,12 @@ public class UI_OutGameManager : MonoBehaviour
         if (raycaster != null) raycaster.enabled = show;
     }
 
+    /// <summary>左の資源表示を、今のセーブの状態で出し直す（初めて手に入った資源を出すときなど）。</summary>
+    public void RefreshResourceCounters()
+    {
+        ResourceCounterUpdateCheck();
+    }
+
     private void ResourceCounterUpdateCheck()
     {
         foreach (var ui_resourceCounter in ui_resourceCounters)

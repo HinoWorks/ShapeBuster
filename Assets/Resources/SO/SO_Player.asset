@@ -18,7 +18,7 @@ MonoBehaviour:
   shotInterval: 0.2
   minPull: 0.28
   launchTopInset: 4.5
-  beamLife: 0.32
+  beamLife: 0.42
   beamHold: 0.18
   aimBounces: 12
   aimSkin: 0.02

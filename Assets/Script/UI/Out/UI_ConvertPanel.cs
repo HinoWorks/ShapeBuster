@@ -124,6 +124,8 @@ public class UI_ConvertPanel : MonoBehaviour
         {
             SoundManager.SE(SEType.UI_Purchase);
             Refresh();
+            // 初めて預けたときは DD の表示がまだ隠れているので、ここで出す。
+            UI_OutGameManager.Inst?.RefreshResourceCounters();
         }
         else
             SoundManager.SE(SEType.UI_Error);

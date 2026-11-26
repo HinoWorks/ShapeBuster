@@ -21,11 +21,17 @@ public class UI_SkillTreeUnit : MonoBehaviour
     [SerializeField] SkillTreeDirection prerequisiteDirectionA;
     [Tooltip("前提の方向の 2 つめ。使わないなら None")]
     [SerializeField] SkillTreeDirection prerequisiteDirectionB;
+    [Tooltip("前提のスキルまでのマス数。ふつうは 1（すぐ隣）。間をあけてつなぐときに増やす")]
+    [SerializeField, Min(1)] int prerequisiteSteps = 1;
+    [Tooltip("前提のスキルのほかに要る開放条件。満たすまで、まだ取っていなければ隠れたまま")]
+    [SerializeField] SkillTreeUnlockGate unlockGate;
     [Tooltip("上の方向から UI_SkillTreeManager が入れる（手では書かない）")]
     [SerializeField] int[] neighborSkillIndexes = Array.Empty<int>();
     public bool IsRoot => isRoot;
     public SkillTreeDirection PrerequisiteDirectionA => prerequisiteDirectionA;
     public SkillTreeDirection PrerequisiteDirectionB => prerequisiteDirectionB;
+    public int PrerequisiteSteps => Mathf.Max(1, prerequisiteSteps);
+    public SkillTreeUnlockGate UnlockGate => unlockGate;
     public int[] NeighborSkillIndexes => neighborSkillIndexes;
 
 
@@ -236,7 +242,11 @@ public class UI_SkillTreeUnit : MonoBehaviour
         else
         {
             level = 0;
-            if (!HasPrerequisite())
+            if (!IsGateOpen())
+            {
+                unlockState = SkillTreeUnlockState.Hide;
+            }
+            else if (!HasPrerequisite())
             {
                 unlockState = SkillTreeUnlockState.EnhanceReady;
             }
@@ -250,6 +260,18 @@ public class UI_SkillTreeUnit : MonoBehaviour
 
         SkillTreeBonus.SetLevel(skillIndex, skillTree, level);
         PublishState();
+    }
+
+    /// <summary>前提のスキルのほかの開放条件を満たしている。</summary>
+    public bool IsGateOpen()
+    {
+        switch (unlockGate)
+        {
+            case SkillTreeUnlockGate.LastJournalPage:
+                return JournalRuntime.UnlockedPages >= JournalRuntime.PageCount;
+            default:
+                return true;
+        }
     }
 
     async UniTask<bool> IsAnyBaseSkillAcquired()

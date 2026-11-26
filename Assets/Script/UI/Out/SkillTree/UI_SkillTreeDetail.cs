@@ -15,7 +15,21 @@ public class UI_SkillTreeDetail : MonoBehaviour
     [SerializeField] GameObject obj_complete;
     [SerializeField] GameObject obj_resourceRoot;
     [SerializeField] UI_ResourceCounter_Simple[] ui_resourceCounts;
-    [SerializeField] float hoverYOffset = 200f;
+    [Header("置き方")]
+    [Tooltip("見えている枠。中身に合わせて高さが変わる。空なら子の main を使う")]
+    [SerializeField] RectTransform box;
+    [Tooltip("はみ出さないようにする範囲。空なら親（スキルツリーの画面）")]
+    [SerializeField] RectTransform frame;
+    [Tooltip("上にあって、詳細を重ねたくないもの（タブなど）。この下の端より上には出さない。空ならアウトゲームの header/headerButtons")]
+    [SerializeField] RectTransform[] avoidTop;
+    [Tooltip("ノードと詳細のすき間（キャンバスの単位）")]
+    [SerializeField] float nodeGap = 12f;
+    [Tooltip("枠の端から離す幅（キャンバスの単位）")]
+    [SerializeField] float edgeMargin = 16f;
+    [Tooltip("ズームにどれだけ大きさを合わせるか。0 で合わせない、1 でズームと同じ")]
+    [SerializeField, Range(0f, 1f)] float zoomFollow = 0.3f;
+    [SerializeField] float minScale = 0.85f;
+    [SerializeField] float maxScale = 1.15f;
 
 
     private UI_SkillTreeUnit currentUnit;
@@ -26,8 +40,8 @@ public class UI_SkillTreeDetail : MonoBehaviour
     private bool resourceReady = false;
 
     private RectTransform rectTr;
-    private Canvas rootCanvas;
-    private Vector3 anchorWorldPosition;
+    private RectTransform anchor;
+    private readonly Vector3[] corners = new Vector3[4];
 
 
     public bool IsShowing(UI_SkillTreeUnit skillTreeUnit)
@@ -46,6 +60,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
         {
             gameObject.SetActive(false);
             currentUnit = null;
+            anchor = null;
             requredResources.Clear();
             resourceReady = false;
             isMaxLevel = true;
@@ -55,17 +70,106 @@ public class UI_SkillTreeDetail : MonoBehaviour
         SetData_Base(currentUnit.level);
     }
 
-    public void SetPositionWithAutoFlip(Vector3 worldPosition)
+    /// <summary>
+    /// ノードの上か下の、枠に収まるほうへ置く（上を優先）。どちらにも収まらなければ、広いほうに置いて枠の中へ寄せる。
+    /// 大きさはズームに少しだけ合わせる。表示しているあいだは、ズームやスクロールに合わせて毎フレーム置き直す。
+    /// </summary>
+    public void SetPositionWithAutoFlip(RectTransform node)
     {
         EnsureCachedRefs();
-        anchorWorldPosition = worldPosition;
-        ApplyVerticalOffset(hoverYOffset);
+        anchor = node;
+        var target = Box();
+        if (target != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(target);
+        Place();
+    }
 
-        Canvas.ForceUpdateCanvases();
-        if (IsAnyCornerOutOfScreen())
+    void LateUpdate()
+    {
+        if (anchor != null && currentUnit != null)
+            Place();
+    }
+
+    void Place()
+    {
+        var parent = rectTr.parent as RectTransform;
+        if (parent == null || anchor == null) return;
+
+        // ノードの四隅を親の座標に直す。ズームはここに入る。
+        anchor.GetWorldCorners(corners);
+        Vector2 min = parent.InverseTransformPoint(corners[0]);
+        Vector2 max = parent.InverseTransformPoint(corners[2]);
+        float nodeHeight = max.y - min.y;
+        float zoom = anchor.rect.height > 0.01f ? nodeHeight / anchor.rect.height : 1f;
+
+        float scale = Mathf.Clamp(1f + (zoom - 1f) * zoomFollow, minScale, maxScale);
+        rectTr.localScale = new Vector3(scale, scale, 1f);
+
+        var target = Box();
+        Vector2 size = (target != null ? target.rect.size : rectTr.rect.size) * scale;
+        float half = size.y * 0.5f;
+        float gap = nodeGap * scale;
+
+        var area = (frame != null ? frame : parent).rect;
+        if (frame != null && frame != parent)
+            area = RectIn(parent, frame);
+        // タブなど、上に重ねたくないものの下で止める。
+        foreach (var block in AvoidTop())
         {
-            ApplyVerticalOffset(-hoverYOffset);
+            if (block == null || !block.gameObject.activeInHierarchy) continue;
+            area.yMax = Mathf.Min(area.yMax, RectIn(parent, block).yMin);
         }
+        float top = area.yMax - edgeMargin;
+        float bottom = area.yMin + edgeMargin;
+
+        float above = max.y + gap + half;
+        float below = min.y - gap - half;
+        float y;
+        if (above + half <= top)
+            y = above;
+        else if (below - half >= bottom)
+            y = below;
+        else
+        {
+            // どちらにも収まらない。広いほうに置いて、枠の中へ寄せる。
+            y = (top - max.y) >= (min.y - bottom) ? above : below;
+        }
+        // ノードがタブの裏などにあると、下に出してもはみ出すので、最後に枠の中へ寄せる。
+        y = top - bottom >= size.y ? Mathf.Clamp(y, bottom + half, top - half) : (top + bottom) * 0.5f;
+
+        // 左右も枠の中へ寄せる。枠より広いときは真ん中。
+        float halfWidth = size.x * 0.5f;
+        float left = area.xMin + edgeMargin;
+        float right = area.xMax - edgeMargin;
+        float x = (min.x + max.x) * 0.5f;
+        x = right - left >= size.x ? Mathf.Clamp(x, left + halfWidth, right - halfWidth) : (left + right) * 0.5f;
+        rectTr.localPosition = new Vector3(x, y, rectTr.localPosition.z);
+    }
+
+    /// <summary>target の四隅を、parent の座標の矩形にする。</summary>
+    Rect RectIn(RectTransform parent, RectTransform target)
+    {
+        target.GetWorldCorners(corners);
+        Vector2 a = parent.InverseTransformPoint(corners[0]);
+        Vector2 b = parent.InverseTransformPoint(corners[2]);
+        return Rect.MinMaxRect(Mathf.Min(a.x, b.x), Mathf.Min(a.y, b.y), Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y));
+    }
+
+    RectTransform[] AvoidTop()
+    {
+        if (avoidTop != null && avoidTop.Length > 0) return avoidTop;
+        var outGame = GetComponentInParent<UI_OutGameManager>(true);
+        var tabs = outGame != null ? outGame.transform.Find("header/headerButtons") as RectTransform : null;
+        avoidTop = tabs != null ? new[] { tabs } : System.Array.Empty<RectTransform>();
+        return avoidTop;
+    }
+
+    /// <summary>見えている枠。中身に合わせて高さが変わる。</summary>
+    RectTransform Box()
+    {
+        if (box == null && rectTr != null)
+            box = rectTr.Find("main") as RectTransform;
+        return box;
     }
 
     private void SetData_Base(int currentLevel)
@@ -90,7 +194,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
         if (tmp_description != null)
         {
             Loc.UseFont(tmp_description);
-            tmp_description.SetText(FormatDescription(so, currentLevel, isMaxLevel));
+            tmp_description.SetText(FormatDescription(so));
         }
 
         SetParamValues(so, currentLevel, isMaxLevel);
@@ -119,12 +223,12 @@ public class UI_SkillTreeDetail : MonoBehaviour
             SetData_Base(currentUnit.level);
     }
 
-    static string FormatDescription(SkillTreeBase skill, int currentLevel, bool isMaxLevel)
+    static string FormatDescription(SkillTreeBase skill)
     {
         string template = Loc.Content(Loc.SkillDesc(skill.baseSkillIndex), "");
         if (string.IsNullOrEmpty(template)) return "";
-        int paramLevel = isMaxLevel ? currentLevel : currentLevel + 1;
-        string value = FormatParams(skill, paramLevel);
+        // 説明の数字は、いつも 1 レベル分の差分（deltaValue）。合計は上の「今 → 次」の欄に出す。
+        string value = FormatDelta(skill);
         if (template.Contains("{0}"))
         {
             try
@@ -137,6 +241,19 @@ public class UI_SkillTreeDetail : MonoBehaviour
             }
         }
         return template.Replace("[A]", value);
+    }
+
+    /// <summary>1 レベル分の差分。加速帯の間隔は、縮む秒数（符号なし）。</summary>
+    static string FormatDelta(SkillTreeBase skill)
+    {
+        float delta = skill.deltaValue;
+        if (skill.paramStat == SkillParamStat.BlockCompact)
+            return SkillTreeBonus.FormatBlockCompact(delta);
+        if (skill.paramStat == SkillParamStat.WallBoostInterval)
+            return Mathf.Abs(delta).ToString("F0") + " " + Loc.Text("ui.unit.sec");
+        if (!HasDisplayUnit(skill.unit))
+            return "";
+        return FormatParam(skill.unit, delta);
     }
 
     static string FormatParams(SkillTreeBase skill, int atLevel)
@@ -214,44 +331,6 @@ public class UI_SkillTreeDetail : MonoBehaviour
     private void EnsureCachedRefs()
     {
         if (rectTr == null) rectTr = transform as RectTransform;
-        if (rootCanvas == null) rootCanvas = GetComponentInParent<Canvas>();
-    }
-
-    private void ApplyVerticalOffset(float offsetY)
-    {
-        var targetScreenPos = RectTransformUtility.WorldToScreenPoint(GetCanvasCamera(), anchorWorldPosition);
-        targetScreenPos.y += offsetY;
-
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            rectTr.parent as RectTransform,
-            targetScreenPos,
-            GetCanvasCamera(),
-            out var worldPos
-        );
-        rectTr.position = worldPos;
-    }
-
-    private Camera GetCanvasCamera()
-    {
-        if (rootCanvas == null) return null;
-        return rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : rootCanvas.worldCamera;
-    }
-
-    private bool IsAnyCornerOutOfScreen()
-    {
-        EnsureCachedRefs();
-        var corners = new Vector3[4];
-        rectTr.GetWorldCorners(corners);
-        var cam = GetCanvasCamera();
-        for (var i = 0; i < corners.Length; i++)
-        {
-            var screenPoint = RectTransformUtility.WorldToScreenPoint(cam, corners[i]);
-            if (screenPoint.x < 0f || screenPoint.x > Screen.width || screenPoint.y < 0f || screenPoint.y > Screen.height)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void SetData_Enhanced(int currentLevel)

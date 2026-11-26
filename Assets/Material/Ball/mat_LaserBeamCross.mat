@@ -33,15 +33,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BeamFade: 0
+    - _ColorSteps: 4
     - _CoreWidth: 0.04
+    - _DotWorldSize: 0.06
+    - _DotsPerCell: 9
     - _EdgeAlpha: 0.45
     - _EnableExternalAlpha: 0
     - _EndFade: 0
     - _EndPower: 0.4
+    - _FadeCool: 1.2
+    - _FadeCrumble: 1.1
+    - _FadeSpark: 0.6
     - _FlowScale: 0.57
     - _FlowSpeed: 19.1
     - _GlowWidth: 1.5
     - _GradientAngle: -90
+    - _PixelMix: 0.775
     - _PixelSize: 0.077
     - _SparkRate: 16
     - _StreakStrength: 0.048

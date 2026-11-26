@@ -83,6 +83,9 @@ public class UI_ResourceCounter : MonoBehaviour, IPointerEnterHandler, IPointerE
     private bool ResourceUnlockCheck()
     {
         var isResourceUnlock = SaveLoader.Inst.Check_ResourceKeyExists(resourceType);
+        // 初めての変換では、1 D がまるごと書かれるまで DD のキーがない。変換が始まっていれば端数でも出す。
+        if (!isResourceUnlock && showOwnedConvert && resourceType == ResourceType.DD)
+            isResourceUnlock = ConvertMine.HasProgress;
         this.gameObject.SetActive(isResourceUnlock);
         return isResourceUnlock;
     }
@@ -95,10 +98,6 @@ public class UI_ResourceCounter : MonoBehaviour, IPointerEnterHandler, IPointerE
         var isResourceUnlock = ResourceUnlockCheck();
         if (!isResourceUnlock) return;
 
-        var haveResource = SaveLoader.Inst.Check_ResourceKeyExists(resourceType);
-        if (!haveResource) return;
-
-        if (!this.gameObject.activeSelf) this.gameObject.SetActive(true);
         var resourceCount = SaveLoader.Inst.Get_ResourceCount(resourceType);
         Set_ResourceMod((resourceType, resourceCount));
     }

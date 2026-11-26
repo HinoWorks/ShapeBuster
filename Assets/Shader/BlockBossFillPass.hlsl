@@ -161,7 +161,8 @@ float FaceOf(float2 c, float2 total)
 half3 DotShade(half3 color, float2 grid)
 {
     float2 f = frac(grid);
-    float gap = (1.0 - saturate(_DotSize)) * 0.5;
+    // ゾンビは、地のドットを目や口と同じ 1 マスまるごとの大きさにする（隙間を空けると地のドットだけ小さく見える）。
+    float gap = (1.0 - saturate(_DotSize)) * 0.5 * (1.0 - step(0.5, _Zombie));
     float inside = step(gap, f.x) * step(f.x, 1.0 - gap);
     inside *= step(gap, f.y) * step(f.y, 1.0 - gap);
     float shade = lerp(0.78, 1.0, Hash21(floor(grid) + _Seed * 17.0));

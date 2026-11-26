@@ -111,7 +111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 7500, y: 4292}
+  m_SizeDelta: {x: 5500, y: 4292}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2522373741588536240
 GameObject:
@@ -1073,7 +1073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 282.8427
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1093,7 +1093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9238795
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1105,15 +1105,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.38268346
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 100
+      value: -800
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 900
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1129,7 +1129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
@@ -1145,7 +1145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2071,11 +2071,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1000
+      value: -1200
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2163,7 +2163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: prerequisiteDirectionA
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
@@ -2179,11 +2179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
-      value: 9004
+      value: 9002
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
@@ -2933,7 +2933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -600
+      value: -800
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2968,12 +2968,20 @@ PrefabInstance:
       value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: unlockGate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.icon
       value: 
       objectReference: {fileID: 21300000, guid: 6ff9e5348feb74efa8d2fa6ebda8cca2, type: 3}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
       value: NA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: prerequisiteSteps
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
@@ -3021,7 +3029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: prerequisiteDirectionA
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
@@ -3037,11 +3045,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
-      value: 9002
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
@@ -3839,7 +3847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.38268346
+      value: 0.3826833
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4633,11 +4641,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -800
+      value: -1000
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4725,7 +4733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: prerequisiteDirectionA
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
@@ -4741,11 +4749,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
-      value: 9003
+      value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
@@ -4959,7 +4967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4971,15 +4979,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 800
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4995,11 +5003,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 1032
+      value: 1031
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
@@ -5011,7 +5019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6196,7 +6204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1400
+      value: -1600
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6284,7 +6292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: prerequisiteDirectionA
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
@@ -6300,11 +6308,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
-      value: 9006
+      value: 9004
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
@@ -6401,15 +6409,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.38268346
+      value: -0.38268346
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 100
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 900
+      value: -1300
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6429,11 +6437,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 3080
+      value: 9003
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 3081
+      value: 9004
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -7006,7 +7014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 282.8427
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7026,7 +7034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.00000004371139
+      value: 0.9238795
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -7038,15 +7046,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: -0.38268346
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -700
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -200
+      value: -1500
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7062,15 +7070,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9005
+      value: 9004
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9004
+      value: 9005
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -7078,7 +7086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7643,7 +7651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 282.8427
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7663,7 +7671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.38268346
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -7675,15 +7683,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: -0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 700
+      value: -1100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7703,11 +7711,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 1031
+      value: 9002
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 3080
+      value: 9003
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -10738,11 +10746,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -300
+      value: -900
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10762,11 +10770,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 3070
+      value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 3071
+      value: 9002
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -11625,7 +11633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: -0.00000004371139
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -11637,15 +11645,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -700
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 700
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11661,11 +11669,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 3000
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
@@ -11677,7 +11685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12425,11 +12433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1200
+      value: -1400
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12517,7 +12525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: prerequisiteDirectionA
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
@@ -12533,11 +12541,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
-      value: 9005
+      value: 9003
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[1]'
@@ -12650,7 +12658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1600
+      value: -1800
       objectReference: {fileID: 0}
     - target: {fileID: 1692321543978486410, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12678,7 +12686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: isRoot
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillIndex
@@ -12737,6 +12745,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
+      propertyPath: prerequisiteDirectionA
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTreeUnit.maxLevel
       value: 1
       objectReference: {fileID: 0}
@@ -12750,7 +12762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: neighborSkillIndexes.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: 'neighborSkillIndexes.Array.data[0]'
@@ -24108,7 +24120,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 330e2c4af3238448e83a42ad5ff5f0a1, type: 3}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.unit
-      value: '%'
+      value: NA
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.maxLevel
@@ -33089,7 +33101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.paramStat
-      value: 36
+      value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.skillName
@@ -33101,7 +33113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.deltaValue
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4302872989103955293, guid: 8620ea0ec453c484fa6c60d3cf063a54, type: 3}
       propertyPath: skillTree.jpSkillName
@@ -36628,7 +36640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 282.8427
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -36648,7 +36660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.9238795
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -36660,11 +36672,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0.38268346
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -36684,7 +36696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
@@ -36700,7 +36712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38087,7 +38099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -38107,7 +38119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.00000004371139
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -38119,15 +38131,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -700
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -200
+      value: -400
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -38147,11 +38159,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 1080
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 3070
+      value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -39062,7 +39074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 282.8427
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -39082,7 +39094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.38268346
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -39094,15 +39106,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7071068
+      value: -0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -800
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -300
+      value: -1700
       objectReference: {fileID: 0}
     - target: {fileID: 5387096493585694276, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -39118,15 +39130,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: targetSkillIndexes.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[0]'
-      value: 9006
+      value: 9005
       objectReference: {fileID: 0}
     - target: {fileID: 5667374917470481511, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: 'targetSkillIndexes.Array.data[1]'
-      value: 9005
+      value: 9006
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_Name
@@ -39134,7 +39146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5769957877846613969, guid: 3a07f2a23c60448648b4a47ced2035d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -178,7 +178,7 @@ MonoBehaviour:
     jpSkillName: "\u9023\u6483"
     icon: {fileID: 21300000, guid: 330e2c4af3238448e83a42ad5ff5f0a1, type: 3}
     maxLevel: 1
-    unit: '%'
+    unit: NA
     paramTarget: 4
     targetIndex: 0
     paramStat: 36
@@ -191,8 +191,8 @@ MonoBehaviour:
     unit: '%'
     paramTarget: 4
     targetIndex: 0
-    paramStat: 36
-    deltaValue: 1
+    paramStat: 73
+    deltaValue: 0.1
   - baseSkillIndex: 1060
     skillName: "\u5148\u5236"
     jpSkillName: "\u5148\u5236"
