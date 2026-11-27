@@ -17,7 +17,7 @@ MonoBehaviour:
     stageTime: 45
     blockColumns: 7
     blockHpRate: 1
-    blockSpeedRate: 0.8
+    blockSpeedRate: 1
     blockResourceRate: 1
     bossIndex: 0
     weightSquare: 100
@@ -54,7 +54,7 @@ MonoBehaviour:
   - stageIndex: 2
     stageTime: 50
     blockColumns: 9
-    blockHpRate: 4.5
+    blockHpRate: 12
     blockSpeedRate: 1.2
     blockResourceRate: 3
     bossIndex: 5
@@ -73,7 +73,7 @@ MonoBehaviour:
   - stageIndex: 3
     stageTime: 55
     blockColumns: 10
-    blockHpRate: 20
+    blockHpRate: 30
     blockSpeedRate: 1.2
     blockResourceRate: 4
     bossIndex: 1
@@ -82,7 +82,7 @@ MonoBehaviour:
     weightTall: 15
     weightSolid: 3
     weightArmor: 5
-    weightRegen: 0
+    weightRegen: 2
     weightBloat: 0
     weightSplit: 0
     weightGhost: 0
@@ -172,12 +172,12 @@ MonoBehaviour:
     blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 13
-    weightSquare: 32
+    weightSquare: 35
     weightWide: 14
     weightTall: 10
     weightSolid: 3
-    weightArmor: 8
-    weightRegen: 8
+    weightArmor: 9
+    weightRegen: 9
     weightBloat: 5
     weightSplit: 10
     weightGhost: 0
@@ -186,17 +186,17 @@ MonoBehaviour:
     wallSlowChance: 25
   - stageIndex: 9
     stageTime: 65
-    blockColumns: 13
+    blockColumns: 12
     blockHpRate: 5000
     blockSpeedRate: 1.3
     blockResourceRate: 7
     bossIndex: 10
-    weightSquare: 36
+    weightSquare: 35
     weightWide: 18
     weightTall: 14
     weightSolid: 3
-    weightArmor: 8
-    weightRegen: 8
+    weightArmor: 9
+    weightRegen: 9
     weightBloat: 5
     weightSplit: 8
     weightGhost: 0
@@ -214,8 +214,8 @@ MonoBehaviour:
     weightWide: 14
     weightTall: 14
     weightSolid: 3
-    weightArmor: 8
-    weightRegen: 8
+    weightArmor: 9
+    weightRegen: 9
     weightBloat: 5
     weightSplit: 8
     weightGhost: 10
@@ -224,7 +224,7 @@ MonoBehaviour:
     wallSlowChance: 25
   - stageIndex: 11
     stageTime: 70
-    blockColumns: 14
+    blockColumns: 13
     blockHpRate: 11000
     blockSpeedRate: 1.3
     blockResourceRate: 7
@@ -233,8 +233,8 @@ MonoBehaviour:
     weightWide: 14
     weightTall: 14
     weightSolid: 3
-    weightArmor: 8
-    weightRegen: 8
+    weightArmor: 9
+    weightRegen: 9
     weightBloat: 5
     weightSplit: 8
     weightGhost: 8
@@ -243,7 +243,7 @@ MonoBehaviour:
     wallSlowChance: 25
   - stageIndex: 12
     stageTime: 75
-    blockColumns: 14
+    blockColumns: 13
     blockHpRate: 20000
     blockSpeedRate: 1.3
     blockResourceRate: 7
@@ -252,8 +252,8 @@ MonoBehaviour:
     weightWide: 12
     weightTall: 12
     weightSolid: 3
-    weightArmor: 8
-    weightRegen: 8
+    weightArmor: 9
+    weightRegen: 9
     weightBloat: 5
     weightSplit: 8
     weightGhost: 8

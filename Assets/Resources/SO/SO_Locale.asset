@@ -1272,8 +1272,8 @@ MonoBehaviour:
     ja: "\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B\u304C [A] \u5897\u3048\u308B\u3002"
     en: Ball attack increases by [A].
   - key: skill.1006.name
-    ja: "EX\u30D1\u30EF\u30FC"
-    en: EX POWER
+    ja: "EX\u30D1\u30EF\u30FC+"
+    en: EX POWER+
   - key: skill.1006.desc
     ja: "\u30DC\u30FC\u30EB\u306E\u653B\u6483\u529B\u304C [A] \u5897\u3048\u308B\u3002"
     en: Ball attack increases by [A].
