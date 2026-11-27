@@ -30,6 +30,9 @@ public class UI_SkillTreeDetail : MonoBehaviour
     [SerializeField, Range(0f, 1f)] float zoomFollow = 0.3f;
     [SerializeField] float minScale = 0.85f;
     [SerializeField] float maxScale = 1.15f;
+    [Header("強化したときの動き")]
+    [Tooltip("レベルのあと、値段の欄を 1 つずつ遅らせて弾ませる間隔（秒）")]
+    [SerializeField] float costPopStagger = 0.05f;
 
 
     private UI_SkillTreeUnit currentUnit;
@@ -176,6 +179,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
     {
         if (currentUnit == null || currentUnit.skillTree == null) return;
 
+        StopPops();
         var so = currentUnit.skillTree;
         int maxLevel = Mathf.Max(1, so.maxLevel);
         isMaxLevel = currentLevel >= maxLevel;
@@ -215,6 +219,7 @@ public class UI_SkillTreeDetail : MonoBehaviour
     void OnDisable()
     {
         Loc.Changed -= OnLanguage;
+        StopPops();
     }
 
     void OnLanguage(GameLanguage _)
@@ -336,6 +341,35 @@ public class UI_SkillTreeDetail : MonoBehaviour
     public void SetData_Enhanced(int currentLevel)
     {
         SetData_Base(currentLevel);
+        PlayEnhancedPop();
+    }
+
+    /// <summary>
+    /// 強化したとき、レベルと次の値段をボタンと同じ動き（UIPopAnim）で弾ませる。
+    /// 最大になったときは値段の欄が消えるので、レベルだけ弾ませる（obj_complete は枠の黄色い線なので動かさない）。
+    /// </summary>
+    void PlayEnhancedPop()
+    {
+        if (tmp_level != null)
+            UIPopAnim.Play(tmp_level.transform);
+
+        if (isMaxLevel || ui_resourceCounts == null) return;
+        int order = 1;
+        foreach (var cont in ui_resourceCounts)
+        {
+            if (cont == null || !cont.gameObject.activeSelf) continue;
+            UIPopAnim.Play(cont.transform, costPopStagger * order);
+            order++;
+        }
+    }
+
+    /// <summary>弾んでいる途中で閉じたり別のスキルに替えたりしても、大きさと傾きを残さない。</summary>
+    void StopPops()
+    {
+        if (tmp_level != null) UIPopAnim.Stop(tmp_level.transform);
+        if (ui_resourceCounts == null) return;
+        foreach (var cont in ui_resourceCounts)
+            if (cont != null) UIPopAnim.Stop(cont.transform);
     }
 
     private void SetData_RequiredCost(int currentLevel)

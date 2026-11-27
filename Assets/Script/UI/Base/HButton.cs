@@ -9,16 +9,21 @@ using UnityEngine.Events;
 
 
 /// <summary>
-/// 押したときに縮み、カーソルが乗ると大きくなるボタン。効果音もここで鳴らす。
+/// カーソルが乗ると大きくなり、押すと一瞬縮んでから大きく傾いて、元に戻るボタン。効果音もここで鳴らす。
+/// 動きの調整値はクラスの頭の定数。
 /// - 押したとき：clickSE。押せない状態（Set_Interactable(false)）で押したときは disabledClickSE。
 /// - カーソルが乗ったとき：hoverSE。
 /// 買う・受け取るなど、結果で音を変えるボタンは、呼び出し側で ClickSE を None にして結果の音を鳴らす。
 /// </summary>
 public class HButton : Button
 {
-    const float duration_scaleChange = 0.2f;
-    const float scale_push = 0.85f; // ボタンが押されたときのスケール
-    const float scale_over = 1.1f; // ボタンにカーソルが乗ったときのスケール
+    // 動きの調整値。
+    const float scale_over = 1.1f;      // カーソルが乗ったときの大きさ
+    const float time_over = 0.2f;       // 乗ったとき・離れたときにかける秒数
+    // 押したときの動き（縮める → 広げて傾ける → 戻す）の値は UIPopAnim にある。
+
+    Tween scaleTween;
+    Tween tiltTween;
 
     //private HButtonConnect hButtonConnect;
     public UnityAction<bool> onMouseOver;
@@ -66,7 +71,7 @@ public class HButton : Button
 
         pointerOver = true;
         SoundManager.SE(hoverSE);
-        Anim_ScaleChange_PointerOn();
+        ScaleTo(scale_over, time_over);
         onMouseOver?.Invoke(true);
     }
 
@@ -89,14 +94,13 @@ public class HButton : Button
     {
         if (!pointerOver) return;
         pointerOver = false;
-        Anim_ScaleChange_ToNormal();
+        ScaleTo(1f, time_over);
         onMouseOver?.Invoke(false);
     }
 
     public override void OnPointerDown(PointerEventData eventData)
     {
         if (!base.interactable) return;
-        Anim_ScaleChange_ToSmall();
         base.OnPointerDown(eventData);
     }
 
@@ -104,8 +108,19 @@ public class HButton : Button
     public override void OnPointerUp(PointerEventData eventData)
     {
         if (!base.interactable) return;
-        Anim_ScaleChange_ToNormal();
         base.OnPointerUp(eventData);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        // 押している途中で画面が閉じても、つぶれたまま・傾いたままにしない。
+        scaleTween?.Kill();
+        tiltTween?.Kill();
+        transform.localScale = Vector3.one;
+        transform.localRotation = Quaternion.identity;
+        pointerOver = false;
+        ScaleTo(1f, time_over);
     }
 
     public override void OnPointerClick(PointerEventData eventData)
@@ -120,7 +135,10 @@ public class HButton : Button
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             if (IsInteractable())
+            {
                 SoundManager.SE(clickSE);
+                Anim_Click();
+            }
             base.OnPointerClick(eventData);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
@@ -159,19 +177,24 @@ public class HButton : Button
     }
 
 
-    private void Anim_ScaleChange_PointerOn()
+    // ---- 動き ----
+    // 乗る：scale_over へ。押せた：UIPopAnim の動きで弾ませて、元（乗っていれば scale_over）に戻す。
+
+    float BaseScale => pointerOver ? scale_over : 1f;
+
+    void ScaleTo(float scale, float time)
     {
-        this.gameObject.transform.DOScale(scale_over * Vector3.one, duration_scaleChange).SetUpdate(true).Play();
+        scaleTween?.Kill();
+        scaleTween = transform.DOScale(scale * Vector3.one, time).SetUpdate(true);
     }
-    private void Anim_ScaleChange_ToSmall()
+
+    private void Anim_Click()
     {
-        this.gameObject.transform.DOScale(scale_push * Vector3.one, duration_scaleChange).SetUpdate(true).Play();
-    }
-    private void Anim_ScaleChange_ToNormal()
-    {
-        this.gameObject.transform.DOScale(1f * Vector3.one, duration_scaleChange).SetUpdate(true).Play();
+        scaleTween?.Kill();
+        tiltTween?.Kill();
+        // 大きさと傾きは別々に動かす（カーソルが外れて大きさだけ止めても、傾きは戻りきるように）。
+        UIPopAnim.Play(transform, out var scale, out var tilt, BaseScale);
+        scaleTween = scale;
+        tiltTween = tilt;
     }
 }
-
-
-

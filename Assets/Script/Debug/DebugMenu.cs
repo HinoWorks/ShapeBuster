@@ -505,6 +505,18 @@ public static class DebugMenu
             ConvertMine.DebugFinishDeposit();
         }
 
+#if UNITY_EDITOR
+        // エディタ専用。ON の間は 1 キーでスクショを Screenshots/ に保存する（DebugScreenshot）。
+        [Category("プレイ")]
+        [SRDebugger.Sort(6)]
+        [DisplayName("1キーでスクショ")]
+        public bool 一キーでスクショ
+        {
+            get => DebugScreenshot.Enabled;
+            set => DebugScreenshot.Enabled = value;
+        }
+#endif
+
         [Category("記録")]
         [SRDebugger.Sort(0)]
         public string 総プレイ時間 => PlayTimeRecord.Format(PlayTimeRecord.TotalSeconds);

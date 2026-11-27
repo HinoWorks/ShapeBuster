@@ -79,8 +79,8 @@ MonoBehaviour:
   - type: 4
     memo: UI_Purchase
     clips:
-    - {fileID: 8300000, guid: 22cd4101eb9a94d3da00f012a5263f2f, type: 3}
-    volume: 1
+    - {fileID: 8300000, guid: da43b9cdd3c23439896c14046d3221bb, type: 3}
+    volume: 0.792
     pitch: {x: 0.98, y: 1.02}
     minInterval: 0.03
     maxVoices: 3
@@ -88,7 +88,6 @@ MonoBehaviour:
     memo: UI_PurchaseMax
     clips:
     - {fileID: 8300000, guid: 22cd4101eb9a94d3da00f012a5263f2f, type: 3}
-    - {fileID: 8300000, guid: 6a716df23d7ba41e69138520288c5495, type: 3}
     volume: 1
     pitch: {x: 0.98, y: 1.02}
     minInterval: 0.03
